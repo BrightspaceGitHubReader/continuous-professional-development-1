@@ -17,8 +17,8 @@ after_success:
 env:
   global:
   - SAUCE_USERNAME: Desire2Learn
-  - REPO_NAME=cpd
-  - OWNER_NAME=BrightspaceUI
+  - REPO_NAME=continuous-professional-development
+  - OWNER_NAME=Brightspace
 #GITHUB_RELEASE_TOKEN
   - secure: BMdO85U/oKS2Vht+uCI6AHbrROfyvfNgXoS4g4IhomtENL88DyoiXyPJHCEd57uneamk0xSLdizWo2esGaCYrNg6RkMHzQffJ3DR+v7i/nEepMzwM6HFOzBDVL2scuaHTY7JtsDZF/WQZ/7lfOT5LasuioRqlsXLsFLKU6/XXZHrD/PHmhbfniQMpBT6ajtf7Id4OU/5kdhwwc67gCnedsPyyj7wOvQEDrbTzAVRXLeViEg3noaShB5uOBf2tNZ8xhE1VY9nk2CWQbirjU3fqrZr9SfeDaJ8xKyJtv9m8DGV2/nGBAxJFvFRVNYxqie6BXdO5jvhIe7j52x/6piY35ci1A5zKzYbC/TD0Hs96DOlq3yiw5n+t3dPsOMw3ZgTndSbwFhlgv9YkjYiI2DFybH3am7BrGB5NVRausmQ8J4z5HWX10An2p0liW+7AN17F/94I+W9kNELgUyO+mRlpxHRhXoaJ4W7c4sN6uLeLcMpHyRPBevv+hHOJgfC6dfYLZADgTnLTOafrPw6iL7Ai/utKgog8bOPA32l8tjWY2WnIoLoLCto9cI+4JqwJJbvLtaG+H6q6Na9Y4r8bghD+diu806AVCEZBzt+FLQuqcGTFB6X1mn5gJ7aZXlmtkDC+Eq4WLu8O7CCUGJneNZNsf2ZpWmHlBMOvTSk+yMwsDw=
 deploy:
@@ -28,4 +28,4 @@ deploy:
   api_key: 
   on:
     tags: true
-    repo: BrightspaceUI/cpd
+    repo: Brightspace/continuous-professional-development
