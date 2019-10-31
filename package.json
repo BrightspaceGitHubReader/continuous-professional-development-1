@@ -1,8 +1,9 @@
 {
-  "name": "<%= packageName %>",
-  "description": "<%= description %>",
-  "repository": "https://github.com/<%= githubOrg %>/<%= shortName %>.git",
-  <%= publishInfo %>,
+  "name": "@brightspace-ui/cpd",
+  "description": "Continuous Professional Development",
+  "repository": "https://github.com/BrightspaceUI/cpd.git",
+  "publishConfig": { "access": "public" },
+  "files": [ "cpd.js" ],
   "scripts": {
     "lint": "eslint . --ext .js,.html",
     "test": "npm run lint && npm run test:local",
