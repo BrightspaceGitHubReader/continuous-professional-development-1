@@ -1,8 +1,6 @@
 # d2l-cpd
 
-[![NPM version](https://img.shields.io/npm/v/@brightspace-ui/cpd.svg)](https://www.npmjs.org/package/@brightspace-ui/cpd)
-[![Greenkeeper badge](https://badges.greenkeeper.io/BrightspaceUI/cpd.svg)](https://greenkeeper.io/)
-[![Build status](https://travis-ci.com/@brightspace-ui/cpd.svg?branch=master)](https://travis-ci.com/@brightspace-ui/cpd)
+[![Build Status](https://www.travis-ci.com/Brightspace/continuous-professional-development.svg?token=s5DqGXfBESukCURszFfU&branch=master)](https://www.travis-ci.com/Brightspace/continuous-professional-development)
 
 Continuous Professional Development
 
