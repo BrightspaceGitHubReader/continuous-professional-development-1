@@ -36,6 +36,7 @@
   "dependencies": {
     "@brightspace-ui/core": "^1",
     "@webcomponents/webcomponentsjs": "^2",
-    "lit-element": "^2"
+    "lit-element": "^2",
+    "d2l-table": "BrightspaceUI/table#semver:^2"
   }
 }
