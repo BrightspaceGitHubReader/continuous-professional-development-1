@@ -6,5 +6,13 @@ export const val = {
 	'lblType': 'Type',
 	'lblMethod': 'Method',
 	'lblCreditHours': 'Credit Hours',
-	'lblDateAdded': 'Date Added'
+	'lblDateAdded': 'Date Added',
+	'addNewCPD': 'Add a New CPD Record',
+	'CPDHeader': 'My CPD Records',
+	'dateRange': 'Date Range',
+	'hideSearchOptions': 'hideSearchOptions',
+	'pendingRecords': 'Pending Records',
+	'progress': 'Progress',
+	'searchFor': 'Search For...',
+	'searchForLabel': 'Search For Awards',
 };
