@@ -1,14 +1,14 @@
 import '@brightspace-ui/core/components/button/button.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import 'd2l-table/d2l-table.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LoadDataMixin } from '../mixins/load-data-mixin.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
 class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 	static get properties() {
 		return {
-			cpdRecords: {
+			_cpdRecords: {
 				type: Object
 			}
 		};
@@ -45,16 +45,6 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 		return null;
 	}
 
-	get cpdRecords() {
-		return this._cpdRecords;
-	}
-
-	set cpdRecords(val) {
-		const oldVal = this._cpdRecords;
-		this._cpdRecords = val;
-		this.requestUpdate('cpdRecords', oldVal);
-	}
-
 	constructor() {
 		super();
 
@@ -63,6 +53,16 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 		this._cpdRecords = {
 			data: []
 		};
+	}
+
+	get cpdRecords() {
+		return this._cpdRecords;
+	}
+
+	set cpdRecords(val) {
+		const oldVal = this._cpdRecords;
+		this._cpdRecords = val;
+		this.requestUpdate('cpdRecords', oldVal);
 	}
 
 	connectedCallback() {
@@ -124,7 +124,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 					<d2l-tbody>
 						${
-							this.cpdRecords.data.map(record => 
+						this._cpdRecords.data.map(record =>
 							html`
 								<d2l-tr role="row">
 									<d2l-td>
@@ -148,10 +148,10 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 									<d2l-td>
 										${record.date_added}
 									</d2l-td>
-								</d2l-tr>
-							`
-							)
-						}
+			</d2l-tr>
+		`
+	)
+}
 					</d2l-tbody>
 				</d2l-thead>
 				</d2l-table>
