@@ -3,6 +3,9 @@ export const LoadDataMixin = superclass => class extends superclass {
 		return {
 			getOptions: {
 				type: Object
+			},
+			cpdRecordsUrl: {
+				type: String
 			}
 		}
 	}
@@ -16,10 +19,11 @@ export const LoadDataMixin = superclass => class extends superclass {
 			}),
 			method: 'GET',
 			mode: 'cors'
-		}
+		};
+		this.cpdRecordsUrl = '';
 	}
 
-	async __loadCpdRecords(cpdRecordsUrl) {
+	__loadCpdRecords(cpdRecordsUrl) {
 		return fetch(cpdRecordsUrl, this.getOptions)
 			.then(r => {
 				return r.json();

@@ -3,15 +3,13 @@ import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { LoadDataMixin } from './mixins/load-data-mixin.js';
 import 'd2l-table/d2l-table.js';
 
+
 class Cpd extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 	static get properties() {
 		const superProps = super.properties;
 		return {
 			prop1: { 
-				type: String
-			},
-			cpdRecordsUrl: {
 				type: String
 			},
 			cpdRecords: {
@@ -66,10 +64,12 @@ class Cpd extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 		this.prop1 = 'cpd';
 		this.cpdRecordsUrl = '';
-		this._cpdRecords = {};
+		this._cpdRecords = {
+			data: []
+		};
 	}
 
-	async connectedCallback() {
+	connectedCallback() {
 		super.connectedCallback();
 
 		this.__loadCpdRecords(this.cpdRecordsUrl)
@@ -80,48 +80,48 @@ class Cpd extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 	render() {
 		return html`
-			<style include="d2l-table-style"></style>
-			<h2>Hello ${this.prop1}!</h2>
-			<div>Localization Example: ${this.localize('myLangTerm')}</div>
-				<div role="main">
+			<custom-style>
+				<style include="d2l-table-style"></style>
+			</custom-style>
+			<div role="main">
 				<d2l-table 
-					id='cpd-records'
+					id="cpd-records"
 					aria-label$="[[localize('ariaCPDRecordsTable')]]"
 				>
 					<d2l-thead>
 						<d2l-tr role="row">
 							<d2l-th>
-								[[localize('lblIcon')]]
+								${this.localize('lblIcon')}
 							</d2l-th>
 
 
 							<d2l-th>
-								[[localize('lblName')]]
+								${this.localize('lblName')}
 							</d2l-th>
 
 
 							<d2l-th>
-								[[localize('lblSubject')]]
+								${this.localize('lblSubject')}
 							</d2l-th>
 
 
 							<d2l-th>
-								[[localize('lblType')]]
+								${this.localize('lblType')}
 							</d2l-th>
 
 
 							<d2l-th>
-								[[localize('lblMethod')]]
+								${this.localize('lblMethod')}
 							</d2l-th>
 
 
 							<d2l-th>
-								[[localize('lblCreditHours')]]
+								${this.localize('lblCreditHours')}
 							</d2l-th>
 
 
 							<d2l-th>
-								[[localize('lblDateAdded')]]
+								${this.localize('lblDateAdded')}
 							</d2l-th>
 						</d2l-tr> 
 					</d2l-thead>
