@@ -8,7 +8,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 	static get properties() {
 		return {
-			_cpdRecords: {
+			cpdRecords: {
 				type: Object
 			}
 		};
@@ -124,7 +124,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 					<d2l-tbody>
 						${
-						this._cpdRecords.data.map(record =>
+						this.cpdRecords.data.map(record =>
 							html`
 								<d2l-tr role="row">
 									<d2l-td>
