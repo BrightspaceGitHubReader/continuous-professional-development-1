@@ -7,7 +7,7 @@ export const LoadDataMixin = superclass => class extends superclass {
 			cpdRecordsUrl: {
 				type: String
 			}
-		}
+		};
 	}
 
 	constructor() {
@@ -15,7 +15,7 @@ export const LoadDataMixin = superclass => class extends superclass {
 
 		this.getOptions = {
 			headers: new Headers({
-					'Access-Control-Allow-Origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			}),
 			method: 'GET',
 			mode: 'cors'
@@ -28,8 +28,8 @@ export const LoadDataMixin = superclass => class extends superclass {
 			.then(r => {
 				return r.json();
 			})
-			.catch(r => {
+			.catch(() => {
 				return {};
 			});
 	}
-}
+};
