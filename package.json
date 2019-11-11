@@ -10,7 +10,8 @@
   "config": {
     "frauAppConfigBuilder": {
       "appFile": "./app.js",
-      "dist": "./dist",
+      "dist": "./build/dev",
+      "distProd": "./build/prod",
       "envVar": "TRAVIS",
       "loader": "iframe"
     },
@@ -18,11 +19,11 @@
       "appClass": "urn:d2l:fra:class:continuous-professional-development"
     },
     "frauPublisher": {
-      "files": "./dist/**",
+      "files": "./build/prod/**",
       "moduleType": "app",
       "targetDirectory": "continuous-professional-development",
       "creds": {
-        "key": "AKIAJSUZXLSOWGASCTAQ",
+        "key": "AKIA3HLX2CRXT6ZTVCIB",
         "secretVar": "CDN_SECRET"
       },
       "devTagVar": "TRAVIS_COMMIT",
@@ -33,7 +34,7 @@
     "cpd.js"
   ],
   "scripts": {
-    "build": "frau-appconfig-builder",
+    "build": "polymer build && frau-appconfig-builder",
     "lint": "eslint . --ext .js,.html",
     "publish:dev:cdn": "npm run build && frau-publisher",
     "resolver": "frau-local-appresolver",

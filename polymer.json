@@ -1,4 +1,48 @@
 {
   "npm": true,
-  "moduleResolution": "node"
+  "moduleResolution": "node",
+  "entrypoint": "index.html",
+  "shell": "src/components/cpd.js",
+  "fragments": [],
+  "sources": [
+    "locales/**",
+    "src/**",
+    "package.json",
+    "index.html"
+  ],
+  "extraDependencies": [
+    "node_modules/@webcomponents/**"
+  ],
+  "builds": [
+    {
+      "preset": "es5-bundled",
+      "name": "dev",
+      "addServiceWorker": false,
+      "js": {
+        "minify": false
+      },
+      "css": {
+        "minify": false
+      },
+      "html": {
+        "minify": false
+      },
+      "bundle": false
+    },
+    {
+      "preset": "es5-bundled",
+      "name": "prod",
+      "addServiceWorker": false,
+      "js": {
+        "minify": true
+      },
+      "css": {
+        "minify": true
+      },
+      "html": {
+        "minify": true
+      },
+      "npm": true
+    }
+  ]
 }

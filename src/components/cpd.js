@@ -1,7 +1,7 @@
 import '@brightspace-ui/core/components/button/button.js';
 import 'd2l-tabs/d2l-tabs.js';
-import './components/my-cpd-records.js';
-import './components/pending-records';
+import './my-cpd-records';
+import './pending-records';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
@@ -21,7 +21,7 @@ class Cpd extends LocalizeMixin(LitElement) {
 			let translations;
 			switch (lang) {
 				case 'en':
-					translations = await import('./locales/en.js');
+					translations = await import('../../locales/en.js');
 					break;
 			}
 
