@@ -1,3 +1,7 @@
+import '@brightspace-ui/core/components/button/button.js';
+import 'd2l-tabs/d2l-tabs.js';
+import './components/my-cpd-records.js';
+import './components/pending-records';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
@@ -5,19 +9,11 @@ class Cpd extends LocalizeMixin(LitElement) {
 
 	static get properties() {
 		return {
-			prop1: { type: String },
 		};
 	}
 
 	static get styles() {
-		return css`
-			:host {
-				display: inline-block;
-			}
-			:host([hidden]) {
-				display: none;
-			}
-		`;
+		return css``;
 	}
 
 	static async getLocalizeResources(langs) {
@@ -40,16 +36,18 @@ class Cpd extends LocalizeMixin(LitElement) {
 		return null;
 	}
 
-	constructor() {
-		super();
-
-		this.prop1 = 'cpd';
-	}
-
 	render() {
 		return html`
-			<h2>Hello ${this.prop1}!</h2>
-			<div>Localization Example: ${this.localize('myLangTerm')}</div>
+			<d2l-tabs >
+				<d2l-tab-panel text="${this.localize('lblCPDHeader')}"> 
+					<d2l-my-cpd-records cpdRecordsUrl='./data/cpd_records.json'></d2l-my-cpd-records>
+				</d2l-tab-panel>
+				<d2l-tab-panel text="${this.localize('lblPendingRecords')}"> 
+					<d2l-pending-records></d2l-pending-records>
+				</d2l-tab-panel>
+				<d2l-tab-panel text="${this.localize('lblProgress')}"> 
+				</d2l-tab-panel>
+			</d2l-tabs>
 		`;
 	}
 }

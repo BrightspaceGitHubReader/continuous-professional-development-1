@@ -1,0 +1,23 @@
+{
+	"data": [
+		{
+			"icon": "icons/test-icon.jpg",
+			"name": "Capstone Project",
+			"subject": "Math",
+			"type": "Structured",
+			"method": "TBD",
+			"credit_hours": "4h 30m",
+			"date_added": "01/01/2019"
+		},
+		{
+			"icon": "icons/test-icon.jpg",
+			"name": "Group Assignment",
+			"subject": "Management",
+			"type": "Unstructured",
+			"method": "TBD",
+			"credit_hours": "2h",
+			"date_added": "01/01/2019"
+		}
+	]
+
+}

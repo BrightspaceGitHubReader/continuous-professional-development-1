@@ -2,6 +2,7 @@
   "name": "@brightspace-ui/cpd",
   "description": "Continuous Professional Development",
   "repository": "https://github.com/BrightspaceUI/cpd.git",
+  "version": "0.0.1",
   "publishConfig": {
     "access": "public"
   },
@@ -36,6 +37,9 @@
   "dependencies": {
     "@brightspace-ui/core": "^1",
     "@webcomponents/webcomponentsjs": "^2",
-    "lit-element": "^2"
+    "lit-element": "^2",
+    "d2l-table": "BrightspaceUI/table#semver:^2",
+    "d2l-date-picker": "github:BrightspaceUI/date-picker#semver:^2",
+    "d2l-tabs": "github:BrightspaceUI/tabs#semver:^1"
   }
 }
