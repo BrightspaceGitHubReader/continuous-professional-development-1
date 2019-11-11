@@ -16,12 +16,6 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 	static get styles() {
 		return css`
-			:host {
-				display: inline-block;
-			}
-			:host([hidden]) {
-				display: none;
-			}
 		`;
 	}
 
@@ -68,7 +62,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.__loadCpdRecords(this.cpdRecordsUrl)
+		this.loadCpdRecords(this.cpdRecordsUrl)
 			.then(r => {
 				this.cpdRecords = r;
 			});

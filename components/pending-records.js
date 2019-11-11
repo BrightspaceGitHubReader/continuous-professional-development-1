@@ -8,18 +8,11 @@ class PendingRecords extends LocalizeMixin(LitElement) {
 
 	static get properties() {
 		return {
-			prop1: { type: String },
 		};
 	}
 
 	static get styles() {
 		return css`
-			:host {
-				display: inline-block;
-			}
-			:host([hidden]) {
-				display: none;
-            }
             .inline {
                 display: inline-block;
             }
@@ -46,20 +39,14 @@ class PendingRecords extends LocalizeMixin(LitElement) {
 		return null;
 	}
 
-	constructor() {
-		super();
-
-		this.prop1 = 'PendingRecords';
-	}
-
 	render() {
 		return html`
 		<div>
             <div>
-                <d2l-input-search class="inline" label="${this.localize('searchForLabel')}" placeholder="${this.localize('searchFor')}"></d2l-input-search>
-                <d2l-link class="inline">${this.localize('hideSearchOptions')}</d2l-link>
+                <d2l-input-search class="inline" label="${this.localize('lblSearchForLabel')}" placeholder="${this.localize('searchFor')}"></d2l-input-search>
+                <d2l-link class="inline">${this.localize('lblHideSearchOptions')}</d2l-link>
             </div>
-            <h5>${this.localize('dateRange')}</h5>
+            <h5>${this.localize('lblDateRange')}</h5>
             <div>
                 <d2l-date-picker class="inline"></d2l-date-picker> 
                 <label>to<label>

@@ -9,19 +9,11 @@ class Cpd extends LocalizeMixin(LitElement) {
 
 	static get properties() {
 		return {
-			prop1: { type: String },
 		};
 	}
 
 	static get styles() {
-		return css`
-			:host {
-				display: inline-block;
-			}
-			:host([hidden]) {
-				display: none;
-			}
-		`;
+		return css``;
 	}
 
 	static async getLocalizeResources(langs) {
@@ -44,22 +36,16 @@ class Cpd extends LocalizeMixin(LitElement) {
 		return null;
 	}
 
-	constructor() {
-		super();
-
-		this.prop1 = 'cpd';
-	}
-
 	render() {
 		return html`
 			<d2l-tabs >
-				<d2l-tab-panel text="${this.localize('CPDHeader')}"> 
+				<d2l-tab-panel text="${this.localize('lblCPDHeader')}"> 
 					<d2l-my-cpd-records cpdRecordsUrl='./data/cpd_records.json'></d2l-my-cpd-records>
 				</d2l-tab-panel>
-				<d2l-tab-panel text="${this.localize('pendingRecords')}"> 
+				<d2l-tab-panel text="${this.localize('lblPendingRecords')}"> 
 					<d2l-pending-records></d2l-pending-records>
 				</d2l-tab-panel>
-				<d2l-tab-panel text="${this.localize('progress')}"> 
+				<d2l-tab-panel text="${this.localize('lblProgress')}"> 
 				</d2l-tab-panel>
 			</d2l-tabs>
 		`;

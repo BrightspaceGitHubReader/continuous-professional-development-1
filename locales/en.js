@@ -1,5 +1,4 @@
 export const val = {
-	'myLangTerm': 'I am a dynamically imported localized string!',
 	'lblIcon': 'Icon',
 	'lblName': 'Name',
 	'lblSubject': 'Subject',
@@ -7,12 +6,13 @@ export const val = {
 	'lblMethod': 'Method',
 	'lblCreditHours': 'Credit Hours',
 	'lblDateAdded': 'Date Added',
-	'addNewCPD': 'Add a New CPD Record',
-	'CPDHeader': 'My CPD Records',
-	'dateRange': 'Date Range',
-	'hideSearchOptions': 'hideSearchOptions',
-	'pendingRecords': 'Pending Records',
-	'progress': 'Progress',
-	'searchFor': 'Search For...',
-	'searchForLabel': 'Search For Awards',
+	'lblAddNewCPD': 'Add a New CPD Record',
+	'lblCPDHeader': 'My CPD Records',
+	'lblDateRange': 'Date Range',
+	'lblHideSearchOptions': 'hideSearchOptions',
+	'lblPendingRecords': 'Pending Records',
+	'lblProgress': 'Progress',
+	'lblSearchFor': 'Search For...',
+	'lblSearchForLabel': 'Search For Awards',
+	'ariaCpdTable': 'A table with your continuous professional development history'
 };
