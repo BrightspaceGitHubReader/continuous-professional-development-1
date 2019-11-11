@@ -30,9 +30,6 @@
       "versionVar": "TRAVIS_TAG"
     }
   },
-  "files": [
-    "cpd.js"
-  ],
   "scripts": {
     "build": "polymer build && frau-appconfig-builder",
     "lint": "eslint . --ext .js,.html",
