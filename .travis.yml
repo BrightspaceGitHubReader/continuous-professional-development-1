@@ -19,7 +19,6 @@ deploy:
   api_key: "$GITHUB_RELEASE_TOKEN"
   on:
     tags: true
-    repo: Brightspace/continuous-professional-development
 env:
   global:
   - SAUCE_USERNAME: Horgan
