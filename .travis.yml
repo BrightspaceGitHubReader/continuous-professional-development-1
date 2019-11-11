@@ -14,6 +14,12 @@ script:
   fi
 after_success:
 - frauci-update-version -d=skip && export TRAVIS_TAG=$(frauci-get-version)
+- test "$TRAVIS_REPO_SLUG" = "Brightspace/continuous-professional-development" &&
+    test "$TRAVIS_BRANCH" = "master" &&
+    test "$TRAVIS_PULL_REQUEST" = "false" &&
+    test "x$TRAVIS_TAG" = "x" &&
+    npm run build &&
+    npm run publish:dev:cdn
 env:
   global:
   - SAUCE_USERNAME: Horgan
