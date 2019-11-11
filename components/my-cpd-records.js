@@ -74,7 +74,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 				<style include="d2l-table-style"></style>
 			</custom-style>
 			<div role="main">
-				<d2l-table 
+				<d2l-table
 					id="cpd-records"
 					aria-label="${this.localize('ariaCpdTable')}"
 				>
@@ -113,16 +113,14 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 							<d2l-th>
 								${this.localize('lblDateAdded')}
 							</d2l-th>
-						</d2l-tr> 
+						</d2l-tr>
 					</d2l-thead>
 
 					<d2l-tbody>
-						${
-	this.cpdRecords.data.map(record =>
-		html`
+						${this.cpdRecords.data.map(record => html`
 								<d2l-tr role="row">
 									<d2l-td>
-										<img src="${record.icon}"></img>		
+										<img src="${record.icon}"></img>
 									</d2l-td>
 									<d2l-td>
 										${record.name}
