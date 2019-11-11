@@ -17,6 +17,15 @@
 			"method": "TBD",
 			"credit_hours": "2h",
 			"date_added": "01/01/2019"
+		}		,
+		{
+			"icon": "icons/test-icon.jpg",
+			"name": "English 101",
+			"subject": "English",
+			"type": "Structured",
+			"method": "TBD",
+			"credit_hours": "4h",
+			"date_added": "10/12/2019"
 		}
 	]
 
