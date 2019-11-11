@@ -24,6 +24,9 @@ export const LoadDataMixin = superclass => class extends superclass {
 	}
 
 	loadCpdRecords(cpdRecordsUrl) {
+		if (!cpdRecordsUrl){
+			return;
+		}
 		return fetch(cpdRecordsUrl, this.getOptions)
 			.then(r => {
 				return r.json();

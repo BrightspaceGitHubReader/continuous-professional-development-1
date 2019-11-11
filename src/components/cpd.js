@@ -9,6 +9,9 @@ class Cpd extends LocalizeMixin(LitElement) {
 
 	static get properties() {
 		return {
+			cpdRecordsUrl: {
+				type: String
+			}
 		};
 	}
 
@@ -40,7 +43,7 @@ class Cpd extends LocalizeMixin(LitElement) {
 		return html`
 			<d2l-tabs >
 				<d2l-tab-panel text="${this.localize('lblCPDHeader')}"> 
-					<d2l-my-cpd-records cpdRecordsUrl='./data/cpd_records.json'></d2l-my-cpd-records>
+					<d2l-my-cpd-records cpdRecordsUrl='${this.cpdRecordsUrl}'></d2l-my-cpd-records>
 				</d2l-tab-panel>
 				<d2l-tab-panel text="${this.localize('lblPendingRecords')}"> 
 					<d2l-pending-records></d2l-pending-records>
