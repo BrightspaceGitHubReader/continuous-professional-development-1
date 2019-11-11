@@ -30,6 +30,10 @@ env:
   #CDN_SECRET
   - secure: b+2O7IDuUfsBW8OmIOeODq0T315ik8lb6GwpZ8J89DZJK14FkYKxpi4ES+mKYru11JeSuhjGdCC5grmSRqIi+G82WnTrky3colYi95f2h+t1yc9TxfPz7Wr4E3dxqzOPm+f1vgjKP9hHLU/Y/nU+ocxJrp9y0pSKO20pHxJZCJlYc1Edlw3BVftQWtTG1ceGi2KwlJFqUnzUO/1YbO3qjWPqC7zXT+Z80ct/Xq82MauUESjbOFFjt7HZ/QshFnf3CgFfTRnb3QqCGBaPh6QHQiNwpMmKmE/8lHG0y02wWyKFfugfTfSSLVQp9s2AicWiLnMrKZWX6GaKvVfteYayTBRmfEkWHzoHr8lDZiDTgTElK7phanlACp9pfhNQVgDor9cCPlwEFb3NviREEKGTBydd2PsiisTE/HnyB5hb/Jrhp7o/He2HhkPlr6rEW7rAyq2buqBCILOWVhSpM4aJCS4pheQzzk/qi3r4tMAt/CxaJ2NIJbNzHlssYw1nWrENOUbDbqWG/StJ86FR2tMLn5O1Zw+i2mP2kJXsiDWkVA3mxUik9K4v7r5fUcr0PPTqLQswpALMBdclC81fjV7zcaalm2GJjAIYPyQgxYSzFOXc3sdFe0PtuF1UYcjYeoirm/sI4CEVMcbJOkoeEStis99yf5QiurMATN32W9EDjyY=
 deploy:
+- provider: releases
+  api_key: "$GITHUB_RELEASE_TOKEN"
+  on:
+    tags: true
 - provider: npm
   email: d2ltravisdeploy@d2l.com
   skip_cleanup: true

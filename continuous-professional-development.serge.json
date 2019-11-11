@@ -1,0 +1,5 @@
+{
+    "name": "Continuous Professional Development",
+    "source_dir": "locales",
+    "output_file_path": "locales/%CULTURE%.json"
+}
