@@ -1,4 +1,5 @@
 {
+  "appId": "urn:d2l:fra:class:continuous-professional-development",
   "name": "@brightspace-ui/cpd",
   "description": "Continuous Professional Development",
   "repository": "https://github.com/BrightspaceUI/cpd.git",
@@ -6,11 +7,36 @@
   "publishConfig": {
     "access": "public"
   },
+  "config": {
+    "frauAppConfigBuilder": {
+      "appFile": "./app.js",
+      "dist": "./dist",
+      "envVar": "TRAVIS",
+      "loader": "iframe"
+    },
+    "frauLocalAppResolver": {
+      "appClass": "urn:d2l:fra:class:continuous-professional-development"
+    },
+    "frauPublisher": {
+      "files": "./dist/**",
+      "moduleType": "app",
+      "targetDirectory": "continuous-professional-development",
+      "creds": {
+        "key": "AKIAJSUZXLSOWGASCTAQ",
+        "secretVar": "CDN_SECRET"
+      },
+      "devTagVar": "TRAVIS_COMMIT",
+      "versionVar": "TRAVIS_TAG"
+    }
+  },
   "files": [
     "cpd.js"
   ],
   "scripts": {
+    "build": "frau-appconfig-builder",
     "lint": "eslint . --ext .js,.html",
+    "publish:dev:cdn": "npm run build && frau-publisher",
+    "resolver": "frau-local-appresolver",
     "test": "npm run lint && npm run test:local",
     "test:local": "polymer test --skip-plugin sauce",
     "test:sauce": "polymer test --skip-plugin local",
@@ -28,7 +54,9 @@
     "eslint-plugin-html": "^6",
     "eslint-plugin-lit": "^1",
     "eslint-plugin-sort-class-members": "^1",
+    "frau-appconfig-builder": "^1.0.0",
     "frau-ci": "^1",
+    "frau-local-appresolver": "^1.0.0",
     "mocha": "^6",
     "polymer-cli": "^1",
     "puppeteer": "^1",
@@ -37,9 +65,9 @@
   "dependencies": {
     "@brightspace-ui/core": "^1",
     "@webcomponents/webcomponentsjs": "^2",
-    "lit-element": "^2",
-    "d2l-table": "BrightspaceUI/table#semver:^2",
     "d2l-date-picker": "github:BrightspaceUI/date-picker#semver:^2",
-    "d2l-tabs": "github:BrightspaceUI/tabs#semver:^1"
+    "d2l-table": "BrightspaceUI/table#semver:^2",
+    "d2l-tabs": "github:BrightspaceUI/tabs#semver:^1",
+    "lit-element": "^2"
   }
 }
