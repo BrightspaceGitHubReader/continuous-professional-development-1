@@ -9,9 +9,9 @@
   },
   "config": {
     "frauAppConfigBuilder": {
-      "appFile": "./app.js",
-      "dist": "./build/dev",
-      "distProd": "./build/prod",
+      "appFile": "./index.html",
+      "distLocal": "./build/dev",
+      "dist": "./build/prod",
       "envVar": "TRAVIS",
       "loader": "iframe"
     },
