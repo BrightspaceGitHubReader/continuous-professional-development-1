@@ -42,7 +42,6 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 	constructor() {
 		super();
 
-		this.prop1 = 'cpd';
 		this.cpdRecordsUrl = '';
 		this._cpdRecords = {
 			data: []
