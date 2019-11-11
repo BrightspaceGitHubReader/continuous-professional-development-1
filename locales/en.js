@@ -12,7 +12,7 @@ export const val = {
 	'lblHideSearchOptions': 'hideSearchOptions',
 	'lblPendingRecords': 'Pending Records',
 	'lblProgress': 'Progress',
-	'lblSearchFor': 'Search For...',
-	'lblSearchForLabel': 'Search For Awards',
+	'lblSearchBarDefault': 'Search For...',
+	'lblSearchFor': 'Search For Awards',
 	'ariaCpdTable': 'A table with your continuous professional development history'
 };
