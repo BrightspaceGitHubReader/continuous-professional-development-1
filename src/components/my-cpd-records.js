@@ -24,7 +24,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 			let translations;
 			switch (lang) {
 				case 'en':
-					translations = await import('../locales/en.js');
+					translations = await import('../../locales/en.js');
 					break;
 			}
 

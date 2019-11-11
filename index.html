@@ -1,26 +1,78 @@
+/* global ifrauclient */
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<link rel="stylesheet" href="node_modules/@brightspace-ui/core/components/demo/styles.css" type="text/css">
-		<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-		<script type="module">
-			import '@brightspace-ui/core/components/demo/demo-page.js';
-			import './cpd.js';
-		</script>
-		<title>d2l-cpd</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<meta charset="UTF-8">
-	</head>
-	<body>
-		<d2l-demo-page page-title="d2l-cpd">
-			<h2>d2l-cpd</h2>
-			<d2l-demo-snippet>
-				<d2l-cpd
-					cpdrecordsurl="./data/cpd_records.json"
-				>
-				</d2l-cpd>
-			</d2l-demo-snippet>
-		</d2l-demo-page>
-	</body>
+
+<head>
+	<meta charset="utf-8">
+	<title>Continuous Professional Development</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Continuous Professional Development">
+	<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="https://s.brightspace.com/lib/ifrau/0.25.0/ifrau/client.js"></script>
+	<script type="module">
+		import './src/components/cpd.js';
+	</script>
+	<script>
+		const client = new ifrauclient({
+			resizeFrame: true,
+			syncFont: true,
+			syncLang: true,
+			resizerOptions: {
+				heightCalculationMethod: 'lowestElement'
+			}
+		});
+		client
+			.connect()
+			.then(client => {
+				window.data = window.data || {};
+				window.data.fraSettings = window.data.fraSettings || {};
+				window.data.fraSettings.client = client;
+				Promise.all([
+					client.request('orgUnit'),
+					client.request('font'),
+					client.getService('picker', '0.1'),
+					client.request('valenceHost'),
+					client.request('options'),
+					client.getService('dialog', '0.1')
+				])
+					.then(ifrauData => {
+						const body = document.getElementsByTagName('body')[0];
+						body.style.fontSize = ifrauData[1].size;
+						body.style.fontFamily = ifrauData[1].family;
+						window.data = window.data || {};
+						window.data.fraSettings = window.data.fraSettings || {};
+						window.data.fraSettings.orgUnitId = ifrauData[0].OrgUnitId;
+						window.data.fraSettings.quicklinkPicker = ifrauData[2];
+						window.data.fraSettings.valenceHost = ifrauData[3];
+						window.data.fraSettings.moduleId = ifrauData[4].moduleId;
+						window.data.fraSettings.mapId = ifrauData[4].mapId;
+						window.data.fraSettings.dialogService = ifrauData[5];
+						const cpd = document.createElement('d2l-cpd');
+						cpd.appTitle = 'Continuous Professional Development';
+						const loadingSpinner = document.getElementById('loading-spinner');
+						document.body.removeChild(loadingSpinner);
+						document.body.appendChild(cpd);
+					});
+			});
+		window.process = {
+			env: {
+				NODE_ENV: 'production'
+			}
+		};
+	</script>
+	<style>
+		.big-spinner {
+			--d2l-loading-spinner-size: 100px;
+		}
+	</style>
+</head>
+
+<body>
+	<d2l-loading-spinner id="loading-spinner" class="big-spinner"></d2l-loading-spinner>
+
+	<noscript>
+		Please enable JavaScript to view your continuous professional development data.
+	</noscript>
+</body>
+
 </html>
