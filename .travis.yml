@@ -1,5 +1,5 @@
 language: node_js
-node_js: node
+node_js: 10
 addons:
   chrome: stable
 script:
@@ -37,7 +37,7 @@ deploy:
 - provider: npm
   email: d2ltravisdeploy@d2l.com
   skip_cleanup: true
-  api_key: 
+  api_key:
   on:
     tags: true
     repo: Brightspace/continuous-professional-development
