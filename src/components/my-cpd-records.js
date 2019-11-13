@@ -1,4 +1,7 @@
 import '@brightspace-ui/core/components/button/button.js';
+import '@brightspace-ui/core/components/inputs/input-checkbox.js';
+import '@brightspace-ui/core/components/inputs/input-search.js';
+import 'd2l-dropdown/d2l-dropdown.js';
 import 'd2l-table/d2l-table.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LoadDataMixin } from '../mixins/load-data-mixin.js';
