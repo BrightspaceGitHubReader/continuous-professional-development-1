@@ -42,13 +42,13 @@ class Cpd extends LocalizeMixin(LitElement) {
 	render() {
 		return html`
 			<d2l-tabs >
-				<d2l-tab-panel text="${this.localize('lblCPDHeader')}"> 
+				<d2l-tab-panel text="${this.localize('lblCPDHeader')}">
 					<d2l-my-cpd-records cpdRecordsUrl='${this.cpdRecordsUrl}'></d2l-my-cpd-records>
 				</d2l-tab-panel>
-				<d2l-tab-panel text="${this.localize('lblPendingRecords')}"> 
+				<d2l-tab-panel text="${this.localize('lblPendingRecords')}">
 					<d2l-pending-records></d2l-pending-records>
 				</d2l-tab-panel>
-				<d2l-tab-panel text="${this.localize('lblProgress')}"> 
+				<d2l-tab-panel text="${this.localize('lblProgress')}">
 				</d2l-tab-panel>
 			</d2l-tabs>
 		`;
