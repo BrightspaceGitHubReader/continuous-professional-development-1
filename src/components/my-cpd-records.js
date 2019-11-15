@@ -116,10 +116,10 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 					</d2l-thead>
 
 					<d2l-tbody>
-						${this.cpdRecords.data.map(record => html`
+						${ this.cpdRecords.data && this.cpdRecords.data.map(record => html`
 								<d2l-tr role="row">
 									<d2l-td>
-										<img src="${record.icon}"></img>
+										<img src="${record.icon}" />
 									</d2l-td>
 									<d2l-td>
 										${record.name}
