@@ -137,6 +137,16 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 		`;
 	}
 
+	toggleSelect(e) {
+		const selectId = e.target.id === 'subject_enable' ? 'subject_select' : 'method_select';
+		const select = this.shadowRoot.querySelector(`#${selectId}`);
+		if (e.target.checked) {
+			select.removeAttribute('disabled');
+		} else {
+			select.setAttribute('disabled', 'disabled');
+		}
+	}
+
 	render() {
 		return html`
 			<custom-style>
@@ -156,9 +166,9 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 				</d2l-input-search>	
 
 				<div id="subject_filter">
-					<label id="subject_label">Subject</label>
+					<label id="subject_label">${this.localize('lblSubject')}</label>
 					<div class="select_filter_controls">
-						<d2l-input-checkbox id="subject_enable"></d2l-input-checkbox>
+						<d2l-input-checkbox checked id="subject_enable" @change="${this.toggleSelect}"></d2l-input-checkbox>
 						<select  
 							class="select_filter"
 							id="subject_select"
@@ -169,9 +179,9 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 				</div>
 
 				<div id="method_filter">
-					<label id="method_label">Method</label>
+					<label id="method_label">${this.localize('lblMethod')}</label>
 					<div class="select_filter_controls">
-						<d2l-input-checkbox id="method_enable"></d2l-input-checkbox>
+						<d2l-input-checkbox checked id="method_enable" @change="${this.toggleSelect}"></d2l-input-checkbox>
 						<select  
 							class="select_filter"
 							id="method_select"
@@ -182,7 +192,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 				</div>
 
 				<div id="date_filter">
-					<label id="date_label">Date Range</label>
+					<label id="date_label">${this.localize('lblDateRange')}</label>
 					<div class="date_filter_controls">
 						<d2l-date-picker></d2l-date-picker> 
 						<label>to</label>
