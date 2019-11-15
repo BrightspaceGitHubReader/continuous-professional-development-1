@@ -1,7 +1,6 @@
 {
 	"data": [
 		{
-			"icon": "icons/test-icon.jpg",
 			"name": "Capstone Project",
 			"subject": "Math",
 			"type": "Structured",
@@ -10,7 +9,6 @@
 			"date_added": "01/01/2019"
 		},
 		{
-			"icon": "icons/test-icon.jpg",
 			"name": "Group Assignment",
 			"subject": "Management",
 			"type": "Unstructured",
@@ -19,7 +17,6 @@
 			"date_added": "01/01/2019"
 		},
 		{
-			"icon": "icons/test-icon.jpg",
 			"name": "English 101",
 			"subject": "English",
 			"type": "Structured",

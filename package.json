@@ -64,9 +64,9 @@
     "@brightspace-ui/core": "^1",
     "@webcomponents/webcomponentsjs": "^2",
     "d2l-date-picker": "github:BrightspaceUI/date-picker#semver:^2",
+    "d2l-datetime-picker": "github:BrightspaceUI/datetime-picker#semver:^4",
     "d2l-table": "BrightspaceUI/table#semver:^2",
     "d2l-tabs": "github:BrightspaceUI/tabs#semver:^1",
-    "d2l-dropdown": "github:BrightspaceUI/dropdown#semver:^7",
     "lit-element": "^2"
   }
 }
