@@ -21,6 +21,9 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 			methodOptions: {
 				type: Array
 			},
+			pageOptions: {
+				type: Array
+			},
 			pageSizeOptions: {
 				type: Array
 			}
@@ -108,6 +111,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 		};
 		this.subjectOptions = [];
 		this.methodOptions = [];
+		this.pageOptions = [];
 		this.pageSizeOptions = [];
 	}
 
@@ -266,8 +270,12 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 				</d2l-thead>
 				</d2l-table>
 				<div class="filter_controls">
-					<select class="page_control" id="page_select"></select>
-					<select class="page_control" id="page_size_select"></select>
+					<select class="page_control" id="page_select">
+						${this.pageOptions.map(option => this.serializeSelect(option))}
+					</select>
+					<select class="page_control" id="page_size_select">
+						${this.pageSizeOptions.map(option => this.serializeSelect(option))}
+					</select>
 				</div>
 			</div>
 					`;
