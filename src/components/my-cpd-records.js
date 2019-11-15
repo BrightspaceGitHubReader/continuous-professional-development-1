@@ -48,17 +48,30 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 				width: 7rem;
 			}
 
-			.d2l-date-picker-container {
-				display: inline-flex;
-				flex-direction: column;
-				flex: 1 1 auto;
+			.date_filter_controls {
+				width: 40%;
+				display: flex;
+				justify-content: space-between;
+				align-items: baseline;
 			}
 
-			.filter_select {
+			.date_filter_controls label {
+				display: inline-block;
+			}
+
+			.page_filter_controls {
+
+			}
+
+			.page_control {
+				width: 7rem;
+			}
+
+			.select_filter {
 				width: 30%;
 			}
 			
-			.filter_controls {
+			.select_filter_controls {
 				display: flex;
 				align-items: baseline;
 			}
@@ -144,35 +157,37 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 				<div id="subject_filter">
 					<label id="subject_label">Subject</label>
-					<div class="filter_controls">
+					<div class="select_filter_controls">
 						<d2l-input-checkbox id="subject_enable"></d2l-input-checkbox>
 						<select  
-							class="filter_select"
+							class="select_filter"
 							id="subject_select"
 							>
-							${this.subjectOptions.}
+							${this.subjectOptions.map(option => this.serializeSelect(option))}
 						</select>
 					</div>
 				</div>
 
 				<div id="method_filter">
 					<label id="method_label">Method</label>
-					<div class="filter_controls">
+					<div class="select_filter_controls">
 						<d2l-input-checkbox id="method_enable"></d2l-input-checkbox>
 						<select  
-							class="filter_select"
+							class="select_filter"
 							id="method_select"
 							>
-							<option value="a">HI</option>
+							${this.methodOptions.map(option => this.serializeSelect(option))}
 						</select>
 					</div>
 				</div>
 
-				<div class="d2l-date-picker-container">
-					<d2l-date-picker
-						label="aaahhh"
-						>
-					</d2l-date-picker>
+				<div id="date_filter">
+					<label id="date_label">Date Range</label>
+					<div class="date_filter_controls">
+						<d2l-date-picker></d2l-date-picker> 
+						<label>to</label>
+						<d2l-date-picker></d2l-date-picker>
+					</div>
 				</div>
 
 				<d2l-table
@@ -240,7 +255,10 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 					</d2l-tbody>
 				</d2l-thead>
 				</d2l-table>
-				<select id="page_size_select"></select>
+				<div class="filter_controls">
+					<select class="page_control" id="page_select"></select>
+					<select class="page_control" id="page_size_select"></select>
+				</div>
 			</div>
 					`;
 	}
