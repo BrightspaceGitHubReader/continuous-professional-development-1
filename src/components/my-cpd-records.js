@@ -156,7 +156,6 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 			<custom-style>
 				<style include="d2l-table-style"></style>
 			</custom-style>
-			<style is="custom-style" include="d2l-input-styles"></style>
 
 			<div role="main">
 				<d2l-button id="new_record">
