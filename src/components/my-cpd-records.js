@@ -26,6 +26,12 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 			},
 			pageSizeOptions: {
 				type: Array
+			},
+			subjectFilterEnabled: {
+				type: Boolean
+			},
+			methodFilterEnabled: {
+				type: Boolean
 			}
 		};
 	}
@@ -62,10 +68,6 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 				display: inline-block;
 			}
 
-			.page_filter_controls {
-
-			}
-
 			.page_control {
 				width: 7rem;
 			}
@@ -74,6 +76,13 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 				width: 30%;
 			}
 			
+			.select_filter[enabled=false] {
+				pointer-events: none;
+				background: #CCC;
+				color: #333;
+				border: 1px solid #666;
+			}
+
 			.select_filter_controls {
 				display: flex;
 				align-items: baseline;
@@ -113,6 +122,8 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 		this.methodOptions = [];
 		this.pageOptions = [];
 		this.pageSizeOptions = [];
+		this.subjectFilterEnabled = true;
+		this.methodFilterEnabled = true;
 	}
 
 	get cpdRecords() {
@@ -141,14 +152,12 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 		`;
 	}
 
-	toggleSelect(e) {
-		const selectId = e.target.id === 'subject_enable' ? 'subject_select' : 'method_select';
-		const select = this.shadowRoot.querySelector(`#${selectId}`);
-		if (e.target.checked) {
-			select.removeAttribute('disabled');
-		} else {
-			select.setAttribute('disabled', 'disabled');
-		}
+	toggleSubjectFilter() {
+		this.subjectFilterEnabled = !this.subjectFilterEnabled;
+	}
+
+	toggleMethodFilter() {
+		this.methodFilterEnabled = !this.methodFilterEnabled;
 	}
 
 	render() {
@@ -159,22 +168,23 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 			<div role="main">
 				<d2l-button id="new_record">
-					Add a New CPD Record
+					${this.localize('lblNewRecordButton')}
 				</d2l-button>
 
 				<d2l-input-search 
 					id="search_filter"
-					placeholder="Search for CPD records..."
+					placeholder=${this.localize('lblSearchPlaceholder')}
 					>
 				</d2l-input-search>	
 
 				<div id="subject_filter">
 					<label id="subject_label">${this.localize('lblSubject')}</label>
 					<div class="select_filter_controls">
-						<d2l-input-checkbox checked id="subject_enable" @change="${this.toggleSelect}"></d2l-input-checkbox>
+						<d2l-input-checkbox checked id="subject_enable" @change="${this.toggleSubjectFilter}"></d2l-input-checkbox>
 						<select  
 							class="select_filter"
 							id="subject_select"
+							enabled="${this.subjectFilterEnabled}"
 							>
 							${this.subjectOptions.map(option => this.serializeSelect(option))}
 						</select>
@@ -184,10 +194,11 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 				<div id="method_filter">
 					<label id="method_label">${this.localize('lblMethod')}</label>
 					<div class="select_filter_controls">
-						<d2l-input-checkbox checked id="method_enable" @change="${this.toggleSelect}"></d2l-input-checkbox>
+						<d2l-input-checkbox checked id="method_enable" @change="${this.toggleMethodFilter}"></d2l-input-checkbox>
 						<select  
 							class="select_filter"
 							id="method_select"
+							enabled="${this.methodFilterEnabled}"
 							>
 							${this.methodOptions.map(option => this.serializeSelect(option))}
 						</select>
@@ -198,7 +209,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 					<label id="date_label">${this.localize('lblDateRange')}</label>
 					<div class="date_filter_controls">
 						<d2l-date-picker></d2l-date-picker> 
-						<label>to</label>
+						<label>${this.localize('lblTo')}</label>
 						<d2l-date-picker></d2l-date-picker>
 					</div>
 				</div>
