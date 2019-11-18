@@ -14,5 +14,8 @@ export const val = {
 	'lblSearchBarDefault': 'Search For...',
 	'lblSearchFor': 'Search For Awards',
 	'lblSubject': 'Subject',
-	'lblType': 'Type'
+	'lblType': 'Type',
+	'lblNewRecordButton': 'Add a new CPD Record',
+	'lblSearchPlaceholder': 'Search for CPD Records...',
+	'lblTo': 'to'
 };
