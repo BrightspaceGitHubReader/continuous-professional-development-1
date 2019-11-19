@@ -48,8 +48,6 @@ class Cpd extends LocalizeMixin(LitElement) {
 				<d2l-tab-panel text="${this.localize('lblPendingRecords')}">
 					<d2l-pending-records></d2l-pending-records>
 				</d2l-tab-panel>
-				<d2l-tab-panel text="${this.localize('lblProgress')}">
-				</d2l-tab-panel>
 			</d2l-tabs>
 		`;
 	}
