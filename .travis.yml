@@ -17,7 +17,6 @@ after_success:
 - test "$TRAVIS_REPO_SLUG" = "Brightspace/continuous-professional-development" &&
     test "$TRAVIS_BRANCH" = "master" &&
     test "$TRAVIS_PULL_REQUEST" = "false" &&
-    test "x$TRAVIS_TAG" = "x" &&
     npm run build &&
     npm run publish:dev:cdn
 env:
@@ -34,10 +33,3 @@ deploy:
   api_key: "$GITHUB_RELEASE_TOKEN"
   on:
     tags: true
-- provider: npm
-  email: d2ltravisdeploy@d2l.com
-  skip_cleanup: true
-  api_key:
-  on:
-    tags: true
-    repo: Brightspace/continuous-professional-development
