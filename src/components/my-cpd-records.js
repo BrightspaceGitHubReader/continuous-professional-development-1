@@ -6,7 +6,7 @@ import 'd2l-table/d2l-table.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LoadDataMixin } from '../mixins/load-data-mixin.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { selectStyles } from '../styles/select-styles.js';
+import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
@@ -62,10 +62,6 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 				display: flex;
 				justify-content: space-between;
 				align-items: baseline;
-			}
-
-			.date_filter_controls label {
-				display: inline-block;
 			}
 
 			.page_control {
@@ -182,7 +178,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 					<div class="select_filter_controls">
 						<d2l-input-checkbox checked id="subject_enable" @change="${this.toggleSubjectFilter}"></d2l-input-checkbox>
 						<select  
-							class="select_filter"
+							class="d2l-input-select select_filter"
 							id="subject_select"
 							enabled="${this.subjectFilterEnabled}"
 							>
@@ -196,7 +192,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 					<div class="select_filter_controls">
 						<d2l-input-checkbox checked id="method_enable" @change="${this.toggleMethodFilter}"></d2l-input-checkbox>
 						<select  
-							class="select_filter"
+							class="d2l-input-select select_filter"
 							id="method_select"
 							enabled="${this.methodFilterEnabled}"
 							>
@@ -280,10 +276,16 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 				</d2l-thead>
 				</d2l-table>
 				<div class="filter_controls">
-					<select class="page_control" id="page_select">
+					<select 
+						 class="d2l-input-select page_control" 
+						 id="page_select"
+						 >
 						${this.pageOptions.map(option => this.serializeSelect(option))}
 					</select>
-					<select class="page_control" id="page_size_select">
+					<select 
+						 class="d2l-input-select page_control" 
+						 id="page_size_select"
+						 >
 						${this.pageSizeOptions.map(option => this.serializeSelect(option))}
 					</select>
 				</div>
