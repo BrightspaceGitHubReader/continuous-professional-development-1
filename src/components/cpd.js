@@ -39,16 +39,11 @@ class Cpd extends LocalizeMixin(LitElement) {
 		return null;
 	}
 
-	constructor() {
-		super();
-		this.demo = false;
-	}
-
 	render() {
 		return html`
 			<d2l-tabs >
 				<d2l-tab-panel text="${this.localize('lblCPDHeader')}">
-					<d2l-my-cpd-records demo></d2l-my-cpd-records>
+					<d2l-my-cpd-records></d2l-my-cpd-records>
 				</d2l-tab-panel>
 				<d2l-tab-panel text="${this.localize('lblPendingRecords')}">
 					<d2l-pending-records></d2l-pending-records>

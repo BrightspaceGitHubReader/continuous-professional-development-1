@@ -32,9 +32,6 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 			},
 			methodFilterEnabled: {
 				type: Boolean
-			},
-			demo: {
-				type: Boolean
 			}
 		};
 	}
@@ -113,7 +110,6 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 	constructor() {
 		super();
 
-		this.demo = false;
 		this._cpdRecords = {
 			RecordSummaries: []
 		};
