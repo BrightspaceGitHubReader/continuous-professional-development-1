@@ -32,13 +32,15 @@
   },
   "scripts": {
     "build": "polymer build && frau-appconfig-builder",
+    "build:local": "polymer build --preset dev && frau-appconfig-builder --dist ./build/default",
     "lint": "eslint . --ext .js,.html",
     "publish:dev:cdn": "npm run build && frau-publisher",
-    "resolver": "frau-local-appresolver",
+    "resolver": "frau-local-appresolver --dist ./build/default",
     "test": "npm run lint && npm run test:local",
     "test:local": "polymer test --skip-plugin sauce",
     "test:sauce": "polymer test --skip-plugin local",
-    "test:travis": "polymer test --config-file wct.conf-travis.json"
+    "test:travis": "polymer test --config-file wct.conf-travis.json",
+    "watch": "onchange \"src\\**\" -- npm run build:local && npm run resolver"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
@@ -56,6 +58,7 @@
     "frau-ci": "^1",
     "frau-local-appresolver": "^1.0.0",
     "mocha": "^6",
+    "onchange": "^6.1.0",
     "polymer-cli": "^1",
     "puppeteer": "^1",
     "wct-mocha": "^1"
