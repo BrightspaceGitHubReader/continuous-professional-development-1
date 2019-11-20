@@ -52,7 +52,6 @@ class PendingRecords extends LocalizeMixin(LitElement) {
                 <label>to<label>
                 <d2l-date-picker class="inline"></d2l-date-picker>
             </div>
-            
 		</div>
 		`;
 	}

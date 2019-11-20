@@ -4,11 +4,11 @@ import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-table/d2l-table.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { LoadDataMixin } from '../mixins/load-data-mixin.js';
+import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
-class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
+class MyCpdRecords extends LocalizeMixin(LitElement) {
 
 	static get properties() {
 		return {
@@ -32,6 +32,9 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 			},
 			methodFilterEnabled: {
 				type: Boolean
+			},
+			cpdRecordService: {
+				type: Object
 			}
 		};
 	}
@@ -110,16 +113,14 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 	constructor() {
 		super();
 
-		this.cpdRecordsUrl = '';
-		this._cpdRecords = {
-			data: []
-		};
+		this._cpdRecords = {};
 		this.subjectOptions = [];
 		this.methodOptions = [];
 		this.pageOptions = [];
 		this.pageSizeOptions = [];
 		this.subjectFilterEnabled = true;
 		this.methodFilterEnabled = true;
+		this.cpdRecordService = CpdRecordsServiceFactory.getRecordsService();
 	}
 
 	get cpdRecords() {
@@ -135,11 +136,11 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.loadCpdRecords(this.cpdRecordsUrl)
-			.then(r => {
-				this.cpdRecords = r;
+		this.cpdRecordService.getRecordSummary()
+			.then(res => res.json())
+			.then(body => {
+				this.cpdRecords = body;
 			});
-
 	}
 
 	serializeSelect(option) {
@@ -154,6 +155,10 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 	toggleMethodFilter() {
 		this.methodFilterEnabled = !this.methodFilterEnabled;
+	}
+
+	getType(isStructured) {
+		return isStructured ? 'Structured' : 'Unstructured';
 	}
 
 	render() {
@@ -237,7 +242,7 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 
 
 							<d2l-th>
-								${this.localize('lblCreditHours')}
+								${this.localize('lblCreditMinutes')}
 							</d2l-th>
 
 
@@ -248,25 +253,25 @@ class MyCpdRecords extends LocalizeMixin(LoadDataMixin(LitElement)) {
 					</d2l-thead>
 
 					<d2l-tbody>
-						${ this.cpdRecords.data && this.cpdRecords.data.map(record => html`
+						${ this.cpdRecords.RecordSummaries && this.cpdRecords.RecordSummaries.map(record => html`
 								<d2l-tr role="row">
 									<d2l-td>
-										${record.name}
+										${record.RecordName}
 									</d2l-td>
 									<d2l-td>
-										${record.subject}
+										${record.SubjectName}
 									</d2l-td>
 									<d2l-td>
-										${record.type}
+										${this.getType(record.IsStructured)}
 									</d2l-td>
 									<d2l-td>
-										${record.method}
+										${record.MethodName}
 									</d2l-td>
 									<d2l-td>
-										${record.credit_hours}
+										${record.CreditMinutes}
 									</d2l-td>
 									<d2l-td>
-										${record.date_added}
+										${record.DateAdded}
 									</d2l-td>
 								</d2l-tr>
 							`

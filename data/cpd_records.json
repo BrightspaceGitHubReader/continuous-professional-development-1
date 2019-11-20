@@ -1,28 +1,28 @@
 {
-	"data": [
+	"RecordSummaries": [
 		{
-			"name": "Capstone Project",
-			"subject": "Math",
-			"type": "Structured",
-			"method": "TBD",
-			"credit_hours": "4h 30m",
-			"date_added": "01/01/2019"
+			"RecordName": "Capstone Project",
+			"SubjectName": "Math",
+			"IsStructured": true,
+			"MethodName": "TBD",
+			"CreditMinutes": "4h 30m",
+			"DateAdded": "01/01/2019"
 		},
 		{
-			"name": "Group Assignment",
-			"subject": "Management",
-			"type": "Unstructured",
-			"method": "TBD",
-			"credit_hours": "2h",
-			"date_added": "01/01/2019"
+			"RecordName": "Group Assignment",
+			"SubjectName": "Management",
+			"IsStructured": false,
+			"MethodName": "TBD",
+			"CreditMinutes": "2h",
+			"DateAdded": "01/01/2019"
 		},
 		{
-			"name": "English 101",
-			"subject": "English",
-			"type": "Structured",
-			"method": "TBD",
-			"credit_hours": "4h",
-			"date_added": "10/12/2019"
+			"RecordName": "English 101",
+			"SubjectName": "English",
+			"IsStructured": true,
+			"MethodName": "TBD",
+			"CreditMinutes": "4h",
+			"DateAdded": "10/12/2019"
 		}
 	]
 
