@@ -16,7 +16,8 @@
       "loader": "iframe"
     },
     "frauLocalAppResolver": {
-      "appClass": "urn:d2l:fra:class:continuous-professional-development"
+      "appClass": "urn:d2l:fra:class:continuous-professional-development",
+      "dist": "./build/dev"
     },
     "frauPublisher": {
       "files": "./build/prod/**",
@@ -32,15 +33,16 @@
   },
   "scripts": {
     "build": "polymer build && frau-appconfig-builder",
-    "build:local": "polymer build --preset dev && frau-appconfig-builder --dist ./build/default",
+    "build:local": "polymer build --name dev && frau-appconfig-builder --dist ./build/dev",
     "lint": "eslint . --ext .js,.html",
     "publish:dev:cdn": "npm run build && frau-publisher",
-    "resolver": "frau-local-appresolver --dist ./build/default",
+    "resolver": "frau-local-appresolver",
     "test": "npm run lint && npm run test:local",
     "test:local": "polymer test --skip-plugin sauce",
     "test:sauce": "polymer test --skip-plugin local",
     "test:travis": "polymer test --config-file wct.conf-travis.json",
-    "watch": "onchange \"src\\**\" -- npm run build:local && npm run resolver"
+    "watch:js": "onchange \"src\\**\" -- npm run build:local",
+    "watch": "npm-run-all build:local resolver watch:js"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
@@ -58,6 +60,7 @@
     "frau-ci": "^1",
     "frau-local-appresolver": "^1.0.0",
     "mocha": "^6",
+    "npm-run-all": "^4.1.5",
     "onchange": "^6.1.0",
     "polymer-cli": "^1",
     "puppeteer": "^1",
