@@ -7,12 +7,6 @@ export class TestDataService {
 			method: 'GET',
 			mode: 'cors'
 		};
-		return fetch('../data/cpd_records.json', getOptions)
-			.then(r => {
-				return r.json();
-			})
-			.catch(() => {
-				return {};
-			});
+		return fetch('../data/cpd_records.json', getOptions);
 	}
 }

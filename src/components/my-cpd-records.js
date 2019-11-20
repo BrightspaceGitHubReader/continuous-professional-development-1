@@ -110,9 +110,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 	constructor() {
 		super();
 
-		this._cpdRecords = {
-			RecordSummaries: []
-		};
+		this._cpdRecords = {};
 		this.subjectOptions = [];
 		this.methodOptions = [];
 		this.pageOptions = [];
@@ -135,8 +133,9 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 		super.connectedCallback();
 
 		CpdRecordsServiceFactory.getRecordsService().getRecordSummary()
-			.then(r => {
-				this.cpdRecords = r;
+			.then(res => res.json())
+			.then(body => {
+				this.cpdRecords = body;
 			});
 	}
 
@@ -239,7 +238,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 
 
 							<d2l-th>
-								${this.localize('lblCreditHours')}
+								${this.localize('lblCreditMinutes')}
 							</d2l-th>
 
 
@@ -259,7 +258,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 										${record.SubjectName}
 									</d2l-td>
 									<d2l-td>
-										${record.IsStructured}
+										${this.getType(record.IsStructured)}
 									</d2l-td>
 									<d2l-td>
 										${record.MethodName}

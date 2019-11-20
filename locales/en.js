@@ -2,7 +2,7 @@ export const val = {
 	'ariaCpdTable': 'A table with your continuous professional development history',
 	'lblAddNewCPD': 'Add a New CPD Record',
 	'lblCPDHeader': 'My CPD Records',
-	'lblCreditHours': 'Credit Hours',
+	'lblCreditMinutes': 'Credit Minutes',
 	'lblDateAdded': 'Date Added',
 	'lblDateRange': 'Date Range',
 	'lblHideSearchOptions': 'hideSearchOptions',
