@@ -32,6 +32,9 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 			},
 			methodFilterEnabled: {
 				type: Boolean
+			},
+			cpdRecordService: {
+				type: Object
 			}
 		};
 	}
@@ -117,6 +120,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 		this.pageSizeOptions = [];
 		this.subjectFilterEnabled = true;
 		this.methodFilterEnabled = true;
+		this.cpdRecordService = CpdRecordsServiceFactory.getRecordsService();
 	}
 
 	get cpdRecords() {
@@ -132,7 +136,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 	connectedCallback() {
 		super.connectedCallback();
 
-		CpdRecordsServiceFactory.getRecordsService().getRecordSummary()
+		this.cpdRecordService.getRecordSummary()
 			.then(res => res.json())
 			.then(body => {
 				this.cpdRecords = body;
