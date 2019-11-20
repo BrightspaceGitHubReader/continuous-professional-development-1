@@ -4,7 +4,7 @@ import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-table/d2l-table.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { CpdRecordsService } from '../services/cpd-records-svc';
+import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
@@ -134,7 +134,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 	connectedCallback() {
 		super.connectedCallback();
 
-		CpdRecordsService.getRecordSummary()
+		CpdRecordsServiceFactory.getRecordsService().getRecordSummary()
 			.then(r => {
 				this.cpdRecords = r;
 			});
