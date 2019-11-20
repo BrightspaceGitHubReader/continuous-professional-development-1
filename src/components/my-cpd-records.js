@@ -252,7 +252,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 						${ this.cpdRecords.RecordSummaries && this.cpdRecords.RecordSummaries.map(record => html`
 								<d2l-tr role="row">
 									<d2l-td>
-										${record.RecordName	}
+										${record.RecordName}
 									</d2l-td>
 									<d2l-td>
 										${record.SubjectName}
