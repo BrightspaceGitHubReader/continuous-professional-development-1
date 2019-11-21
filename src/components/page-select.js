@@ -12,10 +12,10 @@ class PageSelect extends LocalizeMixin(LitElement) {
 			pageSizeOptions: {
 				type: Array
 			},
-			currentPage: {
+			page: {
 				type: Number
 			},
-			currentPageSize: {
+			pageSize: {
 				type: Number
 			}
 		};
@@ -50,15 +50,15 @@ class PageSelect extends LocalizeMixin(LitElement) {
 
 		this.pages = 0;
 		this.pageSizeOptions = [];
-		this.currentPage = 1;
-		this.currentPageSize = 25;
+		this.page = 1;
+		this.pageSize = 25;
 	}
 
 	firePageSelectUpdated() {
 		const event = new CustomEvent('d2l-page-select-updated', {
 			detail: {
-				page: this.currentPage,
-				pageSize: this.currentPageSize
+				page: this.page,
+				pageSize: this.pageSize
 			}
 		});
 		this.dispatchEvent(event);
@@ -73,12 +73,12 @@ class PageSelect extends LocalizeMixin(LitElement) {
 	}
 
 	setPage(e) {
-		this.currentPage = e.target.value;
+		this.page = e.target.value;
 		this.firePageSelectUpdated();
 	}
 
 	setPageSize(e) {
-		this.currentPageSize = e.target.value;
+		this.pageSize = e.target.value;
 		this.firePageSelectUpdated();
 	}
 

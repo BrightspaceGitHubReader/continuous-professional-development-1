@@ -1,5 +1,5 @@
 export class TestDataService {
-	static getRecordSummary(page, pageSize) { //eslint-disable-line
+	static getRecordSummary() { //eslint-disable-line
 		const getOptions = {
 			headers: new Headers({
 				'Access-Control-Allow-Origin': '*'
