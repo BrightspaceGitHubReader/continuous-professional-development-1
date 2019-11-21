@@ -1,5 +1,8 @@
 export const val = {
 	'ariaCpdTable': 'A table with your continuous professional development history',
+	'btnAdd': 'Add',
+	'btnAddAFile': 'Add a File',
+	'btnCancel': 'Cancel',
 	'lblAddNewCPD': 'Add a New CPD Record',
 	'lblCPDHeader': 'My CPD Records',
 	'lblCreditMinutes': 'Credit Minutes',
@@ -15,7 +18,6 @@ export const val = {
 	'lblSearchFor': 'Search For Awards',
 	'lblSubject': 'Subject',
 	'lblType': 'Type',
-	'lblNewRecordButton': 'Add a new CPD Record',
 	'lblSearchPlaceholder': 'Search for CPD Records...',
 	'lblTo': 'to'
 };

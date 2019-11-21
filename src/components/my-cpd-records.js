@@ -169,7 +169,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 
 			<div role="main">
 				<d2l-button id="new_record">
-					${this.localize('lblNewRecordButton')}
+					${this.localize('lblAddNewCPD')}
 				</d2l-button>
 
 				<d2l-input-search 
