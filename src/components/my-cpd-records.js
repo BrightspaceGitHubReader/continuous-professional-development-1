@@ -3,6 +3,7 @@ import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-table/d2l-table.js';
+import './page-select.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
@@ -19,12 +20,6 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 				type: Array
 			},
 			methodOptions: {
-				type: Array
-			},
-			pageOptions: {
-				type: Array
-			},
-			pageSizeOptions: {
 				type: Array
 			},
 			subjectFilterEnabled: {
@@ -114,12 +109,13 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 		super();
 
 		this._cpdRecords = {};
+
 		this.subjectOptions = [];
 		this.methodOptions = [];
-		this.pageOptions = [];
-		this.pageSizeOptions = [];
+
 		this.subjectFilterEnabled = true;
 		this.methodFilterEnabled = true;
+
 		this.cpdRecordService = CpdRecordsServiceFactory.getRecordsService();
 	}
 
@@ -159,6 +155,16 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 
 	getType(isStructured) {
 		return isStructured ? 'Structured' : 'Unstructured';
+	}
+
+	getPage(e) {
+		const page = e.detail.page;
+		const pageSize = e.detail.pageSize;
+		this.cpdRecordService.getRecordSummaryPage(page, pageSize)
+			.then(res => res.json())
+			.then(body => {
+				this.cpdRecords = body;
+			});
 	}
 
 	render() {
@@ -281,18 +287,12 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 				</d2l-thead>
 				</d2l-table>
 				<div class="filter_controls">
-					<select 
-						 class="d2l-input-select page_control" 
-						 id="page_select"
-						 >
-						${this.pageOptions.map(option => this.serializeSelect(option))}
-					</select>
-					<select 
-						 class="d2l-input-select page_control" 
-						 id="page_size_select"
-						 >
-						${this.pageSizeOptions.map(option => this.serializeSelect(option))}
-					</select>
+					<d2l-page-select 
+						pages="${this.cpdRecords.TotalPages}"
+						pageSizeOptions='[20, 25, 30]'
+						@d2l-page-select-updated="${this.getPage}"
+						>
+					</d2l-page-select>
 				</div>
 			</div>
 					`;

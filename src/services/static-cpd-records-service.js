@@ -9,4 +9,8 @@ export class TestDataService {
 		};
 		return fetch('../data/cpd_records.json', getOptions);
 	}
+
+	static getRecordSummaryPage(page, pageSize) { //eslint-disable-line
+		return this.getRecordSummary();
+	}
 }
