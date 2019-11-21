@@ -2,24 +2,7 @@
 
 [![Build Status](https://www.travis-ci.com/Brightspace/continuous-professional-development.svg?token=s5DqGXfBESukCURszFfU&branch=master)](https://www.travis-ci.com/Brightspace/continuous-professional-development)
 
-Continuous Professional Development
-
-## Installation
-
-To install from NPM:
-
-```shell
-npm install @brightspace-ui/cpd
-```
-
-## Usage
-
-```html
-<script type="module">
-    import '@brightspace-ui/cpd/cpd.js';
-</script>
-<d2l-cpd>My element</d2l-cpd>
-```
+Continuous Professional Development FRA Customization
 
 ## Developing, Testing and Contributing
 
@@ -29,34 +12,6 @@ If you don't have it already, install the [Polymer CLI](https://www.polymer-proj
 
 ```shell
 npm install -g polymer-cli
-```
-
-### Running the demos
-
-To start a [local web server](https://www.polymer-project.org/3.0/docs/tools/polymer-cli-commands#serve) that hosts the demo page and tests:
-
-```shell
-polymer serve
-```
-
-### Testing
-
-To lint ([eslint](http://eslint.org/) and [Polymer lint](https://www.polymer-project.org/3.0/docs/tools/polymer-cli-commands#lint)):
-
-```shell
-npm run lint
-```
-
-To run unit tests locally using [Polymer test](https://www.polymer-project.org/3.0/docs/tools/polymer-cli-commands#tests):
-
-```shell
-npm run test:polymer:local
-```
-
-To lint AND run local unit tests:
-
-```shell
-npm test
 ```
 
 [ci-url]: https://travis-ci.org/BrightspaceUI/cpd
@@ -69,6 +24,13 @@ To start a [local web server](https://www.polymer-project.org/3.0/docs/tools/pol
 ```shell
 polymer serve
 ```
+
+To run the FRA in your local LMS instance:
+
+```shell
+npm run watch
+```
+Then override the appconfig.json location using the url output by the script.
 
 ### Testing
 
