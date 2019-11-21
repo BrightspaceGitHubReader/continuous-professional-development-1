@@ -1,5 +1,5 @@
 export class TestDataService {
-	static getRecordSummary() {
+	static getRecordSummary(page, pageSize) { //eslint-disable-line
 		const getOptions = {
 			headers: new Headers({
 				'Access-Control-Allow-Origin': '*'
@@ -8,9 +8,5 @@ export class TestDataService {
 			mode: 'cors'
 		};
 		return fetch('../data/cpd_records.json', getOptions);
-	}
-
-	static getRecordSummaryPage(page, pageSize) { //eslint-disable-line
-		return this.getRecordSummary();
 	}
 }

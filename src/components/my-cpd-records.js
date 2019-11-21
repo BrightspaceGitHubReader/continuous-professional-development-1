@@ -30,6 +30,9 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 			},
 			cpdRecordService: {
 				type: Object
+			},
+			pageSizeOptions: {
+				type: Array
 			}
 		};
 	}
@@ -117,6 +120,8 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 		this.methodFilterEnabled = true;
 
 		this.cpdRecordService = CpdRecordsServiceFactory.getRecordsService();
+
+		this.pageSizeOptions = [20, 25, 30];
 	}
 
 	get cpdRecords() {
@@ -132,7 +137,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.cpdRecordService.getRecordSummary()
+		this.cpdRecordService.getRecordSummary(1, this.pageSizeOptions[0])
 			.then(res => res.json())
 			.then(body => {
 				this.cpdRecords = body;
@@ -160,7 +165,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 	getPage(e) {
 		const page = e.detail.page;
 		const pageSize = e.detail.pageSize;
-		this.cpdRecordService.getRecordSummaryPage(page, pageSize)
+		this.cpdRecordService.getRecordSummary(page, pageSize)
 			.then(res => res.json())
 			.then(body => {
 				this.cpdRecords = body;
@@ -289,7 +294,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 				<div class="filter_controls">
 					<d2l-page-select 
 						pages="${this.cpdRecords.TotalPages}"
-						pageSizeOptions='[20, 25, 30]'
+						pageSizeOptions='[${this.pageSizeOptions.toString()}]'
 						@d2l-page-select-updated="${this.getPage}"
 						>
 					</d2l-page-select>

@@ -10,20 +10,7 @@ d2lfetch.use({
 });
 
 export class CpdRecordsService {
-	static getRecordSummary() {
-		const url = window.data.fraSettings.valenceHost;
-		const base_path = '/d2l/api/customization/cpd/1.0/record';
-		const getRecordSummaryRequest = new Request(url + base_path, {
-			method: 'GET',
-			headers: {
-				'Content-Type' : 'application/json'
-			}
-		});
-
-		return d2lfetch.fetch(getRecordSummaryRequest);
-	}
-
-	static getRecordSummaryPage(page, pageSize) {
+	static getRecordSummary(page, pageSize) {
 		const url = window.data.fraSettings.valenceHost;
 		const base_path = `/d2l/api/customization/cpd/1.0/record?pagenumber=${page}&pagesize=${pageSize}`;
 		const getRecordSummaryRequest = new Request(url + base_path, {
