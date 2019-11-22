@@ -1,4 +1,5 @@
-import { html, LitElement } from 'lit-element/lit-element.js';
+import '@brightspace-ui/core/components/icons/icon.js';
+import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
@@ -9,20 +10,21 @@ class PageSelect extends LocalizeMixin(LitElement) {
 			pages: {
 				type: Number
 			},
-			pageSizeOptions: {
-				type: Array
-			},
 			page: {
-				type: Number
-			},
-			pageSize: {
 				type: Number
 			}
 		};
 	}
 
 	static get styles() {
-		return selectStyles;
+		return [
+			selectStyles,
+			css`
+			.hide {
+				visibility: hidden;
+			}
+			`
+		];
 	}
 
 	static async getLocalizeResources(langs) {
@@ -49,16 +51,13 @@ class PageSelect extends LocalizeMixin(LitElement) {
 		super();
 
 		this.pages = 0;
-		this.pageSizeOptions = [];
 		this.page = 1;
-		this.pageSize = 25;
 	}
 
 	firePageSelectUpdated() {
 		const event = new CustomEvent('d2l-page-select-updated', {
 			detail: {
-				page: this.page,
-				pageSize: this.pageSize
+				page: this.page
 			}
 		});
 		this.dispatchEvent(event);
@@ -77,29 +76,41 @@ class PageSelect extends LocalizeMixin(LitElement) {
 		this.firePageSelectUpdated();
 	}
 
-	setPageSize(e) {
-		this.pageSize = e.target.value;
+	incrementPage() {
+		this.page++;
+		const select = this.shadowRoot.querySelector('#page-select');
+		select.options[++select.selectedIndex].selected = true;
+		this.firePageSelectUpdated();
+	}
+
+	decrementPage() {
+		this.page--;
+		const select = this.shadowRoot.querySelector('#page-select');
+		select.options[--select.selectedIndex].selected = true;
 		this.firePageSelectUpdated();
 	}
 
 	render() {
 		return html`
+			<d2l-icon 
+				class="${this.page > 1 ? null : 'hide'}"
+				icon="tier1:chevron-left" 
+				@click="${this.decrementPage}"
+				>
+			</d2l-icon>
 			<select 
-				 class="d2l-input-select" 
-				 @change="${this.setPage}"
-				 >
+				id="page-select"
+				class="d2l-input-select" 
+				@change="${this.setPage}"
+				>
 				${this.serializePageOptions(this.pages)}
 			</select>
-			<select 
-				 class="d2l-input-select" 
-				 @change="${this.setPageSize}"
-				 >
-				${
-	this.pageSizeOptions.map(sizeOption =>
-		html`<option value=${sizeOption}>${sizeOption} per page</option>`
-	)
-}
-			</select>
+			<d2l-icon 
+				class="${this.page < this.pages ? null : 'hide'}"
+				icon="tier1:chevron-right" 
+				@click="${this.incrementPage}"
+				>
+			</d2l-icon>
 		`;
 	}
 }
