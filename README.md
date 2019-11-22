@@ -14,8 +14,8 @@ If you don't have it already, install the [Polymer CLI](https://www.polymer-proj
 npm install -g polymer-cli
 ```
 
-[ci-url]: https://travis-ci.org/BrightspaceUI/cpd
-[ci-image]: https://travis-ci.org/BrightspaceUI/cpd.svg?branch=master
+[ci-url]: https://travis-ci.com/BrightspaceUI/cpd
+[ci-image]: https://travis-ci.com/BrightspaceUI/cpd.svg?branch=master
 
 ### Running the demos
 
