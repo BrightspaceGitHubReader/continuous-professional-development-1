@@ -30,7 +30,6 @@ To run the FRA in your local LMS instance:
 ```shell
 npm run watch
 ```
-Then override the appconfig.json location using the url output by the script.
 
 ### Testing
 
