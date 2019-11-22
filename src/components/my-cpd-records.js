@@ -3,6 +3,7 @@ import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-table/d2l-table.js';
+import './page-select.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
@@ -21,12 +22,6 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 			methodOptions: {
 				type: Array
 			},
-			pageOptions: {
-				type: Array
-			},
-			pageSizeOptions: {
-				type: Array
-			},
 			subjectFilterEnabled: {
 				type: Boolean
 			},
@@ -35,6 +30,9 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 			},
 			cpdRecordService: {
 				type: Object
+			},
+			pageSizeOptions: {
+				type: Array
 			}
 		};
 	}
@@ -68,7 +66,9 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 			}
 
 			.page_control {
-				width: 7rem;
+				width: 100%;
+				display: flex;
+				justify-content: center;
 			}
 
 			.select_filter {
@@ -114,12 +114,13 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 		super();
 
 		this._cpdRecords = {};
+
 		this.subjectOptions = [];
 		this.methodOptions = [];
-		this.pageOptions = [];
-		this.pageSizeOptions = [];
+
 		this.subjectFilterEnabled = true;
 		this.methodFilterEnabled = true;
+
 		this.cpdRecordService = CpdRecordsServiceFactory.getRecordsService();
 	}
 
@@ -136,7 +137,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.cpdRecordService.getRecordSummary()
+		this.cpdRecordService.getRecordSummary(1)
 			.then(res => res.json())
 			.then(body => {
 				this.cpdRecords = body;
@@ -159,6 +160,15 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 
 	getType(isStructured) {
 		return isStructured ? 'Structured' : 'Unstructured';
+	}
+
+	getPage(e) {
+		const page = e.detail.page;
+		this.cpdRecordService.getRecordSummary(page)
+			.then(res => res.json())
+			.then(body => {
+				this.cpdRecords = body;
+			});
 	}
 
 	render() {
@@ -280,19 +290,12 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 					</d2l-tbody>
 				</d2l-thead>
 				</d2l-table>
-				<div class="filter_controls">
-					<select 
-						 class="d2l-input-select page_control" 
-						 id="page_select"
-						 >
-						${this.pageOptions.map(option => this.serializeSelect(option))}
-					</select>
-					<select 
-						 class="d2l-input-select page_control" 
-						 id="page_size_select"
-						 >
-						${this.pageSizeOptions.map(option => this.serializeSelect(option))}
-					</select>
+				<div class="filter_controls page_control">
+					<d2l-page-select 
+						pages="${this.cpdRecords.TotalPages}"
+						@d2l-page-select-updated="${this.getPage}"
+						>
+					</d2l-page-select>
 				</div>
 			</div>
 					`;
