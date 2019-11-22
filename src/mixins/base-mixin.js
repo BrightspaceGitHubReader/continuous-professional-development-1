@@ -15,7 +15,7 @@ export const BaseMixin = superclass => class extends LocalizeMixin(superclass) {
 
 			lang = lang.replace(/-(?!tw)\w+/, '');
 
-			const langTermRelativeUrl = `../../lang/${lang}.json`;
+			const langTermRelativeUrl = `../../locales/${lang}.json`;
 			const langTermUrl = `${new URL(langTermRelativeUrl, baseUrl)}`;
 
 			if (langTerms[langTermUrl]) {
