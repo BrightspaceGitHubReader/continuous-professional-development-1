@@ -6,6 +6,7 @@
   "fragments": [],
   "sources": [
     "locales/**",
+    "lang/**",
     "src/**",
     "package.json",
     "index.html"
