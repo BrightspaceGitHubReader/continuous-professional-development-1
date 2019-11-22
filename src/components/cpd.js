@@ -43,11 +43,6 @@ class Cpd extends LocalizeMixin(LitElement) {
 		return null;
 	}
 
-	constructor() {
-		super();
-		this.page = 'add-cpd-record';
-	}
-
 	render() {
 		if (this.page === 'add-cpd-record') {
 			return html`
