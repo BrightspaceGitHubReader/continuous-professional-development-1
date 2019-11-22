@@ -10,9 +10,9 @@ d2lfetch.use({
 });
 
 export class CpdRecordsService {
-	static getRecordSummary() {
+	static getRecordSummary(page) {
 		const url = window.data.fraSettings.valenceHost;
-		const base_path = '/d2l/api/customization/cpd/1.0/record';
+		const base_path = `/d2l/api/customization/cpd/1.0/record?pagenumber=${page}`;
 		const getRecordSummaryRequest = new Request(url + base_path, {
 			method: 'GET',
 			headers: {
