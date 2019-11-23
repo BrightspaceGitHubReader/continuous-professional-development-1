@@ -42,7 +42,7 @@
     "test:sauce": "polymer test --skip-plugin local",
     "test:travis": "polymer test --config-file wct.conf-travis.json",
     "watch:js": "onchange \"src\\**\" -- npm run build:local",
-    "watch": "npm-run-all build:local resolver watch:js"
+    "watch": "npm-run-all build:local --parallel resolver watch:js"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
