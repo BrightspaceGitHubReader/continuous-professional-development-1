@@ -1,6 +1,7 @@
 import '@brightspace-ui/core/components/button/button.js';
 import 'd2l-tabs/d2l-tabs.js';
 import './my-cpd-records';
+import './add-cpd-record';
 import './pending-records';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
@@ -10,6 +11,9 @@ class Cpd extends LocalizeMixin(LitElement) {
 	static get properties() {
 		return {
 			cpdRecordsUrl: {
+				type: String
+			},
+			page: {
 				type: String
 			}
 		};
@@ -40,6 +44,11 @@ class Cpd extends LocalizeMixin(LitElement) {
 	}
 
 	render() {
+		if (this.page === 'add-cpd-record') {
+			return html`
+				<d2l-add-cpd-record><d2l-add-cpd-record>
+			`;
+		}
 		return html`
 			<d2l-tabs >
 				<d2l-tab-panel text="${this.localize('lblCPDHeader')}">

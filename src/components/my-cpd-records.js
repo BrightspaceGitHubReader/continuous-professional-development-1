@@ -61,7 +61,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 			.date_filter_controls {
 				width: 40%;
 				display: flex;
-				justify-content: space-between;
+				justify-content: space-between;	
 				align-items: baseline;
 			}
 
@@ -74,7 +74,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 			.select_filter {
 				width: 30%;
 			}
-			
+
 			.select_filter[enabled=false] {
 				pointer-events: none;
 				background: #CCC;
@@ -182,17 +182,17 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 					${this.localize('lblAddNewCPD')}
 				</d2l-button>
 
-				<d2l-input-search 
+				<d2l-input-search
 					id="search_filter"
 					placeholder=${this.localize('lblSearchPlaceholder')}
 					>
-				</d2l-input-search>	
+				</d2l-input-search>
 
 				<div id="subject_filter">
 					<label id="subject_label">${this.localize('lblSubject')}</label>
 					<div class="select_filter_controls">
 						<d2l-input-checkbox checked id="subject_enable" @change="${this.toggleSubjectFilter}"></d2l-input-checkbox>
-						<select  
+						<select
 							class="d2l-input-select select_filter"
 							id="subject_select"
 							enabled="${this.subjectFilterEnabled}"
@@ -206,7 +206,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 					<label id="method_label">${this.localize('lblMethod')}</label>
 					<div class="select_filter_controls">
 						<d2l-input-checkbox checked id="method_enable" @change="${this.toggleMethodFilter}"></d2l-input-checkbox>
-						<select  
+						<select
 							class="d2l-input-select select_filter"
 							id="method_select"
 							enabled="${this.methodFilterEnabled}"
@@ -219,7 +219,7 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 				<div id="date_filter">
 					<label id="date_label">${this.localize('lblDateRange')}</label>
 					<div class="date_filter_controls">
-						<d2l-date-picker></d2l-date-picker> 
+						<d2l-date-picker></d2l-date-picker>
 						<label>${this.localize('lblTo')}</label>
 						<d2l-date-picker></d2l-date-picker>
 					</div>
