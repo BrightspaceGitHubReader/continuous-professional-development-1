@@ -62,41 +62,41 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				<ul>
 					<li>
 						<label for="recordName" class=d2l-label-text>${this.localize('name')}</label>
-						<d2l-input-text name="recordName"></d2l-input-text>
+						<d2l-input-text id="recordName"></d2l-input-text>
 					</li>
 					<li>
 						<ul class="innerlist">
 							<li>
 								<div>
-									<label for="select-type">${this.localize('lblType')}</label>
+									<label for="typeSelect">${this.localize('lblType')}</label>
 								</div>
 								<select
 									class="d2l-input-select select_filter"
-									name="select-type"
+									id="typeSelect"
 									>
-									${this.types.map(option => this.renderSelect(option))}
+									${this.types.map((option, index) => this.renderSelect(option, index))}
 								</select>
 							</li>
 							<li>
 								<div>
-									<label for="select-subject">${this.localize('lblSubject')}</label>
+									<label for="subjectSelect">${this.localize('lblSubject')}</label>
 								</div>
 								<select
 									class="d2l-input-select select_filter"
-									name="select-subject"
+									id="subjectSelect"
 									>
-									${this.subjects.map(option => this.renderSelect(option))}
+									${this.subjects.map((option, index) => this.renderSelect(option, index))}
 								</select>
 							</li>
 							<li>
 								<div>
-									<label for="select-method">${this.localize('lblMethod')}</label>
+									<label for="methodSelect">${this.localize('lblMethod')}</label>
 								</div>
 								<select
 									class="d2l-input-select select_filter"
-									name="select-method"
+									id="methodSelect"
 									>
-									${this.methods.map(option => this.renderSelect(option))}
+									${this.methods.map((option, index) => this.renderSelect(option, index))}
 								</select>
 							</li>
 						</ul>
@@ -105,12 +105,12 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						<div>
 							<div>
 								<label for="creditHours" class=d2l-label-text>${this.localize('credits')}</label>
-								<d2l-input-text class="numberInput" name="creditHours" placeholder=${this.localize('enterCreditHours')}></d2l-input-text>
-								<d2l-input-text class="numberInput" name="creditMinutes" placeholder=${this.localize('enterCreditMinutes')}></d2l-input-text>
+								<d2l-input-text id="creditHours" placeholder=${this.localize('enterCreditHours')}></d2l-input-text>
+								<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')}></d2l-input-text>
 							</div>
 							<div>
 								<label for="gradeValue" class=d2l-label-text>${this.localize('grade')}</label>
-								<div name="gradeValue">94.0</div>
+								<div id="gradeValue">94.0</div>
 							</div>
 						</div>
 					</li>
@@ -118,7 +118,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						<label>${this.localize('addEvidence')}</label>
 						<d2l-attachments></d2l-attachments>
 					<li>
-					${this.questions.map(q => this.renderQuestion(q))}
+					${this.questions.map((q, index) => this.renderQuestion(q, index))}
 				</ul>
 				<div>
 					<d2l-button>${this.localize('save')}</d2l-button>
@@ -128,11 +128,11 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		`;
 	}
 
-	renderQuestion(question) {
+	renderQuestion(question, index) {
 		return html`
 			<li>
-				<label for="answerText">${question}</label>
-				<d2l-input-text name="answerText">
+				<label for=${`$answerText_${index}`}>${question}</label>
+				<d2l-input-text id=${`$answerText_${index}`}>
 			</li>
 		`;
 	}
