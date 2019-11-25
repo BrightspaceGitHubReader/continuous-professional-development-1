@@ -1,25 +1,26 @@
+const getOptions = {
+	headers: new Headers({
+		'Access-Control-Allow-Origin': '*'
+	}),
+	method: 'GET',
+	mode: 'cors'
+};
+
 export class TestDataService {
 
 	static getMethods() {
-		return ['Course', 'Book', 'Netflix'];
+		return fetch('../data/methods.json', getOptions);
 	}
 	static getQuestions() {
 		return ['Why is Ben moving?'];
 	}
 
 	static getRecordSummary() {
-		const getOptions = {
-			headers: new Headers({
-				'Access-Control-Allow-Origin': '*'
-			}),
-			method: 'GET',
-			mode: 'cors'
-		};
 		return fetch('../data/cpd_records.json', getOptions);
 	}
 
 	static getSubjects() {
-		return ['Math', 'Art', 'Mortgages'];
+		return fetch('../data/subjects.json', getOptions);
 	}
 
 	static getTypes() {
