@@ -166,13 +166,11 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 			this.cpdRecordService.getSubjects()
 				.then(res => res.json())
 				.then(body => {
-					console.log(body);
 					this.subjectOptions = body;
 				}),
 			this.cpdRecordService.getMethods()
 				.then(res => res.json())
 				.then(body => {
-					console.log(body);
 					this.methodOptions = body;
 				})
 		]);
