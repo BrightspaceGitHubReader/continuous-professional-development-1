@@ -13,7 +13,7 @@ export class CpdRecordsService {
 	static getMethods() {
 		const url = window.data.fraSettings.valenceHost;
 		const base_path = '/d2l/api/customization/cpd/1.0/method';
-		const getMethodsRequest = new Request(url + base_path, {
+		const getMethodsRequest = new Request(`${url}${base_path}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type' : 'application/json'
@@ -26,7 +26,7 @@ export class CpdRecordsService {
 	static getRecordSummary(page) {
 		const url = window.data.fraSettings.valenceHost;
 		const base_path = `/d2l/api/customization/cpd/1.0/record?pagenumber=${page}`;
-		const getRecordSummaryRequest = new Request(url + base_path, {
+		const getRecordSummaryRequest = new Request(`${url}${base_path}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type' : 'application/json'
@@ -39,7 +39,7 @@ export class CpdRecordsService {
 	static getSubjects() {
 		const url = window.data.fraSettings.valenceHost;
 		const base_path = '/d2l/api/customization/cpd/1.0/subject';
-		const getSubjectsRequest = new Request(url + base_path, {
+		const getSubjectsRequest = new Request(`${url}${base_path}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type' : 'application/json'
@@ -52,7 +52,7 @@ export class CpdRecordsService {
 	static getTypes() {
 		const url = window.data.fraSettings.valenceHost;
 		const base_path = '';
-		const getTypesRequest = new Request(url + base_path, {
+		const getTypesRequest = new Request(`${url}${base_path}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type' : 'application/json'
