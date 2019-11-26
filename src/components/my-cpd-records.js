@@ -159,26 +159,23 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 
 		Promise.all([
 			this.cpdRecordService.getRecordSummary(1)
-				.then(res => res.json())
-				.then(body => {
-					this.cpdRecords = body;
+				.then(data => {
+					this.cpdRecords = data;
 				}),
 			this.cpdRecordService.getSubjects()
-				.then(res => res.json())
-				.then(body => {
-					this.subjectOptions = body;
+				.then(data => {
+					this.subjectOptions = data;
 				}),
 			this.cpdRecordService.getMethods()
-				.then(res => res.json())
-				.then(body => {
-					this.methodOptions = body;
+				.then(data => {
+					this.methodOptions = data;
 				})
 		]);
 	}
 
 	serializeSelect(option) {
 		return html`
-			<option value="${option}">${option}</option>
+			<option value="${option.Id}">${option.Name}</option>
 		`;
 	}
 

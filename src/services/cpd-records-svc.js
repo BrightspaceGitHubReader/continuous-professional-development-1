@@ -20,7 +20,7 @@ export class CpdRecordsService {
 			}
 		});
 
-		return d2lfetch.fetch(getMethodsRequest);
+		return d2lfetch.fetch(getMethodsRequest).then(r => r.json());
 	}
 
 	static getRecordSummary(page) {
@@ -33,7 +33,7 @@ export class CpdRecordsService {
 			}
 		});
 
-		return d2lfetch.fetch(getRecordSummaryRequest);
+		return d2lfetch.fetch(getRecordSummaryRequest).then(r => r.json());
 	}
 
 	static getSubjects() {
@@ -46,7 +46,7 @@ export class CpdRecordsService {
 			}
 		});
 
-		return d2lfetch.fetch(getSubjectsRequest);
+		return d2lfetch.fetch(getSubjectsRequest).then(r => r.json());
 	}
 
 	static getTypes() {
@@ -59,6 +59,6 @@ export class CpdRecordsService {
 			}
 		});
 
-		return d2lfetch.fetch(getTypesRequest);
+		return d2lfetch.fetch(getTypesRequest).then(r => r.json());
 	}
 }

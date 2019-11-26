@@ -9,18 +9,19 @@ const getOptions = {
 export class TestDataService {
 
 	static getMethods() {
-		return fetch('../data/methods.json', getOptions);
+		return fetch('../data/methods.json', getOptions).then(r => r.json());
 	}
+
 	static getQuestions() {
 		return ['Why is Ben moving?'];
 	}
 
 	static getRecordSummary() {
-		return fetch('../data/cpd_records.json', getOptions);
+		return fetch('../data/cpd_records.json', getOptions).then(r => r.json());
 	}
 
 	static getSubjects() {
-		return fetch('../data/subjects.json', getOptions);
+		return fetch('../data/subjects.json', getOptions).then(r => r.json());
 	}
 
 	static getTypes() {
