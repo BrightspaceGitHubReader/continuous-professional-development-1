@@ -9,7 +9,12 @@ const getOptions = {
 export class TestDataService {
 
 	static getMethods() {
-		return fetch('../data/methods.json', getOptions).then(r => r.json());
+		const data = [
+			{'Id': 1, 'Name': 'Course'},
+			{'Id': 2, 'Name': 'Book'},
+			{'Id': 3, 'Name': 'Netflix'}
+		];
+		return Promise.resolve(data);
 	}
 
 	static getQuestions() {
@@ -21,7 +26,12 @@ export class TestDataService {
 	}
 
 	static getSubjects() {
-		return fetch('../data/subjects.json', getOptions).then(r => r.json());
+		const data = [
+			{'Id': 1, 'Name': 'Math'},
+			{'Id': 2, 'Name': 'Art'},
+			{'Id': 3, 'Name': 'Mortgages'}
+		];
+		return Promise.resolve(data);
 	}
 
 	static getTypes() {

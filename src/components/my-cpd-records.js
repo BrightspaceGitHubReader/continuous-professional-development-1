@@ -157,20 +157,18 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 	connectedCallback() {
 		super.connectedCallback();
 
-		Promise.all([
-			this.cpdRecordService.getRecordSummary(1)
-				.then(data => {
-					this.cpdRecords = data;
-				}),
-			this.cpdRecordService.getSubjects()
-				.then(data => {
-					this.subjectOptions = data;
-				}),
-			this.cpdRecordService.getMethods()
-				.then(data => {
-					this.methodOptions = data;
-				})
-		]);
+		this.cpdRecordService.getRecordSummary(1)
+			.then(data => {
+				this.cpdRecords = data;
+			}),
+		this.cpdRecordService.getSubjects()
+			.then(data => {
+				this.subjectOptions = data;
+			}),
+		this.cpdRecordService.getMethods()
+			.then(data => {
+				this.methodOptions = data;
+			});
 	}
 
 	serializeSelect(option) {

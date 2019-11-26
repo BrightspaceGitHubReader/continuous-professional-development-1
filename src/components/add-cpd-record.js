@@ -59,20 +59,14 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	connectedCallback() {
 		super.connectedCallback();
 
-		Promise.all([
-			this.cpdRecordService.getSubjects()
-				.then(res => res.json())
-				.then(body => {
-					console.log(body);
-					this.subjects = body;
-				}),
-			this.cpdRecordService.getMethods()
-				.then(res => res.json())
-				.then(body => {
-					console.log(body);
-					this.methods = body;
-				})
-		]);
+		this.cpdRecordService.getSubjects()
+			.then(body => {
+				this.subjects = body;
+			}),
+		this.cpdRecordService.getMethods()
+			.then(body => {
+				this.methods = body;
+			});
 	}
 
 	render() {
