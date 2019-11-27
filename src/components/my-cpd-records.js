@@ -115,8 +115,8 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 
 		this._cpdRecords = {};
 
-		this.subjectOptions = [];
-		this.methodOptions = [];
+		this._subjectOptions = [];
+		this._methodOptions = [];
 
 		this.subjectFilterEnabled = true;
 		this.methodFilterEnabled = true;
@@ -134,19 +134,46 @@ class MyCpdRecords extends LocalizeMixin(LitElement) {
 		this.requestUpdate('cpdRecords', oldVal);
 	}
 
+	get methodOptions() {
+		return this._methodOptions;
+	}
+
+	set methodOptions(val) {
+		const oldVal = this._methodOptions;
+		this._methodOptions = val;
+		this.requestUpdate('methodOptions', oldVal);
+	}
+
+	get subjectOptions() {
+		return this._subjectOptions;
+	}
+
+	set subjectOptions(val) {
+		const oldVal = this._subjectOptions;
+		this._subjectOptions = val;
+		this.requestUpdate('subjectOptions', oldVal);
+	}
+
 	connectedCallback() {
 		super.connectedCallback();
 
 		this.cpdRecordService.getRecordSummary(1)
-			.then(res => res.json())
-			.then(body => {
-				this.cpdRecords = body;
+			.then(data => {
+				this.cpdRecords = data;
+			}),
+		this.cpdRecordService.getSubjects()
+			.then(data => {
+				this.subjectOptions = data;
+			}),
+		this.cpdRecordService.getMethods()
+			.then(data => {
+				this.methodOptions = data;
 			});
 	}
 
 	serializeSelect(option) {
 		return html`
-			<option value="${option}">${option}</option>
+			<option value="${option.Id}">${option.Name}</option>
 		`;
 	}
 

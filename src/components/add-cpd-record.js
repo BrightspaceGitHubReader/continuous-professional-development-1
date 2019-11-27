@@ -51,9 +51,22 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		super();
 		this.cpdRecordService = CpdRecordsServiceFactory.getRecordsService();
 		this.questions =  this.cpdRecordService.getQuestions();
-		this.subjects = this.cpdRecordService.getSubjects();
-		this.methods = this.cpdRecordService.getMethods();
+		this.subjects = [];
+		this.methods = [];
 		this.types = this.cpdRecordService.getTypes();
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+
+		this.cpdRecordService.getSubjects()
+			.then(body => {
+				this.subjects = body;
+			}),
+		this.cpdRecordService.getMethods()
+			.then(body => {
+				this.methods = body;
+			});
 	}
 
 	render() {
