@@ -16,9 +16,14 @@ export class CpdRecordsService {
 		return this.getRequest(url, base_path);
 	}
 
-	static getRecordSummary(page) {
+	static getRecordSummary(page, filters) {
 		const url = window.data.fraSettings.valenceHost;
-		const base_path = `/d2l/api/customization/cpd/1.0/record?pagenumber=${page}`;
+		let base_path = `/d2l/api/customization/cpd/1.0/record?pagenumber=${page}`;
+		if (filters) {
+			if (filters.Subject) base_path += `&subject=${filters.Subject}`;
+			if (filters.Method) base_path += `&method=${filters.Method}`;
+			if (filters.Name) base_path += `&name=${filters.Name}`;
+		}
 		return this.getRequest(url, base_path);
 	}
 

@@ -1,9 +1,8 @@
 import '@brightspace-ui/core/components/icons/icon.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
-class PageSelect extends LocalizeMixin(LitElement) {
+class PageSelect extends LitElement {
 
 	static get properties() {
 		return {
