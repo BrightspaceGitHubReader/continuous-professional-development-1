@@ -4,7 +4,7 @@ import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-table/d2l-table.js';
 import './page-select.js';
-import './select-filter.js';
+import './filter-select.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
@@ -94,6 +94,8 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 		this.cpdRecordService = CpdRecordsServiceFactory.getRecordsService();
 
+		this.page = 1;
+
 		this.filters = {
 			Subject: 0,
 			Method: 0,
@@ -166,16 +168,19 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 	updateSubjectFilter(e) {
 		this.filters.Subject = e.detail.value;
+		this.page = 1;
 		this.fetchRecords();
 	}
 
 	updateMethodFilter(e) {
 		this.filters.Method = e.detail.value;
+		this.page = 1;
 		this.fetchRecords();
 	}
 
 	updateNameFilter(e) {
 		this.filters.Name = e.detail.value;
+		this.page = 1;
 		this.fetchRecords();
 	}
 
@@ -283,12 +288,11 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	)
 }
 					</d2l-tbody>
-				</d2l-thead>
 				</d2l-table>
 				<div class="page_control">
 					<d2l-page-select 
 						pages="${this.cpdRecords.TotalPages}"
-						@d2l-page-select-updated="${this.getPage}"
+						@d2l-page-select-updated="${this.updatePage}"
 						>
 					</d2l-page-select>
 				</div>

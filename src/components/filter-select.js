@@ -1,7 +1,7 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
-class SelectFilter extends LitElement {
+class FilterSelect extends LitElement {
 
 	static get properties() {
 		return {
@@ -54,10 +54,10 @@ class SelectFilter extends LitElement {
 		this.enabled = true;
 	}
 
-	fireSelectFilterUpdate() {
-		const event = new CustomEvent('d2l-select-filter-update', {
+	fireFilterSelectUpdated() {
+		const event = new CustomEvent('d2l-filter-select-updated', {
 			detail: {
-				value: this.selected
+				value: parseInt(this.selected)
 			}
 		});
 		this.dispatchEvent(event);
@@ -73,6 +73,12 @@ class SelectFilter extends LitElement {
 		this.enabled = !this.enabled;
 	}
 
+	filterChange(e) {
+		this.selected = e.target.value;
+		this.selectedText = e.target.text;
+		this.fireFilterSelectUpdated();
+	}
+
 	render() {
 		return html`
 			<div id="filter">
@@ -86,7 +92,9 @@ class SelectFilter extends LitElement {
 					<select
 						class="d2l-input-select select_filter"
 						enabled="${this.enabled}"
+						@change="${this.filterChange}"
 						>
+						<option value="0">Select a ${this.label}...</option>
 						${this.options.map(option => this.serializeSelect(option))}
 					</select>
 				</div>
@@ -94,4 +102,4 @@ class SelectFilter extends LitElement {
 		`;
 	}
 }
-customElements.define('d2l-select-filter', SelectFilter);
+customElements.define('d2l-filter-select', FilterSelect);
