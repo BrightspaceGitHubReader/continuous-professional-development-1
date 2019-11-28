@@ -27,5 +27,6 @@
 	"grade": "Grade",
 	"enterCreditHours": "Enter Credit Hours",
 	"enterCreditMinutes": "Enter Credit Minutes",
-	"save": "Save"
+	"save": "Save",
+	"selectDefault": "Choose a "
 }

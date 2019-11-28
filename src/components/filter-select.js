@@ -1,7 +1,8 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { BaseMixin } from '../mixins/base-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
-class FilterSelect extends LitElement {
+class FilterSelect extends BaseMixin(LitElement) {
 
 	static get properties() {
 		return {
@@ -10,9 +11,6 @@ class FilterSelect extends LitElement {
 			},
 			selected: {
 				type: Number
-			},
-			selectedText: {
-				type: String
 			},
 			enabled: {
 				type: Boolean
@@ -50,7 +48,6 @@ class FilterSelect extends LitElement {
 
 		this.options = [];
 		this.selected = 0;
-		this.selectedText = '';
 		this.enabled = true;
 	}
 
@@ -64,7 +61,7 @@ class FilterSelect extends LitElement {
 		this.dispatchEvent(event);
 	}
 
-	serializeSelect(option) {
+	renderSelect(option) {
 		return html`
 		<option 
 			value="${option.Id}"
@@ -88,24 +85,24 @@ class FilterSelect extends LitElement {
 
 	render() {
 		return html`
-			<div id="filter">
-				<label id="label">${this.label}</label>
-				<div class="select_filter_controls">
+		<div id="filter">
+			<label id="label">${this.label}</label>
+			<div class="select_filter_controls">
 				<d2l-input-checkbox 
-					 checked 
-					 @change="${this.filterEnable}"
-					 >
+					checked 
+					@change="${this.filterEnable}"
+				>
 				</d2l-input-checkbox>
-					<select
-						class="d2l-input-select select_filter"
-						enabled="${this.enabled}"
-						@change="${this.filterChange}"
-						>
-						<option value="0">Select a ${this.label}...</option>
-						${this.options.map(option => this.serializeSelect(option))}
-					</select>
-				</div>
+				<select
+					class="d2l-input-select select_filter"
+					enabled="${this.enabled}"
+					@change="${this.filterChange}"
+				>
+					<option value="0">${this.localize('selectDefault')} ${this.label}</option>
+					${this.options.map(option => this.renderSelect(option))}
+				</select>
 			</div>
+		</div>
 		`;
 	}
 }
