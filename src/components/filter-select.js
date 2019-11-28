@@ -28,13 +28,6 @@ class FilterSelect extends BaseMixin(LitElement) {
 				width: 30%;
 			}
 
-			.select_filter[enabled=false] {
-				pointer-events: none;
-				background: #CCC;
-				color: #333;
-				border: 1px solid #666;
-			}
-
 			.select_filter_controls {
 				display: flex;
 				align-items: baseline;
@@ -85,7 +78,7 @@ class FilterSelect extends BaseMixin(LitElement) {
 	render() {
 		return html`
 		<div id="filter">
-			<label id="label">${this.label}</label>
+			<label>${this.label}</label>
 			<div class="select_filter_controls">
 				<d2l-input-checkbox 
 					checked 
@@ -94,7 +87,7 @@ class FilterSelect extends BaseMixin(LitElement) {
 				</d2l-input-checkbox>
 				<select
 					class="d2l-input-select select_filter"
-					enabled="${this.enabled}"
+					?disabled=${!this.enabled}
 					@change="${this.filterChange}"
 				>
 					<option value="0">${this.localize('selectDefault')} ${this.label}</option>
