@@ -103,8 +103,6 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	async connectedCallback() {
 		super.connectedCallback();
 
-
-
 		await this.cpdRecordService.getRecordSummary(1)
 			.then(data => {
 				this.cpdRecords = data;
