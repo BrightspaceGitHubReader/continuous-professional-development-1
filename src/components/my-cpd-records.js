@@ -100,18 +100,18 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		};
 	}
 
-	async connectedCallback() {
+	connectedCallback() {
 		super.connectedCallback();
 
-		await this.cpdRecordService.getRecordSummary(1)
+		this.cpdRecordService.getRecordSummary(1)
 			.then(data => {
 				this.cpdRecords = data;
 			});
-		await this.cpdRecordService.getSubjects()
+		this.cpdRecordService.getSubjects()
 			.then(data => {
 				this.subjectOptions = data;
 			});
-		await this.cpdRecordService.getMethods()
+		this.cpdRecordService.getMethods()
 			.then(data => {
 				this.methodOptions = data;
 			});
