@@ -78,22 +78,24 @@ class FilterSelect extends BaseMixin(LitElement) {
 	render() {
 		return html`
 		<div id="filter">
-			<label>${this.label}</label>
-			<div class="select_filter_controls">
-				<d2l-input-checkbox 
-					checked 
-					@change="${this.filterEnable}"
-				>
-				</d2l-input-checkbox>
-				<select
-					class="d2l-input-select select_filter"
-					?disabled=${!this.enabled}
-					@change="${this.filterChange}"
-				>
-					<option value="0">${this.localize('selectDefault')} ${this.label}</option>
-					${this.options.map(option => this.renderSelect(option))}
-				</select>
-			</div>
+			<label>
+				${this.label}
+				<div class="select_filter_controls">
+					<d2l-input-checkbox 
+						checked 
+						@change="${this.filterEnable}"
+					>
+					</d2l-input-checkbox>
+					<select
+						class="d2l-input-select select_filter"
+						?disabled=${!this.enabled}
+						@change="${this.filterChange}"
+					>
+						<option value="0">${this.localize('selectDefault')} ${this.label}</option>
+						${this.options.map(option => this.renderSelect(option))}
+					</select>
+				</div>
+			</label>
 		</div>
 		`;
 	}
