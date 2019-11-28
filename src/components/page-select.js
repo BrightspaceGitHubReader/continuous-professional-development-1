@@ -1,8 +1,9 @@
 import '@brightspace-ui/core/components/icons/icon.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { BaseMixin } from '../mixins/base-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
-class PageSelect extends LitElement {
+class PageSelect extends BaseMixin(LitElement) {
 
 	static get properties() {
 		return {
@@ -50,7 +51,7 @@ class PageSelect extends LitElement {
 					value="${i}"
 					?selected=${this.page === i}
 					>
-					${i} of ${totalPages}
+					${i} ${this.localize('of')} ${totalPages}
 				</option>
 			`);
 		}

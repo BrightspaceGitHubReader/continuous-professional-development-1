@@ -28,5 +28,6 @@
 	"enterCreditHours": "Enter Credit Hours",
 	"enterCreditMinutes": "Enter Credit Minutes",
 	"save": "Save",
-	"selectDefault": "Choose a "
+	"selectDefault": "Choose a ",
+	"of": "of"
 }
