@@ -49,7 +49,7 @@ class FilterSelect extends LitElement {
 		super();
 
 		this.options = [];
-		this.selected = -1;
+		this.selected = 0;
 		this.selectedText = '';
 		this.enabled = true;
 	}
@@ -57,7 +57,8 @@ class FilterSelect extends LitElement {
 	fireFilterSelectUpdated() {
 		const event = new CustomEvent('d2l-filter-select-updated', {
 			detail: {
-				value: parseInt(this.selected)
+				value: parseInt(this.selected),
+				enabled: this.enabled
 			}
 		});
 		this.dispatchEvent(event);
@@ -65,12 +66,18 @@ class FilterSelect extends LitElement {
 
 	serializeSelect(option) {
 		return html`
-			<option value="${option.Id}">${option.Name}</option>
+		<option 
+			value="${option.Id}"
+			?selected=${this.selected === option.Id}
+			>
+			${option.Name}
+		</option>
 		`;
 	}
 
 	filterEnable() {
 		this.enabled = !this.enabled;
+		this.fireFilterSelectUpdated();
 	}
 
 	filterChange(e) {

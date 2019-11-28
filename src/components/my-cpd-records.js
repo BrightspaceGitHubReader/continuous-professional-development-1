@@ -32,9 +32,6 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			cpdRecordService: {
 				type: Object
 			},
-			pageSizeOptions: {
-				type: Array
-			},
 			page: {
 				type: Number
 			},
@@ -84,10 +81,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	constructor() {
 		super();
 
-		this._cpdRecords = {};
+		this.cpdRecords = {};
 
-		this._subjectOptions = [];
-		this._methodOptions = [];
+		this.subjectOptions = [];
+		this.methodOptions = [];
 
 		this.subjectFilterEnabled = true;
 		this.methodFilterEnabled = true;
@@ -103,48 +100,18 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		};
 	}
 
-	get cpdRecords() {
-		return this._cpdRecords;
-	}
-
-	set cpdRecords(val) {
-		const oldVal = this._cpdRecords;
-		this._cpdRecords = val;
-		this.requestUpdate('cpdRecords', oldVal);
-	}
-
-	get methodOptions() {
-		return this._methodOptions;
-	}
-
-	set methodOptions(val) {
-		const oldVal = this._methodOptions;
-		this._methodOptions = val;
-		this.requestUpdate('methodOptions', oldVal);
-	}
-
-	get subjectOptions() {
-		return this._subjectOptions;
-	}
-
-	set subjectOptions(val) {
-		const oldVal = this._subjectOptions;
-		this._subjectOptions = val;
-		this.requestUpdate('subjectOptions', oldVal);
-	}
-
-	connectedCallback() {
+	async connectedCallback() {
 		super.connectedCallback();
 
-		this.cpdRecordService.getRecordSummary(1)
+		await this.cpdRecordService.getRecordSummary(1)
 			.then(data => {
 				this.cpdRecords = data;
-			}),
-		this.cpdRecordService.getSubjects()
+			});
+		await this.cpdRecordService.getSubjects()
 			.then(data => {
 				this.subjectOptions = data;
-			}),
-		this.cpdRecordService.getMethods()
+			});
+		await this.cpdRecordService.getMethods()
 			.then(data => {
 				this.methodOptions = data;
 			});
@@ -167,19 +134,19 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	updateSubjectFilter(e) {
-		this.filters.Subject = e.detail.value;
+		this.filters.Subject = e.detail;
 		this.page = 1;
 		this.fetchRecords();
 	}
 
 	updateMethodFilter(e) {
-		this.filters.Method = e.detail.value;
+		this.filters.Method = e.detail;
 		this.page = 1;
 		this.fetchRecords();
 	}
 
 	updateNameFilter(e) {
-		this.filters.Name = e.detail.value;
+		this.filters.Name = e.detail;
 		this.page = 1;
 		this.fetchRecords();
 	}
@@ -290,14 +257,15 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					</d2l-tbody>
 				</d2l-table>
 				<div class="page_control">
-					<d2l-page-select 
-						pages="${this.cpdRecords.TotalPages}"
-						@d2l-page-select-updated="${this.updatePage}"
-						>
-					</d2l-page-select>
+						<d2l-page-select 
+							pages="${this.cpdRecords.TotalPages}"
+							page="${this.page}"
+							@d2l-page-select-updated="${this.updatePage}"
+							>
+						</d2l-page-select>
+					</div>
 				</div>
-			</div>
-					`;
+			`;
 	}
 }
 customElements.define('d2l-my-cpd-records', MyCpdRecords);

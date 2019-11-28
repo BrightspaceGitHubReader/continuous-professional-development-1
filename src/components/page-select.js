@@ -65,7 +65,14 @@ class PageSelect extends LitElement {
 	serializePageOptions(totalPages) {
 		const templates = [];
 		for (let i = 1; i <= totalPages; i++) {
-			templates.push(html`<option value="${i}">${i} of ${totalPages}</option>`);
+			templates.push(html`
+				<option 
+					value="${i}"
+					?selected=${this.page === i}
+					>
+					${i} of ${totalPages}
+				</option>
+			`);
 		}
 		return templates;
 	}
