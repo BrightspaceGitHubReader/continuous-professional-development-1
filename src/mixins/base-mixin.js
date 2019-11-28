@@ -42,8 +42,8 @@ export const BaseMixin = superclass => class extends LocalizeMixin(superclass) {
 		return null;
 	}
 
-	localize(key) {
-		return super.localize(key) || `{language term '${key}' not found}`;
+	localize(key, params) {
+		return super.localize(key, params) || `{language term '${key}' not found}`;
 	}
 
 };

@@ -91,7 +91,7 @@ class FilterSelect extends BaseMixin(LitElement) {
 						?disabled=${!this.enabled}
 						@change="${this.filterChange}"
 					>
-						<option value="0">${this.localize('selectDefault')} ${this.label}</option>
+						<option value="0">${this.localize('selectDefault', { 'object': this.label})}</option>
 						${this.options.map(option => this.renderSelect(option))}
 					</select>
 				</div>
