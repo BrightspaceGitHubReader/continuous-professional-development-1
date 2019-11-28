@@ -11,7 +11,8 @@
     "index.html"
   ],
   "extraDependencies": [
-    "node_modules/@webcomponents/**"
+    "node_modules/@webcomponents/**",
+    "node_modules/d2l-html-editor/**"
   ],
   "builds": [
     {

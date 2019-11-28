@@ -1,6 +1,6 @@
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import './attachments';
-//import 'd2l-html-editor/d2l-html-editor';
+import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
@@ -21,6 +21,12 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			css`
 		main {
 			width: 100%
+		}
+		d2l-html-editor {
+			border-radius: 0.3rem;
+			border-style: solid;
+			border-width: 1px;
+			border-color: initial;
 		}
 		ul {
 			list-style-type: none;
@@ -144,8 +150,15 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	renderQuestion(question, index) {
 		return html`
 			<li>
-				<label for=${`$answerText_${index}`}>${question}</label>
-				<d2l-input-text id=${`$answerText_${index}`}>
+				<label for=${`answerText_${index}`}>${question}</label>
+				<d2l-html-editor
+					id=${`answerText_${index}`}
+					editor-id=${`answerText_${index}_editor`}
+					toolbar="bold italic underline | bullist d2l_formatrollup | undo redo "
+					plugins="lists d2l_formatrollup"
+					app-root=${`${window.location.origin}/app/node_modules/d2l-html-editor/`}>
+						<div id=${`answerText_${index}_editor`} ></div>
+				</d2l-html-editor>
 			</li>
 		`;
 	}
