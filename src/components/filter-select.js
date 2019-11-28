@@ -79,7 +79,6 @@ class FilterSelect extends BaseMixin(LitElement) {
 
 	filterChange(e) {
 		this.selected = e.target.value;
-		this.selectedText = e.target.text;
 		this.fireFilterSelectUpdated();
 	}
 
