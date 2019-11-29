@@ -1,4 +1,5 @@
 import '@brightspace-ui/core/components/button/button.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-date-picker/d2l-date-picker.js';
@@ -60,6 +61,11 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 			d2l-date-picker {
 				width: 7rem;
+			}
+
+			#search_bar {
+				display: flex;
+				align-items: baseline;
 			}
 
 			.date_filter_controls {
@@ -163,12 +169,16 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					${this.localize('lblAddNewCPD')}
 				</d2l-button>
 
-				<d2l-input-search
-					id="search_filter"
-					placeholder=${this.localize('lblSearchPlaceholder')}
-					@d2l-input-search-searched="${this.updateNameFilter}"
-					>
-				</d2l-input-search>
+				<div id="search_bar">
+					<d2l-input-search
+						id="search_filter"
+						placeholder=${this.localize('lblSearchPlaceholder')}
+						@d2l-input-search-searched="${this.updateNameFilter}"
+						>
+					</d2l-input-search>
+					<d2l-button-subtle text="Hide search options"></d2l-button-subtle>
+				</div>
+
 
 				<d2l-filter-select
 						label="${this.localize('lblSubject')}"
