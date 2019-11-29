@@ -137,10 +137,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	fetchRecords() {
-		const recordsFetch = !this.hideSearchOptions ?
-			this.cpdRecordService.getRecordSummary(this.page, this.filters) :
-			this.cpdRecordService.getRecordSummary(this.page);
-		recordsFetch
+		this.cpdRecordService.getRecordSummary(this.page, this.filters)
 			.then(data => {
 				this.cpdRecords = data;
 			});
@@ -172,7 +169,6 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 	toggleSearchOptions() {
 		this.hideSearchOptions = !this.hideSearchOptions;
-		this.fetchRecords();
 	}
 
 	renderShowHideButtonText() {
