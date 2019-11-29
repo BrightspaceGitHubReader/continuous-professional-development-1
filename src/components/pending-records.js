@@ -22,13 +22,14 @@ class PendingRecords extends BaseMixin(LitElement) {
 	render() {
 		return html`
 		<div>
-            <div>
-                <d2l-input-search class="inline" label="${this.localize('lblSearchForLabel')}" placeholder="${this.localize('searchFor')}"></d2l-input-search>
-                <d2l-link class="inline">${this.localize('lblHideSearchOptions')}</d2l-link>
+			<div>
+				<d2l-input-search class="inline" placeholder="${this.localize('lblSearchBarDefault')}"></d2l-input-search>
+				<d2l-link class="inline">${this.localize('lblHideSearchOptions')}</d2l-link>
+
             </div>
             <h5>${this.localize('lblDateRange')}</h5>
             <div>
-                <d2l-date-picker class="inline"></d2l-date-picker> 
+                <d2l-date-picker class="inline"></d2l-date-picker>
                 <label>to<label>
                 <d2l-date-picker class="inline"></d2l-date-picker>
             </div>
