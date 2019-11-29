@@ -66,12 +66,12 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				width: 7rem;
 			}
 
-			#search_bar {
+			.search_bar {
 				display: flex;
 				align-items: baseline;
 			}
 
-			#search_options[disabled] {
+			.search_options[disabled] {
 				display: none;	
 			}
 
@@ -172,8 +172,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	renderShowHideButtonText() {
-		const showHide = this.hideSearchOptions ? this.localize('show') : this.localize('hide');
-		return this.localize('showHideSearchOptions', {'showhide': showHide});
+		return this.hideSearchOptions ? this.localize('showSearchOptions') : this.localize('hideSearchOptions');
 	}
 
 	render() {
@@ -187,7 +186,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					${this.localize('lblAddNewCPD')}
 				</d2l-button>
 
-				<div id="search_bar">
+				<div class="search_bar">
 					<d2l-input-search
 						id="search_filter"
 						placeholder=${this.localize('lblSearchPlaceholder')}
@@ -203,7 +202,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				</div>
 
 				<div 
-					id="search_options"
+					class="search_options"
 					?disabled=${this.hideSearchOptions}
 					>
 					<d2l-filter-select

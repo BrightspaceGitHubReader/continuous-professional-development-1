@@ -30,7 +30,6 @@
 	"save": "Save",
 	"selectDefault": "Choose a {object}",
 	"of": "of",
-	"show": "Show",
-	"hide": "Hide",
-	"showHideSearchOptions": "{showhide} search options" 
+	"showSearchOptions": "Show search options",
+	"hideSearchOptions": "Hide search options" 
 }
