@@ -10,9 +10,6 @@ class Cpd extends BaseMixin(LitElement) {
 
 	static get properties() {
 		return {
-			cpdRecordsUrl: {
-				type: String
-			},
 			page: {
 				type: String
 			}
