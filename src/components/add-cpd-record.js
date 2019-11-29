@@ -11,6 +11,9 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		return {
 			questions: {
 				type: Array
+			},
+			attachments: {
+				type: Array
 			}
 		};
 	}
@@ -54,6 +57,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		this.subjects = [];
 		this.methods = [];
 		this.types = this.cpdRecordService.getTypes();
+		this.attachments = [];
 	}
 
 	connectedCallback() {
@@ -67,6 +71,28 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			.then(body => {
 				this.methods = body;
 			});
+	}
+
+	attachmentsUpdated(event) {
+		this.attachments = event.detail.attachmentsList;
+		console.log(`attachments Changed: ${this.attachments.length}`);
+	}
+
+	saveForm() {
+		const record = {
+			Name: 'record Name',
+			SubjectId: 1,
+			IsStructured: false,
+			MethodId: 1,
+			creditMinutes: 12,
+			Answers: [
+				{
+					AnswerText: 'No answer',
+					QuestionId: 1
+				}
+			]
+		};
+		this.cpdRecordService.createRecord(record, this.attachments);
 	}
 
 	render() {
@@ -129,12 +155,12 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					</li>
 					<li>
 						<label>${this.localize('addEvidence')}</label>
-						<d2l-attachments></d2l-attachments>
+						<d2l-attachments @d2l-attachments-list-updated=${this.attachmentsUpdated}></d2l-attachments>
 					<li>
 					${this.questions.map((q, index) => this.renderQuestion(q, index))}
 				</ul>
 				<div>
-					<d2l-button>${this.localize('save')}</d2l-button>
+					<d2l-button @click="${this.saveForm}">${this.localize('save')}</d2l-button>
 					<d2l-button>${this.localize('btnCancel')}</d2l-button>
 				</div>
 			</main>

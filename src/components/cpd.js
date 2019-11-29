@@ -44,7 +44,7 @@ class Cpd extends LocalizeMixin(LitElement) {
 	}
 
 	render() {
-		if (this.page === 'add-cpd-record') {
+		if (true) {
 			return html`
 				<d2l-add-cpd-record><d2l-add-cpd-record>
 			`;

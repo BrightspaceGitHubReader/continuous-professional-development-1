@@ -62,10 +62,20 @@ class AttachmentList extends LocalizeMixin(LitElement) {
 	}
 
 	fireAttachmentListUpdated(oldVal) {
-		const event = new CustomEvent('d2l-attachments-list-updated', {
+		const event = new CustomEvent('internal-attachments-list-updated', {
 			detail: {
 				attachmentsList: this.attachmentsList,
 				oldVal
+			}
+		});
+		this.dispatchEvent(event);
+	}
+
+	fireAttachmentListRemoved(removedIted) {
+		const event = new CustomEvent('internal-attachments-list-removed', {
+			detail: {
+				attachmentsList: this.attachmentsList,
+				removedIted: removedIted
 			}
 		});
 		this.dispatchEvent(event);
@@ -85,8 +95,12 @@ class AttachmentList extends LocalizeMixin(LitElement) {
 
 	removeFile(evt) {
 		const oldVal = [...this.attachmentsList];
+		const removedValue = this.attachmentsList[evt.target.attributes.index.value];
 		this.attachmentsList.splice(evt.target.attributes.index.value, 1);
-		this.requestUpdate('attachmentsList', oldVal).then(() => this.fireAttachmentListUpdated(oldVal));
+		this.requestUpdate('attachmentsList', oldVal).then(() => {
+			this.fireAttachmentListUpdated(oldVal);
+			this.fireAttachmentListRemoved(removedValue);
+		});
 	}
 
 	render() {
