@@ -16,6 +16,10 @@ export class CpdRecordsService {
 		return this.getRequest(url, base_path);
 	}
 
+	static getQuestions() {
+		return [];
+	}
+
 	static getRecordSummary(page, filters) {
 		const url = window.data.fraSettings.valenceHost;
 		let base_path = `/d2l/api/customization/cpd/1.0/record?pagenumber=${page}`;
@@ -36,7 +40,6 @@ export class CpdRecordsService {
 				'Content-Type' : 'application/json'
 			}
 		});
-
 		return d2lfetch.fetch(getRequest).then(r => r.json());
 	}
 
@@ -49,6 +52,7 @@ export class CpdRecordsService {
 	static getTypes() {
 		const url = window.data.fraSettings.valenceHost;
 		const base_path = '';
-		return this.getRequest(url, base_path);
+		this.getRequest(url, base_path);
+		return [];
 	}
 }

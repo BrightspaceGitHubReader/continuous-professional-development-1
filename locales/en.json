@@ -29,5 +29,5 @@
 	"enterCreditMinutes": "Enter Credit Minutes",
 	"save": "Save",
 	"selectDefault": "Choose a {object}",
-	"of": "of"
+	"pageCount": "{numerator} of {denominator}"
 }

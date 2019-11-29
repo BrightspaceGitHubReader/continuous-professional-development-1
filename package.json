@@ -41,7 +41,7 @@
     "test:local": "polymer test --skip-plugin sauce",
     "test:sauce": "polymer test --skip-plugin local",
     "test:travis": "polymer test --config-file wct.conf-travis.json",
-    "watch:js": "onchange \"src\\**\" -- npm run build:local",
+    "watch:js": "onchange -d 2000 \"src\\**\" \"index.html\" -- npm run build:local",
     "watch": "npm-run-all build:local --parallel resolver watch:js"
   },
   "author": "D2L Corporation",
