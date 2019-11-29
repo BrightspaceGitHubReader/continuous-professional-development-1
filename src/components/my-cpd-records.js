@@ -38,6 +38,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			},
 			filters: {
 				type: Object
+			},
+			hideSearchOptions: {
+				type: Boolean
 			}
 		};
 	}
@@ -66,6 +69,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			#search_bar {
 				display: flex;
 				align-items: baseline;
+			}
+
+			#search_options[disabled] {
+				display: none;	
 			}
 
 			.date_filter_controls {
@@ -104,6 +111,8 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			Method: 0,
 			Name: 0
 		};
+
+		this.hideSearchOptions = true;
 	}
 
 	connectedCallback() {
@@ -128,7 +137,8 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	fetchRecords() {
-		this.cpdRecordService.getRecordSummary(this.page, this.filters)
+		const recordsFetch = !this.hideSearchOptions ? this.cpdRecordService.getRecordSummary(this.page, this.filters) : this.cpdRecordService.getRecordSummary(this.page);
+		recordsFetch
 			.then(data => {
 				this.cpdRecords = data;
 			});
@@ -158,6 +168,15 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		this.fetchRecords();
 	}
 
+	toggleSearchOptions() {
+		this.hideSearchOptions = !this.hideSearchOptions;
+	}
+
+	renderShowHideButtonText() {
+		const showHide = this.hideSearchOptions ? this.localize('show') : this.localize('hide');
+		return this.localize('showHideSearchOptions', {'showhide': showHide});
+	}
+
 	render() {
 		return html`
 			<custom-style>
@@ -176,30 +195,39 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 						@d2l-input-search-searched="${this.updateNameFilter}"
 						>
 					</d2l-input-search>
-					<d2l-button-subtle text="Hide search options"></d2l-button-subtle>
+
+					<d2l-button-subtle 
+						text="${this.renderShowHideButtonText()}"
+						@click="${this.toggleSearchOptions}"
+						>
+					</d2l-button-subtle>
 				</div>
 
+				<div 
+					id="search_options"
+					?disabled=${this.hideSearchOptions}
+					>
+					<d2l-filter-select
+							label="${this.localize('lblSubject')}"
+							.options=${this.subjectOptions}
+							@d2l-filter-select-updated="${this.updateSubjectFilter}"	
+							>
+					</d2l-filter-select>				
 
-				<d2l-filter-select
-						label="${this.localize('lblSubject')}"
-						.options=${this.subjectOptions}
-						@d2l-filter-select-updated="${this.updateSubjectFilter}"	
-						>
-				</d2l-filter-select>				
+					<d2l-filter-select
+							label="${this.localize('lblMethod')}"
+							.options=${this.methodOptions}
+							@d2l-filter-select-updated="${this.updateMethodFilter}"	
+							>
+					</d2l-filter-select>				
 
-				<d2l-filter-select
-						label="${this.localize('lblMethod')}"
-						.options=${this.methodOptions}
-						@d2l-filter-select-updated="${this.updateMethodFilter}"	
-						>
-				</d2l-filter-select>				
-
-				<div id="date_filter">
-					<label id="date_label">${this.localize('lblDateRange')}</label>
-					<div class="date_filter_controls">
-						<d2l-date-picker></d2l-date-picker>
-						<label>${this.localize('lblTo')}</label>
-						<d2l-date-picker></d2l-date-picker>
+					<div id="date_filter">
+						<label id="date_label">${this.localize('lblDateRange')}</label>
+						<div class="date_filter_controls">
+							<d2l-date-picker></d2l-date-picker>
+							<label>${this.localize('lblTo')}</label>
+							<d2l-date-picker></d2l-date-picker>
+						</div>
 					</div>
 				</div>
 

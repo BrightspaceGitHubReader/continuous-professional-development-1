@@ -29,5 +29,8 @@
 	"enterCreditMinutes": "Enter Credit Minutes",
 	"save": "Save",
 	"selectDefault": "Choose a {object}",
-	"of": "of"
+	"of": "of",
+	"show": "Show",
+	"hide": "Hide",
+	"showHideSearchOptions": "{showhide} search options" 
 }
