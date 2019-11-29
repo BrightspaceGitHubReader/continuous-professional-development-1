@@ -115,10 +115,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		this.hideSearchOptions = true;
 	}
 
-	connectedCallback() {
+	async connectedCallback() {
 		super.connectedCallback();
 
-		this.cpdRecordService.getRecordSummary(this.page)
+		await this.cpdRecordService.getRecordSummary(this.page)
 			.then(data => {
 				this.cpdRecords = data;
 			});
@@ -170,6 +170,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 	toggleSearchOptions() {
 		this.hideSearchOptions = !this.hideSearchOptions;
+		this.fetchRecords();
 	}
 
 	renderShowHideButtonText() {
