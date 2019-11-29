@@ -137,7 +137,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	fetchRecords() {
-		const recordsFetch = !this.hideSearchOptions ? this.cpdRecordService.getRecordSummary(this.page, this.filters) : this.cpdRecordService.getRecordSummary(this.page);
+		const recordsFetch = !this.hideSearchOptions ?
+			this.cpdRecordService.getRecordSummary(this.page, this.filters) :
+			this.cpdRecordService.getRecordSummary(this.page);
 		recordsFetch
 			.then(data => {
 				this.cpdRecords = data;
