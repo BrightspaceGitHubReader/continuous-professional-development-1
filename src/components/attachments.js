@@ -7,9 +7,9 @@ import '@brightspace-ui/core/components/list/list.js';
 import '@brightspace-ui/core/components/list/list-item.js';
 import '@brightspace-ui-labs/file-uploader/d2l-file-uploader.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { BaseMixin } from '../mixins/base-mixin.js';
 
-class Attachments extends LocalizeMixin(LitElement) {
+class Attachments extends BaseMixin(LitElement) {
 
 	static get properties() {
 		return {
@@ -31,25 +31,6 @@ class Attachments extends LocalizeMixin(LitElement) {
 		`;
 	}
 
-	static async getLocalizeResources(langs) {
-		for await (const lang of langs) {
-			let translations;
-			switch (lang) {
-				case 'en':
-					translations = await import('../../locales/en.js');
-					break;
-			}
-
-			if (translations && translations.val) {
-				return {
-					language: lang,
-					resources: translations.val
-				};
-			}
-		}
-
-		return null;
-	}
 	constructor() {
 		super();
 		this._attachmentsList = [];
