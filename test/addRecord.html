@@ -9,6 +9,8 @@
 		<script src="/node_modules/chai/chai.js"></script>
 		<script src="/node_modules/@polymer/test-fixture/test-fixture.js"></script>
 		<script src="/node_modules/wct-mocha/wct-mocha.js"></script>
+		<script src="https://s.brightspace.com/lib/tinymce/dev/4.8.5-a11ychecker.1.2.1-53-powerpaste.3.3.3-308-shadow-dom-fork-2/tinymce.js"></script>
+		<script src="/node_modules/d2l-html-editor/demo/d2l-html-editor-client.js"></script>
 		<script type="module" src="../src/components/add-cpd-record.js"></script>
 	</head>
 	<body>
@@ -20,17 +22,19 @@
 		</test-fixture>
 
 		<script type="module">
-			//import { runAxe } from '@brightspace-ui/core/tools/a11y-test-helper.js';
+			import { runAxe } from '@brightspace-ui/core/tools/a11y-test-helper.js';
 
 			describe('d2l-add-cpd-record', () => {
 				let element;
 				describe('basic', () => {
-					beforeEach(async() => {
+					beforeEach((done) => {
 						element = fixture('basic');
-						await element.updateComplete;
+						element.updateComplete.then(()=> {
+							flush(done);
+						});
 					});
 					it('should pass all axe tests', async() => {
-						//await runAxe(element);
+						await runAxe(element);
 					});
 				});
 			});

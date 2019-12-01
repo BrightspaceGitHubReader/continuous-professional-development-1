@@ -25,9 +25,11 @@
 			describe('d2l-attachments', () => {
 				let element;
 				describe('basic', () => {
-					beforeEach(async() => {
+					beforeEach((done) => {
 						element = fixture('basic');
-						await element.updateComplete;
+						element.updateComplete.then(()=> {
+							flush(done);
+						});
 					});
 					it('should pass all axe tests', async() => {
 						await runAxe(element);

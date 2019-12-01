@@ -37,7 +37,7 @@
     "lint": "eslint . --ext .js,.html",
     "publish:dev:cdn": "npm run build && frau-publisher",
     "resolver": "frau-local-appresolver",
-    "test": "npm run lint && npm run test:local",
+    "test": "npm run test:local && npm run lint",
     "test:local": "polymer test --skip-plugin sauce",
     "test:sauce": "polymer test --skip-plugin local",
     "test:travis": "polymer test --config-file wct.conf-travis.json",
