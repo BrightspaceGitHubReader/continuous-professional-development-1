@@ -25,7 +25,6 @@ class PendingRecords extends BaseMixin(LitElement) {
 			<div>
 				<d2l-input-search class="inline" placeholder="${this.localize('lblSearchBarDefault')}"></d2l-input-search>
 				<d2l-link class="inline">${this.localize('lblHideSearchOptions')}</d2l-link>
-
             </div>
             <h5>${this.localize('lblDateRange')}</h5>
             <div>

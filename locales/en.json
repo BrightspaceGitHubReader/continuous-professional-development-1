@@ -29,7 +29,7 @@
 	"enterCreditMinutes": "Enter Credit Minutes",
 	"save": "Save",
 	"selectDefault": "Choose a {object}",
-	"of": "of",
 	"showSearchOptions": "Show search options",
-	"hideSearchOptions": "Hide search options" 
+	"hideSearchOptions": "Hide search options",
+	"pageCount": "{numerator} of {denominator}"
 }

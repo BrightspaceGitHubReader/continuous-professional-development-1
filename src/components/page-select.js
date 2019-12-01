@@ -46,12 +46,16 @@ class PageSelect extends BaseMixin(LitElement) {
 	serializePageOptions(totalPages) {
 		const templates = [];
 		for (let i = 1; i <= totalPages; i++) {
+			const pageInfo = {
+				numerator: i,
+				denominator: totalPages
+			};
 			templates.push(html`
-				<option 
+				<option
 					value="${i}"
 					?selected=${this.page === i}
 					>
-					${i} ${this.localize('of')} ${totalPages}
+					${this.localize('pageCount', pageInfo)}
 				</option>
 			`);
 		}
@@ -79,22 +83,22 @@ class PageSelect extends BaseMixin(LitElement) {
 
 	render() {
 		return html`
-			<d2l-icon 
+			<d2l-icon
 				class="${this.page > 1 ? null : 'hide'}"
-				icon="tier1:chevron-left" 
+				icon="tier1:chevron-left"
 				@click="${this.decrementPage}"
 				>
 			</d2l-icon>
-			<select 
+			<select
 				id="page-select"
-				class="d2l-input-select" 
+				class="d2l-input-select"
 				@change="${this.setPage}"
 				>
 				${this.serializePageOptions(this.pages)}
 			</select>
-			<d2l-icon 
+			<d2l-icon
 				class="${this.page < this.pages ? null : 'hide'}"
-				icon="tier1:chevron-right" 
+				icon="tier1:chevron-right"
 				@click="${this.incrementPage}"
 				>
 			</d2l-icon>
