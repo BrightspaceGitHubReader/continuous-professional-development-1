@@ -171,14 +171,14 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 				<d2l-filter-select
 						label="${this.localize('lblSubject')}"
-						options=${JSON.stringify(this.subjectOptions)}
+						.options=${this.subjectOptions}
 						@d2l-filter-select-updated="${this.updateSubjectFilter}"
 						>
 				</d2l-filter-select>
 
 				<d2l-filter-select
 						label="${this.localize('lblMethod')}"
-						options=${JSON.stringify(this.methodOptions)}
+						.options=${this.methodOptions}
 						@d2l-filter-select-updated="${this.updateMethodFilter}"
 						>
 				</d2l-filter-select>
