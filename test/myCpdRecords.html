@@ -35,14 +35,11 @@
 						await runAxe(element);
 					});
 					it('should show search options', (done) => {
-						const showHideButton = element.shadowRoot.querySelector('d2l-button-subtle');	
+						const showHideButton = element.shadowRoot.querySelector('d2l-button-subtle');
 						expect(element.hideSearchOptions).to.be.true;
-
-						showHideButton.click();
-						
+						showHideButton.click();	
 						expect(element.hideSearchOptions).to.be.false;
 						done();
-
 					});
 				});
 			});
