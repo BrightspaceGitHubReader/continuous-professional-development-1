@@ -38,16 +38,18 @@
 					it('should pass all axe tests', async() => {
 						await runAxe(element);
 					});
-					// it('should disable the filter if the checkbox is unchecked', (done) => {
-					// 	const outerCheckbox = element.shadowRoot.querySelector('d2l-input-checkbox');
-					// 	expect(outerCheckbox).to.not.be.null;
-					// 	expect(element.enabled).to.equal(true);
-					// 	element.addEventListener('d2l-filter-select-updated', (e) => {
-					// 		expect(e.target.enabled).to.equal(false);
-					// 		done();
-					// 	});
-					// 	outerCheckbox.removeAttribute('checked');
-					// });
+					it('should disable the filter if the checkbox is unchecked', (done) => {
+						// const outerCheckbox = element.shadowRoot.querySelector('d2l-input-checkbox');
+						// expect(outerCheckbox).to.not.be.null;
+						// const checkbox = outerCheckbox.shadowRoot.querySelector('input.d2l-input-checkbox');
+						// expect(checkbox).to.not.be.null;
+						// expect(element.enabled).to.equal(true);
+						// element.addEventListener('d2l-filter-select-updated', (e) => {
+						// 	expect(e.target.enabled).to.equal(false);
+						// 	done();
+						// });
+						// checkbox.click();
+					});
 				});
 			});
 		</script>
