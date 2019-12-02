@@ -29,11 +29,6 @@ export class CpdRecordsService {
 	static createRecord(record, files) {
 		const url = window.data.fraSettings.valenceHost;
 		const base_path = '/d2l/api/customization/cpd/1.0/record';
-
-		if (files === null || files.length === 0)
-		{
-			return this.postJsonRequest(url, base_path, record);
-		}
 		return this.postWithFilesRequest(url, base_path, record, files);
 	}
 
@@ -44,12 +39,19 @@ export class CpdRecordsService {
 	}
 
 	static getQuestions() {
-		return ['Why is Ben moving?'];
+		return [];
 	}
 
-	static getRecordSummary(page) {
+	static getRecordSummary(page, filters) {
 		const url = window.data.fraSettings.valenceHost;
-		const base_path = `/d2l/api/customization/cpd/1.0/record?pagenumber=${page}`;
+		let base_path = `/d2l/api/customization/cpd/1.0/record?pagenumber=${page}`;
+
+		if (filters) {
+			if (filters.Subject.value && filters.Subject.enabled) base_path += `&subject=${filters.Subject.value}`;
+			if (filters.Method.value && filters.Method.enabled) base_path += `&method=${filters.Method.value}`;
+			if (filters.Name.value) base_path += `&name=${filters.Name.value}`;
+		}
+
 		return this.getRequest(url, base_path);
 	}
 
@@ -60,7 +62,6 @@ export class CpdRecordsService {
 				'Content-Type' : 'application/json'
 			}
 		});
-
 		return d2lfetch.fetch(getRequest).then(r => r.json());
 	}
 

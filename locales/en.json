@@ -1,5 +1,5 @@
 {
-  "addEvidence": "Add Evidence",
+	"addEvidence": "Add Evidence",
 	"ariaCpdTable": "A table with your continuous professional development history",
 	"btnAdd": "Add",
 	"btnAddAFile": "Add Attachment",
@@ -20,12 +20,14 @@
 	"lblSubject": "Subject",
 	"lblType": "Type",
 	"lblSearchPlaceholder": "Search for CPD Records...",
-  "lblTo": "to",
-  "name": "Name",
-  "recordName": "Record Name",
-  "credits": "Credits",
-  "grade": "Grade",
-  "enterCreditHours": "Enter Credit Hours",
-  "enterCreditMinutes": "Enter Credit Minutes",
-  "save": "Save"
+	"lblTo": "to",
+	"name": "Name",
+	"recordName": "Record Name",
+	"credits": "Credits",
+	"grade": "Grade",
+	"enterCreditHours": "Enter Credit Hours",
+	"enterCreditMinutes": "Enter Credit Minutes",
+	"save": "Save",
+	"selectDefault": "Choose a {object}",
+	"pageCount": "{numerator} of {denominator}"
 }
