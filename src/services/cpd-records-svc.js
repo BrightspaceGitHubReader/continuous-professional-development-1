@@ -11,21 +11,6 @@ d2lfetch.use({
 
 export class CpdRecordsService {
 
-	static _readFile(file) {
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.onload = (function() {
-				return function() {
-					return resolve(reader.result);
-				};
-			})(file);
-			reader.onerror = (e => {
-				return reject(e);
-			});
-			reader.readAsBinaryString(file);
-		});
-	}
-
 	static createRecord(record, files) {
 		const url = window.data.fraSettings.valenceHost;
 		const base_path = '/d2l/api/customization/cpd/1.0/record';

@@ -6,13 +6,10 @@ import './pending-records';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
-class Cpd extends LocalizeMixin(LitElement) {
+class Cpd extends BaseMixin(LitElement) {
 
 	static get properties() {
 		return {
-			cpdRecordsUrl: {
-				type: String
-			},
 			page: {
 				type: String
 			}
@@ -21,26 +18,6 @@ class Cpd extends LocalizeMixin(LitElement) {
 
 	static get styles() {
 		return css``;
-	}
-
-	static async getLocalizeResources(langs) {
-		for await (const lang of langs) {
-			let translations;
-			switch (lang) {
-				case 'en':
-					translations = await import('../../locales/en.js');
-					break;
-			}
-
-			if (translations && translations.val) {
-				return {
-					language: lang,
-					resources: translations.val
-				};
-			}
-		}
-
-		return null;
 	}
 
 	render() {
