@@ -4,7 +4,7 @@ import './my-cpd-records';
 import './add-cpd-record';
 import './pending-records';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { BaseMixin } from '../mixins/base-mixin.js';
 
 class Cpd extends BaseMixin(LitElement) {
 
@@ -27,11 +27,17 @@ class Cpd extends BaseMixin(LitElement) {
 			`;
 		}
 		return html`
-			<d2l-tabs >
-				<d2l-tab-panel text="${this.localize('lblCPDHeader')}">
+			<d2l-tabs>
+				<d2l-tab-panel
+					text="${this.localize('lblCPDHeader')}"
+					?selected=${(!this.page || this.page === 'my-records')}
+					>
 					<d2l-my-cpd-records></d2l-my-cpd-records>
 				</d2l-tab-panel>
-				<d2l-tab-panel text="${this.localize('lblPendingRecords')}">
+				<d2l-tab-panel
+					text="${this.localize('lblPendingRecords')}"
+					?selected=${this.page === 'pending-records'}
+					>
 					<d2l-pending-records></d2l-pending-records>
 				</d2l-tab-panel>
 			</d2l-tabs>
