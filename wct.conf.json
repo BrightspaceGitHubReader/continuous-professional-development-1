@@ -11,6 +11,30 @@
           "no-sandbox"
         ]
       }
+    },
+    "sauce": {
+      "browsers": [
+        {
+          "browserName": "chrome",
+          "platform": "Windows 10",
+          "version": ""
+        },
+        {
+          "browserName": "chrome",
+          "platform": "OS X 10.13",
+          "version": ""
+        },
+        {
+          "browserName": "safari",
+          "platform": "OS X 10.13",
+          "version": ""
+        },
+        {
+          "browserName": "firefox",
+          "platform": "OS X 10.13",
+          "version": ""
+        }
+      ]
     }
   }
 }
