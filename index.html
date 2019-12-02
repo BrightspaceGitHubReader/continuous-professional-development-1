@@ -37,8 +37,8 @@
 				])
 					.then(ifrauData => {
 						const body = document.getElementsByTagName('body')[0];
-						//body.style.fontSize = ifrauData[1].size;
-						//body.style.fontFamily = ifrauData[1].family;
+						body.style.fontSize = ifrauData[1].size;
+						body.style.fontFamily = ifrauData[1].family;
 						window.data = window.data || {};
 						window.data.fraSettings = window.data.fraSettings || {};
 						//window.data.fraSettings.orgUnitId = ifrauData[0].OrgUnitId;
