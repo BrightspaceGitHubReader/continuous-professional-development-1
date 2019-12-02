@@ -40,7 +40,7 @@
     "test": "npm run test:local && npm run lint",
     "test:local": "polymer test --skip-plugin sauce",
     "test:sauce": "polymer test --skip-plugin local",
-    "test:travis": "polymer test --config-file wct.conf-travis.json",
+    "test:travis": "polymer test --config-file wct.conf-travis.json --skip-plugin local",
     "watch:js": "onchange -d 2000 \"src\\**\" \"index.html\" -- npm run build:local",
     "watch": "npm-run-all build:local --parallel resolver watch:js"
   },
