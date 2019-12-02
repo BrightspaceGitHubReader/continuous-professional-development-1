@@ -111,7 +111,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			SubjectId: this.shadowRoot.querySelector('#subjectSelect').value,
 			IsStructured: !!+this.shadowRoot.querySelector('#typeSelect').value,
 			MethodId: this.shadowRoot.querySelector('#methodSelect').value,
-			creditMinutes: this.shadowRoot.querySelector('#creditHours').value * 60 + this.shadowRoot.querySelector('#creditMinutes').value,
+			CreditMinutes: this.shadowRoot.querySelector('#creditHours').value * 60 + this.shadowRoot.querySelector('#creditMinutes').value,
 			Answers: this.questions.map(question => {
 				return {
 					QuestionId: question.Id,
