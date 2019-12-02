@@ -11,35 +11,6 @@ d2lfetch.use({
 
 export class CpdRecordsService {
 
-	static _encodeChar(char) {
-		return `\\u${  (`0000${  char.charCodeAt(0).toString(16)}`).slice(-4)}`;
-	}
-
-	static async _multipartSerialized(object, files) {
-		const boundary = '1575048195935';
-
-		let jsonString = `--${boundary}\r\n`;
-		jsonString += 'Content-Type: application/json\r\n';
-		jsonString += '\r\n';
-		jsonString += `${JSON.stringify(object).replace(/[\u007F-\uFFFF]/g, this._encodeChar)  }\r\n`;
-		jsonString += `--${  boundary  }\r\n`;
-
-		console.log(`before: ${jsonString.length}`);
-
-		for (const file of files) {
-			const data = await this._readFile(file);
-			console.log(`c: ${data.length}`);
-			jsonString += `Content-Disposition: file; name:""; filename="${  file.name  }"\r\n`;
-			jsonString += `Content-Type: ${  file.type  }\r\n\r\n`;
-			jsonString += data;
-			jsonString += '\r\n';
-			jsonString += `--${  boundary  }--`;
-		}
-
-		console.log(`after: ${jsonString.length}`);
-		return {data: jsonString, size: jsonString.length};
-	}
-
 	static _readFile(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -115,18 +86,17 @@ export class CpdRecordsService {
 	}
 
 	static postWithFilesRequest(url, base_path, object, files) {
-		this._multipartSerialized(object, files)
-			.then((data) => {
-				const postRequest = new Request(`${url}${base_path}`, {
-					method: 'POST',
-					headers: {
-						'Content-Type' : 'multipart/mixed; boundary=1575048195935',
-						'Content-Length': data.size
-					},
-					body: data.data
-				});
-				return d2lfetch.fetch(postRequest);
-			});
+
+		const data = new FormData();
+		data.append('record', JSON.stringify(object));
+		for (const file of files) {
+			data.append('file', file, file.name);
+		}
+		const postRequest = new Request(`${url}${base_path}`, {
+			method: 'POST',
+			body: data
+		});
+		d2lfetch.fetch(postRequest);
 	}
 
 }
