@@ -1,6 +1,5 @@
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import './attachments';
-import './filter-select.js';
 import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
