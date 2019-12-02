@@ -1,4 +1,6 @@
 import '@brightspace-ui/core/components/button/button.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
+import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-table/d2l-table.js';
@@ -36,6 +38,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			},
 			filters: {
 				type: Object
+			},
+			hideSearchOptions: {
+				type: Boolean
 			}
 		};
 	}
@@ -59,6 +64,15 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 			d2l-date-picker {
 				width: 7rem;
+			}
+
+			.search_bar {
+				display: flex;
+				align-items: baseline;
+			}
+
+			.search_options[disabled] {
+				display: none;	
 			}
 
 			.date_filter_controls {
@@ -97,12 +111,14 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			Method: 0,
 			Name: 0
 		};
+
+		this.hideSearchOptions = true;
 	}
 
-	connectedCallback() {
+	async connectedCallback() {
 		super.connectedCallback();
 
-		this.cpdRecordService.getRecordSummary(this.page)
+		await this.cpdRecordService.getRecordSummary(this.page)
 			.then(data => {
 				this.cpdRecords = data;
 			});
@@ -151,6 +167,14 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		this.fetchRecords();
 	}
 
+	toggleSearchOptions() {
+		this.hideSearchOptions = !this.hideSearchOptions;
+	}
+
+	renderShowHideButtonText() {
+		return this.hideSearchOptions ? this.localize('showSearchOptions') : this.localize('hideSearchOptions');
+	}
+
 	render() {
 		return html`
 			<custom-style>
@@ -162,33 +186,46 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					${this.localize('lblAddNewCPD')}
 				</d2l-button>
 
-				<d2l-input-search
-					id="search_filter"
-					placeholder=${this.localize('lblSearchPlaceholder')}
-					@d2l-input-search-searched="${this.updateNameFilter}"
+				<div class="search_bar">
+					<d2l-input-search
+						id="search_filter"
+						placeholder=${this.localize('lblSearchPlaceholder')}
+						@d2l-input-search-searched="${this.updateNameFilter}"
+						>
+					</d2l-input-search>
+
+					<d2l-button-subtle 
+						text="${this.renderShowHideButtonText()}"
+						@click="${this.toggleSearchOptions}"
+						>
+					</d2l-button-subtle>
+				</div>
+
+				<div 
+					class="search_options"
+					?disabled=${this.hideSearchOptions}
 					>
-				</d2l-input-search>
+					<d2l-filter-select
+							label="${this.localize('lblSubject')}"
+							.options=${this.subjectOptions}
+							@d2l-filter-select-updated="${this.updateSubjectFilter}"	
+							>
+					</d2l-filter-select>				
 
-				<d2l-filter-select
-						label="${this.localize('lblSubject')}"
-						.options=${this.subjectOptions}
-						@d2l-filter-select-updated="${this.updateSubjectFilter}"
-						>
-				</d2l-filter-select>
+					<d2l-filter-select
+							label="${this.localize('lblMethod')}"
+							.options=${this.methodOptions}
+							@d2l-filter-select-updated="${this.updateMethodFilter}"	
+							>
+					</d2l-filter-select>				
 
-				<d2l-filter-select
-						label="${this.localize('lblMethod')}"
-						.options=${this.methodOptions}
-						@d2l-filter-select-updated="${this.updateMethodFilter}"
-						>
-				</d2l-filter-select>
-
-				<div id="date_filter">
-					<label id="date_label">${this.localize('lblDateRange')}</label>
-					<div class="date_filter_controls">
-						<d2l-date-picker></d2l-date-picker>
-						<label>${this.localize('lblTo')}</label>
-						<d2l-date-picker></d2l-date-picker>
+					<div id="date_filter">
+						<label id="date_label">${this.localize('lblDateRange')}</label>
+						<div class="date_filter_controls">
+							<d2l-date-picker></d2l-date-picker>
+							<label>${this.localize('lblTo')}</label>
+							<d2l-date-picker></d2l-date-picker>
+						</div>
 					</div>
 				</div>
 
