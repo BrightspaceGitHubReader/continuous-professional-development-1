@@ -29,7 +29,7 @@ class Cpd extends BaseMixin(LitElement) {
 		return html`
 			<d2l-tabs>
 				<d2l-tab-panel
-					text="${this.localize('CPDHeader')}"
+					text="${this.localize('myCPDHeader')}"
 					?selected=${(!this.page || this.page === 'my-records')}
 					>
 					<d2l-my-cpd-records></d2l-my-cpd-records>
