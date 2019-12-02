@@ -96,6 +96,15 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		this.attachments = event.detail.attachmentsList;
 	}
 
+	cancelForm() {
+		this.fireNavigateMyCpdEvent();
+	}
+
+	fireNavigateMyCpdEvent() {
+		const event = new CustomEvent('d2l-navigate-my-cpd');
+		this.dispatchEvent(event);
+	}
+
 	saveForm() {
 		const record = {
 			Name: this.shadowRoot.querySelector('#recordName').value,
@@ -111,6 +120,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			})
 		};
 		this.cpdRecordService.createRecord(record, this.attachments);
+		this.fireNavigateMyCpdEvent();
 	}
 
 	render() {
@@ -178,8 +188,8 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					${this.questions.map((q) => this.renderQuestion(q))}
 				</ul>
 				<div>
-					<d2l-button @click="${this.saveForm}">${this.localize('save')}</d2l-button>
-					<d2l-button>${this.localize('btnCancel')}</d2l-button>
+					<d2l-button @click=${this.saveForm}>${this.localize('save')}</d2l-button>
+					<d2l-button @click=${this.cancelForm}>${this.localize('btnCancel')}</d2l-button>
 				</div>
 			</main>
 		`;
