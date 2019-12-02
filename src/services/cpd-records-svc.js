@@ -39,7 +39,9 @@ export class CpdRecordsService {
 	}
 
 	static getQuestions() {
-		return [];
+		const url = window.data.fraSettings.valenceHost;
+		const base_path = '/d2l/api/customization/cpd/1.0/record/question';
+		return this.getRequest(url, base_path);
 	}
 
 	static getRecordSummary(page, filters) {
@@ -72,7 +74,14 @@ export class CpdRecordsService {
 	}
 
 	static getTypes() {
-		return ['Structured', 'Unstructured'];
+		return [ {
+			Id: 0,
+			Name: 'Unstructured'
+		},
+		{
+			Id: 1,
+			Name: 'Structured'
+		}];
 	}
 
 	static postJsonRequest(url, base_path, object) {

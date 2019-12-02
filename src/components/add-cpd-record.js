@@ -1,5 +1,6 @@
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import './attachments';
+import './filter-select.js';
 import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
@@ -9,10 +10,19 @@ import { selectStyles } from '@brightspace-ui/core/components/inputs/input-selec
 class AddCpdRecord extends BaseMixin(LitElement) {
 	static get properties() {
 		return {
+			attachments: {
+				type: Array
+			},
+			methods: {
+				type: Array
+			},
 			questions: {
 				type: Array
 			},
-			attachments: {
+			subjects: {
+				type: Array
+			},
+			types: {
 				type: Array
 			}
 		};
@@ -59,7 +69,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	constructor() {
 		super();
 		this.cpdRecordService = CpdRecordsServiceFactory.getRecordsService();
-		this.questions =  this.cpdRecordService.getQuestions();
+		this.questions =  [];
 		this.subjects = [];
 		this.methods = [];
 		this.types = this.cpdRecordService.getTypes();
@@ -77,6 +87,10 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			.then(body => {
 				this.methods = body;
 			});
+		this.cpdRecordService.getQuestions()
+			.then(body => {
+				this.questions = body;
+			});
 	}
 
 	attachmentsUpdated(event) {
@@ -84,19 +98,25 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	}
 
 	saveForm() {
-		const test = this.shadowRoot.querySelector('#recordName');
+		// [
+		// 	{
+		// 		AnswerText: 'No answer',
+		// 		QuestionId: 1
+		// 	}
+		// ]
+
 		const record = {
-			Name: 'test',
-			SubjectId: 1,
-			IsStructured: false,
-			MethodId: 1,
-			creditMinutes: 12,
-			Answers: [
-				{
-					AnswerText: 'No answer',
-					QuestionId: 1
-				}
-			]
+			Name: this.shadowRoot.querySelector('#recordName').value,
+			SubjectId: this.shadowRoot.querySelector('#subjectSelect').value,
+			IsStructured: !!+this.shadowRoot.querySelector('#typeSelect').value,
+			MethodId: this.shadowRoot.querySelector('#methodSelect').value,
+			creditMinutes: this.shadowRoot.querySelector('#creditHours').value * 60 + this.shadowRoot.querySelector('#creditMinutes').value,
+			Answers: this.questions.map(question => {
+				return {
+					QuestionId: question.Id,
+					AnswerText: this.shadowRoot.querySelector(`#answerText_${question.Id}`).getContent()
+				};
+			})
 		};
 		this.cpdRecordService.createRecord(record, this.attachments);
 	}
@@ -150,8 +170,8 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						<div>
 							<div>
 								<label for="creditHours" class=d2l-label-text>${this.localize('credits')}</label>
-								<d2l-input-text id="creditHours" placeholder=${this.localize('enterCreditHours')}></d2l-input-text>
-								<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')}></d2l-input-text>
+								<d2l-input-text id="creditHours" placeholder=${this.localize('enterCreditHours')} type="number"></d2l-input-text>
+								<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')} type="number"></d2l-input-text>
 							</div>
 							<div>
 								<label for="gradeValue" class=d2l-label-text>${this.localize('grade')}</label>
@@ -163,7 +183,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						<label>${this.localize('addEvidence')}</label>
 						<d2l-attachments @d2l-attachments-list-updated=${this.attachmentsUpdated}></d2l-attachments>
 					<li>
-					${this.questions.map((q, index) => this.renderQuestion(q, index))}
+					${this.questions.map((q) => this.renderQuestion(q))}
 				</ul>
 				<div>
 					<d2l-button @click="${this.saveForm}">${this.localize('save')}</d2l-button>
@@ -173,24 +193,29 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		`;
 	}
 
-	renderQuestion(question, index) {
+	renderQuestion(question) {
 		return html`
 			<li>
-				<label for=${`answerText_${index}`}>${question}</label>
+				<label for=${`answerText_${question.Id}`}>${question.QuestionText}</label>
 				<d2l-html-editor
-					id=${`answerText_${index}`}
-					editor-id=${`answerText_${index}_editor`}
+					id=${`answerText_${question.Id}`}
+					editor-id=${`answerText_${question.Id}_editor`}
 					toolbar="bold italic underline | bullist d2l_formatrollup | undo redo "
 					plugins="lists d2l_formatrollup"
 					app-root=${`${window.location.origin}/app/node_modules/d2l-html-editor/`}>
-						<div id=${`answerText_${index}_editor`} ></div>
+						<div id=${`answerText_${question.Id}_editor`} ></div>
 				</d2l-html-editor>
 			</li>
 		`;
 	}
 	renderSelect(option) {
 		return html`
-			<option value="${option}">${option}</option>
+		<option 
+			value="${option.Id}"
+			?selected=${this.selected === option.Id}
+			>
+			${option.Name}
+		</option>
 		`;
 	}
 
