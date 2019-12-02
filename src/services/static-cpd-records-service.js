@@ -8,6 +8,9 @@ const getOptions = {
 
 export class TestDataService {
 
+	static createRecord() {
+	}
+
 	static getMethods() {
 		const data = [
 			{'Id': 1, 'Name': 'Course'},
@@ -18,11 +21,12 @@ export class TestDataService {
 	}
 
 	static getQuestions() {
-		return ['Why is Ben moving?'];
+		const data = [{Id:1, QuestionText:'Why is Ben moving?'}];
+		return Promise.resolve(data);
 	}
 
 	static getRecordSummary() {
-		return fetch('../data/cpd_records.json', getOptions).then(r => r.json());
+		return fetch('../../../data/cpd_records.json', getOptions).then(r => r.json());
 	}
 
 	static getSubjects() {
