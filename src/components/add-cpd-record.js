@@ -151,7 +151,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		return html`
 			<li>
 				<label for=${`answerText_${index}`}>${question}</label>
-				<d2l-html-editor
+					<d2l-html-editor
 					id=${`answerText_${index}`}
 					editor-id=${`answerText_${index}_editor`}
 					toolbar="bold italic underline | bullist d2l_formatrollup | undo redo "

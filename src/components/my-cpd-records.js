@@ -1,5 +1,4 @@
 import '@brightspace-ui/core/components/button/button.js';
-import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-table/d2l-table.js';
@@ -65,7 +64,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			.date_filter_controls {
 				width: 40%;
 				display: flex;
-				justify-content: space-between;	
+				justify-content: space-between;
 				align-items: baseline;
 			}
 
@@ -173,16 +172,16 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				<d2l-filter-select
 						label="${this.localize('lblSubject')}"
 						.options=${this.subjectOptions}
-						@d2l-filter-select-updated="${this.updateSubjectFilter}"	
+						@d2l-filter-select-updated="${this.updateSubjectFilter}"
 						>
-				</d2l-filter-select>				
+				</d2l-filter-select>
 
 				<d2l-filter-select
 						label="${this.localize('lblMethod')}"
 						.options=${this.methodOptions}
-						@d2l-filter-select-updated="${this.updateMethodFilter}"	
+						@d2l-filter-select-updated="${this.updateMethodFilter}"
 						>
-				</d2l-filter-select>				
+				</d2l-filter-select>
 
 				<div id="date_filter">
 					<label id="date_label">${this.localize('lblDateRange')}</label>
@@ -258,7 +257,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					</d2l-tbody>
 				</d2l-table>
 				<div class="page_control">
-						<d2l-page-select 
+						<d2l-page-select
 							pages="${this.cpdRecords.TotalPages}"
 							page="${this.page}"
 							@d2l-page-select-updated="${this.updatePage}"

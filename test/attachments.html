@@ -9,7 +9,7 @@
 		<script src="/node_modules/chai/chai.js"></script>
 		<script src="/node_modules/@polymer/test-fixture/test-fixture.js"></script>
 		<script src="/node_modules/wct-mocha/wct-mocha.js"></script>
-		<script type="module" src="../src/components/d2l-attachment-list.js"></script>
+		<script type="module" src="../src/components/attachment-list.js"></script>
 	</head>
 	<body>
 
@@ -25,9 +25,11 @@
 			describe('d2l-attachment-list', () => {
 				let element;
 				describe('basic', () => {
-					beforeEach(async() => {
+					beforeEach((done) => {
 						element = fixture('basic');
-						await element.updateComplete;
+						element.updateComplete.then(() => {
+							flush(done);
+						});
 					});
 					it('should pass all axe tests', async() => {
 						await runAxe(element);
