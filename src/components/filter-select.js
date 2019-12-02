@@ -1,3 +1,4 @@
+import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
@@ -56,7 +57,7 @@ class FilterSelect extends BaseMixin(LitElement) {
 
 	renderSelect(option) {
 		return html`
-		<option 
+		<option
 			value="${option.Id}"
 			?selected=${this.selected === option.Id}
 			>
@@ -81,8 +82,8 @@ class FilterSelect extends BaseMixin(LitElement) {
 			<label>
 				${this.label}
 				<div class="select_filter_controls">
-					<d2l-input-checkbox 
-						checked 
+					<d2l-input-checkbox
+						checked
 						@change="${this.filterEnable}"
 					>
 					</d2l-input-checkbox>
