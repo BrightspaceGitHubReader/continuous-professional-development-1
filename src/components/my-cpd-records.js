@@ -143,6 +143,11 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			});
 	}
 
+	newRecordButtonClick() {
+		const event = new CustomEvent('d2l-navigate-add-cpd');
+		this.dispatchEvent(event);
+	}
+
 	updatePage(e) {
 		console.log(e);
 		this.page = e.detail.page;
@@ -182,8 +187,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			</custom-style>
 
 			<div role="main">
-				<d2l-button id="new_record">
-					${this.localize('addNewCPD')}
+
+					
+				<d2l-button id="new_record" @click="${this.newRecordButtonClick}">
+          ${this.localize('addNewCPD')}
 				</d2l-button>
 
 				<div class="search_bar">

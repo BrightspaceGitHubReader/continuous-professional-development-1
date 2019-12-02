@@ -107,12 +107,12 @@ class Attachments extends BaseMixin(LitElement) {
 				${this.readOnly ? html`
 				<d2l-attachment-list 
 				.attachmentsList=${this.attachmentsList}
-				@d2l-attachments-list-updated="${this.updateAttachmentList}"
+				@internal-attachments-list-removed="${this.updateAttachmentList}"
 				readOnly>
 			</d2l-attachment-list>` : html`
 			<d2l-attachment-list 
 				.attachmentsList=${this.attachmentsList}
-				@d2l-attachments-list-updated="${this.updateAttachmentList}">
+				@internal-attachments-list-removed="${this.updateAttachmentList}">
 			</d2l-attachment-list>`}
 			
 			<d2l-dialog id="add_file_dialog" title-text="${this.localize('addAFile')}" @d2l-dialog-close="${this.onDialogClosed}">
@@ -120,7 +120,7 @@ class Attachments extends BaseMixin(LitElement) {
 					<d2l-labs-file-uploader id="file_loader" multiple @d2l-file-uploader-files-added="${this.newFilesAdded}">
 					</d2l-labs-file-uploader>
 				</div>				
-				<d2l-attachment-list .attachmentsList=${this.currentAttachments} @d2l-attachments-list-updated="${this.updateCurrentEventList}">
+				<d2l-attachment-list .attachmentsList=${this.currentAttachments} @internal-attachments-list-updated="${this.updateCurrentEventList}">
 				</d2l-attachment-list>
 				<d2l-button slot="footer" primary dialog-action @click="${this.commitCurrentFiles}">${this.localize('add')}</d2l-button>
 				<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
