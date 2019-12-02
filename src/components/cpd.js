@@ -29,13 +29,13 @@ class Cpd extends BaseMixin(LitElement) {
 		return html`
 			<d2l-tabs>
 				<d2l-tab-panel
-					text="${this.localize('lblCPDHeader')}"
+					text="${this.localize('CPDHeader')}"
 					?selected=${(!this.page || this.page === 'my-records')}
 					>
 					<d2l-my-cpd-records></d2l-my-cpd-records>
 				</d2l-tab-panel>
 				<d2l-tab-panel
-					text="${this.localize('lblPendingRecords')}"
+					text="${this.localize('pendingRecords')}"
 					?selected=${this.page === 'pending-records'}
 					>
 					<d2l-pending-records></d2l-pending-records>

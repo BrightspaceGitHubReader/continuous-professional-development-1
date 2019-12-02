@@ -183,13 +183,13 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 			<div role="main">
 				<d2l-button id="new_record">
-					${this.localize('lblAddNewCPD')}
+					${this.localize('addNewCPD')}
 				</d2l-button>
 
 				<div class="search_bar">
 					<d2l-input-search
 						id="search_filter"
-						placeholder=${this.localize('lblSearchPlaceholder')}
+						placeholder=${this.localize('searchPlaceholder')}
 						@d2l-input-search-searched="${this.updateNameFilter}"
 						>
 					</d2l-input-search>
@@ -206,24 +206,24 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					?disabled=${this.hideSearchOptions}
 					>
 					<d2l-filter-select
-							label="${this.localize('lblSubject')}"
+							label="${this.localize('subject')}"
 							.options=${this.subjectOptions}
 							@d2l-filter-select-updated="${this.updateSubjectFilter}"	
 							>
 					</d2l-filter-select>				
 
 					<d2l-filter-select
-							label="${this.localize('lblMethod')}"
+							label="${this.localize('method')}"
 							.options=${this.methodOptions}
 							@d2l-filter-select-updated="${this.updateMethodFilter}"	
 							>
 					</d2l-filter-select>				
 
 					<div id="date_filter">
-						<label id="date_label">${this.localize('lblDateRange')}</label>
+						<label id="date_label">${this.localize('dateRange')}</label>
 						<div class="date_filter_controls">
 							<d2l-date-picker></d2l-date-picker>
-							<label>${this.localize('lblTo')}</label>
+							<label>${this.localize('to')}</label>
 							<d2l-date-picker></d2l-date-picker>
 						</div>
 					</div>
@@ -236,32 +236,32 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					<d2l-thead>
 						<d2l-tr role="row">
 							<d2l-th>
-								${this.localize('lblName')}
+								${this.localize('name')}
 							</d2l-th>
 
 
 							<d2l-th>
-								${this.localize('lblSubject')}
+								${this.localize('subject')}
 							</d2l-th>
 
 
 							<d2l-th>
-								${this.localize('lblType')}
+								${this.localize('type')}
 							</d2l-th>
 
 
 							<d2l-th>
-								${this.localize('lblMethod')}
+								${this.localize('method')}
 							</d2l-th>
 
 
 							<d2l-th>
-								${this.localize('lblCreditMinutes')}
+								${this.localize('creditMinutes')}
 							</d2l-th>
 
 
 							<d2l-th>
-								${this.localize('lblDateAdded')}
+								${this.localize('dateAdded')}
 							</d2l-th>
 						</d2l-tr>
 					</d2l-thead>
