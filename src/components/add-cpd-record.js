@@ -183,13 +183,13 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					</li>
 					<li>
 						<label>${this.localize('addEvidence')}</label>
-						<d2l-attachments @d2l-attachments-list-updated=${this.attachmentsUpdated}></d2l-attachments>
+						<d2l-attachments @d2l-attachments-list-updated="${this.attachmentsUpdated}"></d2l-attachments>
 					<li>
 					${this.questions.map((q) => this.renderQuestion(q))}
 				</ul>
 				<div>
-					<d2l-button @click=${this.saveForm}>${this.localize('save')}</d2l-button>
-					<d2l-button @click=${this.cancelForm}>${this.localize('btnCancel')}</d2l-button>
+					<d2l-button @click="${this.saveForm}">${this.localize('save')}</d2l-button>
+					<d2l-button @click="${this.cancelForm}">${this.localize('btnCancel')}</d2l-button>
 				</div>
 			</main>
 		`;

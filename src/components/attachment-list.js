@@ -52,11 +52,11 @@ class AttachmentList extends BaseMixin(LitElement) {
 		this.dispatchEvent(event);
 	}
 
-	fireAttachmentListRemoved(removedIted) {
+	fireAttachmentListRemoved(removedItem) {
 		const event = new CustomEvent('internal-attachments-list-removed', {
 			detail: {
 				attachmentsList: this.attachmentsList,
-				removedIted: removedIted
+				removedItem: removedItem
 			}
 		});
 		this.dispatchEvent(event);

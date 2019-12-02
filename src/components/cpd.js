@@ -31,7 +31,7 @@ class Cpd extends BaseMixin(LitElement) {
 	render() {
 		if (this.page === 'add-cpd-record') {
 			return html`
-				<d2l-add-cpd-record @d2l-navigate-my-cpd=${this.navigateToMyCpd}><d2l-add-cpd-record>
+				<d2l-add-cpd-record @d2l-navigate-my-cpd="${this.navigateToMyCpd}"><d2l-add-cpd-record>
 			`;
 		}
 		return html`
@@ -40,7 +40,7 @@ class Cpd extends BaseMixin(LitElement) {
 					text="${this.localize('lblCPDHeader')}"
 					?selected=${(!this.page || this.page === 'my-records')}
 					>
-					<d2l-my-cpd-records @d2l-navigate-add-cpd=${this.navigateToAddCpd}></d2l-my-cpd-records>
+					<d2l-my-cpd-records @d2l-navigate-add-cpd="${this.navigateToAddCpd}"></d2l-my-cpd-records>
 				</d2l-tab-panel>
 				<d2l-tab-panel
 					text="${this.localize('lblPendingRecords')}"

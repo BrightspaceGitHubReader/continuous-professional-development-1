@@ -81,7 +81,6 @@ export class CpdRecordsService {
 	}
 
 	static postWithFilesRequest(url, base_path, object, files) {
-
 		const data = new FormData();
 		data.append('record', JSON.stringify(object));
 		for (const file of files) {
