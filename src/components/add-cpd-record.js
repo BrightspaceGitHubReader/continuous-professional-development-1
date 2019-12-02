@@ -98,13 +98,6 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	}
 
 	saveForm() {
-		// [
-		// 	{
-		// 		AnswerText: 'No answer',
-		// 		QuestionId: 1
-		// 	}
-		// ]
-
 		const record = {
 			Name: this.shadowRoot.querySelector('#recordName').value,
 			SubjectId: this.shadowRoot.querySelector('#subjectSelect').value,
