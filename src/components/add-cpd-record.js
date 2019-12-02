@@ -135,7 +135,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						<ul class="innerlist">
 							<li>
 								<div>
-									<label for="typeSelect">${this.localize('lblType')}</label>
+									<label for="typeSelect">${this.localize('type')}</label>
 								</div>
 								<select
 									class="d2l-input-select select_filter"
@@ -146,7 +146,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 							</li>
 							<li>
 								<div>
-									<label for="subjectSelect">${this.localize('lblSubject')}</label>
+									<label for="subjectSelect">${this.localize('subject')}</label>
 								</div>
 								<select
 									class="d2l-input-select select_filter"
@@ -157,7 +157,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 							</li>
 							<li>
 								<div>
-									<label for="methodSelect">${this.localize('lblMethod')}</label>
+									<label for="methodSelect">${this.localize('method')}</label>
 								</div>
 								<select
 									class="d2l-input-select select_filter"

@@ -23,10 +23,10 @@ class PendingRecords extends BaseMixin(LitElement) {
 		return html`
 		<div>
 			<div>
-				<d2l-input-search class="inline" placeholder="${this.localize('lblSearchBarDefault')}"></d2l-input-search>
-				<d2l-link class="inline">${this.localize('lblHideSearchOptions')}</d2l-link>
+				<d2l-input-search class="inline" placeholder="${this.localize('searchBarDefault')}"></d2l-input-search>
+				<d2l-link class="inline">${this.localize('hideSearchOptions')}</d2l-link>
             </div>
-            <h5>${this.localize('lblDateRange')}</h5>
+            <h5>${this.localize('dateRange')}</h5>
             <div>
                 <d2l-date-picker class="inline"></d2l-date-picker>
                 <label>to<label>
