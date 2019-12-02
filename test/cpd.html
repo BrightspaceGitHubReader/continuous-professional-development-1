@@ -55,7 +55,7 @@
 					});
 					it('should have my records tab selected if page param is set to pending', (done) => {
 						const selectedTabPanel = element.shadowRoot.querySelector('d2l-tab-panel[selected]');
-						assert(selectedTabPanel.text, 'My Cpd Records');
+						expect(selectedTabPanel.text).to.equal('My CPD Records');
 						done();
 					});
 				});
@@ -68,7 +68,7 @@
 					});
 					it('should have pending tab selected if page param is set to pending', (done) => {
 						const selectedTabPanel = element.shadowRoot.querySelector('d2l-tab-panel[selected]');
-						assert(selectedTabPanel.text, 'Pending Records');
+						expect(selectedTabPanel.text).to.equal('Pending Records');
 						done();
 					});
 				});

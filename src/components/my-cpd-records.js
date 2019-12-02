@@ -78,7 +78,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			.date_filter_controls {
 				width: 40%;
 				display: flex;
-				justify-content: space-between;	
+				justify-content: space-between;
 				align-items: baseline;
 			}
 
@@ -294,7 +294,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					</d2l-tbody>
 				</d2l-table>
 				<div class="page_control">
-						<d2l-page-select 
+						<d2l-page-select
 							pages="${this.cpdRecords.TotalPages}"
 							page="${this.page}"
 							@d2l-page-select-updated="${this.updatePage}"
