@@ -1,6 +1,7 @@
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/button/button-icon.js';
 import '@brightspace-ui/core/components/button/button-subtle.js';
+import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-date-picker/d2l-date-picker.js';
@@ -133,13 +134,19 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			});
 	}
 
-	deleteRecord(e) {
+	deleteRecordButtonClicked(e) {
+		const dialog = this.shadowRoot.querySelector('d2l-dialog-confirm');
+		dialog.opened = true;
 		const recordId = e.target.getAttribute('record-id');
 		if (recordId) {
-			this.cpdRecordService.deleteRecord(recordId)
-				.then(() => {
-					this.fetchRecords();
-				});
+			dialog.addEventListener('d2l-dialog-close', (e) => {
+				if (e.detail.action === 'yes') {
+					this.cpdRecordService.deleteRecord(recordId)
+						.then(() => {
+							this.fetchRecords();
+						});
+				}
+			});
 		}
 	}
 
@@ -285,11 +292,15 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					</d2l-thead>
 
 					<d2l-tbody>
-						${ this.cpdRecords.RecordSummaries && this.cpdRecords.RecordSummaries.map(record => html`
+						${ this.cpdRecords.RecordSummaries && this.cpdRecords.RecordSummaries.map(record => { const {RecordName} = record; return html`
 								<d2l-tr role="row">
 									<d2l-td>
 										${record.RecordName}
-										<d2l-button-icon @click="${this.deleteRecord}" text="delete" icon="tier1:delete" record-id="${record.RecordId}"></d2l-button-icon>
+										<d2l-button-icon @click="${this.deleteRecordButtonClicked}" icon="tier1:delete" record-id="${record.RecordId}"></d2l-button-icon>
+										<d2l-dialog-confirm title-text="${this.localize('delete', {RecordName})}" text="${this.localize('confirmDeleteRecord')}">
+											<d2l-button slot="footer" primary dialog-action="yes">Yes</d2l-button>
+											<d2l-button slot="footer" dialog-action>No</d2l-button>
+										</d2l-dialog-confirm>
 									</d2l-td>
 									<d2l-td>
 										${record.SubjectName}
@@ -307,9 +318,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 										${record.DateAdded}
 									</d2l-td>
 								</d2l-tr>
-							`
-	)
-}
+							`;})}
 					</d2l-tbody>
 				</d2l-table>
 				<div class="page_control">
