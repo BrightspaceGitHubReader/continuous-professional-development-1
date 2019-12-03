@@ -11,14 +11,12 @@ d2lfetch.use({
 
 export class CpdRecordsService {
 
-	static basePath(action) { return `/d2l/api/customization/cpd/1.0/${action}`; }
-
 	static createRecord(record, files) {
-		return this.postWithFilesRequest(this.basePath(this.Record), record, files);
+		return this.postWithFilesRequest(this.getCpdPath(this.Record), record, files);
 	}
 
 	static deleteRecord(recordId) {
-		const request = new Request(`${this.Host}${this.basePath(this.Record)}/${recordId}`, {
+		const request = new Request(`${this.Host}${this.getCpdPath(this.Record)}/${recordId}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type' : 'application/json'
@@ -27,16 +25,18 @@ export class CpdRecordsService {
 		return d2lfetch.fetch(request).then(r => r.json());
 	}
 
+	static getCpdPath(action) { return `/d2l/api/customization/cpd/1.0/${action}`; }
+
 	static getMethods() {
-		return this.getRequest(this.basePath(this.Method));
+		return this.getRequest(this.getCpdPath(this.Method));
 	}
 
 	static getQuestions() {
-		return this.getRequest(this.basePath(this.Question));
+		return this.getRequest(this.getCpdPath(this.Question));
 	}
 
 	static getRecordSummary(page, filters) {
-		let base_path = `${this.basePath(this.Record)}?pageNumber=${page}`;
+		let base_path = `${this.getCpdPath(this.Record)}?pageNumber=${page}`;
 
 		if (filters) {
 			const { Subject, Method, Name } = filters;
