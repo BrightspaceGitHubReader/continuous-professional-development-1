@@ -1,12 +1,11 @@
 export function dateParamString(dateStr, end = false) {
 	const date = new Date(`${dateStr}`);
-	const year = date.getUTCFullYear();
-	const month = date.getUTCMonth() + 1;
-	const day = date.getDate();
-	const zeroPrefixDay = day < 10 ? `0${day}` : day;
-	return end ?
-		`${year}-${month}-${zeroPrefixDay}T23:59:59.000Z` :
-		`${year}-${month}-${zeroPrefixDay}T00:00:00.000Z`;
+	if (end) {
+		date.setHours(23);
+		date.setMinutes(59);
+		date.setSeconds(59);
+	}
+	return date.toISOString();
 }
 
 export function getHoursAndMinutes(minutes) {
