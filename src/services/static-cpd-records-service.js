@@ -26,7 +26,7 @@ export class TestDataService {
 	}
 
 	static getRecordSummary() {
-		return fetch('../../../data/cpd_records.json', getOptions).then(r => r.json());
+		return fetch('../../../../data/cpd_records.json', getOptions).then(r => r.json());
 	}
 
 	static getSubjects() {
