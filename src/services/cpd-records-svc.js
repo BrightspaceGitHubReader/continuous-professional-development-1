@@ -22,7 +22,7 @@ export class CpdRecordsService {
 				'Content-Type' : 'application/json'
 			}
 		});
-		return d2lfetch.fetch(request).then(r => r.json());
+		return d2lfetch.fetch(request);
 	}
 
 	static getCpdPath(action) { return `/d2l/api/customization/cpd/1.0/${action}`; }

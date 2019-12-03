@@ -1,4 +1,5 @@
 import '@brightspace-ui/core/components/button/button.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
 import '@brightspace-ui/core/components/button/button-subtle.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
@@ -72,7 +73,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			}
 
 			.search_options[disabled] {
-				display: none;	
+				display: none;
 			}
 
 			.date_filter_controls {
@@ -132,6 +133,16 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			});
 	}
 
+	deleteRecord(e) {
+		const recordId = e.target.getAttribute('record-id');
+		if (recordId) {
+			this.cpdRecordService.deleteRecord(recordId)
+				.then(() => {
+					this.fetchRecords();
+				});
+		}
+	}
+
 	getType(isStructured) {
 		return isStructured ? 'Structured' : 'Unstructured';
 	}
@@ -188,7 +199,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 			<div role="main">
 
-					
+
 				<d2l-button id="new_record" @click="${this.newRecordButtonClick}">
           ${this.localize('addNewCPD')}
 				</d2l-button>
@@ -201,30 +212,30 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 						>
 					</d2l-input-search>
 
-					<d2l-button-subtle 
+					<d2l-button-subtle
 						text="${this.renderShowHideButtonText()}"
 						@click="${this.toggleSearchOptions}"
 						>
 					</d2l-button-subtle>
 				</div>
 
-				<div 
+				<div
 					class="search_options"
 					?disabled=${this.hideSearchOptions}
 					>
 					<d2l-filter-select
 							label="${this.localize('subject')}"
 							.options=${this.subjectOptions}
-							@d2l-filter-select-updated="${this.updateSubjectFilter}"	
+							@d2l-filter-select-updated="${this.updateSubjectFilter}"
 							>
-					</d2l-filter-select>				
+					</d2l-filter-select>
 
 					<d2l-filter-select
 							label="${this.localize('method')}"
 							.options=${this.methodOptions}
-							@d2l-filter-select-updated="${this.updateMethodFilter}"	
+							@d2l-filter-select-updated="${this.updateMethodFilter}"
 							>
-					</d2l-filter-select>				
+					</d2l-filter-select>
 
 					<div id="date_filter">
 						<label id="date_label">${this.localize('dateRange')}</label>
@@ -278,6 +289,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 								<d2l-tr role="row">
 									<d2l-td>
 										${record.RecordName}
+										<d2l-button-icon @click="${this.deleteRecord}" text="delete" icon="tier1:delete" record-id="${record.RecordId}"></d2l-button-icon>
 									</d2l-td>
 									<d2l-td>
 										${record.SubjectName}

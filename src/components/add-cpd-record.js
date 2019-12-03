@@ -189,7 +189,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				</ul>
 				<div>
 					<d2l-button @click="${this.saveForm}">${this.localize('save')}</d2l-button>
-					<d2l-button @click="${this.cancelForm}">${this.localize('btnCancel')}</d2l-button>
+					<d2l-button @click="${this.cancelForm}">${this.localize('cancel')}</d2l-button>
 				</div>
 			</main>
 		`;
@@ -212,7 +212,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	}
 	renderSelect(option) {
 		return html`
-		<option 
+		<option
 			value="${option.Id}"
 			?selected=${this.selected === option.Id}
 			>
