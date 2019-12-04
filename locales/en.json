@@ -14,6 +14,7 @@
   "icon": "Icon",
   "method": "Method",
   "name": "Name",
+  "no": "No",
   "pendingRecords": "Pending Records",
   "progress": "Progress",
   "searchBarDefault": "Search For...",
@@ -31,5 +32,6 @@
   "selectDefault": "Choose a {object}",
   "showSearchOptions": "Show search options",
   "hideSearchOptions": "Hide search options",
-  "pageCount": "{numerator} of {denominator}"
+  "pageCount": "{numerator} of {denominator}",
+  "yes": "Yes"
 }
