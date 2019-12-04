@@ -45,7 +45,7 @@ export class CpdRecordsService {
 		let base_path = `${this.getCpdPath(this.Record)}?pageNumber=${page}`;
 
 		if (filters) {
-      const { Subject, Method, Name, StartDate, EndDate } = filters;
+			const { Subject, Method, Name, StartDate, EndDate } = filters;
 			if (Subject.value && filters.Subject.enabled) base_path += `&subject=${filters.Subject.value}`;
 			if (Method.value && filters.Method.enabled) base_path += `&method=${filters.Method.value}`;
 			if (Name.value) base_path += `&name=${filters.Name.value}`;
