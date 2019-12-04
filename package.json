@@ -78,7 +78,7 @@
     "d2l-html-editor": "github:Brightspace/d2l-html-editor#semver:^2",
     "d2l-table": "BrightspaceUI/table#semver:^2",
     "d2l-tabs": "github:BrightspaceUI/tabs#semver:^1",
-    "lit-element": "^2",
-    "moment": "^2.24.0"
+    "dayjs": "^1.8.17",
+    "lit-element": "^2"
   }
 }

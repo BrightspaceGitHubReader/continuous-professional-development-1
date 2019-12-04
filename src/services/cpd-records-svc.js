@@ -46,11 +46,11 @@ export class CpdRecordsService {
 
 		if (filters) {
 			const { Subject, Method, Name, StartDate, EndDate } = filters;
-			if (Subject.value && filters.Subject.enabled) base_path += `&subject=${filters.Subject.value}`;
-			if (Method.value && filters.Method.enabled) base_path += `&method=${filters.Method.value}`;
-			if (Name.value) base_path += `&name=${filters.Name.value}`;
-			if (StartDate.value) base_path += `&startdate=${dateParamString(filters.StartDate.value)}`;
-			if (EndDate.value) base_path += `&enddate=${dateParamString(filters.EndDate.value, true)}`;
+			if (Subject.value && Subject.enabled) base_path += `&subject=${Subject.value}`;
+			if (Method.value && Method.enabled) base_path += `&method=${Method.value}`;
+			if (Name.value) base_path += `&name=${Name.value}`;
+			if (StartDate.value) base_path += `&startdate=${dateParamString(StartDate.value)}`;
+			if (EndDate.value) base_path += `&enddate=${dateParamString(EndDate.value, true)}`;
 		}
 
 		return this.getRequest(base_path);

@@ -1,12 +1,12 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
 export function dateParamString(dateStr, end = false) {
-	const date = moment.utc(dateStr, 'YYYY-MM-DD');
+	dayjs.extend(utc);
+	let date = dayjs.utc(dateStr);
 
 	if (end) {
-		date.endOf('day');
-	} else {
-		date.startOf('day');
+		date = date.endOf('day');
 	}
 
 	return date.toISOString();
