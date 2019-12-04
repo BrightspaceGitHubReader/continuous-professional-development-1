@@ -33,28 +33,8 @@ class Attachments extends BaseMixin(LitElement) {
 
 	constructor() {
 		super();
-		this._attachmentsList = [];
-		this._currentAttachments = [];
-	}
-
-	get attachmentsList() {
-		return this._attachmentsList;
-	}
-
-	set attachmentsList(val) {
-		const oldVal = [...this._attachmentsList];
-		this._attachmentsList = val;
-		this.requestUpdate('attachmentsList', oldVal).then(() => this.fireAttachmentListUpdated(oldVal));
-	}
-
-	get currentAttachments() {
-		return this._currentAttachments;
-	}
-
-	set currentAttachments(val) {
-		const oldVal = [...this._currentAttachments];
-		this._currentAttachments = val;
-		this.requestUpdate('currentAttachments', oldVal);
+		this.attachmentsList = [];
+		this.currentAttachments = [];
 	}
 
 	fireAttachmentListUpdated(oldVal) {
@@ -84,12 +64,10 @@ class Attachments extends BaseMixin(LitElement) {
 		this.updateComplete.then(() => this.shadowRoot.querySelector('#add_file_dialog').resize());
 	}
 
-	updateCurrentEventList(evt) {
-		this.requestUpdate('currentAttachments', evt.detail.oldVal);
-	}
-
 	updateAttachmentList(evt) {
-		this.requestUpdate('attachmentsList', evt.detail.oldVal).then(() => this.fireAttachmentListUpdated(evt.detail.oldVal));
+		const oldVal = [...this.attachmentsList];
+		this.attachmentsList = [...evt.detail.attachmentsList];
+		this.fireAttachmentListUpdated(oldVal);
 	}
 
 	async showFileDialog() {
@@ -106,12 +84,12 @@ class Attachments extends BaseMixin(LitElement) {
 				`}
 				${this.readOnly ? html`
 				<d2l-attachment-list 
-				.attachmentsList=${this.attachmentsList}
+				.attachmentsList="${[...this.attachmentsList]}"
 				@internal-attachments-list-removed="${this.updateAttachmentList}"
 				readOnly>
 			</d2l-attachment-list>` : html`
 			<d2l-attachment-list 
-				.attachmentsList=${this.attachmentsList}
+				.attachmentsList="${[...this.attachmentsList]}"
 				@internal-attachments-list-removed="${this.updateAttachmentList}">
 			</d2l-attachment-list>`}
 			
@@ -119,8 +97,8 @@ class Attachments extends BaseMixin(LitElement) {
 				<div id="file_loader_wrapper">
 					<d2l-labs-file-uploader id="file_loader" multiple @d2l-file-uploader-files-added="${this.newFilesAdded}">
 					</d2l-labs-file-uploader>
-				</div>				
-				<d2l-attachment-list .attachmentsList=${this.currentAttachments} @internal-attachments-list-updated="${this.updateCurrentEventList}">
+				</div>
+				<d2l-attachment-list .attachmentsList="${[...this.currentAttachments]}">
 				</d2l-attachment-list>
 				<d2l-button slot="footer" primary dialog-action @click="${this.commitCurrentFiles}">${this.localize('add')}</d2l-button>
 				<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>

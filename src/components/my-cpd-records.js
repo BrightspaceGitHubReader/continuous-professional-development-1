@@ -1,7 +1,10 @@
 import '@brightspace-ui/core/components/button/button.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
 import '@brightspace-ui/core/components/button/button-subtle.js';
+import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
+import '@brightspace-ui/core/components/link/link.js';
 import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-table/d2l-table.js';
 import './page-select.js';
@@ -73,7 +76,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			}
 
 			.search_options[disabled] {
-				display: none;	
+				display: none;
 			}
 
 			.date_filter_controls {
@@ -135,6 +138,22 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			});
 	}
 
+	deleteRecordButtonClicked(e) {
+		const dialog = this.shadowRoot.querySelector('d2l-dialog-confirm');
+		dialog.opened = true;
+		const recordId = e.target.getAttribute('record-id');
+		if (recordId) {
+			dialog.addEventListener('d2l-dialog-close', (e) => {
+				if (e.detail.action === 'yes') {
+					this.cpdRecordService.deleteRecord(recordId)
+						.then(() => {
+							this.fetchRecords();
+						});
+				}
+			});
+		}
+	}
+
 	getType(isStructured) {
 		return isStructured ? 'Structured' : 'Unstructured';
 	}
@@ -145,9 +164,18 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				this.cpdRecords = data;
 			});
 	}
-
-	newRecordButtonClick() {
+	newRecordButtonClicked() {
 		const event = new CustomEvent('d2l-navigate-add-cpd');
+		this.dispatchEvent(event);
+	}
+
+	recordLinkClicked(e) {
+		const recordId = e.target.getAttribute('record-id');
+		const event = new CustomEvent('d2l-navigate-edit-cpd', {
+			detail: {
+				recordId: recordId
+			}
+		});
 		this.dispatchEvent(event);
 	}
 
@@ -194,8 +222,8 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 			<div role="main">
 
-					
-				<d2l-button id="new_record" @click="${this.newRecordButtonClick}">
+
+				<d2l-button id="new_record" @click="${this.newRecordButtonClicked}">
           ${this.localize('addNewCPD')}
 				</d2l-button>
 
@@ -207,19 +235,19 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 						>
 					</d2l-input-search>
 
-					<d2l-button-subtle 
+					<d2l-button-subtle
 						text="${this.renderShowHideButtonText()}"
 						@click="${this.toggleSearchOptions}"
 						>
 					</d2l-button-subtle>
 				</div>
 
-				<div 
+				<div
 					class="search_options"
 					?disabled=${this.hideSearchOptions}
 					>
 					<d2l-filter-select
-						id="subject_select"	
+					  id="subject_select"	
 						label="${this.localize('subject')}"
 						.options=${this.subjectOptions}
 						@d2l-filter-select-updated="${this.updateFilter}"	
@@ -288,10 +316,17 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					</d2l-thead>
 
 					<d2l-tbody>
-						${ this.cpdRecords.RecordSummaries && this.cpdRecords.RecordSummaries.map(record => html`
+						${ this.cpdRecords.RecordSummaries && this.cpdRecords.RecordSummaries.map(record => { const {RecordName} = record; return html`
 								<d2l-tr role="row">
 									<d2l-td>
-										${record.RecordName}
+										<d2l-link @click="${this.recordLinkClicked}" record-id="${record.RecordId}">
+											${record.RecordName}
+										</d2l-link>
+										<d2l-button-icon @click="${this.deleteRecordButtonClicked}" icon="tier1:delete" record-id="${record.RecordId}"></d2l-button-icon>
+										<d2l-dialog-confirm title-text="${this.localize('delete', {RecordName})}" text="${this.localize('confirmDeleteRecord')}">
+											<d2l-button slot="footer" primary dialog-action="yes">${this.localize('yes')}</d2l-button>
+											<d2l-button slot="footer" dialog-action>${this.localize('no')}</d2l-button>
+										</d2l-dialog-confirm>
 									</d2l-td>
 									<d2l-td>
 										${record.SubjectName}
@@ -309,9 +344,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 										${record.DateAdded}
 									</d2l-td>
 								</d2l-tr>
-							`
-	)
-}
+							`;})}
 					</d2l-tbody>
 				</d2l-table>
 				<div class="page_control">

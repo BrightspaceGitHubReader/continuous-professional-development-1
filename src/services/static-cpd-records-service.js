@@ -11,6 +11,8 @@ export class TestDataService {
 	static createRecord() {
 	}
 
+	static deleteRecord() {}
+
 	static getMethods() {
 		const data = [
 			{'Id': 1, 'Name': 'Course'},

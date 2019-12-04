@@ -13,40 +13,51 @@ d2lfetch.use({
 export class CpdRecordsService {
 
 	static createRecord(record, files) {
-		const url = window.data.fraSettings.valenceHost;
-		const base_path = '/d2l/api/customization/cpd/1.0/record';
-		return this.postWithFilesRequest(url, base_path, record, files);
+		return this.postWithFilesRequest(this.getCpdPath(this.Record), record, files);
 	}
 
+	static deleteRecord(recordId) {
+		const request = new Request(`${this.Host}${this.getCpdPath(this.Record)}/${recordId}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type' : 'application/json'
+			}
+		});
+		return d2lfetch.fetch(request);
+	}
+
+	static getCpdPath(action) { return `/d2l/api/customization/cpd/1.0/${action}`; }
+
 	static getMethods() {
-		const url = window.data.fraSettings.valenceHost;
-		const base_path = '/d2l/api/customization/cpd/1.0/method';
-		return this.getRequest(url, base_path);
+		return this.getRequest(this.getCpdPath(this.Method));
 	}
 
 	static getQuestions() {
-		const url = window.data.fraSettings.valenceHost;
-		const base_path = '/d2l/api/customization/cpd/1.0/record/question';
-		return this.getRequest(url, base_path);
+		return this.getRequest(this.getCpdPath(this.Question));
+	}
+
+	static getRecord(recordId) {
+		const base_path = `${this.getCpdPath(this.Record)}/${recordId}`;
+		return this.getRequest(base_path);
 	}
 
 	static getRecordSummary(page, filters) {
-		const url = window.data.fraSettings.valenceHost;
-		let base_path = `/d2l/api/customization/cpd/1.0/record?pagenumber=${page}`;
+		let base_path = `${this.getCpdPath(this.Record)}?pageNumber=${page}`;
 
 		if (filters) {
-			if (filters.Subject.value && filters.Subject.enabled) base_path += `&subject=${filters.Subject.value}`;
-			if (filters.Method.value && filters.Method.enabled) base_path += `&method=${filters.Method.value}`;
-			if (filters.Name.value) base_path += `&name=${filters.Name.value}`;
-			if (filters.StartDate.value) base_path += `&startdate=${dateParamString(filters.StartDate.value)}`;
-			if (filters.EndDate.value) base_path += `&enddate=${dateParamString(filters.EndDate.value, true)}`;
+      const { Subject, Method, Name, StartDate, EndDate } = filters;
+			if (Subject.value && filters.Subject.enabled) base_path += `&subject=${filters.Subject.value}`;
+			if (Method.value && filters.Method.enabled) base_path += `&method=${filters.Method.value}`;
+			if (Name.value) base_path += `&name=${filters.Name.value}`;
+			if (StartDate.value) base_path += `&startdate=${dateParamString(filters.StartDate.value)}`;
+			if (EndDate.value) base_path += `&enddate=${dateParamString(filters.EndDate.value, true)}`;
 		}
 
-		return this.getRequest(url, base_path);
+		return this.getRequest(base_path);
 	}
 
-	static getRequest(url, base_path) {
-		const getRequest = new Request(`${url}${base_path}`, {
+	static getRequest(base_path) {
+		const getRequest = new Request(`${this.Host}${base_path}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type' : 'application/json'
@@ -56,9 +67,8 @@ export class CpdRecordsService {
 	}
 
 	static getSubjects() {
-		const url = window.data.fraSettings.valenceHost;
 		const base_path = '/d2l/api/customization/cpd/1.0/subject';
-		return this.getRequest(url, base_path);
+		return this.getRequest(base_path);
 	}
 
 	static getTypes() {
@@ -72,8 +82,12 @@ export class CpdRecordsService {
 		}];
 	}
 
-	static postJsonRequest(url, base_path, object) {
-		const postRequest = new Request(`${url}${base_path}`, {
+	static get Host() { return window.data.fraSettings.valenceHost; }
+
+	static get Method() { return 'method'; }
+
+	static postJsonRequest(base_path, object) {
+		const postRequest = new Request(`${base_path}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type' : 'application/json'
@@ -83,17 +97,23 @@ export class CpdRecordsService {
 		return d2lfetch.fetch(postRequest);
 	}
 
-	static postWithFilesRequest(url, base_path, object, files) {
+	static postWithFilesRequest(base_path, object, files) {
 		const data = new FormData();
 		data.append('record', JSON.stringify(object));
 		for (const file of files) {
 			data.append('file', file, file.name);
 		}
-		const postRequest = new Request(`${url}${base_path}`, {
+		const postRequest = new Request(`${this.Host}${base_path}`, {
 			method: 'POST',
 			body: data
 		});
 		d2lfetch.fetch(postRequest);
 	}
+
+	static get Question() { return 'question'; }
+
+	static get Record() { return 'record'; }
+
+	static get Subject() { return 'subject'; }
 
 }
