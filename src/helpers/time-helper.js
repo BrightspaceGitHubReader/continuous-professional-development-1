@@ -1,10 +1,14 @@
+import moment from 'moment';
+
 export function dateParamString(dateStr, end = false) {
-	const date = new Date(`${dateStr}`);
+	const date = moment.utc(dateStr, 'YYYY-MM-DD');
+
 	if (end) {
-		date.setHours(23);
-		date.setMinutes(59);
-		date.setSeconds(59);
+		date.endOf('day');
+	} else {
+		date.startOf('day');
 	}
+
 	return date.toISOString();
 }
 
