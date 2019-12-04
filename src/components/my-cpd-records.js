@@ -13,6 +13,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
 import { getHoursAndMinutes } from '../helpers/time-helper.js';
+import moment from 'moment';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class MyCpdRecords extends BaseMixin(LitElement) {
@@ -338,10 +339,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 										${record.MethodName}
 									</d2l-td>
 									<d2l-td>
-										${getHoursAndMinutes(parseInt(record.CreditMinutes))}
+										${getHoursAndMinutes(record.CreditMinutes)}
 									</d2l-td>
 									<d2l-td>
-										${record.DateAdded}
+										${moment(record.DateAdded).format('YYYY-MM-DD')}
 									</d2l-td>
 								</d2l-tr>
 							`;})}
