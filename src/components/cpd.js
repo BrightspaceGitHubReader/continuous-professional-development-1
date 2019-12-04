@@ -12,6 +12,9 @@ class Cpd extends BaseMixin(LitElement) {
 		return {
 			page: {
 				type: String
+			},
+			recordId: {
+				type: Number
 			}
 		};
 	}
@@ -24,6 +27,11 @@ class Cpd extends BaseMixin(LitElement) {
 		this.page = 'add-cpd-record';
 	}
 
+	navigateToEditCpd(e) {
+		this.recordId = e.detail.recordId;
+		this.page = 'edit-cpd-record';
+	}
+
 	navigateToMyCpd() {
 		this.page = 'my-cpd-records';
 	}
@@ -34,13 +42,18 @@ class Cpd extends BaseMixin(LitElement) {
 				<d2l-add-cpd-record @d2l-navigate-my-cpd="${this.navigateToMyCpd}"><d2l-add-cpd-record>
 			`;
 		}
+		if (this.page === 'edit-cpd-record') {
+			return html`
+				<d2l-add-cpd-record @d2l-navigate-my-cpd="${this.navigateToMyCpd}" recordid="${this.recordId}" ><d2l-add-cpd-record>
+			`;
+		}
 		return html`
 			<d2l-tabs>
 				<d2l-tab-panel
 					text="${this.localize('myCPDHeader')}"
 					?selected=${(!this.page || this.page === 'my-records')}
 					>
-					<d2l-my-cpd-records @d2l-navigate-add-cpd="${this.navigateToAddCpd}"></d2l-my-cpd-records>
+					<d2l-my-cpd-records @d2l-navigate-add-cpd="${this.navigateToAddCpd}" @d2l-navigate-edit-cpd="${this.navigateToEditCpd}"></d2l-my-cpd-records>
 				</d2l-tab-panel>
 				<d2l-tab-panel
 					text="${this.localize('pendingRecords')}"
