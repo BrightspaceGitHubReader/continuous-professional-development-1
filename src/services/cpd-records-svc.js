@@ -35,6 +35,11 @@ export class CpdRecordsService {
 		return this.getRequest(this.getCpdPath(this.Question));
 	}
 
+	static getRecord(recordId) {
+		const base_path = `${this.getCpdPath(this.Record)}/${recordId}`;
+		return this.getRequest(base_path);
+	}
+
 	static getRecordSummary(page, filters) {
 		let base_path = `${this.getCpdPath(this.Record)}?pageNumber=${page}`;
 

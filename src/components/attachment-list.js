@@ -29,17 +29,14 @@ class AttachmentList extends BaseMixin(LitElement) {
 
 	constructor() {
 		super();
-		this._attachmentsList = [];
+		this.attachmentsList = [];
 	}
 
-	get attachmentsList() {
-		return this._attachmentsList;
-	}
-
-	set attachmentsList(val) {
-		const oldVal = this._attachmentsList;
-		this._attachmentsList = val;
-		this.requestUpdate('attachmentsList', oldVal).then(() => this.fireAttachmentListUpdated(oldVal));
+	createAttachmentUrl(attachment) {
+		if (attachment.href) {
+			return attachment.href;
+		}
+		return window.URL.createObjectURL(attachment);
 	}
 
 	fireAttachmentListUpdated(oldVal) {
@@ -76,12 +73,12 @@ class AttachmentList extends BaseMixin(LitElement) {
 
 	removeFile(evt) {
 		const oldVal = [...this.attachmentsList];
+		const newVal = [...this.attachmentsList];
 		const removedValue = this.attachmentsList[evt.target.attributes.index.value];
-		this.attachmentsList.splice(evt.target.attributes.index.value, 1);
-		this.requestUpdate('attachmentsList', oldVal).then(() => {
-			this.fireAttachmentListUpdated(oldVal);
-			this.fireAttachmentListRemoved(removedValue);
-		});
+		newVal.splice(evt.target.attributes.index.value, 1);
+		this.attachmentsList = newVal;
+		this.fireAttachmentListUpdated(oldVal);
+		this.fireAttachmentListRemoved(removedValue);
 	}
 
 	render() {
@@ -89,7 +86,7 @@ class AttachmentList extends BaseMixin(LitElement) {
 			<d2l-list separators="none">
 				${this.attachmentsList && this.attachmentsList.map((attachment, index) => html`
 					<d2l-list-item>
-						<d2l-link href="${window.URL.createObjectURL(attachment)}" target="_blank">
+						<d2l-link href="${this.createAttachmentUrl(attachment)}" target="_blank">
 							${attachment.name}
 						</d2l-link>
 						<span>${this.getFileSizeString(attachment.size)}</span>

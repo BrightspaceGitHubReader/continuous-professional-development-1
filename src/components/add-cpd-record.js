@@ -18,6 +18,12 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			questions: {
 				type: Array
 			},
+			record: {
+				type: Object
+			},
+			recordId: {
+				type: Number
+			},
 			subjects: {
 				type: Array
 			},
@@ -90,6 +96,20 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			.then(body => {
 				this.questions = body;
 			});
+		if (this.recordId) {
+			this.cpdRecordService.getRecord(this.recordId)
+				.then(body => {
+					body.Attachments.Files = body.Attachments.Files.map(file => {
+						return {
+							id: file.Id,
+							name: file.Name,
+							size: file.Size,
+							href: `${window.data.fraSettings.valenceHost}${file.Href}`
+						};
+					});
+					this.record = body;
+				});
+		}
 	}
 
 	attachmentsUpdated(event) {
@@ -183,7 +203,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					</li>
 					<li>
 						<label>${this.localize('addEvidence')}</label>
-						<d2l-attachments @d2l-attachments-list-updated="${this.attachmentsUpdated}"></d2l-attachments>
+						<d2l-attachments attachmentslist="${JSON.stringify(this.record && this.record.Attachments && this.record.Attachments.Files || [])}" @d2l-attachments-list-updated="${this.attachmentsUpdated}"></d2l-attachments>
 					<li>
 					${this.questions.map((q) => this.renderQuestion(q))}
 				</ul>
