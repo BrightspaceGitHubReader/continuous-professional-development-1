@@ -150,13 +150,13 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			})
 		};
 		if (this.recordId) {
-			return this.SaveUpdatedRecord(record);
+			return this.saveUpdatedRecord(record);
 		}
 		this.cpdRecordService.createRecord(record, this.attachments)
 			.then(() => this.fireNavigateMyCpdEvent());
 	}
 
-	SaveUpdatedRecord(record) {
+	saveUpdatedRecord(record) {
 		const newAttachments = this.attachments.filter(f => f instanceof File);
 		let removedAttachments = [];
 		if (this.record.Attachments) {
@@ -174,7 +174,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				<ul>
 					<li>
 						<label for="recordName" class=d2l-label-text>${this.localize('name')}</label>
-						<d2l-input-text id="recordName" value="${this.record && this.record.Name || ''}"></d2l-input-text>
+						<d2l-input-text id="recordName" required value="${this.record && this.record.Name || ''}"></d2l-input-text>
 					</li>
 					<li>
 						<ul class="innerlist">
