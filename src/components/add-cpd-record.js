@@ -2,7 +2,7 @@ import '@brightspace-ui/core/components/inputs/input-text.js';
 import './attachments';
 import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { getHours, getMinutes } from '../helpers/time-helper.js';
+import { getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
@@ -141,7 +141,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			SubjectId: this.shadowRoot.querySelector('#subjectSelect').value,
 			IsStructured: !!+this.shadowRoot.querySelector('#typeSelect').value,
 			MethodId: this.shadowRoot.querySelector('#methodSelect').value,
-			CreditMinutes: parseInt((this.shadowRoot.querySelector('#creditHours').value || 0) * 60) + parseInt((this.shadowRoot.querySelector('#creditMinutes').value || 0)),
+			CreditMinutes: getTotalMinutes(this.shadowRoot.querySelector('#creditHours').value, this.shadowRoot.querySelector('#creditMinutes').value),
 			Answers: this.questions.map(question => {
 				return {
 					QuestionId: question.Id,
@@ -152,8 +152,8 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		if (this.recordId) {
 			return this.SaveUpdatedRecord(record);
 		}
-		this.cpdRecordService.createRecord(record, this.attachments);
-		this.fireNavigateMyCpdEvent();
+		this.cpdRecordService.createRecord(record, this.attachments)
+			.then(() => this.fireNavigateMyCpdEvent());
 	}
 
 	SaveUpdatedRecord(record) {
@@ -164,8 +164,8 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				.filter(oldFile => !this.attachments.includes(oldFile))
 				.map(f => f.id);
 		}
-		this.cpdRecordService.updateRecord(this.recordId, record, newAttachments, removedAttachments);
-		this.fireNavigateMyCpdEvent();
+		this.cpdRecordService.updateRecord(this.recordId, record, newAttachments, removedAttachments)
+			.then(() => this.fireNavigateMyCpdEvent());
 	}
 
 	render() {
@@ -186,7 +186,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 									class="d2l-input-select select_filter"
 									id="typeSelect"
 									>
-									${this.types.map((option) => this.renderSelect(option, this.record && this.record.IsStructured && 1 || 0))}
+									${this.types.map((option) => this.renderSelect(option, this.record && +this.record.IsStructured))}
 								</select>
 							</li>
 							<li>

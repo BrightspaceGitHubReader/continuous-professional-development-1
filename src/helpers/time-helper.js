@@ -23,3 +23,7 @@ export function getHours(minutes) {
 export function getMinutes(minutes) {
 	return minutes % 60;
 }
+
+export function getTotalMinutes(hours, minutes) {
+	return parseInt(hours || 0) * 60 + parseInt(minutes || 0);
+}
