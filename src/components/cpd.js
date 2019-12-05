@@ -3,6 +3,7 @@ import 'd2l-tabs/d2l-tabs.js';
 import './my-cpd-records';
 import './add-cpd-record';
 import './pending-records';
+import './my-team-cpd.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 
@@ -36,6 +37,10 @@ class Cpd extends BaseMixin(LitElement) {
 		this.page = 'my-cpd-records';
 	}
 
+	navigateToMyTeamCpd() {
+		this.page = 'my-team-cpd';
+	}
+
 	render() {
 		if (this.page === 'add-cpd-record') {
 			return html`
@@ -58,6 +63,12 @@ class Cpd extends BaseMixin(LitElement) {
 				<d2l-tab-panel
 					text="${this.localize('pendingRecords')}"
 					?selected=${this.page === 'pending-records'}
+					>
+					<d2l-pending-records></d2l-pending-records>
+				</d2l-tab-panel>
+				<d2l-tab-panel
+					text="${this.localize('pendingRecords')}"
+					?selected=${this.page === 'my-team-cpd'}
 					>
 					<d2l-pending-records></d2l-pending-records>
 				</d2l-tab-panel>
