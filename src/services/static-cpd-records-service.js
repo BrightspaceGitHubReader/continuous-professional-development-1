@@ -6,7 +6,7 @@ const getOptions = {
 	mode: 'cors'
 };
 
-export class TestDataService {
+export class StaticCpdRecordsService {
 
 	static createRecord() {
 	}

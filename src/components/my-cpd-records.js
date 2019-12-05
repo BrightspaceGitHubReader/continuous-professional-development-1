@@ -11,10 +11,10 @@ import './page-select.js';
 import './filter-select.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
-import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
 import dayjs from 'dayjs/esm';
 import { getHoursAndMinutes } from '../helpers/time-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
+import { ServiceFactory } from '../services/service-factory';
 
 class MyCpdRecords extends BaseMixin(LitElement) {
 
@@ -107,7 +107,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		this.subjectFilterEnabled = true;
 		this.methodFilterEnabled = true;
 
-		this.cpdRecordService = CpdRecordsServiceFactory.getRecordsService();
+		this.cpdRecordService = ServiceFactory.getRecordsService();
 
 		this.page = 1;
 
