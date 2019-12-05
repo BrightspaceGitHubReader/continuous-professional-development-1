@@ -1,4 +1,5 @@
 import { d2lfetch } from 'd2l-fetch/src/index';
+import { dateParamString } from '../helpers/time-helper.js';
 import fetchAuthFramed from 'd2l-fetch-auth/es6/d2lfetch-auth-framed';
 
 d2lfetch.use({
@@ -44,10 +45,12 @@ export class CpdRecordsService {
 		let base_path = `${this.getCpdPath(this.Record)}?pageNumber=${page}`;
 
 		if (filters) {
-			const { Subject, Method, Name } = filters;
+			const { Subject, Method, Name, StartDate, EndDate } = filters;
 			if (Subject.value && Subject.enabled) base_path += `&subject=${Subject.value}`;
 			if (Method.value && Method.enabled) base_path += `&method=${Method.value}`;
 			if (Name.value) base_path += `&name=${Name.value}`;
+			if (StartDate.value) base_path += `&startdate=${dateParamString(StartDate.value)}`;
+			if (EndDate.value) base_path += `&enddate=${dateParamString(EndDate.value, true)}`;
 		}
 
 		return this.getRequest(base_path);

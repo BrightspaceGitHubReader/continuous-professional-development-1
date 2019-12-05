@@ -12,6 +12,8 @@ import './filter-select.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
+import dayjs from 'dayjs/esm';
+import { getHoursAndMinutes } from '../helpers/time-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class MyCpdRecords extends BaseMixin(LitElement) {
@@ -79,7 +81,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			}
 
 			.date_filter_controls {
-				width: 40%;
+				width: 12rem;
 				display: flex;
 				justify-content: space-between;
 				align-items: baseline;
@@ -112,7 +114,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		this.filters = {
 			Subject: 0,
 			Method: 0,
-			Name: 0
+			Name: 0,
+			StartDate: 0,
+			EndDate: 0
 		};
 
 		this.hideSearchOptions = true;
@@ -177,25 +181,28 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	updatePage(e) {
-		console.log(e);
 		this.page = e.detail.page;
 		this.fetchRecords();
 	}
 
-	updateSubjectFilter(e) {
-		this.filters.Subject = e.detail;
-		this.page = 1;
-		this.fetchRecords();
-	}
-
-	updateMethodFilter(e) {
-		this.filters.Method = e.detail;
-		this.page = 1;
-		this.fetchRecords();
-	}
-
-	updateNameFilter(e) {
-		this.filters.Name = e.detail;
+	updateFilter(e) {
+		switch (e.target.id) {
+			case 'search_input':
+				this.filters.Name = e.detail;
+				break;
+			case 'subject_select':
+				this.filters.Subject = e.detail;
+				break;
+			case 'method_select':
+				this.filters.Method = e.detail;
+				break;
+			case 'start_date_picker':
+				this.filters.StartDate = e.detail;
+				break;
+			case 'end_date_picker':
+				this.filters.EndDate = e.detail;
+				break;
+		}
 		this.page = 1;
 		this.fetchRecords();
 	}
@@ -223,9 +230,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 				<div class="search_bar">
 					<d2l-input-search
-						id="search_filter"
+						id="search_input"
 						placeholder=${this.localize('searchPlaceholder')}
-						@d2l-input-search-searched="${this.updateNameFilter}"
+						@d2l-input-search-searched="${this.updateFilter}"
 						>
 					</d2l-input-search>
 
@@ -241,25 +248,33 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					?disabled=${this.hideSearchOptions}
 					>
 					<d2l-filter-select
-							label="${this.localize('subject')}"
-							.options=${this.subjectOptions}
-							@d2l-filter-select-updated="${this.updateSubjectFilter}"
-							>
-					</d2l-filter-select>
+					  id="subject_select"	
+						label="${this.localize('subject')}"
+						.options=${this.subjectOptions}
+						@d2l-filter-select-updated="${this.updateFilter}"	
+						>
+					</d2l-filter-select>				
 
 					<d2l-filter-select
-							label="${this.localize('method')}"
-							.options=${this.methodOptions}
-							@d2l-filter-select-updated="${this.updateMethodFilter}"
-							>
-					</d2l-filter-select>
+						id="method_select"	
+						label="${this.localize('method')}"
+						.options=${this.methodOptions}
+						@d2l-filter-select-updated="${this.updateFilter}"	
+						>
+					</d2l-filter-select>				
 
 					<div id="date_filter">
 						<label id="date_label">${this.localize('dateRange')}</label>
 						<div class="date_filter_controls">
-							<d2l-date-picker></d2l-date-picker>
+							<d2l-date-picker 
+								id="start_date_picker"
+								@d2l-date-picker-value-changed="${this.updateFilter}"
+								></d2l-date-picker>
 							<label>${this.localize('to')}</label>
-							<d2l-date-picker></d2l-date-picker>
+							<d2l-date-picker 
+								id="end_date_picker"
+								@d2l-date-picker-value-changed="${this.updateFilter}"
+								></d2l-date-picker>
 						</div>
 					</div>
 				</div>
@@ -291,7 +306,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 
 							<d2l-th>
-								${this.localize('creditMinutes')}
+								${this.localize('creditHours')}
 							</d2l-th>
 
 
@@ -324,10 +339,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 										${record.MethodName}
 									</d2l-td>
 									<d2l-td>
-										${record.CreditMinutes}
+										${getHoursAndMinutes(record.CreditMinutes)}
 									</d2l-td>
 									<d2l-td>
-										${record.DateAdded}
+										${dayjs(record.DateAdded).format('YYYY-MM-DD')}
 									</d2l-td>
 								</d2l-tr>
 							`;})}
