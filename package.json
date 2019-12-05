@@ -40,7 +40,8 @@
     "test": "npm run test:local && npm run lint",
     "test:local": "polymer test --skip-plugin sauce",
     "test:sauce": "polymer test --skip-plugin local",
-    "test:travis": "polymer test --config-file wct.conf-travis.json",
+    "test:travis": "npm run test:mocha && polymer test --config-file wct.conf-travis.json",
+    "test:mocha": "mocha --require esm",
     "watch:js": "onchange -d 2000 \"src\\**\" \"index.html\" -- npm run build:local",
     "watch": "npm-run-all build:local --parallel resolver watch:js"
   },
@@ -56,6 +57,7 @@
     "eslint-plugin-html": "^6",
     "eslint-plugin-lit": "^1",
     "eslint-plugin-sort-class-members": "^1",
+    "esm": "^3.2.25",
     "frau-appconfig-builder": "^1.0.0",
     "frau-ci": "^1",
     "frau-local-appresolver": "^1.0.0",
@@ -67,8 +69,8 @@
     "wct-mocha": "^1"
   },
   "dependencies": {
-    "@brightspace-ui/core": "^1",
     "@brightspace-ui-labs/file-uploader": "^2",
+    "@brightspace-ui/core": "^1",
     "@webcomponents/webcomponentsjs": "^2",
     "d2l-date-picker": "github:BrightspaceUI/date-picker#semver:^2",
     "d2l-fetch": "Brightspace/d2l-fetch.git#semver:^2",
@@ -76,6 +78,7 @@
     "d2l-html-editor": "github:Brightspace/d2l-html-editor#semver:^2",
     "d2l-table": "BrightspaceUI/table#semver:^2",
     "d2l-tabs": "github:BrightspaceUI/tabs#semver:^1",
+    "dayjs": "^1.8.17",
     "lit-element": "^2"
   }
 }
