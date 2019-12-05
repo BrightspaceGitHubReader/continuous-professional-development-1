@@ -13,6 +13,17 @@ export function dateParamString(dateStr, end = false) {
 }
 
 export function getHoursAndMinutes(minutes) {
-	const hours = Math.floor(minutes / 60);
-	return `${hours}h ${minutes % 60}m`;
+	return `${getHours(minutes)}h ${getMinutes(minutes)}m`;
+}
+
+export function getHours(minutes) {
+	return Math.floor(minutes / 60);
+}
+
+export function getMinutes(minutes) {
+	return minutes % 60;
+}
+
+export function getTotalMinutes(hours, minutes) {
+	return parseInt(hours || 0) * 60 + parseInt(minutes || 0);
 }

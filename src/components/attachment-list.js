@@ -36,7 +36,9 @@ class AttachmentList extends BaseMixin(LitElement) {
 		if (attachment.href) {
 			return attachment.href;
 		}
-		return window.URL.createObjectURL(attachment);
+		if (attachment instanceof File) {
+			return window.URL.createObjectURL(attachment);
+		}
 	}
 
 	fireAttachmentListUpdated(oldVal) {

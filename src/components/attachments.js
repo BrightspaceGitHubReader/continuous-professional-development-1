@@ -52,9 +52,11 @@ class Attachments extends BaseMixin(LitElement) {
 	}
 
 	commitCurrentFiles() {
+		const oldVal = [...this.attachmentsList];
 		const newFileArray = [...this.attachmentsList];
 		newFileArray.push(...this.currentAttachments);
 		this.attachmentsList = newFileArray;
+		this.fireAttachmentListUpdated(oldVal);
 	}
 
 	newFilesAdded(evt) {

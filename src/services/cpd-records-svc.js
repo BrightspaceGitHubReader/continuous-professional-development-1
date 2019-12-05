@@ -107,7 +107,21 @@ export class CpdRecordsService {
 			method: 'POST',
 			body: data
 		});
-		d2lfetch.fetch(postRequest);
+		return d2lfetch.fetch(postRequest);
+	}
+
+	static putWithFilesRequest(base_path, object, files, removedFiles) {
+		const data = new FormData();
+		data.append('record', JSON.stringify(object));
+		data.append('deletedFiles', JSON.stringify(removedFiles));
+		for (const file of files) {
+			data.append('file', file, file.name);
+		}
+		const postRequest = new Request(`${this.Host}${base_path}`, {
+			method: 'PUT',
+			body: data
+		});
+		return d2lfetch.fetch(postRequest);
 	}
 
 	static get Question() { return 'question'; }
@@ -115,5 +129,9 @@ export class CpdRecordsService {
 	static get Record() { return 'record'; }
 
 	static get Subject() { return 'subject'; }
+
+	static updateRecord(recordId, record, files, removedFiles) {
+		return this.putWithFilesRequest(`${this.getCpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
+	}
 
 }
