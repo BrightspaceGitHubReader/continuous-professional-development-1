@@ -79,6 +79,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		this.methods = [];
 		this.types = this.cpdRecordService.getTypes();
 		this.attachments = [];
+		this.record = {};
 	}
 
 	connectedCallback() {
@@ -99,14 +100,16 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		if (this.recordId) {
 			this.cpdRecordService.getRecord(this.recordId)
 				.then(body => {
-					body.Attachments.Files = body.Attachments.Files.map(file => {
-						return {
-							id: file.Id,
-							name: file.Name,
-							size: file.Size,
-							href: `${window.data.fraSettings.valenceHost}${file.Href}`
-						};
-					});
+					if (body.Attachments) {
+						body.Attachments.Files = body.Attachments.Files.map(file => {
+							return {
+								id: file.Id,
+								name: file.Name,
+								size: file.Size,
+								href: `${window.data.fraSettings.valenceHost}${file.Href}`
+							};
+						});
+					}
 					this.record = body;
 				});
 		}
@@ -114,6 +117,11 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 
 	attachmentsUpdated(event) {
 		this.attachments = event.detail.attachmentsList;
+	}
+
+	getQuestionAnswer(record, questionId) {
+		const answer = record && record.Answers && record.Answers.find(a => a.QuestionId === questionId) || {};
+		return answer.Text || '';
 	}
 
 	cancelForm() {
@@ -149,7 +157,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				<ul>
 					<li>
 						<label for="recordName" class=d2l-label-text>${this.localize('name')}</label>
-						<d2l-input-text id="recordName"></d2l-input-text>
+						<d2l-input-text id="recordName" value="${this.record && this.record.Name || ''}"></d2l-input-text>
 					</li>
 					<li>
 						<ul class="innerlist">
@@ -161,7 +169,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 									class="d2l-input-select select_filter"
 									id="typeSelect"
 									>
-									${this.types.map((option, index) => this.renderSelect(option, index))}
+									${this.types.map((option) => this.renderSelect(option, this.record && this.record.IsStructured && 1 || 0))}
 								</select>
 							</li>
 							<li>
@@ -172,7 +180,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 									class="d2l-input-select select_filter"
 									id="subjectSelect"
 									>
-									${this.subjects.map((option, index) => this.renderSelect(option, index))}
+									${this.subjects.map((option) => this.renderSelect(option, this.record && this.record.Subject && this.record.Subject.Id || 0))}
 								</select>
 							</li>
 							<li>
@@ -183,7 +191,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 									class="d2l-input-select select_filter"
 									id="methodSelect"
 									>
-									${this.methods.map((option, index) => this.renderSelect(option, index))}
+									${this.methods.map((option) => this.renderSelect(option, this.record && this.record.Method && this.record.Method.Id || 0))}
 								</select>
 							</li>
 						</ul>
@@ -192,13 +200,15 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						<div>
 							<div>
 								<label for="creditHours" class=d2l-label-text>${this.localize('credits')}</label>
-								<d2l-input-text id="creditHours" placeholder=${this.localize('enterCreditHours')} type="number"></d2l-input-text>
-								<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')} type="number"></d2l-input-text>
+								<d2l-input-text id="creditHours" placeholder=${this.localize('enterCreditHours')} type="number" min="0" value="${this.record && this.record.CreditMinutes || ''}"></d2l-input-text>
+								<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')} type="number" min="0" max="59"  value="${this.record && this.record.CreditMinutes || ''}"></d2l-input-text>
 							</div>
-							<div>
-								<label for="gradeValue" class=d2l-label-text>${this.localize('grade')}</label>
-								<div id="gradeValue">94.0</div>
-							</div>
+							${this.record && this.record.Grade ? html`
+								<div>
+									<label for="gradeValue" class=d2l-label-text>${this.localize('grade')}</label>
+									<div id="gradeValue">94.0</div>
+								</div>
+							` : html``}
 						</div>
 					</li>
 					<li>
@@ -211,6 +221,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					<d2l-button @click="${this.saveForm}">${this.localize('save')}</d2l-button>
 					<d2l-button @click="${this.cancelForm}">${this.localize('cancel')}</d2l-button>
 				</div>
+					
 			</main>
 		`;
 	}
@@ -222,19 +233,19 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				<d2l-html-editor
 					id=${`answerText_${question.Id}`}
 					editor-id=${`answerText_${question.Id}_editor`}
-					toolbar="bold italic underline | bullist d2l_formatrollup | undo redo "
-					plugins="lists d2l_formatrollup"
-					app-root=${`${window.location.origin}/app/node_modules/d2l-html-editor/`}>
-						<div id=${`answerText_${question.Id}_editor`} ></div>
+					toolbar="bold italic underline | bullist d2l_formatrollup | undo redo"
+					app-root=${`${window.location.origin}/app/node_modules/d2l-html-editor/`}
+					content="${ encodeURIComponent(this.getQuestionAnswer(this.record, question.Id))}">
+						<div id=${`answerText_${question.Id}_editor`} role="textbox" class="d2l-richtext-editor-container"></div>
 				</d2l-html-editor>
 			</li>
 		`;
 	}
-	renderSelect(option) {
+	renderSelect(option, selectedOption) {
 		return html`
 		<option
 			value="${option.Id}"
-			?selected=${this.selected === option.Id}
+			?selected=${selectedOption === option.Id}
 			>
 			${option.Name}
 		</option>

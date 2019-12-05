@@ -39,12 +39,12 @@ class Cpd extends BaseMixin(LitElement) {
 	render() {
 		if (this.page === 'add-cpd-record') {
 			return html`
-				<d2l-add-cpd-record @d2l-navigate-my-cpd="${this.navigateToMyCpd}"><d2l-add-cpd-record>
+				<d2l-add-cpd-record @d2l-navigate-my-cpd="${this.navigateToMyCpd}"></d2l-add-cpd-record>
 			`;
 		}
 		if (this.page === 'edit-cpd-record') {
 			return html`
-				<d2l-add-cpd-record @d2l-navigate-my-cpd="${this.navigateToMyCpd}" recordid="${this.recordId}" ><d2l-add-cpd-record>
+				<d2l-add-cpd-record @d2l-navigate-my-cpd="${this.navigateToMyCpd}" recordid="${this.recordId}" ></d2l-add-cpd-record>
 			`;
 		}
 		return html`
