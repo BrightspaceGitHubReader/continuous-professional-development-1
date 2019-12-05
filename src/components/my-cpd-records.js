@@ -12,8 +12,8 @@ import './filter-select.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
+import dayjs from 'dayjs/esm';
 import { getHoursAndMinutes } from '../helpers/time-helper.js';
-import moment from 'moment';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class MyCpdRecords extends BaseMixin(LitElement) {
@@ -342,7 +342,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 										${getHoursAndMinutes(record.CreditMinutes)}
 									</d2l-td>
 									<d2l-td>
-										${moment(record.DateAdded).format('YYYY-MM-DD')}
+										${dayjs(record.DateAdded).format('YYYY-MM-DD')}
 									</d2l-td>
 								</d2l-tr>
 							`;})}
