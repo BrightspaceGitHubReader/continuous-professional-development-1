@@ -45,12 +45,16 @@
 						//window.data.fraSettings.quicklinkPicker = ifrauData[2];
 						window.data.fraSettings.valenceHost = ifrauData[3];
 						window.data.fraSettings.page = ifrauData[4].page;
+						window.data.fraSettings.manager = ifrauData[4].manager;
 						//window.data.fraSettings.mapId = ifrauData[4].mapId;
 						//window.data.fraSettings.dialogService = ifrauData[5];
 						const cpd = document.createElement('d2l-cpd');
 						cpd.appTitle = 'Continuous Professional Development';
 						if (window.data.fraSettings.page) {
 							cpd.setAttribute('page', window.data.fraSettings.page);
+						}
+						if (window.data.fraSettings.manager) {
+							cpd.setAttribute('manager', window.data.fraSettings.manager);
 						}
 						const loadingSpinner = document.getElementById('loading-spinner');
 						document.body.removeChild(loadingSpinner);

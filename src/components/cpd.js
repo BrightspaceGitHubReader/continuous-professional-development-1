@@ -16,6 +16,9 @@ class Cpd extends BaseMixin(LitElement) {
 			},
 			recordId: {
 				type: Number
+			},
+			manager: {
+				type: Boolean
 			}
 		};
 	}
@@ -66,12 +69,15 @@ class Cpd extends BaseMixin(LitElement) {
 					>
 					<d2l-pending-records></d2l-pending-records>
 				</d2l-tab-panel>
+				${this.manager ?
+		html`
 				<d2l-tab-panel
 					text="My Team CPD"
 					?selected=${this.page === 'my-team-cpd'}
 					>
 					<d2l-my-team-cpd></d2l-my-team-cpd>
 				</d2l-tab-panel>
+				` : null}
 			</d2l-tabs>
 		`;
 	}
