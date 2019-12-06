@@ -42,6 +42,17 @@ export const BaseMixin = superclass => class extends LocalizeMixin(superclass) {
 		return null;
 	}
 
+	fireNavigationEvent(page, recordId, userId) {
+		const event = new CustomEvent('d2l-navigate', {
+			detail: {
+				page,
+				recordId,
+				userId
+			}
+		});
+		return this.dispatchEvent(event);
+	}
+
 	localize(key, params) {
 		return super.localize(key, params) || `{language term '${key}' not found}`;
 	}

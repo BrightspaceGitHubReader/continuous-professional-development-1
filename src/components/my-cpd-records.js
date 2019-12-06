@@ -46,6 +46,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			},
 			hideSearchOptions: {
 				type: Boolean
+			},
+			viewUserId: {
+				type: Number
 			}
 		};
 	}
@@ -125,7 +128,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	async connectedCallback() {
 		super.connectedCallback();
 
-		await this.cpdRecordService.getRecordSummary(this.page)
+		await this.cpdRecordService.getRecordSummary(this.page, this.viewUserId)
 			.then(data => {
 				this.cpdRecords = data;
 			});
@@ -160,24 +163,17 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	fetchRecords() {
-		this.cpdRecordService.getRecordSummary(this.page, this.filters)
+		this.cpdRecordService.getRecordSummary(this.page, this.viewUserId, this.filters)
 			.then(data => {
 				this.cpdRecords = data;
 			});
 	}
 	newRecordButtonClicked() {
-		const event = new CustomEvent('d2l-navigate-add-cpd');
-		this.dispatchEvent(event);
+		this.fireNavigationEvent('add-cpd-record');
 	}
 
 	recordLinkClicked(e) {
-		const recordId = e.target.getAttribute('record-id');
-		const event = new CustomEvent('d2l-navigate-edit-cpd', {
-			detail: {
-				recordId: recordId
-			}
-		});
-		this.dispatchEvent(event);
+		this.fireNavigationEvent('edit-cpd-record', e.target.getAttribute('record-id'));
 	}
 
 	updatePage(e) {
@@ -323,11 +319,13 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 										<d2l-link @click="${this.recordLinkClicked}" record-id="${record.RecordId}">
 											${record.RecordName}
 										</d2l-link>
-										<d2l-button-icon @click="${this.deleteRecordButtonClicked}" icon="tier1:delete" record-id="${record.RecordId}"></d2l-button-icon>
-										<d2l-dialog-confirm title-text="${this.localize('delete', {RecordName})}" text="${this.localize('confirmDeleteRecord')}">
-											<d2l-button slot="footer" primary dialog-action="yes">${this.localize('yes')}</d2l-button>
-											<d2l-button slot="footer" dialog-action>${this.localize('no')}</d2l-button>
-										</d2l-dialog-confirm>
+										${this.viewUserId ? html`` : html`
+											<d2l-button-icon @click="${this.deleteRecordButtonClicked}" icon="tier1:delete" record-id="${record.RecordId}"></d2l-button-icon>
+											<d2l-dialog-confirm title-text="${this.localize('delete', {RecordName})}" text="${this.localize('confirmDeleteRecord')}">
+												<d2l-button slot="footer" primary dialog-action="yes">${this.localize('yes')}</d2l-button>
+												<d2l-button slot="footer" dialog-action>${this.localize('no')}</d2l-button>
+											</d2l-dialog-confirm>
+										`}
 									</d2l-td>
 									<d2l-td>
 										${record.SubjectName}

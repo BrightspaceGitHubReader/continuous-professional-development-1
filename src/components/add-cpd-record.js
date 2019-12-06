@@ -2,6 +2,7 @@ import '@brightspace-ui/core/components/inputs/input-text.js';
 import './attachments';
 import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
@@ -93,6 +94,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		this.methods = [];
 		this.types = this.cpdRecordService.getTypes();
 		this.attachments = [];
+		this.record = {};
 	}
 
 	connectedCallback() {
@@ -113,14 +115,17 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		if (this.recordId) {
 			this.cpdRecordService.getRecord(this.recordId)
 				.then(body => {
-					body.Attachments.Files = body.Attachments.Files.map(file => {
-						return {
-							id: file.Id,
-							name: file.Name,
-							size: file.Size,
-							href: `${window.data.fraSettings.valenceHost}${file.Href}`
-						};
-					});
+					if (body.Attachments) {
+						body.Attachments.Files = body.Attachments.Files.map(file => {
+							return {
+								id: file.Id,
+								name: file.Name,
+								size: file.Size,
+								href: `${window.data.fraSettings.valenceHost}${file.Href}`
+							};
+						});
+						this.attachments = body.Attachments.Files;
+					}
 					this.record = body;
 				});
 		}
@@ -130,13 +135,17 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		this.attachments = event.detail.attachmentsList;
 	}
 
+	getQuestionAnswer(record, questionId) {
+		const answer = record && record.Answers && record.Answers.find(a => a.QuestionId === questionId) || {};
+		return answer.Text || '';
+	}
+
 	cancelForm() {
 		this.fireNavigateMyCpdEvent();
 	}
 
 	fireNavigateMyCpdEvent() {
-		const event = new CustomEvent('d2l-navigate-my-cpd');
-		this.dispatchEvent(event);
+		this.fireNavigationEvent('my-cpd-records');
 	}
 
 	saveForm() {
@@ -145,7 +154,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			SubjectId: this.shadowRoot.querySelector('#subjectSelect').value,
 			IsStructured: !!+this.shadowRoot.querySelector('#typeSelect').value,
 			MethodId: this.shadowRoot.querySelector('#methodSelect').value,
-			CreditMinutes: this.shadowRoot.querySelector('#creditHours').value * 60 + this.shadowRoot.querySelector('#creditMinutes').value,
+			CreditMinutes: getTotalMinutes(this.shadowRoot.querySelector('#creditHours').value, this.shadowRoot.querySelector('#creditMinutes').value),
 			Answers: this.questions.map(question => {
 				return {
 					QuestionId: question.Id,
@@ -153,8 +162,23 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				};
 			})
 		};
-		this.cpdRecordService.createRecord(record, this.attachments);
-		this.fireNavigateMyCpdEvent();
+		if (this.recordId) {
+			return this.saveUpdatedRecord(record);
+		}
+		this.cpdRecordService.createRecord(record, this.attachments)
+			.then(() => this.fireNavigateMyCpdEvent());
+	}
+
+	saveUpdatedRecord(record) {
+		const newAttachments = this.attachments.filter(f => f instanceof File);
+		let removedAttachments = [];
+		if (this.record.Attachments) {
+			removedAttachments = this.record.Attachments.Files
+				.filter(oldFile => !this.attachments.includes(oldFile))
+				.map(f => f.id);
+		}
+		this.cpdRecordService.updateRecord(this.recordId, record, newAttachments, removedAttachments)
+			.then(() => this.fireNavigateMyCpdEvent());
 	}
 
 	render() {
@@ -164,7 +188,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				<ul>
 					<li>
 						<label for="recordName" class=d2l-label-text>${this.localize('name')}</label>
-						<d2l-input-text id="recordName"></d2l-input-text>
+						<d2l-input-text id="recordName" required value="${this.record && this.record.Name || ''}"></d2l-input-text>
 					</li>
 					<li>
 						<ul class="innerlist">
@@ -176,7 +200,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 									class="d2l-input-select select_filter"
 									id="typeSelect"
 									>
-									${this.types.map((option, index) => this.renderSelect(option, index))}
+									${this.types.map((option) => this.renderSelect(option, this.record && +this.record.IsStructured))}
 								</select>
 							</li>
 							<li>
@@ -187,7 +211,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 									class="d2l-input-select select_filter"
 									id="subjectSelect"
 									>
-									${this.subjects.map((option, index) => this.renderSelect(option, index))}
+									${this.subjects.map((option) => this.renderSelect(option, this.record && this.record.Subject && this.record.Subject.Id || 0))}
 								</select>
 							</li>
 							<li>
@@ -198,23 +222,26 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 									class="d2l-input-select select_filter"
 									id="methodSelect"
 									>
-									${this.methods.map((option, index) => this.renderSelect(option, index))}
+									${this.methods.map((option) => this.renderSelect(option, this.record && this.record.Method && this.record.Method.Id || 0))}
 								</select>
 							</li>
 						</ul>
 					</li>
 					<li>
+
 						<div class="credit-container">
 							<div class="credit-time-container">
-								<label for="creditHours" class=d2l-label-text>${this.localize('creditHours')}</label>
+								<label for="creditHours" class=d2l-label-text>${this.localize('credits')}</label>
 								<label for="creditMinutes" class=d2l-label-text>${this.localize('creditMinutes')}</label>
-								<d2l-input-text class="numberInput" id="creditHours" placeholder=${this.localize('enterCreditHours')} type="number"></d2l-input-text>
-								<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')} type="number"></d2l-input-text>
+								<d2l-input-text class="numberInput" id="creditHours" placeholder=${this.localize('enterCreditHours')} type="number" min="0" value="${this.record && getHours(this.record.CreditMinutes) || ''}"></d2l-input-text>
+								<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')} type="number" min="0" max="59"  value="${this.record && getMinutes(this.record.CreditMinutes) || ''}"></d2l-input-text>
 							</div>
-							<div class="grade-container">
-								<label for="gradeValue" class=d2l-label-text>${this.localize('grade')}</label>
-								<div id="gradeValue">94.0</div>
-							</div>
+							${this.record && this.record.Grade ? html`
+								<div class="grade-container">
+									<label for="gradeValue" class=d2l-label-text>${this.localize('grade')}</label>
+									<div id="gradeValue">94.0</div>
+								</div>
+							` : html``}
 						</div>
 					</li>
 					<li>
@@ -227,6 +254,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					<d2l-button @click="${this.saveForm}">${this.localize('save')}</d2l-button>
 					<d2l-button @click="${this.cancelForm}">${this.localize('cancel')}</d2l-button>
 				</div>
+					
 			</main>
 		`;
 	}
@@ -238,19 +266,19 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				<d2l-html-editor
 					id=${`answerText_${question.Id}`}
 					editor-id=${`answerText_${question.Id}_editor`}
-					toolbar="bold italic underline | bullist d2l_formatrollup | undo redo "
-					plugins="lists d2l_formatrollup"
-					app-root=${`${window.location.origin}/app/node_modules/d2l-html-editor/`}>
-						<div id=${`answerText_${question.Id}_editor`} ></div>
+					toolbar="bold italic underline | bullist d2l_formatrollup | undo redo"
+					app-root=${`${window.location.origin}/app/node_modules/d2l-html-editor/`}
+					content="${ encodeURIComponent(this.getQuestionAnswer(this.record, question.Id))}">
+						<div id=${`answerText_${question.Id}_editor`} role="textbox" class="d2l-richtext-editor-container"></div>
 				</d2l-html-editor>
 			</li>
 		`;
 	}
-	renderSelect(option) {
+	renderSelect(option, selectedOption) {
 		return html`
 		<option
 			value="${option.Id}"
-			?selected=${this.selected === option.Id}
+			?selected=${selectedOption === option.Id}
 			>
 			${option.Name}
 		</option>

@@ -41,7 +41,7 @@ export class CpdRecordsService {
 		return this.getRequest(base_path);
 	}
 
-	static getRecordSummary(page, filters) {
+	static getRecordSummary(page, viewUserId, filters) {
 		let base_path = `${this.getCpdPath(this.Record)}?pageNumber=${page}`;
 
 		if (filters) {
@@ -51,6 +51,10 @@ export class CpdRecordsService {
 			if (Name.value) base_path += `&name=${Name.value}`;
 			if (StartDate.value) base_path += `&startdate=${dateParamString(StartDate.value)}`;
 			if (EndDate.value) base_path += `&enddate=${dateParamString(EndDate.value, true)}`;
+		}
+
+		if (viewUserId) {
+			base_path += `&userId=${viewUserId}`;
 		}
 
 		return this.getRequest(base_path);
@@ -107,7 +111,21 @@ export class CpdRecordsService {
 			method: 'POST',
 			body: data
 		});
-		d2lfetch.fetch(postRequest);
+		return d2lfetch.fetch(postRequest);
+	}
+
+	static putWithFilesRequest(base_path, object, files, removedFiles) {
+		const data = new FormData();
+		data.append('record', JSON.stringify(object));
+		data.append('deletedFiles', JSON.stringify(removedFiles));
+		for (const file of files) {
+			data.append('file', file, file.name);
+		}
+		const postRequest = new Request(`${this.Host}${base_path}`, {
+			method: 'PUT',
+			body: data
+		});
+		return d2lfetch.fetch(postRequest);
 	}
 
 	static get Question() { return 'question'; }
@@ -115,5 +133,9 @@ export class CpdRecordsService {
 	static get Record() { return 'record'; }
 
 	static get Subject() { return 'subject'; }
+
+	static updateRecord(recordId, record, files, removedFiles) {
+		return this.putWithFilesRequest(`${this.getCpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
+	}
 
 }
