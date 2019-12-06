@@ -14,6 +14,9 @@ class Cpd extends BaseMixin(LitElement) {
 			manager: {
 				type: Boolean
 			},
+			managePersonal: {
+				type: Boolean
+			},
 			pageData: {
 				type: Object
 			}
@@ -50,6 +53,8 @@ class Cpd extends BaseMixin(LitElement) {
 		}
 		return html`
 			<d2l-tabs>
+				${this.managePersonal ?
+		html`
 				<d2l-tab-panel
 					text="${this.localize('myCPDHeader')}"
 					?selected=${(!this.pageData.page || this.pageData.page === 'my-cpd-records')}
@@ -62,6 +67,8 @@ class Cpd extends BaseMixin(LitElement) {
 					>
 					<d2l-pending-records></d2l-pending-records>
 				</d2l-tab-panel>
+				` : null}
+
 				${this.manager ?
 		html`
 				<d2l-tab-panel
@@ -71,6 +78,7 @@ class Cpd extends BaseMixin(LitElement) {
 					<d2l-my-team-cpd></d2l-my-team-cpd>
 				</d2l-tab-panel>
 				` : null}
+
 			</d2l-tabs>
 		`;
 	}

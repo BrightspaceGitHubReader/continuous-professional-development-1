@@ -19,7 +19,7 @@ export class TeamService {
 			const { Name } = filters;
 			api_path += `&searchTerm=${Name.value}`;
 		}
-		this.getRequest(api_path);
+		return this.getRequest(api_path);
 	}
 
 	static getRequest(path) {
