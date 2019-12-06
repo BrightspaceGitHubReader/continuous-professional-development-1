@@ -4,8 +4,8 @@ import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
-import { ServiceFactory } from '../services/service-factory';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
+import { ServiceFactory } from '../services/service-factory';
 
 class AddCpdRecord extends BaseMixin(LitElement) {
 	static get properties() {

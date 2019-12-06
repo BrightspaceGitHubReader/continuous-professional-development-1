@@ -13,7 +13,7 @@ class Cpd extends BaseMixin(LitElement) {
 		return {
 			manager: {
 				type: Boolean
-      }
+			},
 			pageData: {
 				type: Object
 			}
