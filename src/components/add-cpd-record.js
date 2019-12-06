@@ -131,8 +131,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	}
 
 	fireNavigateMyCpdEvent() {
-		const event = new CustomEvent('d2l-navigate-my-cpd');
-		this.dispatchEvent(event);
+		this.fireNavigationEvent('my-cpd-records');
 	}
 
 	saveForm() {

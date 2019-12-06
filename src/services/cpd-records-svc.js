@@ -41,7 +41,7 @@ export class CpdRecordsService {
 		return this.getRequest(base_path);
 	}
 
-	static getRecordSummary(page, filters) {
+	static getRecordSummary(page, viewUserId, filters) {
 		let base_path = `${this.getCpdPath(this.Record)}?pageNumber=${page}`;
 
 		if (filters) {
@@ -51,6 +51,10 @@ export class CpdRecordsService {
 			if (Name.value) base_path += `&name=${Name.value}`;
 			if (StartDate.value) base_path += `&startdate=${dateParamString(StartDate.value)}`;
 			if (EndDate.value) base_path += `&enddate=${dateParamString(EndDate.value, true)}`;
+		}
+
+		if (viewUserId) {
+			base_path += `&userId=${viewUserId}`;
 		}
 
 		return this.getRequest(base_path);
