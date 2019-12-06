@@ -11,14 +11,11 @@ class Cpd extends BaseMixin(LitElement) {
 
 	static get properties() {
 		return {
-			page: {
-				type: String
-			},
-			recordId: {
-				type: Number
-			},
 			manager: {
 				type: Boolean
+      }
+			pageData: {
+				type: Object
 			}
 		};
 	}
@@ -27,17 +24,13 @@ class Cpd extends BaseMixin(LitElement) {
 		return css``;
 	}
 
-	navigateToAddCpd() {
-		this.page = 'add-cpd-record';
+	constructor() {
+		super();
+		this.pageData = {};
 	}
 
-	navigateToEditCpd(e) {
-		this.recordId = e.detail.recordId;
-		this.page = 'edit-cpd-record';
-	}
-
-	navigateToMyCpd() {
-		this.page = 'my-cpd-records';
+	handleNavigateEvent(e) {
+		this.pageData = e.detail;
 	}
 
 	navigateToMyTeamCpd() {
@@ -45,27 +38,27 @@ class Cpd extends BaseMixin(LitElement) {
 	}
 
 	render() {
-		if (this.page === 'add-cpd-record') {
+		if (this.pageData.page === 'add-cpd-record' || this.pageData.page === 'edit-cpd-record') {
 			return html`
-				<d2l-add-cpd-record @d2l-navigate-my-cpd="${this.navigateToMyCpd}"><d2l-add-cpd-record>
+				<d2l-add-cpd-record @d2l-navigate="${this.handleNavigateEvent}" recordid="${this.pageData.recordId}"></d2l-add-cpd-record>
 			`;
 		}
-		if (this.page === 'edit-cpd-record') {
+		if (this.pageData.page === 'user-cpd-records') {
 			return html`
-				<d2l-add-cpd-record @d2l-navigate-my-cpd="${this.navigateToMyCpd}" recordid="${this.recordId}" ><d2l-add-cpd-record>
+			<d2l-my-cpd-records viewuserid="${this.pageData.viewUserId}"></d2l-my-cpd-records>
 			`;
 		}
 		return html`
 			<d2l-tabs>
 				<d2l-tab-panel
 					text="${this.localize('myCPDHeader')}"
-					?selected=${(!this.page || this.page === 'my-records')}
+					?selected=${(!this.pageData.page || this.pageData.page === 'my-cpd-records')}
 					>
-					<d2l-my-cpd-records @d2l-navigate-add-cpd="${this.navigateToAddCpd}" @d2l-navigate-edit-cpd="${this.navigateToEditCpd}"></d2l-my-cpd-records>
+					<d2l-my-cpd-records @d2l-navigate="${this.handleNavigateEvent}"></d2l-my-cpd-records>
 				</d2l-tab-panel>
 				<d2l-tab-panel
 					text="${this.localize('pendingRecords')}"
-					?selected=${this.page === 'pending-records'}
+					?selected=${this.pageData.page === 'pending-records'}
 					>
 					<d2l-pending-records></d2l-pending-records>
 				</d2l-tab-panel>
