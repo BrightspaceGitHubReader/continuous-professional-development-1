@@ -66,7 +66,7 @@ class Cpd extends BaseMixin(LitElement) {
 		html`
 				<d2l-tab-panel
 					text="My Team CPD"
-					?selected=${this.page === 'my-team-cpd'}
+					?selected=${this.pageData.page === 'my-team-cpd'}
 					>
 					<d2l-my-team-cpd></d2l-my-team-cpd>
 				</d2l-tab-panel>
