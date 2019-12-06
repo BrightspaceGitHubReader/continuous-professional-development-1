@@ -11,10 +11,10 @@ import './page-select.js';
 import './filter-select.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
+import { CpdServiceFactory } from '../services/cpd-service-factory';
 import dayjs from 'dayjs/esm';
 import { getHoursAndMinutes } from '../helpers/time-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
-import { ServiceFactory } from '../services/service-factory';
 
 class MyCpdRecords extends BaseMixin(LitElement) {
 
@@ -35,7 +35,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			methodFilterEnabled: {
 				type: Boolean
 			},
-			cpdRecordService: {
+			cpdService: {
 				type: Object
 			},
 			page: {
@@ -110,7 +110,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		this.subjectFilterEnabled = true;
 		this.methodFilterEnabled = true;
 
-		this.cpdRecordService = ServiceFactory.getRecordsService();
+		this.cpdService = CpdServiceFactory.getCpdService();
 
 		this.page = 1;
 
@@ -128,15 +128,15 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	async connectedCallback() {
 		super.connectedCallback();
 
-		await this.cpdRecordService.getRecordSummary(this.page, this.viewUserId)
+		await this.cpdService.getRecordSummary(this.page, this.viewUserId)
 			.then(data => {
 				this.cpdRecords = data;
 			});
-		this.cpdRecordService.getSubjects()
+		this.cpdService.getSubjects()
 			.then(data => {
 				this.subjectOptions = data;
 			});
-		this.cpdRecordService.getMethods()
+		this.cpdService.getMethods()
 			.then(data => {
 				this.methodOptions = data;
 			});
@@ -149,7 +149,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		if (recordId) {
 			dialog.addEventListener('d2l-dialog-close', (e) => {
 				if (e.detail.action === 'yes') {
-					this.cpdRecordService.deleteRecord(recordId)
+					this.cpdService.deleteRecord(recordId)
 						.then(() => {
 							this.fetchRecords();
 						});
@@ -163,7 +163,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	fetchRecords() {
-		this.cpdRecordService.getRecordSummary(this.page, this.viewUserId, this.filters)
+		this.cpdService.getRecordSummary(this.page, this.viewUserId, this.filters)
 			.then(data => {
 				this.cpdRecords = data;
 			});

@@ -33,5 +33,7 @@
   "showSearchOptions": "Show search options",
   "hideSearchOptions": "Hide search options",
   "pageCount": "{numerator} of {denominator}",
-  "yes": "Yes"
+  "yes": "Yes",
+  "employeeName": "Employee Name",
+  "myTeamCpd": "My Team CPD"
 }

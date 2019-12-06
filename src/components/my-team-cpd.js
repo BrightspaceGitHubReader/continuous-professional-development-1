@@ -3,7 +3,7 @@ import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-table/d2l-table.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
-import { ServiceFactory } from '../services/service-factory';
+import { CpdServiceFactory } from '../services/cpd-service-factory';
 
 class MyTeamCPD extends BaseMixin(LitElement) {
 
@@ -18,7 +18,7 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 			filters: {
 				type: Object
 			},
-			teamService: {
+			cpdService: {
 				type: Object
 			}
 		};
@@ -54,24 +54,24 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 		super();
 
 		this.reports = {
-			Reports: []
+			Objects: []
 		};
 		this.page = 1;
 		this.filters = {};
-		this.teamService = ServiceFactory.getTeamService();
+		this.cpdService = CpdServiceFactory.getCpdService();
 	}
 
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.teamService.getMyTeam(this.page)
+		this.cpdService.getMyTeam(this.page)
 			.then(data => {
 				this.reports = data;
 			});
 	}
 
 	fetchReports() {
-		this.teamService.getMyTeam(this.page, this.filters)
+		this.cpdService.getMyTeam(this.page, this.filters)
 			.then(data => {
 				this.reports = data;
 			});
@@ -126,13 +126,13 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 							</d2l-th>
 
 							<d2l-th>
-								Employee Name
+								${this.localize('employeeName')}
 							</d2l-th>
 						</d2l-tr>
 					</d2l-thead>
 
 					<d2l-tbody>
-						${this.reports.Reports.map(report => this.renderReport(report))}
+						${this.reports.Objects.map(report => this.renderReport(report))}
 					</d2l-tbody>
 				</d2l-table>
 

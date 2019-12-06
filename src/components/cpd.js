@@ -3,7 +3,7 @@ import 'd2l-tabs/d2l-tabs.js';
 import './my-cpd-records';
 import './add-cpd-record';
 import './pending-records';
-import './my-team-cpd.js';
+import './my-team-cpd';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 
@@ -34,10 +34,6 @@ class Cpd extends BaseMixin(LitElement) {
 
 	handleNavigateEvent(e) {
 		this.pageData = e.detail;
-	}
-
-	navigateToMyTeamCpd() {
-		this.page = 'my-team-cpd';
 	}
 
 	render() {
@@ -72,7 +68,7 @@ class Cpd extends BaseMixin(LitElement) {
 				${this.manager ?
 		html`
 				<d2l-tab-panel
-					text="My Team CPD"
+					text="${this.localize('myTeamCpd')}"
 					?selected=${this.pageData.page === 'my-team-cpd'}
 					>
 					<d2l-my-team-cpd></d2l-my-team-cpd>
