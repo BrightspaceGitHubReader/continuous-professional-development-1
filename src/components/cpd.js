@@ -67,10 +67,10 @@ class Cpd extends BaseMixin(LitElement) {
 					<d2l-pending-records></d2l-pending-records>
 				</d2l-tab-panel>
 				<d2l-tab-panel
-					text="${this.localize('pendingRecords')}"
+					text="My Team CPD"
 					?selected=${this.page === 'my-team-cpd'}
 					>
-					<d2l-pending-records></d2l-pending-records>
+					<d2l-my-team-cpd></d2l-my-team-cpd>
 				</d2l-tab-panel>
 			</d2l-tabs>
 		`;

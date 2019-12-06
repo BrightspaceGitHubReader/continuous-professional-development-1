@@ -3,7 +3,7 @@ import './attachments';
 import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
-import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
+import { ServiceFactory } from '../services/service-factory';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class AddCpdRecord extends BaseMixin(LitElement) {
@@ -73,7 +73,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 
 	constructor() {
 		super();
-		this.cpdRecordService = CpdRecordsServiceFactory.getRecordsService();
+		this.cpdRecordService = ServiceFactory.getRecordsService();
 		this.questions =  [];
 		this.subjects = [];
 		this.methods = [];

@@ -26,14 +26,36 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 
 	static get styles() {
 		return [
-			css``
+			css`
+			div[role=main] {
+				display: grid;
+				grid-gap: 1rem;
+			}
+
+			.icon_column {
+				width: 10%;
+			}
+
+			.profile_image {
+				display: flex;
+				justify-content: flex-end;
+			}
+
+			.page_control {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+			}
+			`
 		];
 	}
 
 	constructor() {
 		super();
 
-		this.reports = {};
+		this.reports = {
+			Reports: []
+		};
 		this.page = 1;
 		this.filters = {};
 		this.teamService = ServiceFactory.getTeamService();
@@ -68,13 +90,17 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 
 	renderReport(report) {
 		return html`
-			<d2l-td>
-				<d2l-icon icon="tier3:profile-pic"></d2l-icon>
-			</d2l-td>		
+			<d2l-tr>
+				<d2l-td class="icon_column">
+					<div class="profile_image">
+						<d2l-icon icon="tier3:profile-pic"></d2l-icon>
+					</div>
+				</d2l-td>		
 
-			<d2l-td>
-				${report.DisplayName}
-			</d2l-td>
+				<d2l-td>
+					${report.DisplayName}
+				</d2l-td>
+			</d2l-tr>
 		`;
 	}
 
@@ -94,25 +120,23 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 				<d2l-table
 					aria-label="${this.localize('ariaCpdTable')}"
 					>
-					<d2l-tr role="row">
-						<d2l-th>
-						</d2l-th>
+					<d2l-thead>
+						<d2l-tr role="row">
+							<d2l-th class="icon_column">
+							</d2l-th>
 
-						<d2l-th>
-							Employee Name
-						</d2l-th>
-
-						<d2l-th>
-							Job Title
-						</d2l-th>
-					</d2l-tr>
+							<d2l-th>
+								Employee Name
+							</d2l-th>
+						</d2l-tr>
+					</d2l-thead>
 
 					<d2l-tbody>
 						${this.reports.Reports.map(report => this.renderReport(report))}
 					</d2l-tbody>
 				</d2l-table>
-			</div>
-			<div class="page_control">
+
+				<div class="page_control">
 					<d2l-page-select
 						pages="${this.reports.TotalPages}"
 						page="${this.page}"

@@ -1,7 +1,7 @@
 import { CpdRecordsService } from '../services/cpd-records-svc';
 import { StaticCpdRecordsService } from '../services/static-cpd-records-service';
 import { StaticTeamService } from '../services/static-team-service';
-import { TeamService } from '../services/team-service';
+import { TeamService } from '../services/team-svc';
 
 export class ServiceFactory {
 	static getRecordsService() {
