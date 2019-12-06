@@ -95,6 +95,68 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		this.attachments = [];
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+
+		this.cpdRecordService.getSubjects()
+			.then(body => {
+				this.subjects = body;
+			}),
+		this.cpdRecordService.getMethods()
+			.then(body => {
+				this.methods = body;
+			});
+		this.cpdRecordService.getQuestions()
+			.then(body => {
+				this.questions = body;
+			});
+		if (this.recordId) {
+			this.cpdRecordService.getRecord(this.recordId)
+				.then(body => {
+					body.Attachments.Files = body.Attachments.Files.map(file => {
+						return {
+							id: file.Id,
+							name: file.Name,
+							size: file.Size,
+							href: `${window.data.fraSettings.valenceHost}${file.Href}`
+						};
+					});
+					this.record = body;
+				});
+		}
+	}
+
+	attachmentsUpdated(event) {
+		this.attachments = event.detail.attachmentsList;
+	}
+
+	cancelForm() {
+		this.fireNavigateMyCpdEvent();
+	}
+
+	fireNavigateMyCpdEvent() {
+		const event = new CustomEvent('d2l-navigate-my-cpd');
+		this.dispatchEvent(event);
+	}
+
+	saveForm() {
+		const record = {
+			Name: this.shadowRoot.querySelector('#recordName').value,
+			SubjectId: this.shadowRoot.querySelector('#subjectSelect').value,
+			IsStructured: !!+this.shadowRoot.querySelector('#typeSelect').value,
+			MethodId: this.shadowRoot.querySelector('#methodSelect').value,
+			CreditMinutes: this.shadowRoot.querySelector('#creditHours').value * 60 + this.shadowRoot.querySelector('#creditMinutes').value,
+			Answers: this.questions.map(question => {
+				return {
+					QuestionId: question.Id,
+					AnswerText: this.shadowRoot.querySelector(`#answerText_${question.Id}`).getContent()
+				};
+			})
+		};
+		this.cpdRecordService.createRecord(record, this.attachments);
+		this.fireNavigateMyCpdEvent();
+	}
+
 	render() {
 		return html`
 			<main>
@@ -167,68 +229,6 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				</div>
 			</main>
 		`;
-	}
-
-	connectedCallback() {
-		super.connectedCallback();
-
-		this.cpdRecordService.getSubjects()
-			.then(body => {
-				this.subjects = body;
-			}),
-		this.cpdRecordService.getMethods()
-			.then(body => {
-				this.methods = body;
-			});
-		this.cpdRecordService.getQuestions()
-			.then(body => {
-				this.questions = body;
-			});
-		if (this.recordId) {
-			this.cpdRecordService.getRecord(this.recordId)
-				.then(body => {
-					body.Attachments.Files = body.Attachments.Files.map(file => {
-						return {
-							id: file.Id,
-							name: file.Name,
-							size: file.Size,
-							href: `${window.data.fraSettings.valenceHost}${file.Href}`
-						};
-					});
-					this.record = body;
-				});
-		}
-	}
-
-	attachmentsUpdated(event) {
-		this.attachments = event.detail.attachmentsList;
-	}
-
-	cancelForm() {
-		this.fireNavigateMyCpdEvent();
-	}
-
-	fireNavigateMyCpdEvent() {
-		const event = new CustomEvent('d2l-navigate-my-cpd');
-		this.dispatchEvent(event);
-	}
-
-	saveForm() {
-		const record = {
-			Name: this.shadowRoot.querySelector('#recordName').value,
-			SubjectId: this.shadowRoot.querySelector('#subjectSelect').value,
-			IsStructured: !!+this.shadowRoot.querySelector('#typeSelect').value,
-			MethodId: this.shadowRoot.querySelector('#methodSelect').value,
-			CreditMinutes: this.shadowRoot.querySelector('#creditHours').value * 60 + this.shadowRoot.querySelector('#creditMinutes').value,
-			Answers: this.questions.map(question => {
-				return {
-					QuestionId: question.Id,
-					AnswerText: this.shadowRoot.querySelector(`#answerText_${question.Id}`).getContent()
-				};
-			})
-		};
-		this.cpdRecordService.createRecord(record, this.attachments);
-		this.fireNavigateMyCpdEvent();
 	}
 
 	renderQuestion(question) {
