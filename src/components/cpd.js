@@ -3,6 +3,7 @@ import 'd2l-tabs/d2l-tabs.js';
 import './my-cpd-records';
 import './add-cpd-record';
 import './pending-records';
+import './my-team-cpd';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 
@@ -10,6 +11,12 @@ class Cpd extends BaseMixin(LitElement) {
 
 	static get properties() {
 		return {
+			manager: {
+				type: Boolean
+			},
+			managePersonal: {
+				type: Boolean
+			},
 			pageData: {
 				type: Object
 			}
@@ -23,6 +30,8 @@ class Cpd extends BaseMixin(LitElement) {
 	constructor() {
 		super();
 		this.pageData = {};
+		this.manager = false;
+		this.managePersonal = false;
 	}
 
 	handleNavigateEvent(e) {
@@ -42,6 +51,8 @@ class Cpd extends BaseMixin(LitElement) {
 		}
 		return html`
 			<d2l-tabs>
+				${this.managePersonal ?
+		html`
 				<d2l-tab-panel
 					text="${this.localize('myCPDHeader')}"
 					?selected=${(!this.pageData.page || this.pageData.page === 'my-cpd-records')}
@@ -54,6 +65,18 @@ class Cpd extends BaseMixin(LitElement) {
 					>
 					<d2l-pending-records></d2l-pending-records>
 				</d2l-tab-panel>
+				` : null}
+
+				${this.manager ?
+		html`
+				<d2l-tab-panel
+					text="${this.localize('myTeamCpd')}"
+					?selected=${this.pageData.page === 'my-team-cpd'}
+					>
+					<d2l-my-team-cpd></d2l-my-team-cpd>
+				</d2l-tab-panel>
+				` : null}
+
 			</d2l-tabs>
 		`;
 	}

@@ -4,7 +4,7 @@ import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
-import { CpdRecordsServiceFactory } from '../services/cpd-records-service-factory';
+import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class AddCpdRecord extends BaseMixin(LitElement) {
@@ -74,11 +74,11 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 
 	constructor() {
 		super();
-		this.cpdRecordService = CpdRecordsServiceFactory.getRecordsService();
+		this.cpdService = CpdServiceFactory.getRecordsService();
 		this.questions =  [];
 		this.subjects = [];
 		this.methods = [];
-		this.types = this.cpdRecordService.getTypes();
+		this.types = this.cpdService.getTypes();
 		this.attachments = [];
 		this.record = {};
 	}
@@ -86,20 +86,20 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.cpdRecordService.getSubjects()
+		this.cpdService.getSubjects()
 			.then(body => {
 				this.subjects = body;
 			}),
-		this.cpdRecordService.getMethods()
+		this.cpdService.getMethods()
 			.then(body => {
 				this.methods = body;
 			});
-		this.cpdRecordService.getQuestions()
+		this.cpdService.getQuestions()
 			.then(body => {
 				this.questions = body;
 			});
 		if (this.recordId) {
-			this.cpdRecordService.getRecord(this.recordId)
+			this.cpdService.getRecord(this.recordId)
 				.then(body => {
 					if (body.Attachments) {
 						body.Attachments.Files = body.Attachments.Files.map(file => {
@@ -151,7 +151,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		if (this.recordId) {
 			return this.saveUpdatedRecord(record);
 		}
-		this.cpdRecordService.createRecord(record, this.attachments)
+		this.cpdService.createRecord(record, this.attachments)
 			.then(() => this.fireNavigateMyCpdEvent());
 	}
 
@@ -163,7 +163,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				.filter(oldFile => !this.attachments.includes(oldFile))
 				.map(f => f.id);
 		}
-		this.cpdRecordService.updateRecord(this.recordId, record, newAttachments, removedAttachments)
+		this.cpdService.updateRecord(this.recordId, record, newAttachments, removedAttachments)
 			.then(() => this.fireNavigateMyCpdEvent());
 	}
 

@@ -6,13 +6,11 @@ const getOptions = {
 	mode: 'cors'
 };
 
-export class TestDataService {
+export class DemoCpdService {
 
 	static createRecord() {
 	}
-
 	static deleteRecord() {}
-
 	static getMethods() {
 		const data = [
 			{'Id': 1, 'Name': 'Course'},
@@ -20,6 +18,9 @@ export class TestDataService {
 			{'Id': 3, 'Name': 'Netflix'}
 		];
 		return Promise.resolve(data);
+	}
+	static getMyTeam() {
+		return fetch('../../../../data/reports.json', getOptions).then(r => r.json());
 	}
 
 	static getQuestions() {

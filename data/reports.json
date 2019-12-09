@@ -1,0 +1,24 @@
+{
+	"Objects": [
+		{
+			"DisplayName": "User1",
+			"UserId": "1",
+			"ManagerUserId": "999"
+		},
+		{
+			"DisplayName": "User2",
+			"UserId": "2",
+			"ManagerUserId": "999"
+		},
+		{
+			"DisplayName": "User3",
+			"UserId": "3",
+			"ManagerUserId": "999"
+		}
+	],
+	"PageNumber": 1,
+	"PageSize": 20,
+	"TotalPages": 5,
+	"TotalCount": 1,
+	"ObjectCount": 1
+}

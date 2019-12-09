@@ -10,12 +10,11 @@ d2lfetch.use({
 	}
 });
 
-export class CpdRecordsService {
+export class CpdService {
 
 	static createRecord(record, files) {
 		return this.postWithFilesRequest(this.getCpdPath(this.Record), record, files);
 	}
-
 	static deleteRecord(recordId) {
 		const request = new Request(`${this.Host}${this.getCpdPath(this.Record)}/${recordId}`, {
 			method: 'DELETE',
@@ -25,22 +24,27 @@ export class CpdRecordsService {
 		});
 		return d2lfetch.fetch(request);
 	}
-
 	static getCpdPath(action) { return `/d2l/api/customization/cpd/1.0/${action}`; }
-
 	static getMethods() {
 		return this.getRequest(this.getCpdPath(this.Method));
+	}
+	static getMyTeam(page, filters) {
+		let api_path = this.getCpdPath(this.Team);
+		api_path += `?pageNumber=${page}`;
+		if (filters) {
+			const { Name } = filters;
+			if (Name && Name.value) api_path += `&searchTerm=${Name.value}`;
+		}
+		return this.getRequest(api_path);
 	}
 
 	static getQuestions() {
 		return this.getRequest(this.getCpdPath(this.Question));
 	}
-
 	static getRecord(recordId) {
 		const base_path = `${this.getCpdPath(this.Record)}/${recordId}`;
 		return this.getRequest(base_path);
 	}
-
 	static getRecordSummary(page, viewUserId, filters) {
 		let base_path = `${this.getCpdPath(this.Record)}?pageNumber=${page}`;
 
@@ -59,7 +63,6 @@ export class CpdRecordsService {
 
 		return this.getRequest(base_path);
 	}
-
 	static getRequest(base_path) {
 		const getRequest = new Request(`${this.Host}${base_path}`, {
 			method: 'GET',
@@ -69,12 +72,10 @@ export class CpdRecordsService {
 		});
 		return d2lfetch.fetch(getRequest).then(r => r.json());
 	}
-
 	static getSubjects() {
 		const base_path = '/d2l/api/customization/cpd/1.0/subject';
 		return this.getRequest(base_path);
 	}
-
 	static getTypes() {
 		return [ {
 			Id: 0,
@@ -85,11 +86,8 @@ export class CpdRecordsService {
 			Name: 'Structured'
 		}];
 	}
-
 	static get Host() { return window.data.fraSettings.valenceHost; }
-
 	static get Method() { return 'method'; }
-
 	static postJsonRequest(base_path, object) {
 		const postRequest = new Request(`${base_path}`, {
 			method: 'POST',
@@ -100,7 +98,6 @@ export class CpdRecordsService {
 		});
 		return d2lfetch.fetch(postRequest);
 	}
-
 	static postWithFilesRequest(base_path, object, files) {
 		const data = new FormData();
 		data.append('record', JSON.stringify(object));
@@ -133,6 +130,8 @@ export class CpdRecordsService {
 	static get Record() { return 'record'; }
 
 	static get Subject() { return 'subject'; }
+
+	static get Team() { return 'team'; }
 
 	static updateRecord(recordId, record, files, removedFiles) {
 		return this.putWithFilesRequest(`${this.getCpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
