@@ -173,7 +173,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	recordLinkClicked(e) {
-		this.fireNavigationEvent('edit-cpd-record', e.target.getAttribute('record-id'));
+		this.fireNavigationEvent('edit-cpd-record', e.target.getAttribute('record-id'), this.viewUserId);
 	}
 
 	updatePage(e) {

@@ -30,6 +30,9 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			},
 			types: {
 				type: Array
+			},
+			viewUserId: {
+				type: Number
 			}
 		};
 	}

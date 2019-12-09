@@ -41,7 +41,7 @@ class Cpd extends BaseMixin(LitElement) {
 	render() {
 		if (this.pageData.page === 'add-cpd-record' || this.pageData.page === 'edit-cpd-record') {
 			return html`
-				<d2l-add-cpd-record @d2l-navigate="${this.handleNavigateEvent}" recordid="${this.pageData.recordId}"></d2l-add-cpd-record>
+				<d2l-add-cpd-record @d2l-navigate="${this.handleNavigateEvent}" recordid="${this.pageData.recordId}" viewuserid="${this.pageData.viewUserId}"></d2l-add-cpd-record>
 			`;
 		}
 		if (this.pageData.page === 'user-cpd-records') {
