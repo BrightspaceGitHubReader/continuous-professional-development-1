@@ -246,7 +246,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					</li>
 					<li>
 						<label>${this.localize('addEvidence')}</label>
-						<d2l-attachments attachmentslist="${JSON.stringify(this.record && this.record.Attachments && this.record.Attachments.Files || [])}" @d2l-attachments-list-updated="${this.attachmentsUpdated}"></d2l-attachments>
+						<d2l-attachments .attachmentsList="${this.attachments}" @d2l-attachments-list-updated="${this.attachmentsUpdated}"></d2l-attachments>
 					</li>
 					${this.questions.map((q) => this.renderQuestion(q))}
 				</ul>
