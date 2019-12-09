@@ -1,10 +1,12 @@
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import './attachments';
+import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper.js';
+import { dateParamString, getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import dayjs from 'dayjs/esm';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class AddCpdRecord extends BaseMixin(LitElement) {
@@ -49,6 +51,9 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			grid-template-rows: repeat(4, 1fr);
 			grid-auto-rows: auto;
 		}
+		d2l-date-picker {
+			width: 7rem;
+		}
 		d2l-html-editor {
 			border-radius: 0.3rem;
 			border-style: solid;
@@ -91,7 +96,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 
 	constructor() {
 		super();
-		this.cpdService = CpdServiceFactory.getRecordsService();
+		this.cpdService = CpdServiceFactory.getCpdService();
 		this.questions =  [];
 		this.subjects = [];
 		this.methods = [];
@@ -158,6 +163,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			IsStructured: !!+this.shadowRoot.querySelector('#typeSelect').value,
 			MethodId: this.shadowRoot.querySelector('#methodSelect').value,
 			CreditMinutes: getTotalMinutes(this.shadowRoot.querySelector('#creditHours').value, this.shadowRoot.querySelector('#creditMinutes').value),
+			DateCompleted: dateParamString(this.shadowRoot.querySelector('#dateCompletedPicker').value),
 			Answers: this.questions.map(question => {
 				return {
 					QuestionId: question.Id,
@@ -251,8 +257,17 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						</div>
 					</li>
 					<li>
+						<label for="dateCompletedPicker" class=d2l-label-text>${this.localize('dateCompleted')}</label>
+						<d2l-date-picker 
+							id="dateCompletedPicker"
+							value="${this.record && this.record.DateCompleted && dayjs(this.record.DateCompleted).format('YYYY-MM-DD') || dayjs(new Date()).format('YYYY-MM-DD')}"
+							@d2l-date-picker-value-changed="${this.updateFilter}"
+						></d2l-date-picker>
+					</li>
+					<li>
 						<label>${this.localize('addEvidence')}</label>
 						<d2l-attachments .attachmentsList="${this.attachments}" @d2l-attachments-list-updated="${this.attachmentsUpdated}"></d2l-attachments>
+						
 					</li>
 					${this.questions.map((q) => this.renderQuestion(q))}
 				</ul>

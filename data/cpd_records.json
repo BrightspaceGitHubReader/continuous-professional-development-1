@@ -6,7 +6,7 @@
 			"IsStructured": true,
 			"MethodName": "TBD",
 			"CreditMinutes": "100",
-			"DateAdded": "01/01/2019"
+			"DateCompleted": "01/01/2019"
 		},
 		{
 			"RecordName": "Group Assignment",
@@ -14,7 +14,7 @@
 			"IsStructured": false,
 			"MethodName": "TBD",
 			"CreditMinutes": "60",
-			"DateAdded": "01/01/2019"
+			"DateCompleted": "01/01/2019"
 		},
 		{
 			"RecordName": "English 101",
@@ -22,7 +22,7 @@
 			"IsStructured": true,
 			"MethodName": "TBD",
 			"CreditMinutes": "20",
-			"DateAdded": "10/12/2019"
+			"DateCompleted": "10/12/2019"
 		}
 	],
 	"PageNumber": 1,

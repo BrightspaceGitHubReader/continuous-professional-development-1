@@ -307,7 +307,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 
 							<d2l-th>
-								${this.localize('dateAdded')}
+								${this.localize('dateCompleted')}
 							</d2l-th>
 						</d2l-tr>
 					</d2l-thead>
@@ -340,7 +340,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 										${getHoursAndMinutes(record.CreditMinutes)}
 									</d2l-td>
 									<d2l-td>
-										${dayjs(record.DateAdded).format('YYYY-MM-DD')}
+										${dayjs(record.DateCompleted).format('YYYY-MM-DD')}
 									</d2l-td>
 								</d2l-tr>
 							`;})}

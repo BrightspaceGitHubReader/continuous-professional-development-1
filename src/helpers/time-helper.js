@@ -1,9 +1,7 @@
 import dayjs from 'dayjs/esm';
-import utc from 'dayjs/esm/plugin/utc';
 
 export function dateParamString(dateStr, end = false) {
-	dayjs.extend(utc);
-	let date = dayjs.utc(dateStr);
+	let date = dayjs(dateStr);
 
 	if (end) {
 		date = date.endOf('day');
