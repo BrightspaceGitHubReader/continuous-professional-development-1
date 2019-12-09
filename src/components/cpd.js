@@ -30,6 +30,8 @@ class Cpd extends BaseMixin(LitElement) {
 	constructor() {
 		super();
 		this.pageData = {};
+		this.manager = false;
+		this.managePersonal = false;
 	}
 
 	handleNavigateEvent(e) {
