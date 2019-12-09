@@ -184,7 +184,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	render() {
 		return html`
 			<main>
-				<h2>${this.localize('addNewRecord')}</h2>
+				<h2>${this.recordId ? this.localize('editCPD') : this.localize('addNewCPD')}</h2>
 				<ul>
 					<li>
 						<label for="recordName" class=d2l-label-text>${this.localize('name')}</label>
