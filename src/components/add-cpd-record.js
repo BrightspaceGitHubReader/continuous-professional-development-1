@@ -80,7 +80,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		}
 		.credit-time-container {
 			display: grid;
-			grid-template-rows: 1fr 1fr;
+			grid-template-rows: 1fr;
 			grid-template-columns: 1fr 1fr;
 		}
 		`];
@@ -187,7 +187,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				<h2>${this.recordId ? this.localize('editCPD') : this.localize('addNewCPD')}</h2>
 				<ul>
 					<li>
-						<label for="recordName" class=d2l-label-text>${this.localize('name')}</label>
+						<label for="recordName" class="d2l-label-text">${this.localize('name')}</label>
 						<d2l-input-text id="recordName" required value="${this.record && this.record.Name || ''}"></d2l-input-text>
 					</li>
 					<li>
@@ -228,17 +228,20 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						</ul>
 					</li>
 					<li>
-
 						<div class="credit-container">
 							<div class="credit-time-container">
-								<label for="creditHours" class=d2l-label-text>${this.localize('credits')}</label>
-								<label for="creditMinutes" class=d2l-label-text>${this.localize('creditMinutes')}</label>
-								<d2l-input-text class="numberInput" id="creditHours" placeholder=${this.localize('enterCreditHours')} type="number" min="0" value="${this.record && getHours(this.record.CreditMinutes) || ''}"></d2l-input-text>
-								<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')} type="number" min="0" max="59"  value="${this.record && getMinutes(this.record.CreditMinutes) || ''}"></d2l-input-text>
+								<div>
+									<label for="creditHours" class="d2l-label-text">${this.localize('creditHours')}</label>
+									<d2l-input-text class="numberInput" id="creditHours" placeholder=${this.localize('enterCreditHours')} type="number" min="0" value="${this.record && getHours(this.record.CreditMinutes) || ''}"></d2l-input-text>
+								</div>
+								<div>
+									<label for="creditMinutes" class="d2l-label-text">${this.localize('creditMinutes')}</label>
+									<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')} type="number" min="0" max="59"  value="${this.record && getMinutes(this.record.CreditMinutes) || ''}"></d2l-input-text>
+								</div>
 							</div>
 							${this.record && this.record.Grade ? html`
 								<div class="grade-container">
-									<label for="gradeValue" class=d2l-label-text>${this.localize('grade')}</label>
+									<label for="gradeValue" class="d2l-label-text">${this.localize('grade')}</label>
 									<div id="gradeValue">94.0</div>
 								</div>
 							` : html``}
