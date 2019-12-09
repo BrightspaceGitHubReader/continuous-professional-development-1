@@ -39,7 +39,12 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			selectStyles,
 			css`
 		main {
-			width: 100%
+			width: 100%;
+		}
+		main > ul {
+			display: grid;
+			grid-template-rows: repeat(4, 1fr);
+			grid-auto-rows: auto;
 		}
 		d2l-html-editor {
 			border-radius: 0.3rem;
@@ -57,7 +62,6 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		}
 		.numberInput {
 			width: 200px;
-			padding: 10px;
 		};
 		ul.innerlist {
 			display: flex;
@@ -69,6 +73,16 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			display: inline-block;
 			width: calc(100% / 4);
 		  }
+		.credit-container {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-gap: 20px;
+		}
+		.credit-time-container {
+			display: grid;
+			grid-template-rows: 1fr;
+			grid-template-columns: 1fr 1fr;
+		}
 		`];
 	}
 
@@ -170,9 +184,10 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	render() {
 		return html`
 			<main>
+				<h2>${this.recordId ? this.localize('editCPD') : this.localize('addNewCPD')}</h2>
 				<ul>
 					<li>
-						<label for="recordName" class=d2l-label-text>${this.localize('name')}</label>
+						<label for="recordName" class="d2l-label-text">${this.localize('name')}</label>
 						<d2l-input-text id="recordName" required value="${this.record && this.record.Name || ''}"></d2l-input-text>
 					</li>
 					<li>
@@ -213,15 +228,20 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						</ul>
 					</li>
 					<li>
-						<div>
-							<div>
-								<label for="creditHours" class=d2l-label-text>${this.localize('credits')}</label>
-								<d2l-input-text id="creditHours" placeholder=${this.localize('enterCreditHours')} type="number" min="0" value="${this.record && getHours(this.record.CreditMinutes) || ''}"></d2l-input-text>
-								<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')} type="number" min="0" max="59"  value="${this.record && getMinutes(this.record.CreditMinutes) || ''}"></d2l-input-text>
+						<div class="credit-container">
+							<div class="credit-time-container">
+								<div>
+									<label for="creditHours" class="d2l-label-text">${this.localize('creditHours')}</label>
+									<d2l-input-text class="numberInput" id="creditHours" placeholder=${this.localize('enterCreditHours')} type="number" min="0" value="${this.record && getHours(this.record.CreditMinutes) || ''}"></d2l-input-text>
+								</div>
+								<div>
+									<label for="creditMinutes" class="d2l-label-text">${this.localize('creditMinutes')}</label>
+									<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')} type="number" min="0" max="59"  value="${this.record && getMinutes(this.record.CreditMinutes) || ''}"></d2l-input-text>
+								</div>
 							</div>
 							${this.record && this.record.Grade ? html`
-								<div>
-									<label for="gradeValue" class=d2l-label-text>${this.localize('grade')}</label>
+								<div class="grade-container">
+									<label for="gradeValue" class="d2l-label-text">${this.localize('grade')}</label>
 									<div id="gradeValue">94.0</div>
 								</div>
 							` : html``}
@@ -230,7 +250,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					<li>
 						<label>${this.localize('addEvidence')}</label>
 						<d2l-attachments .attachmentsList="${this.attachments}" @d2l-attachments-list-updated="${this.attachmentsUpdated}"></d2l-attachments>
-					<li>
+					</li>
 					${this.questions.map((q) => this.renderQuestion(q))}
 				</ul>
 				<div>
