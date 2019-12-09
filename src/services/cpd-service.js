@@ -33,7 +33,7 @@ export class CpdService {
 		api_path += `?pageNumber=${page}`;
 		if (filters) {
 			const { Name } = filters;
-			api_path += `&searchTerm=${Name.value}`;
+			if (Name && Name.value) api_path += `&searchTerm=${Name.value}`;
 		}
 		return this.getRequest(api_path);
 	}

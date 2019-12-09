@@ -9,7 +9,7 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 
 	static get properties() {
 		return {
-			reports: {
+			myTeam: {
 				type: Object
 			},
 			page: {
@@ -53,7 +53,7 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 	constructor() {
 		super();
 
-		this.reports = {
+		this.myTeam = {
 			Objects: []
 		};
 		this.page = 1;
@@ -66,14 +66,14 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 
 		this.cpdService.getMyTeam(this.page)
 			.then(data => {
-				this.reports = data;
+				this.myTeam = data;
 			});
 	}
 
 	fetchReports() {
 		this.cpdService.getMyTeam(this.page, this.filters)
 			.then(data => {
-				this.reports = data;
+				this.myTeam = data;
 			});
 	}
 
@@ -132,13 +132,13 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 					</d2l-thead>
 
 					<d2l-tbody>
-						${this.reports.Objects.map(report => this.renderReport(report))}
+						${this.myTeam.Objects.map(report => this.renderReport(report))}
 					</d2l-tbody>
 				</d2l-table>
 
 				<div class="page_control">
 					<d2l-page-select
-						pages="${this.reports.TotalPages}"
+						pages="${this.myTeam.TotalPages}"
 						page="${this.page}"
 						@d2l-page-select-updated="${this.updatePage}"
 						>
