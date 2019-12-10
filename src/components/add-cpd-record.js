@@ -143,11 +143,6 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		this.attachments = event.detail.attachmentsList;
 	}
 
-	getQuestionAnswer(record, questionId) {
-		const answer = record && record.Answers && record.Answers.find(a => a.QuestionId === questionId) || {};
-		return answer.Text || '';
-	}
-
 	cancelForm() {
 		this.fireNavigateMyCpdEvent();
 	}
@@ -156,7 +151,39 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		this.fireNavigationEvent('my-cpd-records');
 	}
 
+	getQuestionAnswer(record, questionId) {
+		const answer = record && record.Answers && record.Answers.find(a => a.QuestionId === questionId) || {};
+		return answer.Text || '';
+	}
+
+	missingRequired() {
+		let missingField = false;
+		const name = this.shadowRoot.querySelector('#recordName');
+		const creditHours = this.shadowRoot.querySelector('#creditHours');
+		const creditMinutes = this.shadowRoot.querySelector('#creditMinutes');
+		const dateCompleted = this.shadowRoot.querySelector('#dateCompletedPicker');
+
+		if (!name.value) {
+			name.setAttribute('required', true);
+			missingField = true;
+		}
+		if (!creditHours.value && !creditMinutes.value) {
+			creditHours.setAttribute('required', true);
+			creditMinutes.setAttribute('required', true);
+			missingField = true;
+		}
+		if (!dateCompleted.value) {
+			dateCompleted.shadowRoot.querySelector('.d2l-input').setAttribute('required', true);
+			missingField = true;
+		}
+		return missingField;
+	}
+
 	saveForm() {
+		if (this.missingRequired()) {
+			return;
+		}
+
 		const record = {
 			Name: this.shadowRoot.querySelector('#recordName').value,
 			SubjectId: this.shadowRoot.querySelector('#subjectSelect').value,
@@ -197,7 +224,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				<ul>
 					<li>
 						<label for="recordName" class="d2l-label-text">${this.localize('name')}</label>
-						<d2l-input-text id="recordName" required value="${this.record && this.record.Name || ''}"></d2l-input-text>
+						<d2l-input-text id="recordName" value="${this.record && this.record.Name || ''}"></d2l-input-text>
 					</li>
 					<li>
 						<ul class="innerlist">
