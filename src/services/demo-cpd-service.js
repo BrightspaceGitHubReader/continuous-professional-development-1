@@ -22,7 +22,6 @@ export class DemoCpdService {
 	static getMyTeam() {
 		return fetch('../../../../data/reports.json', getOptions).then(r => r.json());
 	}
-
 	static getQuestions() {
 		const data = [{Id:1, QuestionText:'Why is Ben moving?'}];
 		return Promise.resolve(data);
@@ -43,5 +42,9 @@ export class DemoCpdService {
 
 	static getTypes() {
 		return ['Structured', 'Unstructured'];
+	}
+
+	static getUserInfo() {
+		return Promise.resolve('First Last');
 	}
 }

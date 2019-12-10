@@ -47,6 +47,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			hideSearchOptions: {
 				type: Boolean
 			},
+			userDisplayName: {
+				type: String
+			},
 			viewUserId: {
 				type: Number
 			}
@@ -140,6 +143,13 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			.then(data => {
 				this.methodOptions = data;
 			});
+		if (this.viewUserId) {
+			this.cpdService.getUserInfo(this.viewUserId)
+				.then(data => {
+					this.userDisplayName = data;
+				});
+
+		}
 	}
 
 	deleteRecordButtonClicked(e) {
@@ -218,11 +228,14 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			</custom-style>
 
 			<div role="main">
-
-
-				<d2l-button id="new_record" @click="${this.newRecordButtonClicked}">
-          ${this.localize('addNewCPD')}
-				</d2l-button>
+				${this.viewUserId ? html`
+					<h2>
+						${this.localize('userTitle', { 'UserName': this.userDisplayName})}
+					</h2>` : html`
+					<d2l-button id="new_record" @click="${this.newRecordButtonClicked}">
+			${this.localize('addNewCPD')}
+					</d2l-button>
+				`}
 
 				<div class="search_bar">
 					<d2l-input-search

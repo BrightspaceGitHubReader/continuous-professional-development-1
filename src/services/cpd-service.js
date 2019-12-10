@@ -86,6 +86,9 @@ export class CpdService {
 			Name: 'Structured'
 		}];
 	}
+	static getUserInfo(userId) {
+		return this.getRequest(this.getCpdPath(`${this.Team}/username/${userId}`));
+	}
 	static get Host() { return window.data.fraSettings.valenceHost; }
 	static get Method() { return 'method'; }
 	static postJsonRequest(base_path, object) {
