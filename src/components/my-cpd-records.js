@@ -6,6 +6,7 @@ import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
 import '@brightspace-ui/core/components/link/link.js';
 import 'd2l-date-picker/d2l-date-picker.js';
+import 'd2l-navigation/d2l-navigation-link-back.js';
 import 'd2l-table/d2l-table.js';
 import './page-select.js';
 import './filter-select.js';
@@ -152,6 +153,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		}
 	}
 
+	backToTeamClicked() {
+		this.fireNavigationEvent('my-team-cpd');
+	}
+
 	deleteRecordButtonClicked(e) {
 		const dialog = this.shadowRoot.querySelector('d2l-dialog-confirm');
 		dialog.opened = true;
@@ -229,9 +234,16 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 			<div role="main">
 				${this.viewUserId ? html`
-					<h2>
-						${this.localize('userTitle', { 'UserName': this.userDisplayName})}
-					</h2>` : html`
+					<div>
+						<d2l-navigation-link-back
+							text="${this.localize('backToTeam')}"
+							@click="${this.backToTeamClicked}"
+							href="javascript:void(0)">
+						</d2l-navigation-link-back>
+						<h2>
+							${this.localize('userTitle', { 'UserName': this.userDisplayName})}
+						</h2>
+					</div>` : html`
 					<d2l-button id="new_record" @click="${this.newRecordButtonClicked}">
 			${this.localize('addNewCPD')}
 					</d2l-button>

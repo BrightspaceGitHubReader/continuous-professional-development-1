@@ -76,6 +76,7 @@
     "d2l-fetch": "Brightspace/d2l-fetch.git#semver:^2",
     "d2l-fetch-auth": "^1.2.0",
     "d2l-html-editor": "github:Brightspace/d2l-html-editor#semver:^2",
+    "d2l-navigation": "github:BrightspaceUI/navigation#semver:^3",
     "d2l-table": "BrightspaceUI/table#semver:^2",
     "d2l-tabs": "github:BrightspaceUI/tabs#semver:^1",
     "dayjs": "^1.8.17",
