@@ -190,6 +190,8 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			IsStructured: !!+this.shadowRoot.querySelector('#typeSelect').value,
 			MethodId: this.shadowRoot.querySelector('#methodSelect').value,
 			CreditMinutes: getTotalMinutes(this.shadowRoot.querySelector('#creditHours').value, this.shadowRoot.querySelector('#creditMinutes').value),
+			IssuedAwardId: null,
+			Grade: null,
 			DateCompleted: dateParamString(this.shadowRoot.querySelector('#dateCompletedPicker').value),
 			Answers: this.questions.map(question => {
 				return {
@@ -285,7 +287,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					</li>
 					<li>
 						<label for="dateCompletedPicker" class=d2l-label-text>${this.localize('dateCompleted')}</label>
-						<d2l-date-picker 
+						<d2l-date-picker
 							id="dateCompletedPicker"
 							value="${this.record && this.record.DateCompleted && dayjs(this.record.DateCompleted).format('YYYY-MM-DD') || dayjs(new Date()).format('YYYY-MM-DD')}"
 							@d2l-date-picker-value-changed="${this.updateFilter}"
@@ -294,7 +296,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					<li>
 						<label>${this.localize('addEvidence')}</label>
 						<d2l-attachments .attachmentsList="${this.attachments}" @d2l-attachments-list-updated="${this.attachmentsUpdated}"></d2l-attachments>
-						
+
 					</li>
 					${this.questions.map((q) => this.renderQuestion(q))}
 				</ul>
@@ -302,7 +304,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					<d2l-button @click="${this.saveForm}">${this.localize('save')}</d2l-button>
 					<d2l-button @click="${this.cancelForm}">${this.localize('cancel')}</d2l-button>
 				</div>
-					
+
 			</main>
 		`;
 	}
