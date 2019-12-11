@@ -317,7 +317,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					id=${`answerText_${question.Id}`}
 					editor-id=${`answerText_${question.Id}_editor`}
 					toolbar="bold italic underline | bullist d2l_formatrollup | undo redo"
-					app-root=${`${window.location.origin}/app/node_modules/d2l-html-editor/`}
+					app-root=${`${window.location.href.replace(/[^/]*$/, '')}node_modules/d2l-html-editor/`}
 					content="${ encodeURIComponent(this.getQuestionAnswer(this.record, question.Id))}">
 						<div id=${`answerText_${question.Id}_editor`} role="textbox" class="d2l-richtext-editor-container"></div>
 				</d2l-html-editor>
