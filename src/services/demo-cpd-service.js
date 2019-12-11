@@ -22,9 +22,18 @@ export class DemoCpdService {
 	static getMyTeam() {
 		return fetch('../../../../data/reports.json', getOptions).then(r => r.json());
 	}
+	static getPendingRecords() {
+		return fetch('../../../../data/awards.json', getOptions).then(r => r.json());
+	}
+
 	static getQuestions() {
 		const data = [{Id:1, QuestionText:'Why is Ben moving?'}];
 		return Promise.resolve(data);
+	}
+
+	static async getRecord(recordId) {
+		const records = await fetch('../../../../data/recordDictionary.json', getOptions).then(r => r.json());
+		return Promise.resolve(records[recordId]);
 	}
 
 	static getRecordSummary() {
@@ -41,7 +50,14 @@ export class DemoCpdService {
 	}
 
 	static getTypes() {
-		return ['Structured', 'Unstructured'];
+		return [ {
+			Id: 0,
+			Name: 'Unstructured'
+		},
+		{
+			Id: 1,
+			Name: 'Structured'
+		}];
 	}
 
 	static getUserInfo() {

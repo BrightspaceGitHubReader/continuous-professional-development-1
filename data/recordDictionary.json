@@ -1,0 +1,29 @@
+{
+  "1": {
+    "RecordId": 1,
+    "Name": "Capstone Project",
+    "SubjectId": 2,
+    "IsStructured": true,
+    "MethodId": 1,
+    "CreditMinutes": 100,
+    "DateCompleted": "01/01/2019"
+  },
+  "2": {
+    "RecordId": 2,
+    "Name": "Group Assignment",
+    "SubjectId": 3,
+    "IsStructured": false,
+    "MethodId": 3,
+    "CreditMinutes": 60,
+    "DateCompleted": "01/01/2019"
+  },
+  "3": {
+    "RecordId": 3,
+    "Name": "English 101",
+    "SubjectId": "English",
+    "IsStructured": true,
+    "MethodId": "TBD",
+    "CreditMinutes": 20,
+    "DateCompleted": "10/12/2019"
+  }
+}

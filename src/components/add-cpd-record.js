@@ -15,6 +15,9 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			attachments: {
 				type: Array
 			},
+			awardId: {
+				type: Number
+			},
 			methods: {
 				type: Array
 			},
@@ -137,6 +140,25 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					this.record = body;
 				});
 		}
+
+		if (this.awardId) {
+			this.cpdService.getPendingRecords().then((records) => {
+				const awardRecord = records.Objects.find(pendingRecord => pendingRecord.IssuedAwardId === this.awardId);
+				if (awardRecord) {
+					this.awardRecord = awardRecord;
+					this.record = {
+						Name: awardRecord.Name,
+						SubjectId: awardRecord.SubjectId,
+						IsStructured: 1,
+						MethodId: awardRecord.MethodId,
+						IssuedAwardId: awardRecord.IssuedAwardId,
+						Grade: awardRecord.Grade,
+						CreditMinutes: awardRecord.CreditMinutes,
+						DateCompleted: dateParamString(awardRecord.DateCompleted)
+					};
+				}
+			});
+		}
 	}
 
 	attachmentsUpdated(event) {
@@ -189,9 +211,9 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			SubjectId: this.shadowRoot.querySelector('#subjectSelect').value,
 			IsStructured: !!+this.shadowRoot.querySelector('#typeSelect').value,
 			MethodId: this.shadowRoot.querySelector('#methodSelect').value,
+			IssuedAwardId: this.awardRecord && this.awardRecord.IssuedAwardId,
+			Grade: this.awardRecord && this.awardRecord.Grade,
 			CreditMinutes: getTotalMinutes(this.shadowRoot.querySelector('#creditHours').value, this.shadowRoot.querySelector('#creditMinutes').value),
-			IssuedAwardId: null,
-			Grade: null,
 			DateCompleted: dateParamString(this.shadowRoot.querySelector('#dateCompletedPicker').value),
 			Answers: this.questions.map(question => {
 				return {
@@ -222,7 +244,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	render() {
 		return html`
 			<main>
-				<h2>${this.recordId ? this.localize('editCPD') : this.localize('addNewCPD')}</h2>
+				<h2>${this.record ? this.localize('editCPD') : this.localize('addNewCPD')}</h2>
 				<ul>
 					<li>
 						<label for="recordName" class="d2l-label-text">${this.localize('name')}</label>

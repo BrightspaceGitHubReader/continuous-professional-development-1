@@ -1,0 +1,36 @@
+{
+  "Objects": [
+    {
+      "Name": "First Award",
+      "IssuedAwardId": 12,
+      "MethodId": 1,
+      "SubjectId": 1,
+      "CreditMinutes": 90,
+      "Grade": 90.7,
+      "IssuedDate": "2019-12-06 20:54:23.450"
+    },
+    {
+      "Name": "You did gud",
+      "IssuedAwardId": 13,
+      "MethodId": 2,
+      "SubjectId": 2,
+      "CreditMinutes": 45,
+      "Grade": 60.7,
+      "IssuedDate": "2019-12-06 20:54:23.450"
+    },
+    {
+      "Name": "AVS certified",
+      "IssuedAwardId": 14,
+      "MethodId": 3,
+      "SubjectId": 3,
+      "CreditMinutes": 9000,
+      "Grade": 99.7,
+      "IssuedDate": "2019-12-06 20:54:23.450"
+    }
+  ],
+  "PageNumber": 1,
+  "PageSize": 20,
+  "TotalPages": 1,
+  "TotalCount": 3,
+  "ObjectCount": 3
+}

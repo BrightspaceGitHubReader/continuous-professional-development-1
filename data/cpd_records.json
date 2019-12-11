@@ -1,6 +1,7 @@
 {
 	"RecordSummaries": [
 		{
+      "RecordId": 1,
 			"RecordName": "Capstone Project",
 			"SubjectName": "Math",
 			"IsStructured": true,
@@ -9,6 +10,7 @@
 			"DateCompleted": "01/01/2019"
 		},
 		{
+      "RecordId": 2,
 			"RecordName": "Group Assignment",
 			"SubjectName": "Management",
 			"IsStructured": false,
@@ -17,6 +19,7 @@
 			"DateCompleted": "01/01/2019"
 		},
 		{
+      "RecordId": 3,
 			"RecordName": "English 101",
 			"SubjectName": "English",
 			"IsStructured": true,

@@ -38,6 +38,10 @@ export class CpdService {
 		return this.getRequest(api_path);
 	}
 
+	static getPendingRecords() {
+		return this.getRequest(this.getCpdPath(this.Pending));
+	}
+
 	static getQuestions() {
 		return this.getRequest(this.getCpdPath(this.Question));
 	}
@@ -91,6 +95,7 @@ export class CpdService {
 	}
 	static get Host() { return window.data.fraSettings.valenceHost; }
 	static get Method() { return 'method'; }
+	static get Pending() { return 'pending'; }
 	static postJsonRequest(base_path, object) {
 		const postRequest = new Request(`${base_path}`, {
 			method: 'POST',
@@ -139,5 +144,4 @@ export class CpdService {
 	static updateRecord(recordId, record, files, removedFiles) {
 		return this.putWithFilesRequest(`${this.getCpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
 	}
-
 }
