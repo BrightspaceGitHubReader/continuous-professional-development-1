@@ -12,7 +12,7 @@
   "confirmDeleteRecord": "Are you sure you want to delete this record?",
   "dateCompleted": "Date Completed",
   "dateRange": "Date Range",
-  "delete": "Delete {RecordName}",  
+  "delete": "Delete {recordname}",  
   "editCPD": "Edit CPD Record",
   "employeeName": "Employee Name",
   "enterCreditHours": "Enter Credit Hours",
@@ -25,6 +25,7 @@
   "myTeamCpd": "My Team CPD",
   "name": "Name",
   "no": "No",
+  "noResultsFound": "No results found",
   "pageCount": "{numerator} of {denominator}",
   "pendingRecords": "Pending Records",
   "progress": "Progress",
@@ -38,6 +39,6 @@
   "subject": "Subject",
   "to": "to",
   "type": "Type",
-  "userTitle": "{UserName}'s CPD Record",
+  "userTitle": "{username}'s CPD Record",
   "yes": "Yes"
 }

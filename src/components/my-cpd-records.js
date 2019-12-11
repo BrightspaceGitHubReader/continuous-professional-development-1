@@ -10,6 +10,7 @@ import 'd2l-navigation/d2l-navigation-link-back.js';
 import 'd2l-table/d2l-table.js';
 import './page-select.js';
 import './filter-select.js';
+import './message-container.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
@@ -88,7 +89,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			}
 
 			.date_filter_controls {
-				width: 12rem;
+				width: 16rem;
 				display: flex;
 				justify-content: space-between;
 				align-items: baseline;
@@ -222,6 +223,87 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		this.hideSearchOptions = !this.hideSearchOptions;
 	}
 
+	renderTable() {
+		return html`
+		<d2l-table
+			id="cpd-records"
+			aria-label="${this.localize('ariaCpdTable')}"
+			>
+			<d2l-thead>
+				<d2l-tr role="row">
+					<d2l-th>
+						${this.localize('name')}
+					</d2l-th>
+
+
+					<d2l-th>
+						${this.localize('subject')}
+					</d2l-th>
+
+
+					<d2l-th>
+						${this.localize('type')}
+					</d2l-th>
+
+
+					<d2l-th>
+						${this.localize('method')}
+					</d2l-th>
+
+
+					<d2l-th>
+						${this.localize('creditHours')}
+					</d2l-th>
+
+
+					<d2l-th>
+						${this.localize('dateCompleted')}
+					</d2l-th>
+				</d2l-tr>
+			</d2l-thead>
+
+			<d2l-tbody>
+				${ this.cpdRecords.RecordSummaries.map(record => this.renderRecord(record)) }
+			</d2l-tbody>
+		</d2l-table>
+		`;
+	}
+
+	renderRecord(record) {
+		const {recordname} = record;
+		return html`
+		<d2l-tr role="row">
+			<d2l-td>
+				<d2l-link @click="${this.recordLinkClicked}" record-id="${record.RecordId}">
+					${record.RecordName}
+				</d2l-link>
+				${this.viewUserId ? html`` : html`
+					<d2l-button-icon @click="${this.deleteRecordButtonClicked}" icon="tier1:delete" record-id="${record.RecordId}"></d2l-button-icon>
+					<d2l-dialog-confirm title-text="${this.localize('delete', {recordname})}" text="${this.localize('confirmDeleteRecord')}">
+						<d2l-button slot="footer" primary dialog-action="yes">${this.localize('yes')}</d2l-button>
+						<d2l-button slot="footer" dialog-action>${this.localize('no')}</d2l-button>
+					</d2l-dialog-confirm>
+				`}
+			</d2l-td>
+			<d2l-td>
+				${record.SubjectName}
+			</d2l-td>
+			<d2l-td>
+				${this.getType(record.IsStructured)}
+			</d2l-td>
+			<d2l-td>
+				${record.MethodName}
+			</d2l-td>
+			<d2l-td>
+				${getHoursAndMinutes(record.CreditMinutes)}
+			</d2l-td>
+			<d2l-td>
+				${dayjs(record.DateCompleted).format('YYYY-MM-DD')}
+			</d2l-td>
+		</d2l-tr>
+		`;
+	}
+
 	renderShowHideButtonText() {
 		return this.hideSearchOptions ? this.localize('showSearchOptions') : this.localize('hideSearchOptions');
 	}
@@ -234,6 +316,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 			<div role="main">
 				${this.viewUserId ? html`
+
 					<div>
 						<d2l-navigation-link-back
 							text="${this.localize('backToTeam')}"
@@ -241,9 +324,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 							href="javascript:void(0)">
 						</d2l-navigation-link-back>
 						<h2>
-							${this.localize('userTitle', { 'UserName': this.userDisplayName})}
+							${this.localize('userTitle', { 'username': this.userDisplayName})}
 						</h2>
 					</div>` : html`
+
 					<d2l-button id="new_record" @click="${this.newRecordButtonClicked}">
 			${this.localize('addNewCPD')}
 					</d2l-button>
@@ -299,87 +383,18 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 						</div>
 					</div>
 				</div>
-
-				<d2l-table
-					id="cpd-records"
-					aria-label="${this.localize('ariaCpdTable')}"
-				>
-					<d2l-thead>
-						<d2l-tr role="row">
-							<d2l-th>
-								${this.localize('name')}
-							</d2l-th>
-
-
-							<d2l-th>
-								${this.localize('subject')}
-							</d2l-th>
-
-
-							<d2l-th>
-								${this.localize('type')}
-							</d2l-th>
-
-
-							<d2l-th>
-								${this.localize('method')}
-							</d2l-th>
-
-
-							<d2l-th>
-								${this.localize('creditHours')}
-							</d2l-th>
-
-
-							<d2l-th>
-								${this.localize('dateCompleted')}
-							</d2l-th>
-						</d2l-tr>
-					</d2l-thead>
-
-					<d2l-tbody>
-						${ this.cpdRecords.RecordSummaries && this.cpdRecords.RecordSummaries.map(record => { const {RecordName} = record; return html`
-								<d2l-tr role="row">
-									<d2l-td>
-										<d2l-link @click="${this.recordLinkClicked}" record-id="${record.RecordId}">
-											${record.RecordName}
-										</d2l-link>
-										${this.viewUserId ? html`` : html`
-											<d2l-button-icon @click="${this.deleteRecordButtonClicked}" icon="tier1:delete" record-id="${record.RecordId}"></d2l-button-icon>
-											<d2l-dialog-confirm title-text="${this.localize('delete', {RecordName})}" text="${this.localize('confirmDeleteRecord')}">
-												<d2l-button slot="footer" primary dialog-action="yes">${this.localize('yes')}</d2l-button>
-												<d2l-button slot="footer" dialog-action>${this.localize('no')}</d2l-button>
-											</d2l-dialog-confirm>
-										`}
-									</d2l-td>
-									<d2l-td>
-										${record.SubjectName}
-									</d2l-td>
-									<d2l-td>
-										${this.getType(record.IsStructured)}
-									</d2l-td>
-									<d2l-td>
-										${record.MethodName}
-									</d2l-td>
-									<d2l-td>
-										${getHoursAndMinutes(record.CreditMinutes)}
-									</d2l-td>
-									<d2l-td>
-										${dayjs(record.DateCompleted).format('YYYY-MM-DD')}
-									</d2l-td>
-								</d2l-tr>
-							`;})}
-					</d2l-tbody>
-				</d2l-table>
+				${this.cpdRecords.RecordSummaries && this.cpdRecords.RecordSummaries.length > 0 ?
+		this.renderTable() : html`<d2l-message-container message="${this.localize('noResultsFound')}"></d2l-message-container>`
+}
 				<div class="page_control">
-						<d2l-page-select
-							pages="${this.cpdRecords.TotalPages}"
-							page="${this.page}"
-							@d2l-page-select-updated="${this.updatePage}"
-							>
-						</d2l-page-select>
-					</div>
+					<d2l-page-select
+						pages="${this.cpdRecords.TotalPages}"
+						page="${this.page}"
+						@d2l-page-select-updated="${this.updatePage}"
+						>
+					</d2l-page-select>
 				</div>
+			</div>
 			`;
 	}
 }
