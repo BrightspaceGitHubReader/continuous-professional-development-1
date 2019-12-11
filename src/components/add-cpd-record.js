@@ -170,7 +170,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		return answer.Text || '';
 	}
 
-	missingRequired() {
+	validateForm() {
 		let missingField = false;
 		const name = this.shadowRoot.querySelector('#recordName');
 		const creditHours = this.shadowRoot.querySelector('#creditHours');
@@ -178,23 +178,30 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		const dateCompleted = this.shadowRoot.querySelector('#dateCompletedPicker');
 
 		if (!name.value) {
-			name.setAttribute('required', true);
+			name.setAttribute('aria-invalid', true);
 			missingField = true;
 		}
+		else {
+			name.value = name.value.trim();
+			if (!name.value) {
+				name.setAttribute('aria-invalid', true);
+				missingField = true;
+			}
+		}
 		if (!creditHours.value && !creditMinutes.value) {
-			creditHours.setAttribute('required', true);
-			creditMinutes.setAttribute('required', true);
+			creditHours.setAttribute('aria-invalid', true);
+			creditMinutes.setAttribute('aria-invalid', true);
 			missingField = true;
 		}
 		if (!dateCompleted.value) {
-			dateCompleted.shadowRoot.querySelector('.d2l-input').setAttribute('required', true);
+			dateCompleted.shadowRoot.querySelector('.d2l-input').setAttribute('aria-invalid', true);
 			missingField = true;
 		}
 		return missingField;
 	}
 
 	saveForm() {
-		if (this.missingRequired()) {
+		if (this.validateForm()) {
 			return;
 		}
 
@@ -240,7 +247,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				<ul>
 					<li>
 						<label for="recordName" class="d2l-label-text">${this.localize('name')}</label>
-						<d2l-input-text id="recordName" value="${this.record && this.record.Name || ''}"></d2l-input-text>
+						<d2l-input-text id="recordName" required value="${this.record && this.record.Name || ''}"></d2l-input-text>
 					</li>
 					<li>
 						<ul class="innerlist">
@@ -284,11 +291,11 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 							<div class="credit-time-container">
 								<div>
 									<label for="creditHours" class="d2l-label-text">${this.localize('creditHours')}</label>
-									<d2l-input-text class="numberInput" id="creditHours" placeholder=${this.localize('enterCreditHours')} type="number" min="0" value="${this.record && getHours(this.record.CreditMinutes) || ''}"></d2l-input-text>
+									<d2l-input-text class="numberInput" id="creditHours" required placeholder=${this.localize('enterCreditHours')} type="number" min="0" value="${this.record && getHours(this.record.CreditMinutes) || ''}"></d2l-input-text>
 								</div>
 								<div>
 									<label for="creditMinutes" class="d2l-label-text">${this.localize('creditMinutes')}</label>
-									<d2l-input-text class="numberInput" id="creditMinutes" placeholder=${this.localize('enterCreditMinutes')} type="number" min="0" max="59"  value="${this.record && getMinutes(this.record.CreditMinutes) || ''}"></d2l-input-text>
+									<d2l-input-text class="numberInput" id="creditMinutes" required placeholder=${this.localize('enterCreditMinutes')} type="number" min="0" max="59"  value="${this.record && getMinutes(this.record.CreditMinutes) || ''}"></d2l-input-text>
 								</div>
 							</div>
 							${this.record && this.record.Grade ? html`
@@ -303,6 +310,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						<label for="dateCompletedPicker" class=d2l-label-text>${this.localize('dateCompleted')}</label>
 						<d2l-date-picker
 							id="dateCompletedPicker"
+							required
 							value="${this.record && this.record.DateCompleted && dayjs(this.record.DateCompleted).format('YYYY-MM-DD') || dayjs(new Date()).format('YYYY-MM-DD')}"
 							@d2l-date-picker-value-changed="${this.updateFilter}"
 						></d2l-date-picker>
