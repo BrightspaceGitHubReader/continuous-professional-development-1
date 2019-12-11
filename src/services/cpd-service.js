@@ -47,7 +47,20 @@ export class CpdService {
 	}
 	static getRecord(recordId) {
 		const base_path = `${this.getCpdPath(this.Record)}/${recordId}`;
-		return this.getRequest(base_path);
+		return this.getRequest(base_path)
+			.then(body => {
+				if (body.Attachments) {
+					body.Attachments.Files = body.Attachments.Files.map(file => {
+						return {
+							id: file.Id,
+							name: file.Name,
+							size: file.Size,
+							href: `${window.data.fraSettings.valenceHost}${file.Href}`
+						};
+					});
+				}
+				return body;
+			});
 	}
 	static getRecordSummary(page, viewUserId, filters) {
 		let base_path = `${this.getCpdPath(this.Record)}?pageNumber=${page}`;

@@ -127,14 +127,6 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			this.cpdService.getRecord(this.recordId)
 				.then(body => {
 					if (body.Attachments) {
-						body.Attachments.Files = body.Attachments.Files.map(file => {
-							return {
-								id: file.Id,
-								name: file.Name,
-								size: file.Size,
-								href: `${window.data.fraSettings.valenceHost}${file.Href}`
-							};
-						});
 						this.attachments = body.Attachments.Files;
 					}
 					this.record = body;

@@ -4,6 +4,7 @@ import './my-cpd-records';
 import './add-cpd-record';
 import './pending-records';
 import './my-team-cpd';
+import './read-only-cpd-record';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 
@@ -47,6 +48,11 @@ class Cpd extends BaseMixin(LitElement) {
 		if (this.pageData.page === 'user-cpd-records') {
 			return html`
 			<d2l-my-cpd-records viewuserid="${this.pageData.viewUserId}"></d2l-my-cpd-records>
+			`;
+		}
+		if (this.pageData.page === 'read-only-cpd-record') {
+			return html`
+			<d2l-read-only-cpd-record recordId="${this.pageData.recordId}"></d2l-read-only-cpd-record>
 			`;
 		}
 		return html`
