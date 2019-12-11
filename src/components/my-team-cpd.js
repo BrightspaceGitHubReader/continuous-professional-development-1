@@ -89,6 +89,10 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 		this.fetchReports();
 	}
 
+	userClicked(e) {
+		this.fireNavigationEvent('user-cpd-records', undefined, e.target.getAttribute('user-id'));
+	}
+
 	renderTable() {
 		return html`
 		<d2l-table
@@ -122,7 +126,9 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 				</d2l-td>		
 
 				<d2l-td>
-					${report.DisplayName}
+					<d2l-link @click="${this.userClicked}" user-id="${report.UserId}">
+						${report.DisplayName}
+					</d2l-link>
 				</d2l-td>
 			</d2l-tr>
 		`;
