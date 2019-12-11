@@ -1,6 +1,7 @@
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import './attachments';
 import 'd2l-date-picker/d2l-date-picker.js';
+import 'd2l-navigation/d2l-navigation-link-back.js';
 import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
@@ -106,6 +107,11 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 	render() {
 		return html`
 			<main>
+				<d2l-navigation-link-back
+					text="${this.localize('backToTeam')}"
+					@click="${this.backToTeamClicked}"
+					href="javascript:void(0)">
+				</d2l-navigation-link-back>
 				<h2>${this.localize('viewCPD')}</h2>
 				<ul>
 					<li>
@@ -179,6 +185,10 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 			return html`<d2l-attachments readonly .attachmentsList="${attachments}"></d2l-attachments>`;
 		}
 		return this.localize('noEvidence');
+	}
+
+	backToTeamClicked() {
+		this.fireNavigationEvent('my-team-cpd');
 	}
 }
 
