@@ -1,4 +1,5 @@
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
+import { ResizeObserver } from 'd2l-resize-aware/resize-observer-module.js';
 
 const langTerms = {};
 const baseUrl = import.meta.url;
@@ -42,6 +43,15 @@ export const BaseMixin = superclass => class extends LocalizeMixin(superclass) {
 		return null;
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+		new ResizeObserver(() => {
+			this.resize();
+		}).observe(document.body, {
+			attributes: true
+		});
+	}
+
 	fireNavigationEvent(page, recordId, userId, awardId) {
 		const event = new CustomEvent('d2l-navigate', {
 			detail: {
@@ -56,6 +66,10 @@ export const BaseMixin = superclass => class extends LocalizeMixin(superclass) {
 
 	localize(key, params) {
 		return super.localize(key, params) || `{language term '${key}' not found}`;
+	}
+
+	resize() {
+		window.parentIFrame && window.parentIFrame.size();
 	}
 
 };

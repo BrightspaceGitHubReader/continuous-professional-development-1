@@ -24,6 +24,9 @@
 		client
 			.connect()
 			.then(client => {
+				window.iFrameResizer = {
+					heightCalculationMethod: 'lowestElement'
+				};
 				window.data = window.data || {};
 				window.data.fraSettings = window.data.fraSettings || {};
 				window.data.fraSettings.client = client;

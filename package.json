@@ -82,6 +82,7 @@
     "d2l-table": "BrightspaceUI/table#semver:^2",
     "d2l-tabs": "github:BrightspaceUI/tabs#semver:^1",
     "dayjs": "^1.8.17",
-    "lit-element": "^2"
+    "lit-element": "^2",
+    "d2l-resize-aware": "BrightspaceUI/resize-aware#semver:^1"
   }
 }
