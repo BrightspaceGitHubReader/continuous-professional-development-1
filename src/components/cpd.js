@@ -47,12 +47,18 @@ class Cpd extends BaseMixin(LitElement) {
 		}
 		if (this.pageData.page === 'user-cpd-records') {
 			return html`
-			<d2l-my-cpd-records viewuserid="${this.pageData.viewUserId}"></d2l-my-cpd-records>
+			<d2l-my-cpd-records
+				@d2l-navigate="${this.handleNavigateEvent}"
+				viewuserid="${this.pageData.viewUserId}">
+			</d2l-my-cpd-records>
 			`;
 		}
 		if (this.pageData.page === 'read-only-cpd-record') {
 			return html`
-			<d2l-read-only-cpd-record recordId="${this.pageData.recordId}"></d2l-read-only-cpd-record>
+			<d2l-read-only-cpd-record
+				@d2l-navigate="${this.handleNavigateEvent}"
+				recordId="${this.pageData.recordId}">
+			</d2l-read-only-cpd-record>
 			`;
 		}
 		return html`
@@ -79,7 +85,7 @@ class Cpd extends BaseMixin(LitElement) {
 					text="${this.localize('myTeamCpd')}"
 					?selected=${this.pageData.page === 'my-team-cpd'}
 					>
-					<d2l-my-team-cpd></d2l-my-team-cpd>
+					<d2l-my-team-cpd @d2l-navigate="${this.handleNavigateEvent}"></d2l-my-team-cpd>
 				</d2l-tab-panel>
 				` : null}
 

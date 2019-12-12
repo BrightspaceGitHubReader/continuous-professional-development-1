@@ -189,7 +189,19 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	recordLinkClicked(e) {
-		this.fireNavigationEvent('edit-cpd-record', e.target.getAttribute('record-id'), this.viewUserId);
+		if (!this.viewUserId) {
+			this.fireNavigationEvent(
+				'edit-cpd-record',
+				e.target.getAttribute('record-id')
+			);
+		} else {
+			this.fireNavigationEvent(
+				'read-only-cpd-record',
+				e.target.getAttribute('record-id'),
+				this.viewUserId
+			);
+		}
+
 	}
 
 	updatePage(e) {
@@ -329,7 +341,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 							href="javascript:void(0)">
 						</d2l-navigation-link-back>
 						<h2>
-							${this.localize('userTitle', { 'username': this.userDisplayName})}
+							${this.localize('userTitle', { 'userName': this.userDisplayName})}
 						</h2>
 					</div>` : html`
 

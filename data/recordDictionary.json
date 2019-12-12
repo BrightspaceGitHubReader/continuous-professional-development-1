@@ -3,27 +3,39 @@
     "RecordId": 1,
     "Name": "Capstone Project",
     "SubjectId": 2,
+    "Subject": {"Name": "My Subject"},
+    "Method": {"Name": "My Method"},
     "IsStructured": true,
     "MethodId": 1,
     "CreditMinutes": 100,
+    "Attachments": {"Files": []},
+    "Answers": [{"QuestionId": 1, "Text":"Some anser text"}],
     "DateCompleted": "01/01/2019"
   },
   "2": {
     "RecordId": 2,
     "Name": "Group Assignment",
     "SubjectId": 3,
+    "Subject": {"Name": "My Subject"},
+    "Method": {"Name": "My Method"},
     "IsStructured": false,
     "MethodId": 3,
     "CreditMinutes": 60,
+    "Attachments": {"Files": []},
+    "Answers": [{"QuestionId": 1, "Text":"Some anser text"}],
     "DateCompleted": "01/01/2019"
   },
   "3": {
     "RecordId": 3,
     "Name": "English 101",
     "SubjectId": "English",
-    "IsStructured": true,
+    "Subject": {"Name": "My Subject"},
+    "Method": {"Name": "My Method"},
+    "IsStructured": false,
     "MethodId": "TBD",
     "CreditMinutes": 20,
+    "Attachments": {"Files": []},
+    "Answers": [{"QuestionId": 1, "Text":"Some anser text"}],
     "DateCompleted": "10/12/2019"
   }
 }

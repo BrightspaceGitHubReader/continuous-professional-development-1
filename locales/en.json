@@ -50,7 +50,7 @@
   "subject": "Subject",
   "to": "to",
   "type": "Type",
-  "userTitle": "{UserName}'s CPD Record",
+  "userTitle": "{userName}'s CPD Record",
   "viewCPD": "View CPD Record",
   "yes": "Yes"
 }
