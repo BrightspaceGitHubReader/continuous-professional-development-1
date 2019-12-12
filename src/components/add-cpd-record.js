@@ -105,7 +105,6 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		this.methods = [];
 		this.types = this.cpdService.getTypes();
 		this.attachments = [];
-		this.record = {};
 	}
 
 	connectedCallback() {
