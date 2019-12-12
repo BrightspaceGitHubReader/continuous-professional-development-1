@@ -12,13 +12,21 @@
 		<script type="module" src="../src/components/cpd.js"></script>
 	</head>
 	<body>
+		<test-fixture id="myTeam">
+			<template>
+				<d2l-cpd
+					manager
+					managePersonal
+					pageData='{"page":"my-team-cpd"}'></d2l-cpd>
+			</template>
+		</test-fixture>
 
 		<test-fixture id="pending">
 			<template>
-				<d2l-cpd 
+				<d2l-cpd
 					manager
 					managePersonal
-					pagedata='{"page":"pending-records"}'></d2l-cpd>
+					pageData='{"page":"pending-records"}'></d2l-cpd>
 			</template>
 		</test-fixture>
 
@@ -32,7 +40,7 @@
 		</test-fixture>
 
 		<script type="module">
-			//import { runAxe } from '@brightspace-ui/core/tools/a11y-test-helper.js';
+			import { runAxe } from '@brightspace-ui/core/tools/a11y-test-helper.js';
 
 			describe('d2l-cpd', () => {
 				let element;
@@ -57,7 +65,7 @@
 						});
 					});
 					it('should pass all axe tests', async() => {
-						//await runAxe(element);
+						await runAxe(element);
 					});
 					it('should have my records tab selected if page param is set to pending', (done) => {
 						const selectedTabPanel = element.shadowRoot.querySelector('d2l-tab-panel[selected]');
@@ -77,8 +85,21 @@
 						expect(selectedTabPanel.text).to.equal('Pending Records');
 						done();
 					});
+					it('should pass all axe tests', async() => {
+						await runAxe(element);
+					});
 				});
-
+				describe('myTeam', () => {
+					beforeEach((done) => {
+						element = fixture('myTeam');
+						element.updateComplete.then(() => {
+							initialized(element, done);
+						});
+					});
+					it('should pass all axe tests', async() => {
+						await runAxe(element);
+					});
+				});
 			});
 		</script>
 	</body>

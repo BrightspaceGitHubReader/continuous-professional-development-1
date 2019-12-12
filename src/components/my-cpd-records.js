@@ -270,7 +270,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	renderRecord(record) {
-		const {recordname} = record;
+		const {recordName} = record;
 		return html`
 		<d2l-tr role="row">
 			<d2l-td>
@@ -278,8 +278,13 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					${record.RecordName}
 				</d2l-link>
 				${this.viewUserId ? html`` : html`
-					<d2l-button-icon @click="${this.deleteRecordButtonClicked}" icon="tier1:delete" record-id="${record.RecordId}"></d2l-button-icon>
-					<d2l-dialog-confirm title-text="${this.localize('delete', {recordname})}" text="${this.localize('confirmDeleteRecord')}">
+					<d2l-button-icon
+						@click="${this.deleteRecordButtonClicked}"
+						icon="tier1:delete"
+						text="${this.localize('delete', {recordName})}"
+						record-id="${record.RecordId}">
+					</d2l-button-icon>
+					<d2l-dialog-confirm title-text="${this.localize('delete', {recordName})}" text="${this.localize('confirmDeleteRecord')}">
 						<d2l-button slot="footer" primary dialog-action="yes">${this.localize('yes')}</d2l-button>
 						<d2l-button slot="footer" dialog-action>${this.localize('no')}</d2l-button>
 					</d2l-dialog-confirm>
@@ -336,7 +341,8 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				<div class="search_bar">
 					<d2l-input-search
 						id="search_input"
-						placeholder=${this.localize('searchPlaceholder')}
+						label="${this.localize('search')}"
+						placeholder=${this.localize('searchRecordPlaceholder')}
 						@d2l-input-search-searched="${this.updateFilter}"
 						>
 					</d2l-input-search>
@@ -353,30 +359,30 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					?disabled=${this.hideSearchOptions}
 					>
 					<d2l-filter-select
-					  id="subject_select"	
+						id="subject_select"
 						label="${this.localize('subject')}"
 						.options=${this.subjectOptions}
-						@d2l-filter-select-updated="${this.updateFilter}"	
+						@d2l-filter-select-updated="${this.updateFilter}"
 						>
-					</d2l-filter-select>				
+					</d2l-filter-select>
 
 					<d2l-filter-select
-						id="method_select"	
+						id="method_select"
 						label="${this.localize('method')}"
 						.options=${this.methodOptions}
-						@d2l-filter-select-updated="${this.updateFilter}"	
+						@d2l-filter-select-updated="${this.updateFilter}"
 						>
-					</d2l-filter-select>				
+					</d2l-filter-select>
 
 					<div id="date_filter">
 						<label id="date_label">${this.localize('dateRange')}</label>
 						<div class="date_filter_controls">
-							<d2l-date-picker 
+							<d2l-date-picker
 								id="start_date_picker"
 								@d2l-date-picker-value-changed="${this.updateFilter}"
 								></d2l-date-picker>
 							<label>${this.localize('to')}</label>
-							<d2l-date-picker 
+							<d2l-date-picker
 								id="end_date_picker"
 								@d2l-date-picker-value-changed="${this.updateFilter}"
 								></d2l-date-picker>

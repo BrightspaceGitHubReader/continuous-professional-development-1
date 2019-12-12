@@ -92,6 +92,7 @@ class PageSelect extends BaseMixin(LitElement) {
 			<select
 				id="page-select"
 				class="d2l-input-select"
+				aria-label="${this.localize('chooseChoice', {choice: this.localize('page')})}"
 				@change="${this.setPage}"
 				>
 				${this.serializePageOptions(this.pages)}

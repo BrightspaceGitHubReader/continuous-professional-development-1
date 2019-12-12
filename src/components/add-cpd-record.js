@@ -255,6 +255,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 									<label for="typeSelect">${this.localize('type')}</label>
 								</div>
 								<select
+									aria-label="${this.localize('chooseChoice', {choice: this.localize('type')})}"
 									class="d2l-input-select select_filter"
 									id="typeSelect"
 									>
@@ -266,6 +267,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 									<label for="subjectSelect">${this.localize('subject')}</label>
 								</div>
 								<select
+									aria-label="${this.localize('chooseChoice', {choice: this.localize('subject')})}"
 									class="d2l-input-select select_filter"
 									id="subjectSelect"
 									>
@@ -277,6 +279,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 									<label for="methodSelect">${this.localize('method')}</label>
 								</div>
 								<select
+									aria-label="${this.localize('chooseChoice', {choice: this.localize('method')})}"
 									class="d2l-input-select select_filter"
 									id="methodSelect"
 									>

@@ -123,7 +123,7 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 					<div class="profile_image">
 						<d2l-icon icon="tier3:profile-pic"></d2l-icon>
 					</div>
-				</d2l-td>		
+				</d2l-td>
 
 				<d2l-td>
 					<d2l-link @click="${this.userClicked}" user-id="${report.UserId}">
@@ -142,7 +142,8 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 
 			<div role="main">
 				<d2l-input-search
-					placeholder=${this.localize('searchPlaceholder')}
+					label="${this.localize('search')}"
+					placeholder=${this.localize('searchTeamPlaceholder')}
 					@d2l-input-search-searched="${this.updateFilter}"
 					>
 				</d2l-input-search>
@@ -150,7 +151,7 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 					${ this.myTeam.Objects && this.myTeam.Objects.length > 0 ?
 		this.renderTable() : html`<d2l-message-container message="${this.localize('noResultsFound')}"></d2l-message-container>`
 }
-		
+
 				<div class="page_control">
 					<d2l-page-select
 						pages="${this.myTeam.TotalPages}"

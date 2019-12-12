@@ -91,6 +91,7 @@ class FilterSelect extends BaseMixin(LitElement) {
 						class="d2l-input-select select_filter"
 						?disabled=${!this.enabled}
 						@change="${this.filterChange}"
+						aria-label="${this.localize('chooseChoice', {choice: this.label})}"
 					>
 						<option value="0">${this.localize('selectDefault', { 'object': this.label})}</option>
 						${this.options.map(option => this.renderSelect(option))}
