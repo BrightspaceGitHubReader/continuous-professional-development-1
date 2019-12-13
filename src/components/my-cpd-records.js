@@ -341,11 +341,13 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				${this.viewUserId ? html`
 
 					<div>
-						<d2l-navigation-link-back
-							text="${this.localize('backToTeam')}"
-							@click="${this.backToTeamClicked}"
-							href="javascript:void(0)">
-						</d2l-navigation-link-back>
+						<div>
+							<d2l-navigation-link-back
+								text="${this.localize('backToTeam')}"
+								@click="${this.backToTeamClicked}"
+								href="javascript:void(0)">
+							</d2l-navigation-link-back>
+						</div>
 						<h2>
 							${this.localize('userTitle', { 'userName': this.userDisplayName})}
 						</h2>
