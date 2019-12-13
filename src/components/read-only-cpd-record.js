@@ -24,6 +24,9 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 			},
 			types: {
 				type: Array
+			},
+			userDisplayName: {
+				type: String
 			}
 		};
 	}
@@ -92,15 +95,19 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 		this.record = {};
 	}
 
-	connectedCallback() {
+	async connectedCallback() {
 		super.connectedCallback();
+		await this.cpdService.getRecord(this.recordId)
+			.then(body => {
+				this.record = body;
+			});
 		this.cpdService.getQuestions()
 			.then(body => {
 				this.questions = body;
 			});
-		this.cpdService.getRecord(this.recordId)
+		this.cpdService.getUserInfo(this.record.User)
 			.then(body => {
-				this.record = body;
+				this.userDisplayName = body;
 			});
 	}
 
@@ -108,8 +115,8 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 		return html`
 			<main>
 				<d2l-navigation-link-back
-					text="${this.localize('backToTeam')}"
-					@click="${this.backToTeamClicked}"
+					text="${this.localize('backToUserRecords', {userName: this.userDisplayName})}"
+					@click="${this.backToUserRecordsClicked}"
 					href="javascript:void(0)">
 				</d2l-navigation-link-back>
 				<h2>${this.localize('viewCPD')}</h2>
@@ -155,7 +162,7 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 					<li>
 						<label for="evidence">${this.localize('evidence')}</label>
 						<div id="evidence">
-							${this.renderEvidence(this.record.Attachments.Files)}
+							${this.renderEvidence(this.record.Attachments)}
 						</div>
 					</li>
 					${this.questions.map((q) => this.renderAnswers(q, this.record.Answers))}
@@ -182,13 +189,13 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 
 	renderEvidence(attachments) {
 		if (attachments) {
-			return html`<d2l-attachments readonly .attachmentsList="${attachments}"></d2l-attachments>`;
+			return html`<d2l-attachments readonly .attachmentsList="${attachments.Files}"></d2l-attachments>`;
 		}
 		return this.localize('noEvidence');
 	}
 
-	backToTeamClicked() {
-		this.fireNavigationEvent('my-team-cpd');
+	backToUserRecordsClicked() {
+		this.fireNavigationEvent('user-cpd-records', null, this.record.User, null);
 	}
 }
 

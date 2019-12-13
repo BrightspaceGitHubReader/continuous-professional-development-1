@@ -7,6 +7,7 @@
   "ariaPendingRecordsTable": "A table listing your awarded awards",
   "addToMyCpd": "Add to My CPD ",
   "backToTeam": "Back to My Team",
+  "backToUserRecords": "Back to {userName}'s records",
   "cancel": "Cancel",
   "chooseChoice": "Choose a {choice}",
   "confirmDeleteRecord": "Are you sure you want to delete this record?",
