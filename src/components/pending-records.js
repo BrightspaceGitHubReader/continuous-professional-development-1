@@ -7,6 +7,8 @@ import 'd2l-menu/d2l-menu';
 import 'd2l-dropdown/d2l-dropdown';
 import 'd2l-dropdown/d2l-dropdown-menu';
 import 'd2l-date-picker/d2l-date-picker';
+import './message-container';
+import './page-select';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
@@ -15,7 +17,16 @@ class PendingRecords extends BaseMixin(LitElement) {
 	static get properties() {
 		return {
 			pendingRecords: {
-				type: Array
+				type: Object
+			},
+			page: {
+				type: Number
+			},
+			filters: {
+				type: Object
+			},
+			hideSearchOptions: {
+				type: Boolean
 			}
 		};
 	}
@@ -26,26 +37,124 @@ class PendingRecords extends BaseMixin(LitElement) {
 				display: grid;
 				grid-gap: 1rem;
 			}
+
+			d2l-input-search {
+				width: 35%;
+			}
+
+			d2l-date-picker {
+				width: 7rem;
+			}
+
+			.date_filter_controls {
+				width: 16rem;
+				display: flex;
+				justify-content: space-between;
+				align-items: baseline;
+			}
+
+			.page_control {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+			}
+
+			.search_options[disabled] {
+				display: none;
+			}
 		`;
 	}
 
 	constructor() {
 		super();
 		this.cpdService = CpdServiceFactory.getCpdService();
+		this.page = 1;
+		this.hideSearchOptions = true;
 	}
 
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.cpdService.getPendingRecords()
+		this.cpdService.getPendingRecords(this.page)
 			.then(data => {
-				this.pendingRecords = data.Objects;
+				this.pendingRecords = data;
 			});
+	}
+
+	fetchAwards() {
+		this.cpdService.getPendingRecords(this.page, this.filters)
+			.then(data => {
+				this.pendingRecords = data;
+			});
+	}
+
+	updateFilter(e) {
+		this.filters = this.filters || {};
+		switch (e.target.id) {
+			case 'search_input':
+				this.filters.Name = e.detail;
+				break;
+			case 'start_date_picker':
+				this.filters.StartDate = e.detail;
+				break;
+			case 'end_date_picker':
+				this.filters.EndDate = e.detail;
+				break;
+		}
+		this.page = 1;
+		this.fetchAwards();
+	}
+
+	updatePage(e) {
+		this.page = e.detail.page;
+		this.fetchAwards();
+	}
+
+	toggleSearchOptions() {
+		this.hideSearchOptions = !this.hideSearchOptions;
+	}
+
+	renderShowHideButtonText() {
+		return this.hideSearchOptions ? this.localize('showSearchOptions') : this.localize('hideSearchOptions');
 	}
 
 	addAwardButtonClicked(e) {
 		const awardId = e.target.getAttribute('data-award-id');
 		this.fireNavigationEvent('add-cpd-record', undefined, undefined, awardId);
+	}
+
+	renderTable() {
+		return html`
+		<d2l-table
+			aria-label="${this.localize('ariaPendingRecordsTable')}"
+			>
+			<d2l-thead>
+				<d2l-tr role="row">
+					<d2l-th class="icon_column">
+					</d2l-th>
+					<d2l-th>
+						${this.localize('name')}
+					</d2l-th>
+					<d2l-th>
+						${this.localize('dateIssued')}
+					</d2l-th>
+				</d2l-tr>
+			</d2l-thead>
+
+			<d2l-tbody>
+				${this.pendingRecords && this.pendingRecords.Objects.map(award => this.renderAward(award))}
+			</d2l-tbody>
+		</d2l-table>
+
+		<div class="page_control">
+			<d2l-page-select
+				pages="${ Math.ceil(this.pendingRecords.TotalCount / this.pendingRecords.PageSize) }"
+				page="${this.page}"
+				@d2l-page-select-updated="${this.updatePage}"
+				>
+			</d2l-page-select>
+		</div>
+		`;
 	}
 
 	renderAward(award) {
@@ -86,26 +195,45 @@ class PendingRecords extends BaseMixin(LitElement) {
 			</custom-style>
 
 			<div role="main">
-				<d2l-table
-					aria-label="${this.localize('ariaPendingRecordsTable')}"
-					>
-					<d2l-thead>
-						<d2l-tr role="row">
-							<d2l-th class="icon_column">
-							</d2l-th>
-							<d2l-th>
-								${this.localize('name')}
-							</d2l-th>
-							<d2l-th>
-								${this.localize('dateIssued')}
-							</d2l-th>
-						</d2l-tr>
-					</d2l-thead>
+				<div class="search_bar">
+					<d2l-input-search
+						id="search_input"
+						label="${this.localize('search')}"
+						placeholder="${this.localize('searchPendingPlaceholder')}"
+						@d2l-input-search-searched="${this.updateFilter}"
+						>
+					</d2l-input-search>
 
-					<d2l-tbody>
-						${this.pendingRecords && this.pendingRecords.map(award => this.renderAward(award))}
-					</d2l-tbody>
-				</d2l-table>
+					<d2l-button-subtle
+						text="${this.renderShowHideButtonText()}"
+						@click="${this.toggleSearchOptions}"
+						>
+					</d2l-button-subtle>
+				</div>
+
+			<div
+				class="search_options"
+				?disabled=${this.hideSearchOptions}
+				>
+				<div id="date_filter">
+					<label id="date_label">${this.localize('dateRange')}</label>
+					<div class="date_filter_controls">
+						<d2l-date-picker
+							id="start_date_picker"
+							@d2l-date-picker-value-changed="${this.updateFilter}"
+							></d2l-date-picker>
+						<label>${this.localize('to')}</label>
+						<d2l-date-picker
+							id="end_date_picker"
+							@d2l-date-picker-value-changed="${this.updateFilter}"
+							></d2l-date-picker>
+					</div>
+				</div>
+			</div>
+
+				${this.pendingRecords.Objects && this.pendingRecords.Objects.length > 0 ?
+		this.renderTable() : html`<d2l-message-container message="${this.localize('noResultsFound')}"></d2l-message-container>`
+}
 			</div>
 		`;
 	}

@@ -38,8 +38,16 @@ export class CpdService {
 		return this.getRequest(api_path);
 	}
 
-	static getPendingRecords() {
-		return this.getRequest(this.getCpdPath(this.Pending));
+	static getPendingRecords(page, filters) {
+		let api_path = this.getCpdPath(this.Pending);
+		api_path += `?pageNumber=${page}`;
+		if (filters) {
+			const { Name, StartDate, EndDate } = filters;
+			if (Name && Name.value) api_path += `&awardName=${Name.value}`;
+			if (StartDate && StartDate.value) api_path += `&startDate=${dateParamString(StartDate.value)}`;
+			if (EndDate && EndDate.value) api_path += `&endDate=${dateParamString(EndDate.value, true)}`;
+		}
+		return this.getRequest(api_path);
 	}
 
 	static getQuestions() {

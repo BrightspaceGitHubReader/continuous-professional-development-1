@@ -41,6 +41,7 @@
   "search": "Search",
   "searchBarDefault": "Search For...",
   "searchFor": "Search For Awards",
+  "searchPendingPlaceholder": "Search for awards...",
   "searchRecordPlaceholder": "Search for CPD Records...",
   "searchTeamPlaceholder": "Search for team member...",
   "recordName": "Record Name",

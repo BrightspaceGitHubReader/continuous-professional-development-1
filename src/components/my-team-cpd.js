@@ -33,6 +33,10 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 				grid-gap: 1rem;
 			}
 
+			d2l-input-search {
+				width: 35%;
+			}
+
 			.icon_column {
 				width: 10%;
 			}
