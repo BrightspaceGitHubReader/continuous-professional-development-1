@@ -58,9 +58,6 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 	constructor() {
 		super();
 
-		this.myTeam = {
-			Objects: []
-		};
 		this.page = 1;
 		this.filters = {};
 		this.cpdService = CpdServiceFactory.getCpdService();
@@ -117,6 +114,15 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 				${this.myTeam.Objects.map(report => this.renderReport(report))}
 			</d2l-tbody>
 		</d2l-table>
+
+		<div class="page_control">
+			<d2l-page-select
+				pages="${this.myTeam.TotalPages}"
+				page="${this.page}"
+				@d2l-page-select-updated="${this.updatePage}"
+				>
+			</d2l-page-select>
+		</div>
 		`;
 	}
 
@@ -152,18 +158,10 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 					>
 				</d2l-input-search>
 
-					${ this.myTeam.Objects && this.myTeam.Objects.length > 0 ?
+					${ this.myTeam && this.myTeam.Objects && this.myTeam.Objects.length > 0 ?
 		this.renderTable() : html`<d2l-message-container message="${this.localize('noResultsFound')}"></d2l-message-container>`
 }
 
-				<div class="page_control">
-					<d2l-page-select
-						pages="${this.myTeam.TotalPages}"
-						page="${this.page}"
-						@d2l-page-select-updated="${this.updatePage}"
-						>
-					</d2l-page-select>
-				</div>
 			</div>
 		`;
 	}

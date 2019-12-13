@@ -231,7 +231,7 @@ class PendingRecords extends BaseMixin(LitElement) {
 				</div>
 			</div>
 
-				${this.pendingRecords.Objects && this.pendingRecords.Objects.length > 0 ?
+				${ this.pendingRecords && this.pendingRecords.Objects && this.pendingRecords.Objects.length > 0 ?
 		this.renderTable() : html`<d2l-message-container message="${this.localize('noResultsFound')}"></d2l-message-container>`
 }
 			</div>

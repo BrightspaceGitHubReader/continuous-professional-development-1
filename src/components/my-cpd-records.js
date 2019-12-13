@@ -107,8 +107,6 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	constructor() {
 		super();
 
-		this.cpdRecords = {};
-
 		this.subjectOptions = [];
 		this.methodOptions = [];
 
@@ -278,6 +276,14 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				${ this.cpdRecords.RecordSummaries.map(record => this.renderRecord(record)) }
 			</d2l-tbody>
 		</d2l-table>
+		<div class="page_control">
+			<d2l-page-select
+				pages="${this.cpdRecords.TotalPages}"
+				page="${this.page}"
+				@d2l-page-select-updated="${this.updatePage}"
+				>
+			</d2l-page-select>
+		</div>
 		`;
 	}
 
@@ -401,17 +407,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 						</div>
 					</div>
 				</div>
-				${this.cpdRecords.RecordSummaries && this.cpdRecords.RecordSummaries.length > 0 ?
+				${this.cpdRecords && this.cpdRecords.RecordSummaries && this.cpdRecords.RecordSummaries.length > 0 ?
 		this.renderTable() : html`<d2l-message-container message="${this.localize('noResultsFound')}"></d2l-message-container>`
 }
-				<div class="page_control">
-					<d2l-page-select
-						pages="${this.cpdRecords.TotalPages}"
-						page="${this.page}"
-						@d2l-page-select-updated="${this.updatePage}"
-						>
-					</d2l-page-select>
-				</div>
 			</div>
 			`;
 	}
