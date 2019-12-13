@@ -353,7 +353,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 						</h2>
 					</div>` : html`
 
-					<d2l-button id="new_record" @click="${this.newRecordButtonClicked}">
+					<d2l-button id="new_record" primary @click="${this.newRecordButtonClicked}">
 			${this.localize('addNewCPD')}
 					</d2l-button>
 				`}
