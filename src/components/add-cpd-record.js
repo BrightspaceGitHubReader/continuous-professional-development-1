@@ -139,9 +139,13 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					this.awardRecord = awardRecord;
 					this.record = {
 						Name: awardRecord.Name,
-						SubjectId: awardRecord.SubjectId,
+						Subject: {
+							Id: awardRecord.SubjectId
+						},
 						IsStructured: 1,
-						MethodId: awardRecord.MethodId,
+						Method: {
+							Id: awardRecord.MethodId
+						},
 						IssuedAwardId: awardRecord.IssuedAwardId,
 						Grade: awardRecord.Grade,
 						CreditMinutes: awardRecord.CreditMinutes,
