@@ -7,13 +7,13 @@ import '@brightspace-ui/core/components/inputs/input-search.js';
 import '@brightspace-ui/core/components/link/link.js';
 import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-navigation/d2l-navigation-link-back.js';
-import 'd2l-table/d2l-table.js';
 import './page-select.js';
 import './filter-select.js';
 import './message-container.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { cpdTableStyles } from '../styles/cpd-table-styles';
 import dayjs from 'dayjs/esm';
 import { getHoursAndMinutes } from '../helpers/time-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
@@ -61,6 +61,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	static get styles() {
 		return [
 			selectStyles,
+			cpdTableStyles,
 			css`
 			div[role=main] {
 				display: grid;
@@ -235,47 +236,47 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 	renderTable() {
 		return html`
-		<d2l-table
-			id="cpd-records"
+		<table
 			aria-label="${this.localize('ariaCpdTable')}"
 			>
-			<d2l-thead>
-				<d2l-tr role="row">
-					<d2l-th>
+			<thead>
+				<tr>
+					<th>
 						${this.localize('name')}
-					</d2l-th>
+					</th>
 
 
-					<d2l-th>
+					<th>
 						${this.localize('subject')}
-					</d2l-th>
+					</th>
 
 
-					<d2l-th>
+					<th>
 						${this.localize('type')}
-					</d2l-th>
+					</th>
 
 
-					<d2l-th>
+					<th>
 						${this.localize('method')}
-					</d2l-th>
+					</th>
 
 
-					<d2l-th>
+					<th>
 						${this.localize('creditHours')}
-					</d2l-th>
+					</th>
 
 
-					<d2l-th>
+					<th>
 						${this.localize('dateCompleted')}
-					</d2l-th>
-				</d2l-tr>
-			</d2l-thead>
+					</th>
+				</tr>
+			</thead>
 
-			<d2l-tbody>
+			<tbody>
 				${ this.cpdRecords.RecordSummaries.map(record => this.renderRecord(record)) }
-			</d2l-tbody>
-		</d2l-table>
+			</tbody>
+		</table>
+
 		<div class="page_control">
 			<d2l-page-select
 				pages="${this.cpdRecords.TotalPages}"
@@ -290,8 +291,8 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	renderRecord(record) {
 		const {recordName} = record;
 		return html`
-		<d2l-tr role="row">
-			<d2l-td>
+		<tr role="row">
+			<td>
 				<d2l-link @click="${this.recordLinkClicked}" record-id="${record.RecordId}">
 					${record.RecordName}
 				</d2l-link>
@@ -307,23 +308,23 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 						<d2l-button slot="footer" dialog-action>${this.localize('no')}</d2l-button>
 					</d2l-dialog-confirm>
 				`}
-			</d2l-td>
-			<d2l-td>
+			</td>
+			<td>
 				${record.SubjectName}
-			</d2l-td>
-			<d2l-td>
+			</td>
+			<td>
 				${this.getType(record.IsStructured)}
-			</d2l-td>
-			<d2l-td>
+			</td>
+			<td>
 				${record.MethodName}
-			</d2l-td>
-			<d2l-td>
+			</td>
+			<td>
 				${getHoursAndMinutes(record.CreditMinutes)}
-			</d2l-td>
-			<d2l-td>
+			</td>
+			<td>
 				${dayjs(record.DateCompleted).format('YYYY-MM-DD')}
-			</d2l-td>
-		</d2l-tr>
+			</td>
+		</tr>
 		`;
 	}
 
@@ -333,9 +334,6 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 	render() {
 		return html`
-			<custom-style>
-				<style include="d2l-table-style"></style>
-			</custom-style>
 
 			<div role="main">
 				${this.viewUserId ? html`

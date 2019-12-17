@@ -2,7 +2,6 @@ import '@brightspace-ui/core/components/button/button-icon';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
 import '@brightspace-ui/core/components/link/link.js';
-import 'd2l-table/d2l-table.js';
 import 'd2l-menu/d2l-menu';
 import 'd2l-dropdown/d2l-dropdown';
 import 'd2l-dropdown/d2l-dropdown-menu';
@@ -12,6 +11,7 @@ import './page-select';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { cpdTableStyles } from '../styles/cpd-table-styles';
 
 class PendingRecords extends BaseMixin(LitElement) {
 	static get properties() {
@@ -32,7 +32,9 @@ class PendingRecords extends BaseMixin(LitElement) {
 	}
 
 	static get styles() {
-		return css`
+		return [
+			cpdTableStyles,
+			css`
 			div[role=main] {
 				display: grid;
 				grid-gap: 1rem;
@@ -62,7 +64,8 @@ class PendingRecords extends BaseMixin(LitElement) {
 			.search_options[disabled] {
 				display: none;
 			}
-		`;
+			`
+		];
 	}
 
 	constructor() {
@@ -125,26 +128,26 @@ class PendingRecords extends BaseMixin(LitElement) {
 
 	renderTable() {
 		return html`
-		<d2l-table
+		<table
 			aria-label="${this.localize('ariaPendingRecordsTable')}"
 			>
-			<d2l-thead>
-				<d2l-tr role="row">
-					<d2l-th class="icon_column">
-					</d2l-th>
-					<d2l-th>
+			<thead>
+				<tr>
+					<th class="icon_column">
+					</th>
+					<th>
 						${this.localize('name')}
-					</d2l-th>
-					<d2l-th>
+					</th>
+					<th>
 						${this.localize('dateIssued')}
-					</d2l-th>
-				</d2l-tr>
-			</d2l-thead>
+					</th>
+				</tr>
+			</thead>
 
-			<d2l-tbody>
+			<tbody>
 				${this.pendingRecords && this.pendingRecords.Objects.map(award => this.renderAward(award))}
-			</d2l-tbody>
-		</d2l-table>
+			</tbody>
+		</table>
 
 		<div class="page_control">
 			<d2l-page-select
@@ -159,14 +162,14 @@ class PendingRecords extends BaseMixin(LitElement) {
 
 	renderAward(award) {
 		return html`
-			<d2l-tr role="row">
-				<d2l-td class="icon_column">
+			<tr role="row">
+				<td class="icon_column">
 					<div class="profile_image">
 						<d2l-icon icon="tier3:profile-pic"></d2l-icon>
 					</div>
-				</d2l-td>
+				</td>
 
-				<d2l-td>
+				<td>
 					${award.Name}
 					<d2l-dropdown>
 						<d2l-button-icon text="${this.localize('options')}" icon="tier1:arrow-collapse" class="d2l-dropdown-opener"></d2l-button-icon>
@@ -180,20 +183,16 @@ class PendingRecords extends BaseMixin(LitElement) {
 							</d2l-menu>
 						</d2l-dropdown-menu>
 					</d2l-dropdown>
-				</d2l-td>
-				<d2l-td>
+				</td>
+				<td>
 					${award.IssuedDate}
-				</d2l-td>
-			</d2l-tr>
+				</td>
+			</tr>
 		`;
 	}
 
 	render() {
 		return html`
-			<custom-style>
-				<style include="d2l-table-style"></style>
-			</custom-style>
-
 			<div role="main">
 				<div class="search_bar">
 					<d2l-input-search
