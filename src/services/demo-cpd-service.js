@@ -11,6 +11,10 @@ export class DemoCpdService {
 	static createRecord() {
 	}
 	static deleteRecord() {}
+
+	static getJobTitleDefaults() {
+		return fetch('../../../../data/job_targets.json', getOptions).then(r => r.json());
+	}
 	static getMethods() {
 		const data = [
 			{'Id': 1, 'Name': 'Course'},

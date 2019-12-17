@@ -1,0 +1,27 @@
+{
+  "Objects": [
+    {
+      "JobTitle": "Chief Executive",
+      "HasDefaults": true
+    },
+    {
+      "JobTitle": "Software Developer",
+      "HasDefaults": false
+    },
+    {
+      "JobTitle": "Janitor",
+      "HasDefaults": true
+    },
+    {
+      "JobTitle": "Senorita Developer",
+      "HasDefaults": true
+    },
+    {
+      "JobTitle": "Chief Chef",
+      "HasDefaults": true
+    }
+  ],
+  "PageNumber": 1,
+  "PageSize": 20,
+  "TotalPages": 5
+}

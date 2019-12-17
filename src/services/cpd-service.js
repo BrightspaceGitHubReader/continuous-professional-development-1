@@ -24,7 +24,13 @@ export class CpdService {
 		});
 		return d2lfetch.fetch(request);
 	}
+
 	static getCpdPath(action) { return `/d2l/api/customization/cpd/1.0/${action}`; }
+
+	static getJobTitleDefaults() {
+		return Promise.resolve({Objects: []});
+	}
+
 	static getMethods() {
 		return this.getRequest(this.getCpdPath(this.Method));
 	}
