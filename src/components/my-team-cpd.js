@@ -118,7 +118,7 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 
 		<div class="page_control">
 			<d2l-page-select
-				pages="${this.myTeam.TotalPages}"
+				pages="${ Math.ceil(this.myTeam.TotalCount / this.myTeam.PageSize) }"
 				page="${this.page}"
 				@d2l-page-select-updated="${this.updatePage}"
 				>
