@@ -3,7 +3,7 @@
   "name": "@brightspace-ui/cpd",
   "description": "Continuous Professional Development",
   "repository": "https://github.com/BrightspaceUI/cpd.git",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "publishConfig": {
     "access": "public"
   },
