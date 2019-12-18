@@ -1,9 +1,9 @@
-
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/link/link.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { cpdTableStyles } from '../styles/cpd-table-styles';
 
 class CpdAdminJobList extends BaseMixin(LitElement) {
 	static get properties() {
@@ -15,7 +15,10 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 	}
 
 	static get styles() {
-		return css``;
+		return [
+			cpdTableStyles,
+			css``
+		];
 	}
 
 	constructor() {

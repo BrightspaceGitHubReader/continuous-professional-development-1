@@ -10,6 +10,7 @@
 	<script src="https://s.brightspace.com/lib/ifrau/0.25.0/ifrau/client.js"></script>
 	<script type="module">
 		import './src/components/cpd.js';
+		import './src/components/cpd-admin.js';
 	</script>
 	<script>
 		/* global ifrauclient */
@@ -21,6 +22,30 @@
 				heightCalculationMethod: 'lowestElement'
 			}
 		});
+		const loadCpd = function(frauSettings) {
+			const { page, manager, managePersonal } = frauSettings;
+			const cpd = document.createElement('d2l-cpd');
+			cpd.appTitle = 'Continuous Professional Development';
+			if (page) {
+				cpd.setAttribute('pageData', JSON.stringify({page}));
+			}
+			if (manager) {
+				cpd.setAttribute('manager', manager);
+			}
+			if (managePersonal) {
+				cpd.setAttribute('managePersonal', managePersonal);
+			}
+			const loadingSpinner = document.getElementById('loading-spinner');
+			document.body.removeChild(loadingSpinner);
+			document.body.appendChild(cpd);
+		};
+
+		const loadCpdAdmin = function(frauSettings) {
+			const cpdAdmin = document.createElement('d2l-cpd-admin');
+			const loadingSpinner = document.getElementById('loading-spinner');
+			document.body.removeChild(loadingSpinner);
+			document.body.appendChild(cpdAdmin);
+		};
 		client
 			.connect()
 			.then(client => {
@@ -46,29 +71,13 @@
 						body.style.color = "var(--d2l-color-ferrite)";
 						window.data = window.data || {};
 						window.data.fraSettings = window.data.fraSettings || {};
-						//window.data.fraSettings.orgUnitId = ifrauData[0].OrgUnitId;
-						//window.data.fraSettings.quicklinkPicker = ifrauData[2];
 						window.data.fraSettings.valenceHost = ifrauData[3];
-						window.data.fraSettings.page = ifrauData[4].page;
-						window.data.fraSettings.manager = ifrauData[4].manager;
-						window.data.fraSettings.managePersonal = ifrauData[4].managePersonal;
-						//window.data.fraSettings.mapId = ifrauData[4].mapId;
-						//window.data.fraSettings.dialogService = ifrauData[5];
+						if (ifrauData[4].admin) {
+							loadCpdAdmin(ifrauData[4]);
+						} else {
+							loadCpd(ifrauData[4]);
+						}
 						window.data.fraSettings.navigation = ifrauData[6];
-						const cpd = document.createElement('d2l-cpd');
-						cpd.appTitle = 'Continuous Professional Development';
-						if (window.data.fraSettings.page) {
-							cpd.setAttribute('pageData', JSON.stringify({page:window.data.fraSettings.page}));
-						}
-						if (window.data.fraSettings.manager) {
-							cpd.setAttribute('manager', window.data.fraSettings.manager);
-						}
-						if (window.data.fraSettings.managePersonal) {
-							cpd.setAttribute('managePersonal', window.data.fraSettings.managePersonal);
-						}
-						const loadingSpinner = document.getElementById('loading-spinner');
-						document.body.removeChild(loadingSpinner);
-						document.body.appendChild(cpd);
 					});
 			})
 			.catch( err => {
