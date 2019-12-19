@@ -11,10 +11,10 @@ d2lfetch.use({
 });
 
 export class CpdService {
-
 	static createRecord(record, files) {
 		return this.postWithFilesRequest(this.getCpdPath(this.Record), record, files);
 	}
+
 	static deleteRecord(recordId) {
 		const request = new Request(`${this.Host}${this.getCpdPath(this.Record)}/${recordId}`, {
 			method: 'DELETE',
@@ -106,6 +106,12 @@ export class CpdService {
 	static getSubjects() {
 		const base_path = '/d2l/api/customization/cpd/1.0/subject';
 		return this.getRequest(base_path);
+	}
+	static getSubjectTargets() {
+		return Promise.resolve({
+			Objects: [
+			]
+		});
 	}
 	static getTypes() {
 		return [ {

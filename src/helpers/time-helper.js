@@ -25,3 +25,56 @@ export function getMinutes(minutes) {
 export function getTotalMinutes(hours, minutes) {
 	return parseInt(hours || 0) * 60 + parseInt(minutes || 0);
 }
+
+export function getListOfMonths() {
+	return [
+		{
+			Name: 'January',
+			NumberOfDays: 31
+		},
+		{
+			Name: 'February',
+			NumberOfDays: 28
+		},
+		{
+			Name: 'March',
+			NumberOfDays: 31
+		},
+		{
+			Name: 'April',
+			NumberOfDays: 30
+		},
+		{
+			Name: 'May',
+			NumberOfDays: 31
+		},
+		{
+			Name: 'June',
+			NumberOfDays: 30
+		},
+		{
+			Name: 'July',
+			NumberOfDays: 31
+		},
+		{
+			Name: 'August',
+			NumberOfDays: 31
+		},
+		{
+			Name: 'September',
+			NumberOfDays: 30
+		},
+		{
+			Name: 'October',
+			NumberOfDays: 31
+		},
+		{
+			Name: 'November',
+			NumberOfDays: 30
+		},
+		{
+			Name: 'December',
+			NumberOfDays: 31
+		},
+	];
+}
