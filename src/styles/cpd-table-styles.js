@@ -4,6 +4,7 @@ export const cpdTableStyles = css`
 table {
 	background-color: transparent;
 	width: 100%;
+	height: 41px;
 	border:1px solid #cdd5dc;
 	border-color: var(--d2l-color-mica);
 	border-collapse: collapse;
