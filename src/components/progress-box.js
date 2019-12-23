@@ -27,6 +27,14 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 				border: 2px solid var(--d2l-color-gypsum);
 				border-radius: 0.5em;
 			}
+			.progress-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+			.progress-header-link {
+				padding: 0 10px;
+			}
 
 			@media (max-width: 929px) {
 				.progress {
@@ -46,6 +54,9 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 		super.connectedCallback();
 		this.progress = this.cpdService.getProgress()
 			.then((data) => this.progress = data);
+	}
+	navigateAdjustTargets() {
+		this.fireNavigationEvent('cpd-manage-targets');
 	}
 
 	viewToggleChanged(e) {
@@ -79,11 +90,17 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 		];
 		return html`
 		<div class="progress" @d2l-view-toggle-changed=${this.viewToggleChanged}>
-			<div>
-				<d2l-view-toggle .toggleOptions=${toggleOptions} selectedOption="overall"></d2l-view-toggle>
+			<div class="progress-header">
+				<div>
+					<d2l-view-toggle .toggleOptions=${toggleOptions} selectedOption="overall"></d2l-view-toggle>
+				</div>
+				<div class="progress-header-link">
+					<d2l-link @click="${this.navigateAdjustTargets}">${this.localize('adjustTargets')}</d2l-link>
+				</div>
 			</div>
 			${this.renderView(this.selectedView)}
 		</div>
+
 		`;
 	}
 }

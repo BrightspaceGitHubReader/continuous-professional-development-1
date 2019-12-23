@@ -66,7 +66,12 @@ export class DemoCpdService {
 		];
 		return Promise.resolve(data);
 	}
-
+	static getSubjectTargets() {
+		return Promise.resolve({
+			Objects: [
+			]
+		});
+	}
 	static getTypes() {
 		return [ {
 			Id: 0,

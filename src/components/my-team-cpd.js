@@ -147,7 +147,6 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 
 	render() {
 		return html`
-
 			<div role="main">
 				<d2l-input-search
 					label="${this.localize('search')}"

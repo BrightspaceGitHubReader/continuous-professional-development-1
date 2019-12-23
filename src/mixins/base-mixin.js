@@ -53,7 +53,9 @@ export const BaseMixin = superclass => class extends LocalizeMixin(superclass) {
 	}
 
 	fireNavigationEvent(page, recordId, viewUserId, awardId) {
-		const event = new CustomEvent('d2l-navigate', {
+		const event = new CustomEvent('d2l-cpd-navigate', {
+			bubbles: true,
+			composed: true,
 			detail: {
 				page,
 				recordId,
@@ -61,7 +63,7 @@ export const BaseMixin = superclass => class extends LocalizeMixin(superclass) {
 				awardId
 			}
 		});
-		return this.dispatchEvent(event);
+		this.dispatchEvent(event);
 	}
 
 	localize(key, params) {
