@@ -30,6 +30,20 @@ export class DemoCpdService {
 		return fetch('../../../../data/awards.json', getOptions).then(r => r.json());
 	}
 
+	static getProgress() {
+		const data =  {
+			structured: {
+				numerator: 30,
+				denominator: 19
+			},
+			unstructured: {
+				numerator: 12,
+				denominator: 15
+			}
+		};
+		return Promise.resolve(data);
+	}
+
 	static getQuestions() {
 		const data = [{Id:1, QuestionText:'Why is Ben moving?'}];
 		return Promise.resolve(data);

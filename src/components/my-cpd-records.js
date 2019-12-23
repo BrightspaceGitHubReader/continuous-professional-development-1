@@ -10,6 +10,7 @@ import 'd2l-navigation/d2l-navigation-link-back.js';
 import './page-select.js';
 import './filter-select.js';
 import './message-container.js';
+import './progress-box';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
@@ -350,7 +351,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 							${this.localize('userTitle', { 'userName': this.userDisplayName})}
 						</h2>
 					</div>` : html`
-
+					<d2l-cpd-progress-box></d2l-cpd-progress-box>
 					<d2l-button id="new_record" primary @click="${this.newRecordButtonClicked}">
 			${this.localize('addNewCPD')}
 					</d2l-button>

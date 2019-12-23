@@ -250,7 +250,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				<ul>
 					<li>
 						<label for="recordName" class="d2l-label-text">${this.localize('name')}</label>
-						<d2l-input-text id="recordName" required value="${this.record && this.record.Name || ''}"></d2l-input-text>
+						<d2l-input-text autocomplete="off" id="recordName" required value="${this.record && this.record.Name || ''}"></d2l-input-text>
 					</li>
 					<li>
 						<ul class="innerlist">
