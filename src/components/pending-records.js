@@ -122,10 +122,10 @@ class PendingRecords extends BaseMixin(LitElement) {
 	}
 
 	addAwardButtonClicked(e) {
-		const awardId = e.target.getAttribute('data-award-id');
+		const awardData = e.target.getAttribute('data-award-id');
 		this.fireNavigationEvent({
 			page: 'add-cpd-record',
-			awardId
+			awardData
 		});
 	}
 
@@ -179,7 +179,7 @@ class PendingRecords extends BaseMixin(LitElement) {
 						<d2l-dropdown-menu>
 							<d2l-menu>
 								<d2l-menu-item
-									data-award-id="${award.IssuedAwardId}"
+									data-award-id="${JSON.stringify(award)}"
 									text="${this.localize('addToMyCpd')}"
 									@click="${this.addAwardButtonClicked}">
 									</d2l-menu-item>

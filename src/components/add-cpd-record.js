@@ -15,8 +15,8 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			attachments: {
 				type: Array
 			},
-			awardId: {
-				type: Number
+			awardRecord: {
+				type: Object
 			},
 			methods: {
 				type: Array
@@ -132,27 +132,21 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				});
 		}
 
-		if (this.awardId) {
-			this.cpdService.getPendingRecords().then((records) => {
-				const awardRecord = records.Objects.find(pendingRecord => pendingRecord.IssuedAwardId === this.awardId);
-				if (awardRecord) {
-					this.awardRecord = awardRecord;
-					this.record = {
-						Name: awardRecord.Name,
-						Subject: {
-							Id: awardRecord.SubjectId
-						},
-						IsStructured: 1,
-						Method: {
-							Id: awardRecord.MethodId
-						},
-						IssuedAwardId: awardRecord.IssuedAwardId,
-						Grade: awardRecord.Grade,
-						CreditMinutes: awardRecord.CreditMinutes,
-						DateCompleted: dateParamString(awardRecord.DateCompleted)
-					};
-				}
-			});
+		if (this.awardRecord) {
+			this.record = {
+				Name: this.awardRecord.Name,
+				Subject: {
+					Id: this.awardRecord.SubjectId
+				},
+				IsStructured: 1,
+				Method: {
+					Id: this.awardRecord.MethodId
+				},
+				IssuedAwardId: this.awardRecord.IssuedAwardId,
+				Grade: this.awardRecord.Grade,
+				CreditMinutes: this.awardRecord.CreditMinutes,
+				DateCompleted: dateParamString(this.awardRecord.IssuedDate)
+			};
 		}
 	}
 
