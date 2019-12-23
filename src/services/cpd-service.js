@@ -58,6 +58,20 @@ export class CpdService {
 		return this.getRequest(api_path);
 	}
 
+	static getProgress() {
+		const data =  {
+			structured: {
+				numerator: 30,
+				denominator: 19
+			},
+			unstructured: {
+				numerator: 12,
+				denominator: 15
+			}
+		};
+		return Promise.resolve(data);
+	}
+
 	static getQuestions() {
 		return this.getRequest(this.getCpdPath(this.Question));
 	}
