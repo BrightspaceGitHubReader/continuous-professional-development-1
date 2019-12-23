@@ -27,8 +27,10 @@ export class CpdService {
 
 	static getCpdPath(action) { return `/d2l/api/customization/cpd/1.0/${action}`; }
 
-	static getJobTitleDefaults() {
-		return Promise.resolve({Objects: []});
+	static getJobTitleDefaults(page) {
+		let api_path = this.getCpdPath(this.Job);
+		api_path += `?pageNumber=${page}`;
+		return this.getRequest(api_path);
 	}
 
 	static getMethods() {
@@ -127,6 +129,7 @@ export class CpdService {
 		return this.getRequest(this.getCpdPath(`${this.Team}/username/${userId}`));
 	}
 	static get Host() { return window.data.fraSettings.valenceHost; }
+	static get Job() { return 'target/job'; }
 	static get Method() { return 'method'; }
 	static get Pending() { return 'pending'; }
 	static postJsonRequest(base_path, object) {
@@ -167,11 +170,9 @@ export class CpdService {
 	}
 
 	static get Question() { return 'question'; }
-
 	static get Record() { return 'record'; }
-
 	static get Subject() { return 'subject'; }
-
+	static get Target() {return 'target';}
 	static get Team() { return 'team'; }
 
 	static updateRecord(recordId, record, files, removedFiles) {

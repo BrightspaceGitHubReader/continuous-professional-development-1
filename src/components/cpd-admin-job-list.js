@@ -10,6 +10,9 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 		return {
 			jobTargets: {
 				type: Object
+			},
+			page: {
+				type: Number
 			}
 		};
 	}
@@ -17,23 +20,45 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 	static get styles() {
 		return [
 			cpdTableStyles,
-			css``
+			css`
+			.page_control {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+			}
+			.defaults_column {
+				width: 12%;
+				text-align: center;
+			}
+			`
 		];
 	}
 
 	constructor() {
 		super();
 		this.cpdService = CpdServiceFactory.getCpdService();
+		this.page = 1;
 	}
 
 	connectedCallback() {
 		super.connectedCallback();
+		this.fetchJobs();
+	}
+
+	fetchJobs() {
 		this.cpdService
-			.getJobTitleDefaults()
+			.getJobTitleDefaults(this.page)
 			.then(data => (this.jobTargets = data));
 	}
 
-	jobTargetLinkClicked() {}
+	jobTargetLinkClicked(e) {
+		this.fireNavigationEvent(
+			{
+				page: 'cpd-manage-targets',
+				jobTitle: e.target.getAttribute('jobTitle')
+			}
+		);
+	}
 
 	renderJobTitleRow(jobTargetData) {
 		return html`
@@ -45,7 +70,7 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 						${jobTargetData.JobTitle}
 					</d2l-link>
 				</td>
-				<td>
+				<td class="defaults_column">
 					<d2l-icon
 						icon="tier1:${jobTargetData.HasDefaults ? 'check' : 'close-default'}">
 					</d2l-icon>
@@ -54,13 +79,18 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 		`;
 	}
 
+	updatePage(e) {
+		this.page = e.detail.page;
+		this.fetchJobs();
+	}
+
 	render() {
 		return html`
 			<table>
 				<thead>
 					<tr>
 						<th>${this.localize('jobTitle')}</th>
-						<th>${this.localize('hasDefaults')}</th>
+						<th class="defaults_column">${this.localize('hasDefaults')}</th>
 					</tr>
 				</thead>
 				${this.jobTargets &&
@@ -68,6 +98,14 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 						this.renderJobTitleRow(jobTargetData)
 					)}
 			</table>
+			<div class="page_control">
+				<d2l-page-select
+					pages="${Math.ceil(this.jobTargets.TotalCount / this.jobTargets.PageSize)}"
+					page="${this.page}"
+					@d2l-page-select-updated="${this.updatePage}"
+					>
+				</d2l-page-select>
+			</div>
 		`;
 	}
 }

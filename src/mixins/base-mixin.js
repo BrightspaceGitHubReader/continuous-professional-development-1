@@ -52,15 +52,12 @@ export const BaseMixin = superclass => class extends LocalizeMixin(superclass) {
 		});
 	}
 
-	fireNavigationEvent(page, recordId, viewUserId, awardId) {
+	fireNavigationEvent(pageData) {
 		const event = new CustomEvent('d2l-cpd-navigate', {
 			bubbles: true,
 			composed: true,
 			detail: {
-				page,
-				recordId,
-				viewUserId,
-				awardId
+				pageData
 			}
 		});
 		this.dispatchEvent(event);

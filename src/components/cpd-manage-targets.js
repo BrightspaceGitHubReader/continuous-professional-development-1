@@ -32,6 +32,9 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			},
 			currentSelectedMonth: {
 				type: Number
+			},
+			jobTitle: {
+				type: String
 			}
 		};
 	}
@@ -189,7 +192,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 	}
 
 	backToMyCpdClicked() {
-		this.fireNavigationEvent('user-cpd-records');
+		this.fireNavigationEvent({page:'user-cpd-records'});
 	}
 
 	renderSelect(option, optionIndex, selectedOption) {

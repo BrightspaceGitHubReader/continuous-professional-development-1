@@ -165,7 +165,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	}
 
 	fireNavigateMyCpdEvent() {
-		this.fireNavigationEvent('my-cpd-records');
+		this.fireNavigationEvent({page:'my-cpd-records'});
 	}
 
 	getQuestionAnswer(record, questionId) {

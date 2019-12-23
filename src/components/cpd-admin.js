@@ -15,14 +15,25 @@ class CpdAdmin extends BaseMixin(LitElement) {
 	static get styles() {
 		return css``;
 	}
-	onNavigate(e) {
-		this.pageData = e.detail;
+	connectedCallback() {
+		super.connectedCallback();
+		this.addEventListener('d2l-cpd-navigate', this.handleNavigateEvent);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.removeEventListener('d2l-cpd-navigate', this.handleNavigateEvent);
+	}
+	handleNavigateEvent(e) {
+		this.pageData = e.detail.pageData;
 	}
 	render() {
+		if (this.pageData && this.pageData.page === 'cpd-manage-targets') {
+			return html`<d2l-cpd-manage-targets jobTitle="${this.pageData.jobTitle}"></d2l-cpd-manage-targets>`;
+		}
 		return html`
 		<d2l-tabs>
 			<d2l-tab-panel
-				@d2l-navigate="${this.onNavigate}"
 				text="${this.localize('jobTitleTargets')}">
 				<d2l-cpd-admin-job-list></d2l-cpd-admin-job-list>
 			</d2l-tab-panel>

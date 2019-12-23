@@ -155,7 +155,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	backToTeamClicked() {
-		this.fireNavigationEvent('my-team-cpd');
+		this.fireNavigationEvent({page: 'my-team-cpd'});
 	}
 
 	deleteRecordButtonClicked(e) {
@@ -185,20 +185,24 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			});
 	}
 	newRecordButtonClicked() {
-		this.fireNavigationEvent('add-cpd-record');
+		this.fireNavigationEvent({page:'add-cpd-record'});
 	}
 
 	recordLinkClicked(e) {
 		if (!this.viewUserId) {
 			this.fireNavigationEvent(
-				'edit-cpd-record',
-				e.target.getAttribute('record-id')
+				{
+					page: 'edit-cpd-record',
+					recordId: e.target.getAttribute('record-id')
+				}
 			);
 		} else {
 			this.fireNavigationEvent(
-				'read-only-cpd-record',
-				e.target.getAttribute('record-id'),
-				this.viewUserId
+				{
+					page:'read-only-cpd-record',
+					recordId: e.target.getAttribute('record-id'),
+					viewUserId: this.viewUserId
+				}
 			);
 		}
 

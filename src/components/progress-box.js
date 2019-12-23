@@ -56,7 +56,7 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 			.then((data) => this.progress = data);
 	}
 	navigateAdjustTargets() {
-		this.fireNavigationEvent('cpd-manage-targets');
+		this.fireNavigationEvent({page:'cpd-manage-targets'});
 	}
 
 	viewToggleChanged(e) {

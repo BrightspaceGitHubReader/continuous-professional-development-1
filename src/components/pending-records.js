@@ -123,7 +123,10 @@ class PendingRecords extends BaseMixin(LitElement) {
 
 	addAwardButtonClicked(e) {
 		const awardId = e.target.getAttribute('data-award-id');
-		this.fireNavigationEvent('add-cpd-record', undefined, undefined, awardId);
+		this.fireNavigationEvent({
+			page: 'add-cpd-record',
+			awardId
+		});
 	}
 
 	renderTable() {

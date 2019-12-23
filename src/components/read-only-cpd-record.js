@@ -195,7 +195,10 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 	}
 
 	backToUserRecordsClicked() {
-		this.fireNavigationEvent('user-cpd-records', null, this.record.User, null);
+		this.fireNavigationEvent({
+			page:'user-cpd-records',
+			viewUserId: this.record.User
+		});
 	}
 }
 

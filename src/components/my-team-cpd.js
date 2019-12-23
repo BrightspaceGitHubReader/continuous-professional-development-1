@@ -92,7 +92,11 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 	}
 
 	userClicked(e) {
-		this.fireNavigationEvent('user-cpd-records', undefined, e.target.getAttribute('user-id'));
+		this.fireNavigationEvent(
+			{
+				page: 'user-cpd-records',
+				viewUserId: e.target.getAttribute('user-id')
+			});
 	}
 
 	renderTable() {

@@ -37,7 +37,7 @@ class Cpd extends BaseMixin(LitElement) {
 	}
 
 	handleNavigateEvent(e) {
-		this.pageData = e.detail;
+		this.pageData = e.detail.pageData;
 	}
 
 	connectedCallback() {
@@ -52,7 +52,7 @@ class Cpd extends BaseMixin(LitElement) {
 
 	render() {
 		if (this.pageData.page === 'cpd-manage-targets') {
-			return html`<d2l-cpd-manage-targets></d2l-cpd-manage-targets>`;
+			return html`<d2l-cpd-manage-targets jobTitle="${this.pageData.jobTitle}"></d2l-cpd-manage-targets>`;
 		}
 		if (this.pageData.page === 'add-cpd-record' || this.pageData.page === 'edit-cpd-record') {
 			return html`
