@@ -82,11 +82,11 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		return html`
 			<main>
 				<d2l-navigation-link-back
-					text="${this.localize('backToMyCPD')}"
-					@click="${this.backToMyCpdClicked}"
+					text="${(this.jobTitle) ? this.localize('backToJobCpd') : this.localize('backToMyCPD')}"
+					@click="${this.backLinkClicked}"
 					href="javascript:void(0)">
 				</d2l-navigation-link-back>
-				<h2>${this.localize('managePersonalTargets')}</h2>
+				<h2>${(this.jobTitle) ? this.localize('manageJobTargets') : this.localize('managePersonalTargets')}</h2>
 
 				<h3>${this.localize('targetStartDay')}</h3>
 				<p>
@@ -191,8 +191,12 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		`;
 	}
 
-	backToMyCpdClicked() {
-		this.fireNavigationEvent({page:'user-cpd-records'});
+	backLinkClicked() {
+		if (!this.jobTitle) {
+			this.fireNavigationEvent({page:'user-cpd-records'});
+		} else {
+			this.fireNavigationEvent({page:'admin-job-list'});
+		}
 	}
 
 	renderSelect(option, optionIndex, selectedOption) {
