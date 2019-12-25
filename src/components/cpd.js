@@ -1,11 +1,11 @@
 import '@brightspace-ui/core/components/button/button.js';
 import 'd2l-tabs/d2l-tabs.js';
 import './cpd-manage-targets';
-import './my-cpd-records';
-import './add-cpd-record';
-import './pending-records';
-import './my-team-cpd';
-import './read-only-cpd-record';
+import './cpd-my-records';
+import './cpd-add-record';
+import './cpd-pending-records';
+import './cpd-my-team';
+import './cpd-read-only-record';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 
@@ -54,23 +54,23 @@ class Cpd extends BaseMixin(LitElement) {
 		if (this.pageData.page === 'cpd-manage-targets') {
 			return html`<d2l-cpd-manage-targets></d2l-cpd-manage-targets>`;
 		}
-		if (this.pageData.page === 'add-cpd-record' || this.pageData.page === 'edit-cpd-record') {
+		if (this.pageData.page === 'cpd-add-record' || this.pageData.page === 'cpd-edit-record') {
 			return html`
-				<d2l-add-cpd-record recordid="${this.pageData.recordId}" viewuserid="${this.pageData.viewUserId}" awardRecord="${this.pageData.awardData}"></d2l-add-cpd-record>
+				<d2l-cpd-add-record recordid="${this.pageData.recordId}" viewuserid="${this.pageData.viewUserId}" awardRecord="${this.pageData.awardData}"></d2l-cpd-add-record>
 			`;
 		}
 		if (this.pageData.page === 'user-cpd-records') {
 			return html`
-			<d2l-my-cpd-records
+			<d2l-cpd-my-records
 				viewuserid="${this.pageData.viewUserId}">
-			</d2l-my-cpd-records>
+			</d2l-cpd-my-records>
 			`;
 		}
-		if (this.pageData.page === 'read-only-cpd-record') {
+		if (this.pageData.page === 'cpd-read-only-record') {
 			return html`
-			<d2l-read-only-cpd-record
+			<d2l-cpd-read-only-record
 				recordId="${this.pageData.recordId}">
-			</d2l-read-only-cpd-record>
+			</d2l-cpd-read-only-record>
 			`;
 		}
 		return html`
@@ -79,15 +79,15 @@ class Cpd extends BaseMixin(LitElement) {
 		html`
 				<d2l-tab-panel
 					text="${this.localize('myCPDHeader')}"
-					?selected=${(!this.pageData.page || this.pageData.page === 'my-cpd-records')}
+					?selected=${(!this.pageData.page || this.pageData.page === 'cpd-my-records')}
 					>
-					<d2l-my-cpd-records></d2l-my-cpd-records>
+					<d2l-cpd-my-records></d2l-cpd-my-records>
 				</d2l-tab-panel>
 				<d2l-tab-panel
 					text="${this.localize('pendingRecords')}"
-					?selected=${this.pageData.page === 'pending-records'}
+					?selected=${this.pageData.page === 'cpd-pending-records'}
 					>
-					<d2l-pending-records></d2l-pending-records>
+					<d2l-cpd-pending-records></d2l-cpd-pending-records>
 				</d2l-tab-panel>
 				` : null}
 
@@ -95,9 +95,9 @@ class Cpd extends BaseMixin(LitElement) {
 		html`
 				<d2l-tab-panel
 					text="${this.localize('myTeamCpd')}"
-					?selected=${this.pageData.page === 'my-team-cpd'}
+					?selected=${this.pageData.page === 'cpd-my-team'}
 					>
-					<d2l-my-team-cpd></d2l-my-team-cpd>
+					<d2l-cpd-my-team></d2l-cpd-my-team>
 				</d2l-tab-panel>
 				` : null}
 

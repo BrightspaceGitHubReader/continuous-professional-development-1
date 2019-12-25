@@ -167,4 +167,4 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 		`;
 	}
 }
-customElements.define('d2l-my-team-cpd', MyTeamCPD);
+customElements.define('d2l-cpd-my-team', MyTeamCPD);

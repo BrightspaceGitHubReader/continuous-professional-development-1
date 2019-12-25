@@ -124,7 +124,7 @@ class PendingRecords extends BaseMixin(LitElement) {
 	addAwardButtonClicked(e) {
 		const awardData = e.target.getAttribute('data-award-id');
 		this.fireNavigationEvent({
-			page: 'add-cpd-record',
+			page: 'cpd-add-record',
 			awardData
 		});
 	}
@@ -240,4 +240,4 @@ class PendingRecords extends BaseMixin(LitElement) {
 		`;
 	}
 }
-customElements.define('d2l-pending-records', PendingRecords);
+customElements.define('d2l-cpd-pending-records', PendingRecords);

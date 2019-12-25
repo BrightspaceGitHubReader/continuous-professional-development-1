@@ -202,4 +202,4 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 	}
 }
 
-customElements.define('d2l-read-only-cpd-record', ReadOnlyCpdRecord);
+customElements.define('d2l-cpd-read-only-record', ReadOnlyCpdRecord);

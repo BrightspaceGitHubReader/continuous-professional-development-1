@@ -159,7 +159,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	}
 
 	fireNavigateMyCpdEvent() {
-		this.fireNavigationEvent({page:'my-cpd-records'});
+		this.fireNavigationEvent({page:'cpd-my-records'});
 	}
 
 	getQuestionAnswer(record, questionId) {
@@ -359,4 +359,4 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 
 }
 
-customElements.define('d2l-add-cpd-record', AddCpdRecord);
+customElements.define('d2l-cpd-add-record', AddCpdRecord);

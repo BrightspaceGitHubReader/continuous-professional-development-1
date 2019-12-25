@@ -11,20 +11,20 @@
 		<script src="/node_modules/wct-mocha/wct-mocha.js"></script>
 		<script src="https://s.brightspace.com/lib/tinymce/dev/4.8.5-a11ychecker.1.2.1-53-powerpaste.3.3.3-308-shadow-dom-fork-2/tinymce.js"></script>
 		<script src="/node_modules/d2l-html-editor/demo/d2l-html-editor-client.js"></script>
-		<script type="module" src="../src/components/add-cpd-record.js"></script>
+		<script type="module" src="../src/components/cpd-add-record.js"></script>
 	</head>
 	<body>
 
 		<test-fixture id="basic">
 			<template>
-				<d2l-add-cpd-record></d2l-add-cpd-record>
+				<d2l-cpd-add-record></d2l-cpd-add-record>
 			</template>
 		</test-fixture>
 
 		<script type="module">
 			import { runAxe } from '@brightspace-ui/core/tools/a11y-test-helper.js';
 
-			describe('d2l-add-cpd-record', () => {
+			describe('d2l-cpd-add-record', () => {
 				let element;
 				describe('basic', () => {
 					beforeEach((done) => {
