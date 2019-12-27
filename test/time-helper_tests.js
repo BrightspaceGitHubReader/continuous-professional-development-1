@@ -1,15 +1,13 @@
 import { dateParamString, getHoursAndMinutes } from '../src/helpers/time-helper';
 import dayjs from 'dayjs';
 import { expect } from 'chai';
-import utc from 'dayjs/plugin/utc';
 
-dayjs.extend(utc);
 describe('TimeHelpers', () => {
 	describe('basic', () => {
 		it('should produce beginning of day if not end', () => {
 			const date = '2019-12-04';
 			const param = dateParamString(date);
-			const testDate = dayjs.utc(param);
+			const testDate = dayjs(param);
 			expect(testDate.hour()).to.equal(0);
 			expect(testDate.minute()).to.equal(0);
 			expect(testDate.second()).to.equal(0);
@@ -17,7 +15,7 @@ describe('TimeHelpers', () => {
 		it('should produce end of day if end', () => {
 			const date = '2019-12-04';
 			const param = dateParamString(date, true);
-			const testDate = dayjs.utc(param);
+			const testDate = dayjs(param);
 			expect(testDate.hour()).to.equal(23);
 			expect(testDate.minute()).to.equal(59);
 			expect(testDate.second()).to.equal(59);
