@@ -59,7 +59,7 @@ class Cpd extends BaseMixin(LitElement) {
 				<d2l-cpd-add-record recordid="${this.pageData.recordId}" viewuserid="${this.pageData.viewUserId}" awardRecord="${this.pageData.awardData}"></d2l-cpd-add-record>
 			`;
 		}
-		if (this.pageData.page === 'user-cpd-records') {
+		if (this.pageData.page === 'cpd-user-records') {
 			return html`
 			<d2l-cpd-my-records
 				viewuserid="${this.pageData.viewUserId}">

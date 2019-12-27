@@ -16,7 +16,7 @@ import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 import dayjs from 'dayjs/esm';
-import { getHoursAndMinutes } from '../helpers/time-helper.js';
+import { getHoursAndMinutesString } from '../helpers/time-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class MyCpdRecords extends BaseMixin(LitElement) {
@@ -324,7 +324,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				${record.MethodName}
 			</td>
 			<td>
-				${getHoursAndMinutes(record.CreditMinutes)}
+				${getHoursAndMinutesString(record.CreditMinutes)}
 			</td>
 			<td>
 				${dayjs(record.DateCompleted).format('YYYY-MM-DD')}

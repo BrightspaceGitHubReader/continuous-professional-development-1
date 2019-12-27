@@ -66,11 +66,15 @@ export class DemoCpdService {
 		];
 		return Promise.resolve(data);
 	}
-	static getSubjectTargets() {
-		return Promise.resolve({
-			Objects: [
-			]
-		});
+	static getSubjectTargets(jobTitle) {
+		if (!jobTitle) {
+			return Promise.resolve(
+				{'TargetId':1, 'Type':'Job', 'JobTitle':'Sous-Chef', 'UserId':175, 'StartDate':'0001-01-01T00:00:00.000Z', 'Subjects':[{'Subject':{'Id':1, 'Name':'Mortgage'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':2, 'Name':'Protection'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':3, 'Name':'General Insurance'}, 'StructuredMinutes':90, 'UnstructuredMinutes':10}, {'Subject':{'Id':4, 'Name':'Investment'}, 'StructuredMinutes':10, 'UnstructuredMinutes':25}, {'Subject':{'Id':5, 'Name':'Pension'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':6, 'Name':'Regulation'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':7, 'Name':'Other'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}]}
+			);
+		}
+		return Promise.resolve(
+			{'TargetId':1, 'Type':'Personal', 'JobTitle':'Sous-Chef', 'UserId':175, 'StartDate':'0001-01-01T00:00:00.000Z', 'Subjects':[{'Subject':{'Id':1, 'Name':'Mortgage'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':2, 'Name':'Protection'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':3, 'Name':'General Insurance'}, 'StructuredMinutes':90, 'UnstructuredMinutes':10}, {'Subject':{'Id':4, 'Name':'Investment'}, 'StructuredMinutes':10, 'UnstructuredMinutes':25}, {'Subject':{'Id':5, 'Name':'Pension'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':6, 'Name':'Regulation'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':7, 'Name':'Other'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}]}
+		);
 	}
 	static getTypes() {
 		return [ {
@@ -85,5 +89,13 @@ export class DemoCpdService {
 
 	static getUserInfo() {
 		return Promise.resolve('First Last');
+	}
+
+	static saveTargetDate() {
+		return Promise.resolve();
+	}
+
+	static updateTarget() {
+		return Promise.resolve();
 	}
 }

@@ -10,8 +10,15 @@ export function dateParamString(dateStr, end = false) {
 	return date.toISOString();
 }
 
-export function getHoursAndMinutes(minutes) {
+export function getHoursAndMinutesString(minutes) {
 	return `${getHours(minutes)}h ${getMinutes(minutes)}m`;
+}
+
+export function getHoursAndMinutes(minutes) {
+	return {
+		hours: getHours(minutes),
+		minutes: getMinutes(minutes)
+	};
 }
 
 export function getHours(minutes) {

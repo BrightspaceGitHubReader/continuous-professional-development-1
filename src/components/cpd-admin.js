@@ -1,6 +1,7 @@
 
 import 'd2l-tabs/d2l-tabs';
 import './cpd-admin-job-list';
+import './cpd-manage-targets';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 

@@ -123,11 +123,11 @@ export class CpdService {
 		const base_path = '/d2l/api/customization/cpd/1.0/subject';
 		return this.getRequest(base_path);
 	}
-	static getSubjectTargets() {
-		return Promise.resolve({
-			Objects: [
-			]
-		});
+	static getSubjectTargets(jobTitle) {
+		if (!jobTitle) {
+			return this.getRequest('/d2l/api/customization/cpd/1.0/target/user');
+		}
+		return this.getRequest(`/d2l/api/customization/cpd/1.0/target/job?jobTitle=${jobTitle}`);
 	}
 	static getTypes() {
 		return [ {
@@ -191,5 +191,13 @@ export class CpdService {
 
 	static updateRecord(recordId, record, files, removedFiles) {
 		return this.putWithFilesRequest(`${this.getCpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
+	}
+
+	static updateTarget(jobTitle) {
+		if (jobTitle) {
+			//post to job title api
+		} else {
+			//return this.postRequest();
+		}
 	}
 }

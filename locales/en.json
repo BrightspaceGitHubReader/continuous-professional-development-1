@@ -24,6 +24,7 @@
   "day": "Day",
   "delete": "Delete {recordName}",
   "editCPD": "Edit CPD Record",
+  "editSubjectTarget": "Edit targets for subject {subject}",
   "employeeName": "Employee Name",
   "enterCreditHours": "Enter Credit Hours",
   "enterCreditMinutes": "Enter Credit Minutes",

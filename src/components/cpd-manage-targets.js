@@ -1,9 +1,12 @@
-import '@brightspace-ui/core/components/inputs/input-checkbox.js';
+
 import 'd2l-navigation/d2l-navigation-link-back.js';
-import '@brightspace-ui/core/components/icons/icon';
+import '@brightspace-ui/core/components/button/button-icon';
+import '@brightspace-ui/core/components/button/button';
 import '@brightspace-ui/core/components/dialog/dialog.js';
+import '@brightspace-ui/core/components/inputs/input-checkbox';
+import '@brightspace-ui/core/components/inputs/input-text';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { getHoursAndMinutes, getListOfMonths } from  '../helpers/time-helper.js';
+import { getHoursAndMinutes, getHoursAndMinutesString, getListOfMonths } from  '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
@@ -35,6 +38,9 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			},
 			jobTitle: {
 				type: String
+			},
+			dialogData: {
+				type: Object
 			}
 		};
 	}
@@ -46,9 +52,6 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			css`
 			span.selected-date {
 				font-weight: bold;
-			}
-			d2l-icon.edit {
-				cursor: pointer;
 			}
 			.dialog-grid {
 				display: grid;
@@ -68,11 +71,16 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		this.showTargetDate = false;
 		this.months = getListOfMonths();
 		this.currentSelectedMonth = 1;
+		this.dialogData = {};
 	}
 
 	async connectedCallback() {
 		super.connectedCallback();
-		this.cpdService.getSubjectTargets()
+		this.fetchTargets();
+	}
+
+	fetchTargets() {
+		this.cpdService.getSubjectTargets(this.jobTitle)
 			.then(body => {
 				this.subjectTargets = body;
 			});
@@ -102,7 +110,10 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 								${this.localize('selectedTargetDay')}
 							</span>
 							: January 01
-							<d2l-icon class="edit" icon="tier1:edit" @click="${this.openTargetDateDialog}"></d2l-icon>
+							<d2l-button-icon
+								icon="tier1:edit"
+								@click="${this.openTargetDateDialog}">
+							</d2l-button-icon>
 						</p>
 						` : ''}
 				<d2l-dialog id="target-start-date-dialog" title-text="${this.localize('targetStartDay')}">
@@ -145,7 +156,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 					</thead>
 
 					<tbody>
-						${this.subjectTargets.Objects.map(subject => this.renderSubjectTargets(subject))}
+						${this.subjectTargets.Subjects.map(subject => this.renderSubjectTargets(subject))}
 					</tbody>
 				</table>
 
@@ -155,22 +166,54 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 							<label for="structured">${this.localize('structured')}</label>
 							<div id="structured">
 								<label for="structuredHours">${this.localize('hours')}</label>
-								<d2l-input-text id="structuredHours" class="numberInput" required type="number" min="0" value="0"></d2l-input-text>
+								<d2l-input-text
+									id="structuredHours"
+									class="numberInput"
+									required type="number"
+									min="0"
+									value="${this.dialogData.structured && this.dialogData.structured.hours}"
+								>
+								</d2l-input-text>
 								<label for="structuredMinutes">${this.localize('minutes')}</label>
-								<d2l-input-text id="structuredMinutes" class="numberInput" required type="number" min="0" max="59" value="0"></d2l-input-text>
+								<d2l-input-text
+									id="structuredMinutes"
+									class="numberInput"
+									required type="number"
+									min="0"
+									max="59"
+									value="${this.dialogData.structured && this.dialogData.structured.minutes}"
+								>
+								</d2l-input-text>
 							</div>
 						</div>
 						<div>
 							<label for="unstructured">${this.localize('unstructured')}</label>
 							<div id="unstructured">
 								<label for="unstructuredHours">${this.localize('hours')}</label>
-								<d2l-input-text id="unstructuredHours" class="numberInput" required type="number" min="0" value="0"></d2l-input-text>
+								<d2l-input-text
+									id="unstructuredHours"
+									class="numberInput"
+									required
+									type="number"
+									min="0"
+									value="${this.dialogData.unstructured && this.dialogData.unstructured.hours}"
+								>
+								</d2l-input-text>
 								<label for="unstructuredMinutes">${this.localize('minutes')}</label>
-								<d2l-input-text id="unstructuredMinutes" class="numberInput" required type="number" min="0" max="59" value="0"></d2l-input-text>
+								<d2l-input-text
+									id="unstructuredMinutes"
+									class="numberInput"
+									required
+									type="number"
+									min="0"
+									max="59"
+									value="${this.dialogData.unstructured && this.dialogData.unstructured.minutes}"
+								>
+								</d2l-input-text>
 							</div>
 						</div>
 					</div>
-					<d2l-button slot="footer" primary dialog-action @click="${this.saveTargetDate}">${this.localize('save')}</d2l-button>
+					<d2l-button slot="footer" primary dialog-action @click="${this.saveTargets}">${this.localize('save')}</d2l-button>
 					<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
 				</d2l-dialog>
 			</main>
@@ -181,19 +224,24 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		return html`
 			<tr>
 				<td>
-					${subject.SubjectName}
-					<d2l-icon subject-id="${subject.SubjectId}" class="edit" icon="tier1:edit" @click="${this.openSubjectTargetDialog}"></d2l-icon>
+					${subject.Subject.Name}
+					<d2l-button-icon
+						subject-json="${JSON.stringify(subject)}"
+						icon="tier1:edit"
+						text="${this.localize('editSubjectTarget', {subject: subject.Subject.Name})}"
+						@click="${this.openSubjectTargetDialog}">
+					</d2l-button-icon>
 				</td>
-				<td>${getHoursAndMinutes(subject.StructuredMinutes)}</td>
-				<td>${getHoursAndMinutes(subject.UnstructuredMinutes)}</td>
-				<td>${getHoursAndMinutes(subject.StructuredMinutes + subject.UnstructuredMinutes)}</td>
+				<td>${getHoursAndMinutesString(subject.StructuredMinutes)}</td>
+				<td>${getHoursAndMinutesString(subject.UnstructuredMinutes)}</td>
+				<td>${getHoursAndMinutesString(subject.StructuredMinutes + subject.UnstructuredMinutes)}</td>
 			</tr>
 		`;
 	}
 
 	backLinkClicked() {
 		if (!this.jobTitle) {
-			this.fireNavigationEvent({page:'user-cpd-records'});
+			this.fireNavigationEvent({page:'cpd-user-records'});
 		} else {
 			this.fireNavigationEvent({page:'admin-job-list'});
 		}
@@ -214,12 +262,24 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		this.shadowRoot.querySelector('#target-start-date-dialog').open();
 	}
 
-	openSubjectTargetDialog() {
+	openSubjectTargetDialog(e) {
+		const subject = e.target.getAttribute('subject-json') &&
+			JSON.parse(e.target.getAttribute('subject-json'));
+		const { StructuredMinutes, UnstructuredMinutes } = subject;
+		this.dialogData = {
+			structured: getHoursAndMinutes(StructuredMinutes),
+			unstructured: getHoursAndMinutes(UnstructuredMinutes)
+		};
 		this.shadowRoot.querySelector('#subject-target-hours-dialog').open();
 	}
 
 	saveTargetDate() {
-		return;
+		this.cpdService.saveTargetDate(this.jobTitle);
+	}
+
+	saveTargets() {
+		this.cpdService.updateTarget(this.jobTitle)
+			.then(() => this.fetchTargets());
 	}
 
 	setShowTargetDate() {
