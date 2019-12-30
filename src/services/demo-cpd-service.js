@@ -55,7 +55,11 @@ export class DemoCpdService {
 	}
 
 	static getRecordSummary() {
-		return fetch('../../../../data/cpd_records.json', getOptions).then(r => r.json());
+		return this.getRequest('../../../../data/cpd_records.json');
+	}
+
+	static getRequest(url) {
+		return fetch(url, getOptions).then(r => r.json());
 	}
 
 	static getSubjects() {

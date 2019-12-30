@@ -11,12 +11,13 @@ d2lfetch.use({
 });
 
 export class CpdService {
+	static CpdPath(action) { return `/d2l/api/customization/cpd/1.0/${action}`; }
 	static createRecord(record, files) {
-		return this.postWithFilesRequest(this.getCpdPath(this.Record), record, files);
+		return this.postWithFilesRequest(this.CpdPath(this.Record), record, files);
 	}
 
 	static deleteRecord(recordId) {
-		const request = new Request(`${this.Host}${this.getCpdPath(this.Record)}/${recordId}`, {
+		const request = new Request(`${this.Host}${this.CpdPath(this.Record)}/${recordId}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type' : 'application/json'
@@ -25,19 +26,17 @@ export class CpdService {
 		return d2lfetch.fetch(request);
 	}
 
-	static getCpdPath(action) { return `/d2l/api/customization/cpd/1.0/${action}`; }
-
 	static getJobTitleDefaults(page) {
-		let api_path = this.getCpdPath(this.Job);
+		let api_path = this.CpdPath(this.Job);
 		api_path += `?pageNumber=${page}`;
 		return this.getRequest(api_path);
 	}
 
 	static getMethods() {
-		return this.getRequest(this.getCpdPath(this.Method));
+		return this.getRequest(this.CpdPath(this.Method));
 	}
 	static getMyTeam(page, filters) {
-		let api_path = this.getCpdPath(this.Team);
+		let api_path = this.CpdPath(this.Team);
 		api_path += `?pageNumber=${page}`;
 		if (filters) {
 			const { Name } = filters;
@@ -47,7 +46,7 @@ export class CpdService {
 	}
 
 	static getPendingRecords(page, filters) {
-		let api_path = this.getCpdPath(this.Pending);
+		let api_path = this.CpdPath(this.Pending);
 		api_path += `?pageNumber=${page}`;
 		if (filters) {
 			const { Name, StartDate, EndDate } = filters;
@@ -73,10 +72,10 @@ export class CpdService {
 	}
 
 	static getQuestions() {
-		return this.getRequest(this.getCpdPath(this.Question));
+		return this.getRequest(this.CpdPath(this.Question));
 	}
 	static getRecord(recordId) {
-		const base_path = `${this.getCpdPath(this.Record)}/${recordId}`;
+		const base_path = `${this.CpdPath(this.Record)}/${recordId}`;
 		return this.getRequest(base_path)
 			.then(body => {
 				if (body.Attachments) {
@@ -93,7 +92,7 @@ export class CpdService {
 			});
 	}
 	static getRecordSummary(page, viewUserId, filters) {
-		let base_path = `${this.getCpdPath(this.Record)}?pageNumber=${page}`;
+		let base_path = `${this.CpdPath(this.Record)}?pageNumber=${page}`;
 
 		if (filters) {
 			const { Subject, Method, Name, StartDate, EndDate } = filters;
@@ -140,7 +139,7 @@ export class CpdService {
 		}];
 	}
 	static getUserInfo(userId) {
-		return this.getRequest(this.getCpdPath(`${this.Team}/username/${userId}`));
+		return this.getRequest(this.CpdPath(`${this.Team}/username/${userId}`));
 	}
 	static get Host() { return window.data.fraSettings.valenceHost; }
 	static get Job() { return 'target/job'; }
@@ -190,7 +189,7 @@ export class CpdService {
 	static get Team() { return 'team'; }
 
 	static updateRecord(recordId, record, files, removedFiles) {
-		return this.putWithFilesRequest(`${this.getCpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
+		return this.putWithFilesRequest(`${this.CpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
 	}
 
 	static updateTarget(jobTitle) {
