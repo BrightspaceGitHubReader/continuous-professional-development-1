@@ -1,5 +1,6 @@
+import { CpdRoutes } from '../helpers/cpdRoutes';
 import { d2lfetch } from 'd2l-fetch/src/index';
-import { dateParamString } from '../helpers/time-helper.js';
+import { dateParamString } from '../helpers/time-helper';
 import fetchAuthFramed from 'd2l-fetch-auth/es6/d2lfetch-auth-framed';
 
 d2lfetch.use({
@@ -192,11 +193,11 @@ export class CpdService {
 		return this.putWithFilesRequest(`${this.CpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
 	}
 
-	static updateTarget(jobTitle) {
+	static updateTarget(jobTitle, target) {
 		if (jobTitle) {
-			//post to job title api
+			return this.postJsonRequest(CpdRoutes.Path(CpdRoutes.JobTarget), target);
 		} else {
-			//return this.postRequest();
+			return this.postJsonRequest(CpdRoutes.Path(CpdRoutes.UserTarget), target);
 		}
 	}
 }

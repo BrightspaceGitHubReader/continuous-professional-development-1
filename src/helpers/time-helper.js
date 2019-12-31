@@ -22,10 +22,16 @@ export function getHoursAndMinutes(minutes) {
 }
 
 export function getHours(minutes) {
+	if (!minutes) {
+		return 0;
+	}
 	return Math.floor(minutes / 60);
 }
 
 export function getMinutes(minutes) {
+	if (!minutes) {
+		return 0;
+	}
 	return minutes % 60;
 }
 

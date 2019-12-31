@@ -6,7 +6,7 @@ import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox';
 import '@brightspace-ui/core/components/inputs/input-text';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { getHoursAndMinutes, getHoursAndMinutesString, getListOfMonths } from  '../helpers/time-helper.js';
+import { getHours, getHoursAndMinutesString, getListOfMonths, getMinutes, getTotalMinutes } from  '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
@@ -167,21 +167,23 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 							<div id="structured">
 								<label for="structuredHours">${this.localize('hours')}</label>
 								<d2l-input-text
+									@change="${this.onDialogDataUpdated}"
 									id="structuredHours"
 									class="numberInput"
 									required type="number"
 									min="0"
-									value="${this.dialogData.structured && this.dialogData.structured.hours}"
+									value="${getHours(this.dialogData.StructuredMinutes)}"
 								>
 								</d2l-input-text>
 								<label for="structuredMinutes">${this.localize('minutes')}</label>
 								<d2l-input-text
+									@change="${this.onDialogDataUpdated}"
 									id="structuredMinutes"
 									class="numberInput"
 									required type="number"
 									min="0"
 									max="59"
-									value="${this.dialogData.structured && this.dialogData.structured.minutes}"
+									value="${getMinutes(this.dialogData.StructuredMinutes)}"
 								>
 								</d2l-input-text>
 							</div>
@@ -191,23 +193,25 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 							<div id="unstructured">
 								<label for="unstructuredHours">${this.localize('hours')}</label>
 								<d2l-input-text
+									@change="${this.onDialogDataUpdated}"
 									id="unstructuredHours"
 									class="numberInput"
 									required
 									type="number"
 									min="0"
-									value="${this.dialogData.unstructured && this.dialogData.unstructured.hours}"
+									value="${getHours(this.dialogData.UnstructuredMinutes)}"
 								>
 								</d2l-input-text>
 								<label for="unstructuredMinutes">${this.localize('minutes')}</label>
 								<d2l-input-text
+									@change="${this.onDialogDataUpdated}"
 									id="unstructuredMinutes"
 									class="numberInput"
 									required
 									type="number"
 									min="0"
 									max="59"
-									value="${this.dialogData.unstructured && this.dialogData.unstructured.minutes}"
+									value="${getMinutes(this.dialogData.UnstructuredMinutes)}"
 								>
 								</d2l-input-text>
 							</div>
@@ -258,6 +262,24 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		`;
 	}
 
+	onDialogDataUpdated(e) {
+		const number = parseInt(e.target.value);
+		switch (e.target.id) {
+			case 'structuredHours':
+				this.dialogData.StructuredMinutes = getTotalMinutes(number, getMinutes(this.dialogData.StructuredMinutes));
+				break;
+			case 'structuredMinutes':
+				this.dialogData.StructuredMinutes = getTotalMinutes(getHours(this.dialogData.StructuredMinutes), number);
+				break;
+			case 'unstructuredHours':
+				this.dialogData.UnstructuredMinutes = getTotalMinutes(number, getMinutes(this.dialogDataUnstructuredMinutes));
+				break;
+			case 'unstructuredMinutes':
+				this.dialogData.UnstructuredMinutes = getTotalMinutes(getHours(this.dialogData.UnstructuredMinutes), number);
+				break;
+		}
+	}
+
 	openTargetDateDialog() {
 		this.shadowRoot.querySelector('#target-start-date-dialog').open();
 	}
@@ -265,10 +287,10 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 	openSubjectTargetDialog(e) {
 		const subject = e.target.getAttribute('subject-json') &&
 			JSON.parse(e.target.getAttribute('subject-json'));
-		const { StructuredMinutes, UnstructuredMinutes } = subject;
 		this.dialogData = {
-			structured: getHoursAndMinutes(StructuredMinutes),
-			unstructured: getHoursAndMinutes(UnstructuredMinutes)
+			SubjectId: subject.Subject.Id,
+			StructuredMinutes: subject.StructuredMinutes,
+			UnstructuredMinutes: subject.UnstructuredMinutes
 		};
 		this.shadowRoot.querySelector('#subject-target-hours-dialog').open();
 	}
@@ -278,7 +300,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 	}
 
 	saveTargets() {
-		this.cpdService.updateTarget(this.jobTitle)
+		this.cpdService.updateTarget(this.jobTitle, this.dialogData)
 			.then(() => this.fetchTargets());
 	}
 

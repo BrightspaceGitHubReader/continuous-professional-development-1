@@ -94,12 +94,10 @@ export class DemoCpdService {
 	static getUserInfo() {
 		return Promise.resolve('First Last');
 	}
-
-	static saveTargetDate() {
+	static updateTarget() {
 		return Promise.resolve();
 	}
-
-	static updateTarget() {
+	static updateTargetDate() {
 		return Promise.resolve();
 	}
 }
