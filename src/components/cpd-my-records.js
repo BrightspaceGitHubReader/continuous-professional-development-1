@@ -301,7 +301,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				<d2l-link @click="${this.recordLinkClicked}" record-id="${record.RecordId}">
 					${record.RecordName}
 				</d2l-link>
-				${this.viewUserId ? html`` : html`
+				${this.viewUserId ? null : html`
 					<d2l-button-icon
 						@click="${this.deleteRecordButtonClicked}"
 						icon="tier1:delete"

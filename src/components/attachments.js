@@ -79,7 +79,7 @@ class Attachments extends BaseMixin(LitElement) {
 	render() {
 		return html`
 		<div>
-			${this.readOnly ? html`` : html`
+			${this.readOnly ? null : html`
 				<d2l-button id="add_file_button" @click="${this.showFileDialog}">
 						${this.localize('addAFile')}
 				</d2l-button>

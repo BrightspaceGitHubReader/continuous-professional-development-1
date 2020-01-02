@@ -303,7 +303,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 									<label for="gradeValue" class="d2l-label-text">${this.localize('grade')}</label>
 									<div id="gradeValue">${this.record.Grade}</div>
 								</div>
-							` : html``}
+							` : null}
 						</div>
 					</li>
 					<li>

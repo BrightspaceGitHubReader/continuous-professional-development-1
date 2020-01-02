@@ -33,13 +33,17 @@ class ProgressOverall extends BaseMixin(LitElement) {
 				align-items: center;
 			}
 			.progress-inner-split {
-				max-width: 350px;
+				max-width: 450px;
 				display: grid;
 				grid-template-columns: 50% 50%;
 				grid-template-rows: 5fr 3fr;
 			}
 			d2l-meter-circle {
-				min-width: 80px;
+				min-width: 100px;
+				padding: 0 10px;
+			}
+			d2l-meter-radial {
+				min-width: 100px;
 			}
 			.progress-inner-chevron > d2l-icon {
 				color: var(--d2l-color-corundum);
@@ -57,8 +61,20 @@ class ProgressOverall extends BaseMixin(LitElement) {
 				max-width: 200px;
 				padding: 20px;
 			}
-			d2l-meter-circle {
-				padding: 0 10px;
+			.progress-text {
+				padding: 12px;
+			}
+			.check-icon {
+				color: green;
+			}
+			.progress-label: {
+				vertical-align: middle;
+			}
+			.progress-inner-circle {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
 			}
 			@media (max-width: 929px) {
 				.progress-inner-chevron {
@@ -72,9 +88,19 @@ class ProgressOverall extends BaseMixin(LitElement) {
 		return formatTotalProgress(this.progress);
 	}
 
+	renderProgressText(numerator, denominator) {
+		return html`
+		<div class="progress-text">
+			${numerator >= denominator ? html`
+				<d2l-icon class="check-icon" icon="tier2:check-circle"></d2l-icon>
+			` : null}
+			<label class="progress-label">${`${numerator}/${denominator} ${this.localize('hours')}`}</label>
+		</div>`;
+	}
+
 	render() {
 		if (!this.progress.structured || !this.progress.unstructured) {
-			return html``;
+			return null;
 		}
 		const {structured, unstructured} = this.progress;
 		return html`
@@ -82,11 +108,21 @@ class ProgressOverall extends BaseMixin(LitElement) {
 			<div class="progress-inner-split">
 				<div class="progress-inner-meter">
 					<h4 class="d2l-heading-4">${this.localize('structured')}</h4>
-					<d2l-meter-radial value="${structured.numerator}" max="${structured.denominator}"></d2l-meter-radial>
+					<d2l-meter-radial
+						value="${structured.numerator}"
+						max="${structured.denominator}"
+						percent>
+					</d2l-meter-radial>
+					${this.renderProgressText(structured.numerator, structured.denominator)}
 				</div>
 				<div class="progress-inner-meter">
 					<h4 class="d2l-heading-4">${this.localize('unstructured')}</h4>
-					<d2l-meter-radial value="${unstructured.numerator}" max="${unstructured.denominator}"></d2l-meter-radial>
+					<d2l-meter-radial
+						value="${unstructured.numerator}"
+						max="${unstructured.denominator}"
+						percent>
+					</d2l-meter-radial>
+					${this.renderProgressText(unstructured.numerator, unstructured.denominator)}
 				</div>
 				<div class="progress-split-text d2l-body-compact">
 					${this.localize('overallSplitText', { total:
@@ -97,7 +133,14 @@ class ProgressOverall extends BaseMixin(LitElement) {
 				<d2l-icon icon="tier3:chevron-right"></d2l-icon>
 			</div>
 			<div class="progress-inner-summary">
-				<d2l-meter-circle value="${this.getTotals().numerator}" max="${this.getTotals().denominator}"></d2l-meter-circle>
+				<div class="progress-inner-circle">
+					<d2l-meter-circle
+						value="${this.getTotals().numerator}"
+						max="${this.getTotals().denominator}"
+						percent>
+					</d2l-meter-circle>
+					${this.renderProgressText(this.getTotals().numerator, this.getTotals().denominator)}
+				</div>
 				<div class="d2l-body-compact">
 					<h4>${this.localize('myTargetsProgress')}</h4>
 					<div>

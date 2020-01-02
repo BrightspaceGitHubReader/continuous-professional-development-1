@@ -85,12 +85,12 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 			></d2l-progress-overall>
 			`;
 		}
-		return html``;
+		return null;
 	}
 
 	render() {
 		if (!this.progress) {
-			return html``;
+			return null;
 		}
 		const toggleOptions = [
 			{
