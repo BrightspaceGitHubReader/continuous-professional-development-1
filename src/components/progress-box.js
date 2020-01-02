@@ -11,6 +11,9 @@ import { CpdServiceFactory } from '../services/cpd-service-factory';
 class CpdProgressBox extends BaseMixin(LitElement) {
 	static get properties() {
 		return {
+			hasJobTarget: {
+				type: Boolean,
+			},
 			progress: {
 				type: Object
 			}
@@ -52,8 +55,10 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 	}
 	connectedCallback() {
 		super.connectedCallback();
-		this.progress = this.cpdService.getProgress()
-			.then((data) => this.progress = data);
+		this.cpdService.getProgress()
+			.then((data) =>
+				this.progress = JSON.parse(JSON.stringify(data).toLocaleLowerCase())
+			);
 	}
 	navigateAdjustTargets() {
 		this.fireNavigationEvent({page:'cpd-manage-targets'});
@@ -61,6 +66,15 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 
 	viewToggleChanged(e) {
 		this.selectedView = e.detail.view;
+	}
+
+	renderTargetLink() {
+		if (!this.hasJobTarget) {
+			return html`<div class="progress-header-link">
+					<d2l-link @click="${this.navigateAdjustTargets}">${this.localize('adjustTargets')}</d2l-link>
+				</div>`;
+		}
+		return html ``;
 	}
 
 	renderView(selectedView) {
@@ -94,9 +108,7 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 				<div>
 					<d2l-view-toggle .toggleOptions=${toggleOptions} selectedOption="overall"></d2l-view-toggle>
 				</div>
-				<div class="progress-header-link">
-					<d2l-link @click="${this.navigateAdjustTargets}">${this.localize('adjustTargets')}</d2l-link>
-				</div>
+				${this.renderTargetLink()}
 			</div>
 			${this.renderView(this.selectedView)}
 		</div>

@@ -59,17 +59,7 @@ export class CpdService {
 	}
 
 	static getProgress() {
-		const data =  {
-			structured: {
-				numerator: 30,
-				denominator: 19
-			},
-			unstructured: {
-				numerator: 12,
-				denominator: 15
-			}
-		};
-		return Promise.resolve(data);
+		return this.getRequest(CpdRoutes.Path(CpdRoutes.Progress));
 	}
 
 	static getQuestions() {
@@ -195,9 +185,9 @@ export class CpdService {
 
 	static updateTarget(jobTitle, target) {
 		if (jobTitle) {
-			return this.postJsonRequest(CpdRoutes.Path(CpdRoutes.JobTarget), target);
+			return this.postJsonRequest(CpdRoutes.FullPath(CpdRoutes.JobTarget), target);
 		} else {
-			return this.postJsonRequest(CpdRoutes.Path(CpdRoutes.UserTarget), target);
+			return this.postJsonRequest(CpdRoutes.FullPath(CpdRoutes.UserTarget), target);
 		}
 	}
 }

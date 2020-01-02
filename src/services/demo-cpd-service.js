@@ -32,11 +32,11 @@ export class DemoCpdService {
 
 	static getProgress() {
 		const data =  {
-			structured: {
+			Structured: {
 				numerator: 30,
 				denominator: 19
 			},
-			unstructured: {
+			Unstructured: {
 				numerator: 12,
 				denominator: 15
 			}
