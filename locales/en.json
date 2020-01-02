@@ -66,7 +66,7 @@
   "searchRecordPlaceholder": "Search for CPD Records...",
   "searchTeamPlaceholder": "Search for team member...",
   "selectDefault": "Choose a {object}",
-  "selectedTargetDay": "Selected Month/Day",
+  "selectedTargetDay": "Selected Month/Day: ",
   "selectTargetDay": "Select a specific target start day",
   "showSearchOptions": "Show search options",
   "structured": "Structured",

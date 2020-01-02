@@ -190,4 +190,8 @@ export class CpdService {
 			return this.postJsonRequest(CpdRoutes.FullPath(CpdRoutes.UserTarget), target);
 		}
 	}
+
+	static updateTargetDate(date, jobTitle) {
+		return this.postJsonRequest(jobTitle ? CpdRoutes.FullPath(CpdRoutes.JobTargetStartDate) : CpdRoutes.FullPath(CpdRoutes.UserTargetStartDate), date);
+	}
 }

@@ -10,6 +10,7 @@ import { getHours, getHoursAndMinutesString, getListOfMonths, getMinutes, getTot
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
+import dayjs from 'dayjs/esm';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class ManageCpdTargets extends BaseMixin(LitElement) {
@@ -32,9 +33,6 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			},
 			showTargetDate: {
 				type: Boolean
-			},
-			currentSelectedMonth: {
-				type: Number
 			},
 			jobTitle: {
 				type: String
@@ -70,7 +68,8 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		this.cpdService = CpdServiceFactory.getCpdService();
 		this.showTargetDate = false;
 		this.months = getListOfMonths();
-		this.currentSelectedMonth = 1;
+		this.selectedTargetMonth = 1;
+		this.selectedTargetDay = 1;
 		this.dialogData = {};
 	}
 
@@ -83,7 +82,17 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		this.cpdService.getSubjectTargets(this.jobTitle)
 			.then(body => {
 				this.subjectTargets = body;
+				const date = new Date(body.StartDate);
+				this.selectedTargetDay = date.getDate() + 1;
+				this.selectedTargetMonth = date.getMonth() + 1;
 			});
+	}
+
+	selectedDateString() {
+		let date = dayjs();
+		date = date.set('month', this.selectedTargetMonth - 1);
+		date = date.set('date', this.selectedTargetDay);
+		return `${date.format('MMMM DD')}`;
 	}
 
 	render() {
@@ -109,7 +118,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 							<span class="selected-date">
 								${this.localize('selectedTargetDay')}
 							</span>
-							: January 01
+							${this.selectedDateString()}
 							<d2l-button-icon
 								icon="tier1:edit"
 								@click="${this.openTargetDateDialog}">
@@ -121,14 +130,14 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 						<label for="monthSelect">${this.localize('month')}</label>
 						<label for="daySelect">${this.localize('day')}</label>
 						<select
-							@change="${this.setCurrentSelectedMonth}"
+							@change="${this.setSelectedMonth}"
 							aria-label="${this.localize('chooseChoice', {choice: this.localize('month')})}"
 							class="d2l-input-select"
 							id="monthSelect"
 						>
 							${this.months.map((month, index) => this.renderSelect(month, index + 1, this.selectedTargetMonth))}
 						</select>
-						${this.renderDaySelect(this.currentSelectedMonth)}
+						${this.renderDaySelect(this.selectedTargetMonth)}
 					</div>
 					<d2l-button slot="footer" primary dialog-action @click="${this.saveTargetDate}">${this.localize('save')}</d2l-button>
 					<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
@@ -296,7 +305,12 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 	}
 
 	saveTargetDate() {
-		this.cpdService.saveTargetDate(this.jobTitle);
+		this.selectedTargetMonth = this.newSelectedMonth;
+		this.selectedTargetDay = this.newSelectedDay;
+		const date = new Date();
+		date.setMonth(this.selectedTargetMonth - 1);
+		date.setDate(this.selectedTargetDay);
+		this.cpdService.updateTargetDate(date.toJSON(), this.jobTitle);
 	}
 
 	saveTargets() {
@@ -324,6 +338,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		});
 		return html`
 		<select
+			@change="${this.setSelectedDay}"
 			aria-label="${this.localize('chooseChoice', {choice: this.localize('day')})}"
 			class="d2l-input-select"
 			id="daySelect"
@@ -332,9 +347,12 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		</select>
 		`;
 	}
+	setSelectedDay(event) {
+		this.newSelectedDay = event.target.value;
+	}
 
-	setCurrentSelectedMonth(event) {
-		this.currentSelectedMonth = event.target.value;
+	setSelectedMonth(event) {
+		this.newSelectedMonth = event.target.value;
 	}
 }
 
