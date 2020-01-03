@@ -55,6 +55,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			},
 			viewUserId: {
 				type: Number
+			},
+			hasEnforcedTarget: {
+				type: Boolean
 			}
 		};
 	}
@@ -355,7 +358,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 							${this.localize('userTitle', { 'userName': this.userDisplayName})}
 						</h2>
 					</div>` : html`
-					<d2l-cpd-progress-box></d2l-cpd-progress-box>
+					<d2l-cpd-progress-box ?hasEnforcedTarget=${this.hasEnforcedTarget}></d2l-cpd-progress-box>
 					<d2l-button id="new_record" primary @click="${this.newRecordButtonClicked}">
 			${this.localize('addNewCPD')}
 					</d2l-button>

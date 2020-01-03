@@ -21,6 +21,9 @@ class Cpd extends BaseMixin(LitElement) {
 			},
 			pageData: {
 				type: Object
+			},
+			hasEnforcedTarget: {
+				type: Boolean
 			}
 		};
 	}
@@ -34,6 +37,7 @@ class Cpd extends BaseMixin(LitElement) {
 		this.pageData = {};
 		this.manager = false;
 		this.managePersonal = false;
+		this.hasEnforcedTarget = false;
 	}
 
 	handleNavigateEvent(e) {
@@ -81,7 +85,7 @@ class Cpd extends BaseMixin(LitElement) {
 					text="${this.localize('myCPDHeader')}"
 					?selected=${(!this.pageData.page || this.pageData.page === 'cpd-my-records')}
 					>
-					<d2l-cpd-my-records></d2l-cpd-my-records>
+					<d2l-cpd-my-records ?hasEnforcedTarget=${this.hasEnforcedTarget}></d2l-cpd-my-records>
 				</d2l-tab-panel>
 				<d2l-tab-panel
 					text="${this.localize('pendingRecords')}"

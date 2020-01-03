@@ -10,7 +10,7 @@ import { CpdServiceFactory } from '../services/cpd-service-factory';
 class CpdProgressBox extends BaseMixin(LitElement) {
 	static get properties() {
 		return {
-			hasJobTarget: {
+			hasEnforcedTarget: {
 				type: Boolean,
 			},
 			progress: {
@@ -55,6 +55,7 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 		this.selectedView = 'overall';
 		this.cpdService = CpdServiceFactory.getCpdService();
 	}
+
 	connectedCallback() {
 		super.connectedCallback();
 		this.cpdService.getProgress()
@@ -71,7 +72,7 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 	}
 
 	renderTargetLink() {
-		if (!this.hasJobTarget) {
+		if (!this.hasEnforcedTarget) {
 			return html`<div class="progress-header-link">
 					<d2l-link @click="${this.navigateAdjustTargets}">${this.localize('adjustTargets')}</d2l-link>
 				</div>`;

@@ -22,7 +22,7 @@
 			}
 		});
 		const loadCpd = function(frauSettings) {
-			const { page, manager, managePersonal } = frauSettings;
+			const { page, manager, managePersonal, hasEnforcedTarget } = frauSettings;
 			const cpd = document.createElement('d2l-cpd');
 			cpd.appTitle = 'Continuous Professional Development';
 			if (page) {
@@ -33,6 +33,9 @@
 			}
 			if (managePersonal) {
 				cpd.setAttribute('managePersonal', managePersonal);
+			}
+			if (hasEnforcedTarget) {
+				cpd.setAttribute('hasEnforcedTarget', hasEnforcedTarget);
 			}
 			const loadingSpinner = document.getElementById('loading-spinner');
 			document.body.removeChild(loadingSpinner);
