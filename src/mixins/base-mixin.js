@@ -9,28 +9,31 @@ export const BaseMixin = superclass => class extends LocalizeMixin(superclass) {
 	static async getLocalizeResources(langs) {
 		const uniqueLangs = new Set(langs);
 
-		for await (let lang of uniqueLangs) {
+		const getLangUrl = function(lang) {
+			const langTermRelativeUrl = `../../locales/${lang}.json`;
+			return `${new URL(langTermRelativeUrl, baseUrl)}`;
+		};
+
+		for await (const lang of uniqueLangs) {
 			if (!lang) {
 				continue;
 			}
 
-			lang = lang.replace(/-(?!tw)\w+/, '');
-
-			const langTermRelativeUrl = `../../locales/${lang}.json`;
-			const langTermUrl = `${new URL(langTermRelativeUrl, baseUrl)}`;
+			const langTermUrl = getLangUrl(lang);
 
 			if (langTerms[langTermUrl]) {
 				return await langTerms[langTermUrl];
 			}
 
 			langTerms[langTermUrl] = (async() => {
-				const response = await fetch(langTermUrl);
+				let response = await fetch(langTermUrl);
+				if (!response.ok) {
+					response = await fetch(getLangUrl('en'));
+				}
 				const translations = await response.json();
-
 				if (!translations) {
 					return;
 				}
-
 				return {
 					language: lang,
 					resources: translations
