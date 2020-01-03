@@ -1,9 +1,8 @@
 import '@brightspace-ui/core/components/colors/colors';
 import '@brightspace-ui/core/components/icons/icon';
-import '@brightspace-ui/core/components/meter/meter-radial';
-import '@brightspace-ui/core/components/meter/meter-circle';
 import './view-toggle';
 import './progress-overall';
+import './progress-subject';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { BaseMixin } from '../mixins/base-mixin';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
@@ -16,6 +15,9 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 			},
 			progress: {
 				type: Object
+			},
+			selectedView: {
+				type: String
 			}
 		};
 	}
@@ -57,7 +59,7 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 		super.connectedCallback();
 		this.cpdService.getProgress()
 			.then((data) =>
-				this.progress = JSON.parse(JSON.stringify(data).toLocaleLowerCase())
+				this.progress = this.lowercasePropertyNames(data)
 			);
 	}
 	navigateAdjustTargets() {
@@ -83,6 +85,13 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 			<d2l-progress-overall
 			.progress="${this.progress}"
 			></d2l-progress-overall>
+			`;
+		}
+		else if (selectedView === 'subject') {
+			return html`
+			<d2l-progress-subject
+			.progress="${this.progress}"
+			></d2l-progress-subject>
 			`;
 		}
 		return null;

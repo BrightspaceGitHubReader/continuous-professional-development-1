@@ -1,9 +1,11 @@
+import { getHoursRounded } from './time-helper';
+
 export function formatTotalProgress(progress) {
 	const structured = formatProgress(progress.structured);
 	const unstructured = formatProgress(progress.unstructured);
 	return {
-		numerator: structured.numerator + unstructured.numerator,
-		denominator: structured.denominator + unstructured.denominator
+		numerator: getHoursRounded(structured.numerator + unstructured.numerator),
+		denominator: getHoursRounded(structured.denominator + unstructured.denominator)
 	};
 }
 

@@ -28,6 +28,12 @@ export function getHours(minutes) {
 	return Math.floor(minutes / 60);
 }
 
+export function getHoursRounded(minutes, precision = 1) {
+	const hours = minutes / 60;
+	const multiplier = Math.pow(10, precision || 0);
+	return Math.round(hours * multiplier) / multiplier;
+}
+
 export function getMinutes(minutes) {
 	if (!minutes) {
 		return 0;

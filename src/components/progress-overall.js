@@ -1,8 +1,12 @@
 import '@brightspace-ui/core/components/icons/icon.js';
+import '@brightspace-ui/core/components/meter/meter-circle';
+import '@brightspace-ui/core/components/meter/meter-radial';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { bodyCompactStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import {formatTotalProgress} from '../helpers/progress-helper';
+import { formatTotalProgress } from '../helpers/progress-helper';
+import { getHoursRounded } from '../helpers/time-helper.js';
+
 class ProgressOverall extends BaseMixin(LitElement) {
 	static get properties() {
 		return {
@@ -91,10 +95,10 @@ class ProgressOverall extends BaseMixin(LitElement) {
 	renderProgressText(numerator, denominator) {
 		return html`
 		<div class="progress-text">
-			${numerator >= denominator ? html`
+			${numerator >= denominator && denominator > 0 ? html`
 				<d2l-icon class="check-icon" icon="tier2:check-circle"></d2l-icon>
 			` : null}
-			<label class="progress-label">${`${numerator}/${denominator} ${this.localize('hours')}`}</label>
+			<label class="progress-label">${this.localize('hoursProgress', {numerator, denominator})}</label>
 		</div>`;
 	}
 
@@ -109,24 +113,24 @@ class ProgressOverall extends BaseMixin(LitElement) {
 				<div class="progress-inner-meter">
 					<h4 class="d2l-heading-4">${this.localize('structured')}</h4>
 					<d2l-meter-radial
-						value="${structured.numerator}"
-						max="${structured.denominator}"
+						value="${getHoursRounded(structured.numerator)}"
+						max="${getHoursRounded(structured.denominator)}"
 						percent>
 					</d2l-meter-radial>
-					${this.renderProgressText(structured.numerator, structured.denominator)}
+					${this.renderProgressText(getHoursRounded(structured.numerator), getHoursRounded(structured.denominator))}
 				</div>
 				<div class="progress-inner-meter">
 					<h4 class="d2l-heading-4">${this.localize('unstructured')}</h4>
 					<d2l-meter-radial
-						value="${unstructured.numerator}"
-						max="${unstructured.denominator}"
+						value="${getHoursRounded(unstructured.numerator)}"
+						max="${getHoursRounded(unstructured.denominator)}"
 						percent>
 					</d2l-meter-radial>
-					${this.renderProgressText(unstructured.numerator, unstructured.denominator)}
+					${this.renderProgressText(getHoursRounded(unstructured.numerator), getHoursRounded(unstructured.denominator))}
 				</div>
 				<div class="progress-split-text d2l-body-compact">
 					${this.localize('overallSplitText', { total:
-						unstructured.denominator + structured.denominator, structured: structured.numerator, unstructured: unstructured.numerator})}
+						getHoursRounded(unstructured.denominator + structured.denominator), structured: getHoursRounded(structured.numerator), unstructured: getHoursRounded(unstructured.numerator)})}
 				</div>
 			</div>
 			<div class="progress-inner-chevron">

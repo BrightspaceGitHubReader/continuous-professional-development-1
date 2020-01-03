@@ -70,6 +70,19 @@ export const BaseMixin = superclass => class extends LocalizeMixin(superclass) {
 		return super.localize(key, params) || `{language term '${key}' not found}`;
 	}
 
+	lowercasePropertyNames(obj) {
+		const newObj = Array.isArray(obj) ? [] : {};
+		Object.keys(obj).forEach(key => {
+			if (obj[key] !== null && typeof obj[key] === 'object') {
+				newObj[key.toLowerCase()] = this.lowercasePropertyNames(obj[key]);
+			}
+			else {
+				newObj[key.toLowerCase()] = obj[key];
+			}
+		});
+		return newObj;
+	}
+
 	resize() {
 		window.parentIFrame && window.parentIFrame.size();
 	}
