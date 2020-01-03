@@ -93,7 +93,7 @@ class Cpd extends BaseMixin(LitElement) {
 					>
 					<d2l-cpd-pending-records></d2l-cpd-pending-records>
 				</d2l-tab-panel>
-				` : null}
+				` : html``}
 
 				${this.manager ?
 		html`
@@ -103,7 +103,7 @@ class Cpd extends BaseMixin(LitElement) {
 					>
 					<d2l-cpd-my-team></d2l-cpd-my-team>
 				</d2l-tab-panel>
-				` : null}
+				` : html``}
 
 			</d2l-tabs>
 		`;

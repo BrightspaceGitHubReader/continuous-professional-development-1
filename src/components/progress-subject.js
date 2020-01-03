@@ -44,7 +44,7 @@ class ProgressSubject extends BaseMixin(LitElement) {
 		<div class="progress-text">
 			${numerator >= denominator && denominator > 0 ? html`
 				<d2l-icon class="check-icon" icon="tier2:check-circle"></d2l-icon>
-			` : null}
+			` : html``}
 			<label class="progress-label">${`${this.localize('hoursProgress', {numerator, denominator})}`}</label>
 		</div>`;
 	}
@@ -61,7 +61,7 @@ class ProgressSubject extends BaseMixin(LitElement) {
 					max="${getHoursRounded(subjectData.structured.denominator)}"
 					text="${this.localize('completed')}{x}/{y}"
 					percent>
-				</d2l-meter-linear>				
+				</d2l-meter-linear>
 			</td>
 			<td>
 				<d2l-meter-linear

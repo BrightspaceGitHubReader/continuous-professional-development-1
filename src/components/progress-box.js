@@ -22,8 +22,7 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 		};
 	}
 	static get styles() {
-		return [
-			css`
+		return css`
 			d2l-view-toggle {
 				padding: 10px 0;
 			}
@@ -47,7 +46,8 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 				}
 			}
 
-			`];
+			`
+		;
 	}
 
 	constructor() {
@@ -95,12 +95,12 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 			></d2l-progress-subject>
 			`;
 		}
-		return null;
+		return html``;
 	}
 
 	render() {
 		if (!this.progress) {
-			return null;
+			return html``;
 		}
 		const toggleOptions = [
 			{
@@ -122,7 +122,6 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 			</div>
 			${this.renderView(this.selectedView)}
 		</div>
-
 		`;
 	}
 }

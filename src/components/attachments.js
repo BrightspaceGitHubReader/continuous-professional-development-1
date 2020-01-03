@@ -79,22 +79,22 @@ class Attachments extends BaseMixin(LitElement) {
 	render() {
 		return html`
 		<div>
-			${this.readOnly ? null : html`
+			${this.readOnly ? html`` : html`
 				<d2l-button id="add_file_button" @click="${this.showFileDialog}">
 						${this.localize('addAFile')}
 				</d2l-button>
 				`}
 				${this.readOnly ? html`
-				<d2l-attachment-list 
+				<d2l-attachment-list
 				.attachmentsList="${[...this.attachmentsList]}"
 				@internal-attachments-list-removed="${this.updateAttachmentList}"
 				readOnly>
 			</d2l-attachment-list>` : html`
-			<d2l-attachment-list 
+			<d2l-attachment-list
 				.attachmentsList="${[...this.attachmentsList]}"
 				@internal-attachments-list-removed="${this.updateAttachmentList}">
 			</d2l-attachment-list>`}
-			
+
 			<d2l-dialog id="add_file_dialog" title-text="${this.localize('addAFile')}" @d2l-dialog-close="${this.onDialogClosed}">
 				<div id="file_loader_wrapper">
 					<d2l-labs-file-uploader id="file_loader" multiple @d2l-file-uploader-files-added="${this.newFilesAdded}">

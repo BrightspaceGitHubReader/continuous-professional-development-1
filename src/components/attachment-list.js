@@ -92,7 +92,7 @@ class AttachmentList extends BaseMixin(LitElement) {
 							${attachment.name}
 						</d2l-link>
 						<span>${this.getFileSizeString(attachment.size)}</span>
-						${this.readOnly ? null : html`
+						${this.readOnly ? html`` : html`
 						<d2l-button-icon index="${index}" icon="tier1:close-small" @click="${this.removeFile}"></d2l-button-icon>
 						`}
 					</d2l-list-item>

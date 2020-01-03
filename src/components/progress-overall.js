@@ -97,14 +97,14 @@ class ProgressOverall extends BaseMixin(LitElement) {
 		<div class="progress-text">
 			${numerator >= denominator && denominator > 0 ? html`
 				<d2l-icon class="check-icon" icon="tier2:check-circle"></d2l-icon>
-			` : null}
+			` : html``}
 			<label class="progress-label">${this.localize('hoursProgress', {numerator, denominator})}</label>
 		</div>`;
 	}
 
 	render() {
 		if (!this.progress.structured || !this.progress.unstructured) {
-			return null;
+			return html``;
 		}
 		const {structured, unstructured} = this.progress;
 		return html`
