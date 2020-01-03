@@ -18,7 +18,6 @@ after_success:
 - test "$TRAVIS_REPO_SLUG" = "Brightspace/continuous-professional-development" &&
     test "$TRAVIS_BRANCH" = "master" &&
     test "$TRAVIS_PULL_REQUEST" = "false" &&
-    npm run build &&
     npm run publish:dev:cdn
 env:
   global:

@@ -2,7 +2,7 @@
   "npm": true,
   "moduleResolution": "node",
   "entrypoint": "index.html",
-  "shell": "src/components/cpd.js",
+  "shell": "src/components/cpd-loader.js",
   "fragments": [],
   "sources": [
     "locales/**",
