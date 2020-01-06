@@ -186,13 +186,13 @@ export class CpdService {
 
 	static updateTarget(jobTitle, target) {
 		if (jobTitle) {
-			return this.postJsonRequest(CpdRoutes.FullPath(CpdRoutes.JobTarget), target);
+			return this.postJsonRequest(CpdRoutes.FullPath(CpdRoutes.JobTarget(jobTitle)), target);
 		} else {
 			return this.postJsonRequest(CpdRoutes.FullPath(CpdRoutes.UserTarget), target);
 		}
 	}
 
 	static updateTargetDate(date, jobTitle) {
-		return this.postJsonRequest(jobTitle ? CpdRoutes.FullPath(CpdRoutes.JobTargetStartDate) : CpdRoutes.FullPath(CpdRoutes.UserTargetStartDate), date);
+		return this.postJsonRequest(jobTitle ? CpdRoutes.FullPath(CpdRoutes.JobTargetStartDate(jobTitle)) : CpdRoutes.FullPath(CpdRoutes.UserTargetStartDate), date);
 	}
 }
