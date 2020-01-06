@@ -71,7 +71,7 @@ class ProgressOverall extends BaseMixin(LitElement) {
 			.check-icon {
 				color: green;
 			}
-			.progress-label: {
+			.progress-label {
 				vertical-align: middle;
 			}
 			.progress-inner-circle {

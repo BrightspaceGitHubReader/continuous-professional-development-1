@@ -82,9 +82,11 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		this.cpdService.getSubjectTargets(this.jobTitle)
 			.then(body => {
 				this.subjectTargets = body;
-				const date = new Date(body.StartDate);
-				this.selectedTargetDay = date.getDate() + 1;
-				this.selectedTargetMonth = date.getMonth() + 1;
+				if (body.StartDate) {
+					const date = new Date(body.StartDate);
+					this.selectedTargetDay = date.getDate() + 1;
+					this.selectedTargetMonth = date.getMonth() + 1;
+				}
 			});
 	}
 
@@ -165,7 +167,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 					</thead>
 
 					<tbody>
-						${this.subjectTargets.Subjects.map(subject => this.renderSubjectTargets(subject))}
+						${this.subjectTargets && this.subjectTargets.Subjects && this.subjectTargets.Subjects.map(subject => this.renderSubjectTargets(subject))}
 					</tbody>
 				</table>
 
@@ -290,6 +292,8 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 	}
 
 	openTargetDateDialog() {
+		this.newSelectedMonth = this.selectedTargetMonth;
+		this.newSelectedDay = this.selectedTargetDay;
 		this.shadowRoot.querySelector('#target-start-date-dialog').open();
 	}
 

@@ -46,54 +46,7 @@ export function getTotalMinutes(hours, minutes) {
 }
 
 export function getListOfMonths() {
-	return [
-		{
-			Name: 'January',
-			NumberOfDays: 31
-		},
-		{
-			Name: 'February',
-			NumberOfDays: 28
-		},
-		{
-			Name: 'March',
-			NumberOfDays: 31
-		},
-		{
-			Name: 'April',
-			NumberOfDays: 30
-		},
-		{
-			Name: 'May',
-			NumberOfDays: 31
-		},
-		{
-			Name: 'June',
-			NumberOfDays: 30
-		},
-		{
-			Name: 'July',
-			NumberOfDays: 31
-		},
-		{
-			Name: 'August',
-			NumberOfDays: 31
-		},
-		{
-			Name: 'September',
-			NumberOfDays: 30
-		},
-		{
-			Name: 'October',
-			NumberOfDays: 31
-		},
-		{
-			Name: 'November',
-			NumberOfDays: 30
-		},
-		{
-			Name: 'December',
-			NumberOfDays: 31
-		},
-	];
+	const months = window && window.data && window.data.months || Array.from(new Array(12), (val, index) => index + 1);
+	const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+	return months.map((Name, index) => { return {Name, NumberOfDays: days[index]};});
 }

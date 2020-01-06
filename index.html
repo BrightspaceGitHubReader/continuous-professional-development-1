@@ -22,6 +22,7 @@
 			}
 		});
 		const loadCpd = function(frauSettings) {
+			window.data.months = JSON.parse(document.getElementsByTagName('html')[0].getAttribute('data-intl-overrides')).date.calendar.months.long;
 			const { page, manager, managePersonal, hasEnforcedTarget } = frauSettings;
 			const cpd = document.createElement('d2l-cpd');
 			cpd.appTitle = 'Continuous Professional Development';

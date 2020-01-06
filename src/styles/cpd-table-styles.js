@@ -15,6 +15,7 @@ table {
 }
 
 td, th {
+	background-color: #ffffff;
 	border:1px solid #cdd5dc;
 	padding: 0.5rem 1rem;
 	vertical-align: middle;

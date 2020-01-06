@@ -26,6 +26,13 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 			d2l-view-toggle {
 				padding: 10px 0;
 			}
+			d2l-progress-subject {
+				margin: 10px;
+				display: block;
+			}
+			d2l-progress-overall {
+				display: block;
+			}
 			.progress {
 				background-color: var(--d2l-color-sylvite);
 				border: 2px solid var(--d2l-color-gypsum);

@@ -32,7 +32,7 @@ class ProgressSubject extends BaseMixin(LitElement) {
 			.check-icon {
 				color: green;
 			}
-			.progress-label: {
+			.progress-label {
 				vertical-align: middle;
 			}
 			`
