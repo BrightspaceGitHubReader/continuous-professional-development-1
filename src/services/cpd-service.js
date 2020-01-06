@@ -28,7 +28,7 @@ export class CpdService {
 	}
 
 	static getJobTitleDefaults(page) {
-		let api_path = this.CpdPath(this.Job);
+		let api_path = this.CpdPath(this.JobTitle);
 		api_path += `?pageNumber=${page}`;
 		return this.getRequest(api_path);
 	}
@@ -134,6 +134,7 @@ export class CpdService {
 	}
 	static get Host() { return window.data.fraSettings.valenceHost; }
 	static get Job() { return 'target/job'; }
+	static get JobTitle() { return 'jobtitle'; }
 	static get Method() { return 'method'; }
 	static get Pending() { return 'pending'; }
 	static postJsonRequest(base_path, object) {
