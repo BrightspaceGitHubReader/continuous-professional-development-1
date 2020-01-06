@@ -134,7 +134,7 @@ export class CpdService {
 	}
 	static get Host() { return window.data.fraSettings.valenceHost; }
 	static get Job() { return 'target/job'; }
-	static get JobTitle() { return 'jobtitle'; }
+	static get JobTitle() { return 'target/jobtitles'; }
 	static get Method() { return 'method'; }
 	static get Pending() { return 'pending'; }
 	static postJsonRequest(base_path, object) {
