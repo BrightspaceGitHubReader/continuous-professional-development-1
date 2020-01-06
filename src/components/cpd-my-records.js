@@ -44,6 +44,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			page: {
 				type: Number
 			},
+			progress: {
+				type: Object
+			},
 			filters: {
 				type: Object
 			},
@@ -133,13 +136,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		this.hideSearchOptions = true;
 	}
 
-	async connectedCallback() {
+	connectedCallback() {
 		super.connectedCallback();
 
-		await this.cpdService.getRecordSummary(this.page, this.viewUserId)
-			.then(data => {
-				this.cpdRecords = data;
-			});
+		this.fetchRecords();
 		this.cpdService.getSubjects()
 			.then(data => {
 				this.subjectOptions = data;
@@ -186,6 +186,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			.then(data => {
 				this.cpdRecords = data;
 			});
+		this.cpdService.getProgress()
+			.then((data) =>
+				this.progress = this.lowercasePropertyNames(data)
+			);
 	}
 	newRecordButtonClicked() {
 		this.fireNavigationEvent({page:'cpd-add-record'});
@@ -358,7 +362,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 							${this.localize('userTitle', { 'userName': this.userDisplayName})}
 						</h2>
 					</div>` : html`
-					<d2l-cpd-progress-box ?hasEnforcedTarget=${this.hasEnforcedTarget}></d2l-cpd-progress-box>
+					<d2l-cpd-progress-box ?hasEnforcedTarget=${this.hasEnforcedTarget} .progress="${this.progress}"></d2l-cpd-progress-box>
 					<d2l-button id="new_record" primary @click="${this.newRecordButtonClicked}">
 			${this.localize('addNewCPD')}
 					</d2l-button>

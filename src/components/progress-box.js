@@ -65,10 +65,6 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 
 	connectedCallback() {
 		super.connectedCallback();
-		this.cpdService.getProgress()
-			.then((data) =>
-				this.progress = this.lowercasePropertyNames(data)
-			);
 	}
 	navigateAdjustTargets() {
 		this.fireNavigationEvent({page:'cpd-manage-targets'});
