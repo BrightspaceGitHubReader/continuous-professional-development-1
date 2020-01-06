@@ -130,7 +130,7 @@ class ProgressOverall extends BaseMixin(LitElement) {
 				</div>
 				<div class="progress-split-text d2l-body-compact">
 					${this.localize('overallSplitText', { total:
-						getHoursRounded(unstructured.denominator + structured.denominator), structured: getHoursRounded(structured.numerator), unstructured: getHoursRounded(unstructured.numerator)})}
+						getHoursRounded(unstructured.denominator) + getHoursRounded(structured.denominator), structured: getHoursRounded(structured.numerator), unstructured: getHoursRounded(unstructured.numerator)})}
 				</div>
 			</div>
 			<div class="progress-inner-chevron">
