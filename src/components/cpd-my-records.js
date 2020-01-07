@@ -161,20 +161,21 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		this.fireNavigationEvent({page: 'cpd-my-team'});
 	}
 
+	deleteRecord(e) {
+		const recordId = e.target.getAttribute('record-id');
+		if (recordId && e.detail.action === 'yes') {
+			this.cpdService.deleteRecord(recordId)
+				.then(() => {
+					this.fetchRecords();
+				});
+		}
+	}
+
 	deleteRecordButtonClicked(e) {
 		const dialog = this.shadowRoot.querySelector('d2l-dialog-confirm');
-		dialog.opened = true;
 		const recordId = e.target.getAttribute('record-id');
-		if (recordId) {
-			dialog.addEventListener('d2l-dialog-close', (e) => {
-				if (e.detail.action === 'yes') {
-					this.cpdService.deleteRecord(recordId)
-						.then(() => {
-							this.fetchRecords();
-						});
-				}
-			});
-		}
+		dialog.setAttribute('record-id', recordId);
+		dialog.opened = true;
 	}
 
 	getType(isStructured) {
@@ -315,7 +316,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 						text="${this.localize('delete', {recordName})}"
 						record-id="${record.RecordId}">
 					</d2l-button-icon>
-					<d2l-dialog-confirm title-text="${this.localize('delete', {recordName})}" text="${this.localize('confirmDeleteRecord')}">
+					<d2l-dialog-confirm title-text="${this.localize('delete', {recordName})}" text="${this.localize('confirmDeleteRecord')}" @d2l-dialog-close="${this.deleteRecord}" >
 						<d2l-button slot="footer" primary dialog-action="yes">${this.localize('yes')}</d2l-button>
 						<d2l-button slot="footer" dialog-action>${this.localize('no')}</d2l-button>
 					</d2l-dialog-confirm>
