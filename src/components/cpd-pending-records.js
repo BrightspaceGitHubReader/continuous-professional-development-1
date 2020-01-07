@@ -55,6 +55,10 @@ class PendingRecords extends BaseMixin(LitElement) {
 				align-items: baseline;
 			}
 
+			.icon_column {
+				width: 30px;
+			}
+
 			.page_control {
 				width: 100%;
 				display: flex;

@@ -39,7 +39,7 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 			}
 
 			.icon_column {
-				width: 10%;
+				width: 30px;
 			}
 
 			.profile_image {

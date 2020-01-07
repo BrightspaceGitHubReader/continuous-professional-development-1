@@ -86,6 +86,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 					const date = new Date(body.StartDate);
 					this.selectedTargetDay = date.getDate() + 1;
 					this.selectedTargetMonth = date.getMonth() + 1;
+					this.showTargetDate = true;
 				}
 			});
 	}
@@ -112,7 +113,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 					${this.localize('targetStartDayDescription')}
 				</p>
 
-				<d2l-input-checkbox @change="${this.setShowTargetDate}" id="start-date-checkbox">
+				<d2l-input-checkbox @change="${this.setShowTargetDate}" id="start-date-checkbox" ?checked=${this.showTargetDate}>
 					${this.localize('selectTargetDay')}
 				</d2l-input-checkbox>
 				${this.showTargetDate ? html`
@@ -150,7 +151,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 				<table aria-label="${this.localize('ariaTargetsTable')}">
 					<thead>
 						<tr>
-							<th class="icon_column">
+							<th>
 								${this.localize('subject')}
 							</th>
 							<th>
