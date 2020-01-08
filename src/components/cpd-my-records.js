@@ -179,7 +179,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	}
 
 	getType(isStructured) {
-		return isStructured ? 'Structured' : 'Unstructured';
+		return isStructured ? this.localize('structured') : this.localize('unstructured');
 	}
 
 	fetchRecords() {
@@ -187,10 +187,13 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			.then(data => {
 				this.cpdRecords = data;
 			});
-		this.cpdService.getProgress()
-			.then((data) =>
-				this.progress = this.lowercasePropertyNames(data)
-			);
+		if (!this.viewUserId) {
+			this.cpdService.getProgress()
+				.then((data) =>
+					this.progress = this.lowercasePropertyNames(data)
+				);
+		}
+
 	}
 	newRecordButtonClicked() {
 		this.fireNavigationEvent({page:'cpd-add-record'});
