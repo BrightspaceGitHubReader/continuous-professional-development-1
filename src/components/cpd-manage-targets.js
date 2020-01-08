@@ -6,11 +6,12 @@ import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox';
 import '@brightspace-ui/core/components/inputs/input-text';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { getHours, getHoursAndMinutesString, getListOfMonths, getMinutes, getTotalMinutes } from  '../helpers/time-helper.js';
+import { getHours, getHoursAndMinutesString, getMinutes, getTotalMinutes } from  '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 import dayjs from 'dayjs/esm';
+import { getDateTimeDescriptor } from '@brightspace-ui/intl/lib/dateTime';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class ManageCpdTargets extends BaseMixin(LitElement) {
@@ -18,6 +19,9 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		return {
 			subjectTargets: {
 				type: Object
+			},
+			newSelectedMonth: {
+				type: Number
 			},
 			selectedTargetMonth: {
 				type: Number
@@ -67,7 +71,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		super();
 		this.cpdService = CpdServiceFactory.getCpdService();
 		this.showTargetDate = false;
-		this.months = getListOfMonths();
+		this.months = getDateTimeDescriptor().calendar.months.long;
 		this.selectedTargetMonth = 1;
 		this.selectedTargetDay = 1;
 		this.dialogData = {};
@@ -138,7 +142,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 							class="d2l-input-select"
 							id="monthSelect"
 						>
-							${this.months.map((month, index) => this.renderSelect(month, index + 1, this.selectedTargetMonth))}
+							${this.months.map((month, index) => this.renderSelectOption(month, index + 1, this.selectedTargetMonth))}
 						</select>
 						${this.renderDaySelect(this.selectedTargetMonth)}
 					</div>
@@ -263,13 +267,13 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		}
 	}
 
-	renderSelect(option, optionIndex, selectedOption) {
+	renderSelectOption(option, optionIndex, selectedOption) {
 		return html`
 		<option
 			value="${optionIndex}"
 			?selected=${selectedOption === optionIndex}
 			>
-			${option.Name}
+			${option}
 		</option>
 		`;
 	}
@@ -332,14 +336,17 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		}
 	}
 
-	renderDaySelect(month) {
-		const numberOfDays = this.months[parseInt(month) - 1].NumberOfDays;
+	renderDaySelect() {
+		const daysInMonth = function(month) {
+			const nonLeapYear = 2019;
+			return new Date(nonLeapYear, month, 0).getDate();
+		};
+
+		const numberOfDays = daysInMonth(this.newSelectedMonth || 1);
 		const days = Array.from({
 			length: numberOfDays
 		}, (v, index) => {
-			return {
-				Name: index + 1
-			};
+			return index + 1;
 		});
 		return html`
 		<select
@@ -348,7 +355,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			class="d2l-input-select"
 			id="daySelect"
 		>
-			${days.map((day, index) => this.renderSelect(day, index + 1, 1))}
+			${days.map((day, index) => this.renderSelectOption(day, index + 1, this.selectedTargetDay || 1))}
 		</select>
 		`;
 	}

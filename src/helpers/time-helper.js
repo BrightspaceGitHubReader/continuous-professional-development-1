@@ -44,9 +44,3 @@ export function getMinutes(minutes) {
 export function getTotalMinutes(hours, minutes) {
 	return parseInt(hours || 0) * 60 + parseInt(minutes || 0);
 }
-
-export function getListOfMonths() {
-	const months = window && window.data && window.data.months || Array.from(new Array(12), (val, index) => index + 1);
-	const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
-	return months.map((Name, index) => { return {Name, NumberOfDays: days[index]};});
-}
