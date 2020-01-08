@@ -167,6 +167,11 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		return answer.Text || '';
 	}
 
+	getQuestionKey(record, questionId) {
+		const answer = record && record.Answers && record.Answers.find(a => a.QuestionId === questionId) || false;
+		return answer ? 're-render' : 'render';
+	}
+
 	validateForm() {
 		let missingField = false;
 		const name = this.shadowRoot.querySelector('#recordName');
@@ -337,6 +342,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				<label for=${`answerText_${question.Id}`}>${question.QuestionText}</label>
 				<d2l-html-editor
 					id=${`answerText_${question.Id}`}
+					key="${ this.getQuestionKey(this.record, question.Id)}"
 					editor-id=${`answerText_${question.Id}_editor`}
 					toolbar="bold italic underline | bullist d2l_formatrollup | undo redo"
 					app-root=${`${window.location.href.replace(/[^/]*$/, '')}node_modules/d2l-html-editor/`}
