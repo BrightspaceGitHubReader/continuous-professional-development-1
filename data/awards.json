@@ -16,7 +16,7 @@
       "SubjectId": 2,
       "CreditMinutes": 45,
       "Grade": 60.7,
-      "IssuedDate": "2019-12-06 20:54:23.450"
+      "IssuedDate": "2019-11-06 20:54:23.450"
     },
     {
       "Name": "AVS certified",
@@ -25,7 +25,7 @@
       "SubjectId": 3,
       "CreditMinutes": 9000,
       "Grade": 99.7,
-      "IssuedDate": "2019-12-06 20:54:23.450"
+      "IssuedDate": "2017-12-06 10:54:23.450"
     }
   ],
   "PageNumber": 1,

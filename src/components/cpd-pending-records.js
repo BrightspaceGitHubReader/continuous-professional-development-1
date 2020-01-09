@@ -12,6 +12,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
+import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
 
 class PendingRecords extends BaseMixin(LitElement) {
 	static get properties() {
@@ -192,7 +193,7 @@ class PendingRecords extends BaseMixin(LitElement) {
 					</d2l-dropdown>
 				</td>
 				<td>
-					${award.IssuedDate}
+					${formatDateTime(new Date(award.IssuedDate))}
 				</td>
 			</tr>
 		`;

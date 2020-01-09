@@ -6,7 +6,7 @@ import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
-import dayjs from 'dayjs/esm';
+import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getHoursAndMinutesString } from  '../helpers/time-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
@@ -157,7 +157,7 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 					</li>
 					<li>
 						<label for="dateCompleted" class=d2l-label-text>${this.localize('dateCompleted')}</label>
-						<p>${this.record && this.record.DateCompleted && dayjs(this.record.DateCompleted).format('YYYY-MM-DD')}</p>
+						<p>${this.record && this.record.DateCompleted && formatDate(new Date(this.record.DateCompleted))}</p>
 					</li>
 					<li>
 						<label for="evidence">${this.localize('evidence')}</label>

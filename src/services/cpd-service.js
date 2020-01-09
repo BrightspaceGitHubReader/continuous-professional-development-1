@@ -1,7 +1,7 @@
 import { CpdRoutes } from '../helpers/cpdRoutes';
 import { d2lfetch } from 'd2l-fetch/src/index';
-import { dateParamString } from '../helpers/time-helper';
 import fetchAuthFramed from 'd2l-fetch-auth/es6/d2lfetch-auth-framed';
+import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 
 d2lfetch.use({
 	name: 'auth',
@@ -52,8 +52,8 @@ export class CpdService {
 		if (filters) {
 			const { Name, StartDate, EndDate } = filters;
 			if (Name && Name.value) api_path += `&awardName=${Name.value}`;
-			if (StartDate && StartDate.value) api_path += `&startDate=${dateParamString(StartDate.value)}`;
-			if (EndDate && EndDate.value) api_path += `&endDate=${dateParamString(EndDate.value, true)}`;
+			if (StartDate && StartDate.value) api_path += `&startDate=${formatDate(new Date(StartDate.value))}`;
+			if (EndDate && EndDate.value) api_path += `&endDate=${formatDate(new Date(EndDate.value), true)}`;
 		}
 		return this.getRequest(api_path);
 	}
@@ -93,8 +93,8 @@ export class CpdService {
 			if (Subject.value && Subject.enabled) base_path += `&subject=${Subject.value}`;
 			if (Method.value && Method.enabled) base_path += `&method=${Method.value}`;
 			if (Name.value) base_path += `&name=${Name.value}`;
-			if (StartDate.value) base_path += `&startdate=${dateParamString(StartDate.value)}`;
-			if (EndDate.value) base_path += `&enddate=${dateParamString(EndDate.value, true)}`;
+			if (StartDate.value) base_path += `&startdate=${formatDate(new Date(StartDate.value))}`;
+			if (EndDate.value) base_path += `&enddate=${formatDate(new Date(EndDate.value), true)}`;
 		}
 
 		return this.getRequest(base_path);

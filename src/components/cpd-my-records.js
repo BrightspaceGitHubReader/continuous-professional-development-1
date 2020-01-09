@@ -15,7 +15,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
-import dayjs from 'dayjs/esm';
+import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getHoursAndMinutesString } from '../helpers/time-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
@@ -338,7 +338,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				${getHoursAndMinutesString(record.CreditMinutes)}
 			</td>
 			<td>
-				${dayjs(record.DateCompleted).format('YYYY-MM-DD')}
+				${formatDate(new Date(record.DateCompleted))}
 			</td>
 		</tr>
 		`;

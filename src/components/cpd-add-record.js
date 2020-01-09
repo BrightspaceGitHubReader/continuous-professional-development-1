@@ -3,10 +3,10 @@ import './attachments';
 import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { dateParamString, getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper.js';
+import { getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
-import dayjs from 'dayjs/esm';
+import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class AddCpdRecord extends BaseMixin(LitElement) {
@@ -145,7 +145,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 				IssuedAwardId: this.awardRecord.IssuedAwardId,
 				Grade: this.awardRecord.Grade,
 				CreditMinutes: this.awardRecord.CreditMinutes,
-				DateCompleted: dateParamString(this.awardRecord.IssuedDate)
+				DateCompleted: formatDate(new Date(this.awardRecord.IssuedDate))
 			};
 		}
 	}
@@ -215,7 +215,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			IssuedAwardId: this.awardRecord && this.awardRecord.IssuedAwardId,
 			Grade: this.awardRecord && this.awardRecord.Grade,
 			CreditMinutes: getTotalMinutes(this.shadowRoot.querySelector('#creditHours').value, this.shadowRoot.querySelector('#creditMinutes').value),
-			DateCompleted: dateParamString(this.shadowRoot.querySelector('#dateCompletedPicker').value),
+			DateCompleted: formatDate(new Date(this.shadowRoot.querySelector('#dateCompletedPicker').value)),
 			Answers: this.questions.map(question => {
 				return {
 					QuestionId: question.Id,
@@ -316,7 +316,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						<d2l-date-picker
 							id="dateCompletedPicker"
 							required
-							value="${this.record && this.record.DateCompleted && dayjs(this.record.DateCompleted).format('YYYY-MM-DD') || dayjs(new Date()).format('YYYY-MM-DD')}"
+							value="${this.record && this.record.DateCompleted && formatDate(new Date(this.record.DateCompleted)) || formatDate(new Date())}"
 							@d2l-date-picker-value-changed="${this.updateFilter}"
 						></d2l-date-picker>
 					</li>

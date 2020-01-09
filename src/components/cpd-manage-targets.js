@@ -6,12 +6,11 @@ import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox';
 import '@brightspace-ui/core/components/inputs/input-text';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { formatDate, getDateTimeDescriptor } from '@brightspace-ui/intl/lib/dateTime';
 import { getHours, getHoursAndMinutesString, getMinutes, getTotalMinutes } from  '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
-import dayjs from 'dayjs/esm';
-import { getDateTimeDescriptor } from '@brightspace-ui/intl/lib/dateTime';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class ManageCpdTargets extends BaseMixin(LitElement) {
@@ -96,10 +95,9 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 	}
 
 	selectedDateString() {
-		let date = dayjs();
-		date = date.set('month', this.selectedTargetMonth - 1);
-		date = date.set('date', this.selectedTargetDay);
-		return `${date.format('MMMM DD')}`;
+		const nonLeapYear = 2019;
+		const date = new Date(nonLeapYear, this.selectedTargetMonth - 1, this.selectedTargetDay);
+		return `${formatDate(date, {format: 'monthDay'})}`;
 	}
 
 	render() {
@@ -348,6 +346,9 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		}, (v, index) => {
 			return index + 1;
 		});
+		if (numberOfDays < this.newSelectedDay) {
+			this.newSelectedDay = 1;
+		}
 		return html`
 		<select
 			@change="${this.setSelectedDay}"
