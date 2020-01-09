@@ -32,10 +32,9 @@ export function getHours(minutes) {
 	return Math.floor(minutes / 60);
 }
 
-export function getHoursRounded(minutes, precision = 1) {
+export function getHoursRounded(minutes) {
 	const hours = minutes / 60;
-	const multiplier = Math.pow(10, precision || 0);
-	return Math.round(hours * multiplier) / multiplier;
+	return roundToOneDecimal(hours);
 }
 
 export function getMinutes(minutes) {
@@ -47,4 +46,8 @@ export function getMinutes(minutes) {
 
 export function getTotalMinutes(hours, minutes) {
 	return parseInt(hours || 0) * 60 + parseInt(minutes || 0);
+}
+
+export function roundToOneDecimal(number) {
+	return Number(number.toFixed(1));
 }
