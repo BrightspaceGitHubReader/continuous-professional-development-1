@@ -110,7 +110,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 					@click="${this.backLinkClicked}"
 					href="javascript:void(0)">
 				</d2l-navigation-link-back>
-				<h2>${(this.jobTitle) ? this.localize('manageJobTargets') : this.localize('managePersonalTargets')}</h2>
+				<h2>${(this.jobTitle) ? this.localize('manageJobTargets', {title:this.jobTitle}) : this.localize('managePersonalTargets')}</h2>
 
 				<h3>${this.localize('targetStartDay')}</h3>
 				<p>
