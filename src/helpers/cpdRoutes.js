@@ -11,6 +11,7 @@ export class CpdRoutes {
 	static get Record() { return 'record'; }
 	static get Subject() { return 'subject'; }
 	static get Team() { return 'team'; }
+	static get UserRecord() {return 'record/user';}
 	static get UserTarget() {return 'target/user';}
 	static get UserTargetStartDate() {return 'target/user/startDate'; }
 }

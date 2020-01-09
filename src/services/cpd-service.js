@@ -84,6 +84,9 @@ export class CpdService {
 	}
 	static getRecordSummary(page, viewUserId, filters) {
 		let base_path = `${this.CpdPath(this.Record)}?pageNumber=${page}`;
+		if (viewUserId) {
+			base_path = CpdRoutes.Path(`${CpdRoutes.UserRecord}/${viewUserId}?pageNumber=${page}`);
+		}
 
 		if (filters) {
 			const { Subject, Method, Name, StartDate, EndDate } = filters;
@@ -92,10 +95,6 @@ export class CpdService {
 			if (Name.value) base_path += `&name=${Name.value}`;
 			if (StartDate.value) base_path += `&startdate=${dateParamString(StartDate.value)}`;
 			if (EndDate.value) base_path += `&enddate=${dateParamString(EndDate.value, true)}`;
-		}
-
-		if (viewUserId) {
-			base_path += `&userId=${viewUserId}`;
 		}
 
 		return this.getRequest(base_path);
