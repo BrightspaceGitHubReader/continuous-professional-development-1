@@ -21,6 +21,10 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 		return [
 			cpdTableStyles,
 			css`
+			div[role=main] {
+				display: grid;
+				grid-gap: 1rem;
+			}
 			.page_control {
 				width: 100%;
 				display: flex;
@@ -86,25 +90,27 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 
 	render() {
 		return html`
-			<table>
-				<thead>
-					<tr>
-						<th>${this.localize('jobTitle')}</th>
-						<th class="defaults_column">${this.localize('hasDefaults')}</th>
-					</tr>
-				</thead>
-				${this.jobTargets &&
-					this.jobTargets.Objects.map(jobTargetData =>
-						this.renderJobTitleRow(jobTargetData)
-					)}
-			</table>
-			<div class="page_control">
-				<d2l-page-select
-					pages="${Math.ceil(this.jobTargets.TotalCount / this.jobTargets.PageSize)}"
-					page="${this.page}"
-					@d2l-page-select-updated="${this.updatePage}"
-					>
-				</d2l-page-select>
+			<div role="main">
+				<table>
+					<thead>
+						<tr>
+							<th>${this.localize('jobTitle')}</th>
+							<th class="defaults_column">${this.localize('hasDefaults')}</th>
+						</tr>
+					</thead>
+					${this.jobTargets &&
+						this.jobTargets.Objects.map(jobTargetData =>
+							this.renderJobTitleRow(jobTargetData)
+						)}
+				</table>
+				<div class="page_control">
+					<d2l-page-select
+						pages="${Math.ceil(this.jobTargets.TotalCount / this.jobTargets.PageSize)}"
+						page="${this.page}"
+						@d2l-page-select-updated="${this.updatePage}"
+						>
+					</d2l-page-select>
+				</div>
 			</div>
 		`;
 	}
