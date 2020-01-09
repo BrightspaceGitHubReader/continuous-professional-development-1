@@ -1,3 +1,19 @@
+import dayjs from 'dayjs/esm';
+
+export function formatForDatePicker(date) {
+	return dayjs(date).format('YYYY-MM-DD');
+}
+
+export function dateParamString(dateStr, end = false) {
+	let date = dayjs(dateStr);
+
+	if (end) {
+		date = date.endOf('day');
+	}
+
+	return date.toISOString();
+}
+
 export function getHoursAndMinutesString(minutes) {
 	return `${getHours(minutes)}h ${getMinutes(minutes)}m`;
 }
