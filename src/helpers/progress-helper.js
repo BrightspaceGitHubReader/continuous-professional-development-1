@@ -10,9 +10,6 @@ export function formatTotalProgress(progress) {
 }
 
 export function formatProgress(progress) {
-	if (progress.denominator === 0) {
-		return progress;
-	}
 	if (progress.numerator > progress.denominator) {
 		return {
 			numerator: progress.denominator,
