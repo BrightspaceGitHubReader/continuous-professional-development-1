@@ -259,7 +259,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 
 	backLinkClicked() {
 		if (!this.jobTitle) {
-			this.fireNavigationEvent({page:'cpd-user-records'});
+			this.fireNavigationEvent({page:'cpd-my-records'});
 		} else {
 			this.fireNavigationEvent({page:'admin-job-list'});
 		}
