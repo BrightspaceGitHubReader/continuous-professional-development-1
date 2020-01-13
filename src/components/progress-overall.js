@@ -2,10 +2,10 @@ import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/meter/meter-circle';
 import '@brightspace-ui/core/components/meter/meter-radial';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { getHoursRounded, roundToOneDecimal } from '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { bodyCompactStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { formatTotalProgress } from '../helpers/progress-helper';
-import { getHoursRounded } from '../helpers/time-helper.js';
 
 class ProgressOverall extends BaseMixin(LitElement) {
 	static get properties() {
@@ -130,7 +130,7 @@ class ProgressOverall extends BaseMixin(LitElement) {
 				</div>
 				<div class="progress-split-text d2l-body-compact">
 					${this.localize('overallSplitText', { total:
-						getHoursRounded(unstructured.denominator) + getHoursRounded(structured.denominator), structured: getHoursRounded(structured.numerator), unstructured: getHoursRounded(unstructured.numerator)})}
+						roundToOneDecimal(getHoursRounded(unstructured.denominator) + getHoursRounded(structured.denominator)), structured: getHoursRounded(structured.numerator), unstructured: getHoursRounded(unstructured.numerator)})}
 				</div>
 			</div>
 			<div class="progress-inner-chevron">
