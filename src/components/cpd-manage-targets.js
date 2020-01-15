@@ -7,7 +7,7 @@ import '@brightspace-ui/core/components/inputs/input-checkbox';
 import '@brightspace-ui/core/components/inputs/input-text';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { formatDate, getDateTimeDescriptor } from '@brightspace-ui/intl/lib/dateTime';
-import { getHours, getHoursAndMinutesString, getMinutes, getTotalMinutes } from  '../helpers/time-helper.js';
+import { getHours, getHoursAndMinutes, getMinutes, getTotalMinutes } from  '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
@@ -250,9 +250,9 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 						@click="${this.openSubjectTargetDialog}">
 					</d2l-button-icon>
 				</td>
-				<td>${getHoursAndMinutesString(subject.StructuredMinutes)}</td>
-				<td>${getHoursAndMinutesString(subject.UnstructuredMinutes)}</td>
-				<td>${getHoursAndMinutesString(subject.StructuredMinutes + subject.UnstructuredMinutes)}</td>
+				<td>${this.localize('shortTimeDuration', getHoursAndMinutes(subject.StructuredMinutes))}</td>
+				<td>${this.localize('shortTimeDuration', getHoursAndMinutes(subject.UnstructuredMinutes))}</td>
+				<td>${this.localize('shortTimeDuration', getHoursAndMinutes(subject.StructuredMinutes + subject.UnstructuredMinutes))}</td>
 			</tr>
 		`;
 	}

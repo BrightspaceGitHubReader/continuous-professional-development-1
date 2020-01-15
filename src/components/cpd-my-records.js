@@ -16,7 +16,7 @@ import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
-import { getHoursAndMinutesString } from '../helpers/time-helper.js';
+import { getHoursAndMinutes } from '../helpers/time-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class MyCpdRecords extends BaseMixin(LitElement) {
@@ -335,7 +335,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				${record.MethodName}
 			</td>
 			<td>
-				${getHoursAndMinutesString(record.CreditMinutes)}
+				${this.localize('shortTimeDuration', getHoursAndMinutes(record.CreditMinutes))}
 			</td>
 			<td>
 				${formatDate(new Date(record.DateCompleted))}

@@ -1,4 +1,4 @@
-import { dateParamString, getHoursAndMinutesString } from '../src/helpers/time-helper';
+import { dateParamString, getHoursAndMinutes } from '../src/helpers/time-helper';
 import dayjs from 'dayjs';
 import { expect } from 'chai';
 
@@ -21,26 +21,30 @@ describe('TimeHelpers', () => {
 			expect(testDate.second()).to.equal(59);
 		});
 	});
-	describe('getHoursAndMinutesString', () => {
+	describe('getHoursAndMinutes', () => {
 		it('should produce nothing if 0', () => {
 			const minutes = 0;
-			const result = getHoursAndMinutesString(minutes);
-			expect(result).to.equal('0h 0m');
+			const result = getHoursAndMinutes(minutes);
+			expect(result.minutes).to.equal(0);
+			expect(result.hours).to.equal(0);
 		});
 		it('should produce correct output when greater than and not divisible by 60', () => {
 			const minutes = 100;
-			const result = getHoursAndMinutesString(minutes);
-			expect(result).to.equal('1h 40m');
+			const result = getHoursAndMinutes(minutes);
+			expect(result.hours).to.equal(1);
+			expect(result.minutes).to.equal(40);
 		});
 		it('should produce correct output when greater than and divisible by 60', () => {
 			const minutes = 120;
-			const result = getHoursAndMinutesString(minutes);
-			expect(result).to.equal('2h 0m');
+			const result = getHoursAndMinutes(minutes);
+			expect(result.hours).to.equal(2);
+			expect(result.minutes).to.equal(0);
 		});
 		it('should produce correct output when less than 60', () => {
 			const minutes = 40;
-			const result = getHoursAndMinutesString(minutes);
-			expect(result).to.equal('0h 40m');
+			const result = getHoursAndMinutes(minutes);
+			expect(result.hours).to.equal(0);
+			expect(result.minutes).to.equal(40);
 		});
 	});
 });

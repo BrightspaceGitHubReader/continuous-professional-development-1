@@ -72,6 +72,7 @@
   "selectDefault": "Choose a {object}",
   "selectedTargetDay": "Selected Month/Day: ",
   "selectTargetDay": "Select a specific target start day",
+  "shortTimeDuration": "{hours}h {minutes}m",
   "showSearchOptions": "Show search options",
   "structured": "Structured",
   "subject": "Subject",

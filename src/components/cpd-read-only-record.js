@@ -7,7 +7,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
-import { getHoursAndMinutesString } from  '../helpers/time-helper.js';
+import { getHoursAndMinutes } from  '../helpers/time-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
@@ -147,7 +147,7 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 						<div class="credit-container">
 							<div>
 								<label for="creditMinutes" class="d2l-label-text">${this.localize('creditHours')}</label>
-								<p id="creditMinutes">${getHoursAndMinutesString(this.record.CreditMinutes)}</p>
+								<p id="creditMinutes">${this.localize('shortTimeDuration', getHoursAndMinutes(this.record.CreditMinutes))}</p>
 							</div>
 							<div>
 								<label for="gradeValue" class="d2l-label-text">${this.localize('grade')}</label>
