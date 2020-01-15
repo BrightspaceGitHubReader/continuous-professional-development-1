@@ -6,6 +6,7 @@ import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { decimalToPercent } from '../helpers/record-helper.js';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getHoursAndMinutes } from  '../helpers/time-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
@@ -151,7 +152,7 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 							</div>
 							<div>
 								<label for="gradeValue" class="d2l-label-text">${this.localize('grade')}</label>
-								<p id="gradeValue">${this.record.Grade || this.localize('noGrade')}</p>
+								<p id="gradeValue">${this.localize('percent', decimalToPercent(this.record.Grade)) || this.localize('noGrade')}</p>
 							</div>
 						</div>
 					</li>

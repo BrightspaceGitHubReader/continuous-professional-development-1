@@ -6,6 +6,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { dateParamString, formatForDatePicker, getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { decimalToPercent } from '../helpers/record-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class AddCpdRecord extends BaseMixin(LitElement) {
@@ -305,7 +306,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 							${this.record && this.record.Grade ? html`
 								<div class="grade-container">
 									<label for="gradeValue" class="d2l-label-text">${this.localize('grade')}</label>
-									<div id="gradeValue">${this.record.Grade}</div>
+									<div id="gradeValue">${this.localize('percent', decimalToPercent(this.record.Grade))}</div>
 								</div>
 							` : html``}
 						</div>

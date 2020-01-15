@@ -60,6 +60,7 @@
   "page": "page",
   "pageCount": "{numerator} of {denominator}",
   "pendingRecords": "Pending Records",
+  "percent": "{percent}%",
   "progress": "Progress",
   "recordName": "Record Name",
   "save": "Save",
