@@ -11,17 +11,17 @@ import { getCurrentDate, getHours, getHoursAndMinutes, getMinutes, getMonthFromD
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
+import dayjs from 'dayjs/esm';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
+import utc from 'dayjs/esm/plugin/utc';
 
+dayjs.extend(utc);
 class ManageCpdTargets extends BaseMixin(LitElement) {
 	static get properties() {
 		return {
 			subjectTargets: {
 				type: Object
-			},
-			newSelectedMonth: {
-				type: Number
 			},
 			selectedTargetMonth: {
 				type: Number
@@ -38,13 +38,13 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			isRollingTarget: {
 				type: Boolean
 			},
-			isRollingTargetNew: {
-				type: Boolean
-			},
 			jobTitle: {
 				type: String
 			},
 			dialogData: {
+				type: Object
+			},
+			dateDialogData: {
 				type: Object
 			}
 		};
@@ -81,6 +81,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		const today = getCurrentDate();
 		this.setSelectedTargetDate(getMonthFromDate(today), today.getDate());
 		this.dialogData = {};
+		this.dateDialogData = {};
 		this.isRollingTarget = true;
 	}
 
@@ -94,8 +95,8 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			.then(body => {
 				this.subjectTargets = body;
 				if (body.StartDate) {
-					const date = new Date(body.StartDate);
-					this.setSelectedTargetDate(getMonthFromDate(date), date.getDate());
+					const date = dayjs(body.StartDate).utc();
+					this.setSelectedTargetDate(date.month() + 1, date.date());
 					this.isRollingTarget = false;
 				}
 			});
@@ -241,7 +242,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 					<div class="dialog-grid">
 						<div class="radio-buttons-container">
 							<label class="d2l-input-radio-label">
-								<input 
+								<input
 									id="rolling-radio-button"
 									type="radio"
 									name="targetStartDayType"
@@ -250,7 +251,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 								${this.localize('rollingTarget')}
 							</label>
 							<label class="d2l-input-radio-label">
-								<input 
+								<input
 									id="specific-radio-button"
 									type="radio"
 									name="targetStartDayType"
@@ -259,7 +260,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 								${this.localize('specificSps')}
 							</label>
 						</div>
-						${this.isRollingTargetNew ? html`` : html `
+						${this.dateDialogData.isRolling ? html`` : html `
 							<label for="monthSelect">${this.localize('month')}</label>
 							<label for="daySelect">${this.localize('day')}</label>
 							<select
@@ -268,7 +269,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 								class="d2l-input-select"
 								id="monthSelect"
 							>
-								${this.months.map((month, index) => this.renderSelectOption(month, index + 1, this.newSelectedMonth))}
+								${this.months.map((month, index) => this.renderSelectOption(month, index + 1, this.dateDialogData.month))}
 							</select>
 							${this.renderDaySelect()}
 						`}
@@ -281,7 +282,11 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 	}
 
 	targetTypeChanged(e) {
-		this.isRollingTargetNew = Boolean(e.target.value === 'rolling');
+		this.dateDialogData = {
+			isRolling: Boolean(e.target.value === 'rolling'),
+			month: this.dateDialogData.month,
+			date: this.dateDialogData.date
+		};
 		this.updateComplete.then(() => this.shadowRoot.querySelector('#target-start-date-dialog').resize());
 	}
 
@@ -342,9 +347,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 	}
 
 	openTargetDateDialog() {
-		this.newSelectedMonth = this.selectedTargetMonth;
-		this.newSelectedDay = this.selectedTargetDay;
-		this.isRollingTargetNew = this.isRollingTarget;
+		this.setDateDialogData(this.isRollingTarget, this.selectedTargetMonth, this.selectedTargetDay);
 		this.shadowRoot.querySelector('#specific-radio-button').checked = !this.isRollingTarget;
 		this.shadowRoot.querySelector('#rolling-radio-button').checked = this.isRollingTarget;
 		this.shadowRoot.querySelector('#target-start-date-dialog').open();
@@ -362,13 +365,13 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 	}
 
 	saveTargetDate() {
-		this.isRollingTarget = this.isRollingTargetNew;
+		this.isRollingTarget = this.dateDialogData.isRolling;
 		if (this.isRollingTarget) {
 			const today = getCurrentDate();
 			this.setSelectedTargetDate(getMonthFromDate(today), today.getDate());
 			this.cpdService.updateTargetDate(null, this.jobTitle);
 		} else {
-			this.setSelectedTargetDate(this.newSelectedMonth, this.newSelectedDay);
+			this.setSelectedTargetDate(this.dateDialogData.month, this.dateDialogData.date);
 			const date = new Date();
 			date.setMonth(this.selectedTargetMonth - 1);
 			date.setDate(this.selectedTargetDay);
@@ -387,14 +390,14 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			return new Date(nonLeapYear, month, 0).getDate();
 		};
 
-		const numberOfDays = daysInMonth(this.newSelectedMonth || 1);
+		const numberOfDays = daysInMonth(this.dateDialogData.month || 1);
 		const days = Array.from({
 			length: numberOfDays
 		}, (v, index) => {
 			return index + 1;
 		});
-		if (numberOfDays < this.newSelectedDay) {
-			this.newSelectedDay = 1;
+		if (numberOfDays < this.dateDialogData.date) {
+			this.dateDialogData.date = 1;
 		}
 		return html`
 		<select
@@ -403,25 +406,29 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			class="d2l-input-select"
 			id="daySelect"
 		>
-			${days.map((day, index) => this.renderSelectOption(day, index + 1, this.newSelectedDay || 1))}
+			${days.map((day, index) => this.renderSelectOption(day, index + 1, this.dateDialogData.date || 1))}
 		</select>
 		`;
 	}
 	setSelectedDay(event) {
 		if (event.target.value) {
-			this.newSelectedDay = Number(event.target.value);
+			this.dateDialogData.date = Number(event.target.value);
 		}
 	}
 
 	setSelectedMonth(event) {
 		if (event.target.value) {
-			this.newSelectedMonth = Number(event.target.value);
+			this.dateDialogData.month = Number(event.target.value);
 		}
 	}
 
 	setSelectedTargetDate(month, day) {
 		this.selectedTargetMonth = month;
 		this.selectedTargetDay = day;
+	}
+
+	setDateDialogData(isRolling, month, date) {
+		this.dateDialogData = { isRolling, month, date };
 	}
 }
 
