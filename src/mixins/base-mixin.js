@@ -1,10 +1,11 @@
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
 import { ResizeObserver } from 'd2l-resize-aware/resize-observer-module.js';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin';
 
 const langTerms = {};
 const baseUrl = import.meta.url;
 
-export const BaseMixin = superclass => class extends LocalizeMixin(superclass) {
+export const BaseMixin = superclass => class extends RtlMixin(LocalizeMixin(superclass)) {
 
 	static async getLocalizeResources(langs) {
 		const uniqueLangs = new Set(langs);

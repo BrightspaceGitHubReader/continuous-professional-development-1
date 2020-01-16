@@ -72,7 +72,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			css`
 			div[role=main] {
 				display: grid;
-				grid-gap: 1rem;
+				grid-gap: 36px;
 			}
 
 			d2l-button {
@@ -80,16 +80,28 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			}
 
 			d2l-input-search {
-				width: 35%;
+				width: fit-content;
 			}
 
 			d2l-date-picker {
 				width: 7rem;
 			}
 
+			d2l-button-subtle {
+				width: min-content;
+			}
+
 			.search_bar {
-				display: flex;
+				display: grid;
+				column-gap: 12px;
+				grid-auto-flow: column;
 				align-items: baseline;
+				width: fit-content;
+			}
+
+			.search_options {
+				display: grid;
+				gap: 36px;
 			}
 
 			.search_options[disabled] {
@@ -98,12 +110,14 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 			.date_filter_controls {
 				width: 16rem;
-				display: flex;
-				justify-content: space-between;
+				display: grid;
+				column-gap: 12px;
+				grid-auto-flow: column;
 				align-items: baseline;
+				margin-top: 6px;
 			}
 
-			.page_control {
+			.pageControl {
 				width: 100%;
 				display: flex;
 				justify-content: center;
@@ -293,7 +307,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			</tbody>
 		</table>
 
-		<div class="page_control">
+		<div class="pageControl">
 			<d2l-page-select
 				pages="${this.cpdRecords.TotalPages}"
 				page="${this.page}"

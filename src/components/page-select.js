@@ -1,4 +1,4 @@
-import '@brightspace-ui/core/components/icons/icon.js';
+import '@brightspace-ui/core/components/button/button-icon';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
@@ -83,12 +83,13 @@ class PageSelect extends BaseMixin(LitElement) {
 
 	render() {
 		return html`
-			<d2l-icon
+			<d2l-button-icon
 				class="${this.page > 1 ? null : 'hide'}"
 				icon="tier1:chevron-left"
 				@click="${this.decrementPage}"
+				aria-label="${this.localize('previousPage')}"
 				>
-			</d2l-icon>
+			</d2l-button-icon>
 			<select
 				id="page-select"
 				class="d2l-input-select"
@@ -97,12 +98,13 @@ class PageSelect extends BaseMixin(LitElement) {
 				>
 				${this.serializePageOptions(this.pages)}
 			</select>
-			<d2l-icon
+			<d2l-button-icon
 				class="${this.page < this.pages ? null : 'hide'}"
 				icon="tier1:chevron-right"
 				@click="${this.incrementPage}"
+				aria-label="${this.localize('nextPage')}"
 				>
-			</d2l-icon>
+			</d2l-button-icon>
 		`;
 	}
 }

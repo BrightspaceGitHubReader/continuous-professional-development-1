@@ -74,12 +74,12 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		.numberInput {
 			width: 200px;
 		};
-		ul.innerlist {
+		ul.innerList {
 			display: flex;
 			flex-direction: row;
 			flex-wrap: wrap;
 		}
-		ul.innerlist > li {
+		ul.innerList > li {
 			list-style: none;
 			display: inline-block;
 			width: calc(100% / 4);
@@ -252,7 +252,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 						<d2l-input-text autocomplete="off" id="recordName" required value="${this.record && this.record.Name || ''}"></d2l-input-text>
 					</li>
 					<li>
-						<ul class="innerlist">
+						<ul class="innerList">
 							<li>
 								<div>
 									<label for="typeSelect">${this.localize('type')}</label>

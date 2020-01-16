@@ -64,13 +64,13 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 		.numberInput {
 			width: 200px;
 		}
-		ul.innerlist {
+		ul.innerList {
 			display: flex;
 			flex-direction: row;
 			flex-wrap: wrap;
 			align-items: start;
 		}
-		ul.innerlist > li {
+		ul.innerList > li {
 			list-style: none;
 			display: inline-block;
 			width: calc(100% / 4);
@@ -127,7 +127,7 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 						<p id="recordName">${this.record.Name}</p>
 					</li>
 					<li>
-						<ul class="innerlist">
+						<ul class="innerList">
 							<li>
 								<label for="type">${this.localize('type')}</label>
 								<p id="type">

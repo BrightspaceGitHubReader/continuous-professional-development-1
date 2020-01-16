@@ -47,7 +47,7 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 				justify-content: flex-end;
 			}
 
-			.page_control {
+			.pageControl {
 				width: 100%;
 				display: flex;
 				justify-content: center;
@@ -120,7 +120,7 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 			</tbody>
 		</table>
 
-		<div class="page_control">
+		<div class="pageControl">
 			<d2l-page-select
 				pages="${ Math.ceil(this.myTeam.TotalCount / this.myTeam.PageSize) }"
 				page="${this.page}"

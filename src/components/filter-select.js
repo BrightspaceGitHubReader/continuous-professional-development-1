@@ -25,13 +25,23 @@ class FilterSelect extends BaseMixin(LitElement) {
 	static get styles() {
 		return [ selectStyles,
 			css`
+			:host {
+				display: block;
+			}
+
 			.select_filter {
+				margin-left: 6px;
 				width: 30%;
+			}
+			.select_filter[dir="rtl"] {
+				margin-left: 0px;
+				margin-right: 6px;
 			}
 
 			.select_filter_controls {
 				display: flex;
 				align-items: baseline;
+				margin-top: 6px;
 			}
 			`
 		];
@@ -83,6 +93,7 @@ class FilterSelect extends BaseMixin(LitElement) {
 				${this.label}
 				<div class="select_filter_controls">
 					<d2l-input-checkbox
+						aria-label="${this.localize('filterRecordsBy', {choice: this.label})}"
 						checked
 						@change="${this.filterEnable}"
 					>

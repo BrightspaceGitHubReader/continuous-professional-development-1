@@ -60,7 +60,7 @@ class PendingRecords extends BaseMixin(LitElement) {
 				width: 30px;
 			}
 
-			.page_control {
+			.pageControl {
 				width: 100%;
 				display: flex;
 				justify-content: center;
@@ -157,7 +157,7 @@ class PendingRecords extends BaseMixin(LitElement) {
 			</tbody>
 		</table>
 
-		<div class="page_control">
+		<div class="pageControl">
 			<d2l-page-select
 				pages="${ Math.ceil(this.pendingRecords.TotalCount / this.pendingRecords.PageSize) }"
 				page="${this.page}"

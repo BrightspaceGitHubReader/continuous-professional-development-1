@@ -25,7 +25,7 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 				display: grid;
 				grid-gap: 1rem;
 			}
-			.page_control {
+			.pageControl {
 				width: 100%;
 				display: flex;
 				justify-content: center;
@@ -103,7 +103,7 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 							this.renderJobTitleRow(jobTargetData)
 						)}
 				</table>
-				<div class="page_control">
+				<div class="pageControl">
 					<d2l-page-select
 						pages="${Math.ceil(this.jobTargets.TotalCount / this.jobTargets.PageSize)}"
 						page="${this.page}"
