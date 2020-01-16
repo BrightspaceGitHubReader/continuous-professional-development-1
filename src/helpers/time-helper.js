@@ -47,3 +47,20 @@ export function getTotalMinutes(hours, minutes) {
 export function roundToOneDecimal(number) {
 	return Number(number.toFixed(1));
 }
+
+export function getMonthFromDate(date) {
+	return date.getMonth() + 1;
+}
+
+export function getNonLeapYearDate(month, date) {
+	const nonLeapYear = 2019;
+	return new Date(nonLeapYear, month - 1, date);
+}
+
+export function getCurrentDate() {
+	const today = new Date();
+	if (today.getMonth() === 1 && today.getDate() === 29) {
+		today.setDate(28);
+	}
+	return today;
+}

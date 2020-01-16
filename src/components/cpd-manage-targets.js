@@ -7,10 +7,11 @@ import '@brightspace-ui/core/components/inputs/input-checkbox';
 import '@brightspace-ui/core/components/inputs/input-text';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { formatDate, getDateTimeDescriptor } from '@brightspace-ui/intl/lib/dateTime';
-import { getHours, getHoursAndMinutes, getMinutes, getTotalMinutes } from  '../helpers/time-helper.js';
+import { getCurrentDate, getHours, getHoursAndMinutes, getMinutes, getMonthFromDate, getNonLeapYearDate, getTotalMinutes } from  '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
+import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class ManageCpdTargets extends BaseMixin(LitElement) {
@@ -34,7 +35,10 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			days: {
 				type: Array
 			},
-			showTargetDate: {
+			isRollingTarget: {
+				type: Boolean
+			},
+			isRollingTargetNew: {
 				type: Boolean
 			},
 			jobTitle: {
@@ -48,6 +52,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 
 	static get styles() {
 		return [
+			radioStyles,
 			selectStyles,
 			cpdTableStyles,
 			css`
@@ -62,18 +67,21 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			label {
 				font-weight: bold;
 			}
-			`
+			.radio-buttons-container {
+				grid-column-start: 1;
+				grid-column-end: 3;
+			}`
 		];
 	}
 
 	constructor() {
 		super();
 		this.cpdService = CpdServiceFactory.getCpdService();
-		this.showTargetDate = false;
 		this.months = getDateTimeDescriptor().calendar.months.long;
-		this.selectedTargetMonth = 1;
-		this.selectedTargetDay = 1;
+		const today = getCurrentDate();
+		this.setSelectedTargetDate(getMonthFromDate(today), today.getDate());
 		this.dialogData = {};
+		this.isRollingTarget = true;
 	}
 
 	async connectedCallback() {
@@ -87,16 +95,14 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 				this.subjectTargets = body;
 				if (body.StartDate) {
 					const date = new Date(body.StartDate);
-					this.selectedTargetDay = date.getDate() + 1;
-					this.selectedTargetMonth = date.getMonth() + 1;
-					this.showTargetDate = true;
+					this.setSelectedTargetDate(getMonthFromDate(date), date.getDate());
+					this.isRollingTarget = false;
 				}
 			});
 	}
 
 	selectedDateString() {
-		const nonLeapYear = 2019;
-		const date = new Date(nonLeapYear, this.selectedTargetMonth - 1, this.selectedTargetDay);
+		const date = getNonLeapYearDate(this.selectedTargetMonth, this.selectedTargetDay);
 		return `${formatDate(date, {format: 'monthDay'})}`;
 	}
 
@@ -115,38 +121,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 					${this.localize('targetStartDayDescription')}
 				</p>
 
-				<d2l-input-checkbox @change="${this.setShowTargetDate}" id="start-date-checkbox" ?checked=${this.showTargetDate}>
-					${this.localize('selectTargetDay')}
-				</d2l-input-checkbox>
-				${this.showTargetDate ? html`
-						<p>
-							<span class="selected-date">
-								${this.localize('selectedTargetDay')}
-							</span>
-							${this.selectedDateString()}
-							<d2l-button-icon
-								icon="tier1:edit"
-								@click="${this.openTargetDateDialog}">
-							</d2l-button-icon>
-						</p>
-						` : ''}
-				<d2l-dialog id="target-start-date-dialog" title-text="${this.localize('targetStartDay')}">
-					<div class="dialog-grid">
-						<label for="monthSelect">${this.localize('month')}</label>
-						<label for="daySelect">${this.localize('day')}</label>
-						<select
-							@change="${this.setSelectedMonth}"
-							aria-label="${this.localize('chooseChoice', {choice: this.localize('month')})}"
-							class="d2l-input-select"
-							id="monthSelect"
-						>
-							${this.months.map((month, index) => this.renderSelectOption(month, index + 1, this.selectedTargetMonth))}
-						</select>
-						${this.renderDaySelect(this.selectedTargetMonth)}
-					</div>
-					<d2l-button slot="footer" primary dialog-action @click="${this.saveTargetDate}">${this.localize('save')}</d2l-button>
-					<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
-				</d2l-dialog>
+				${this.renderTargetSelection()}
 
 
 				<h3>${this.localize('subjectTargets')}</h3>
@@ -238,6 +213,78 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 		`;
 	}
 
+	renderTargetSelection() {
+		return html `
+			<div>
+				<div>
+					<label class="d2l-label-text">
+						${this.localize('type')}:
+					</label>
+					<span>
+						${this.isRollingTarget ? this.localize('rollingTarget') : this.localize('specificSps')}
+					</span>
+					<d2l-button-icon
+						icon="tier1:edit"
+						text="${this.localize('editTargetPeriod')}"
+						@click="${this.openTargetDateDialog}">
+					</d2l-button-icon>
+				</div>
+				<div>
+					<label class="d2l-label-text">
+						${this.localize('currentTargetPeriod')}
+					</label>
+					<span>
+						${this.selectedDateString()}
+					</span>
+				</div>
+				<d2l-dialog id="target-start-date-dialog" title-text="${this.localize('targetStartDay')}">
+					<div class="dialog-grid">
+						<div class="radio-buttons-container">
+							<label class="d2l-input-radio-label">
+								<input 
+									id="rolling-radio-button"
+									type="radio"
+									name="targetStartDayType"
+									value="rolling"
+									@change=${this.targetTypeChanged} />
+								${this.localize('rollingTarget')}
+							</label>
+							<label class="d2l-input-radio-label">
+								<input 
+									id="specific-radio-button"
+									type="radio"
+									name="targetStartDayType"
+									value="specific"
+									@change=${this.targetTypeChanged} />
+								${this.localize('specificSps')}
+							</label>
+						</div>
+						${this.isRollingTargetNew ? html`` : html `
+							<label for="monthSelect">${this.localize('month')}</label>
+							<label for="daySelect">${this.localize('day')}</label>
+							<select
+								@change="${this.setSelectedMonth}"
+								aria-label="${this.localize('chooseChoice', {choice: this.localize('month')})}"
+								class="d2l-input-select"
+								id="monthSelect"
+							>
+								${this.months.map((month, index) => this.renderSelectOption(month, index + 1, this.newSelectedMonth))}
+							</select>
+							${this.renderDaySelect()}
+						`}
+					</div>
+					<d2l-button slot="footer" primary dialog-action @click="${this.saveTargetDate}">${this.localize('save')}</d2l-button>
+					<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
+				</d2l-dialog>
+			</div>
+		`;
+	}
+
+	targetTypeChanged(e) {
+		this.isRollingTargetNew = Boolean(e.target.value === 'rolling');
+		this.updateComplete.then(() => this.shadowRoot.querySelector('#target-start-date-dialog').resize());
+	}
+
 	renderSubjectTargets(subject) {
 		return html`
 			<tr>
@@ -297,6 +344,9 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 	openTargetDateDialog() {
 		this.newSelectedMonth = this.selectedTargetMonth;
 		this.newSelectedDay = this.selectedTargetDay;
+		this.isRollingTargetNew = this.isRollingTarget;
+		this.shadowRoot.querySelector('#specific-radio-button').checked = !this.isRollingTarget;
+		this.shadowRoot.querySelector('#rolling-radio-button').checked = this.isRollingTarget;
 		this.shadowRoot.querySelector('#target-start-date-dialog').open();
 	}
 
@@ -312,26 +362,23 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 	}
 
 	saveTargetDate() {
-		this.selectedTargetMonth = this.newSelectedMonth;
-		this.selectedTargetDay = this.newSelectedDay;
-		const date = new Date();
-		date.setMonth(this.selectedTargetMonth - 1);
-		date.setDate(this.selectedTargetDay);
-		this.cpdService.updateTargetDate(date.toJSON(), this.jobTitle);
+		this.isRollingTarget = this.isRollingTargetNew;
+		if (this.isRollingTarget) {
+			const today = getCurrentDate();
+			this.setSelectedTargetDate(getMonthFromDate(today), today.getDate());
+			this.cpdService.updateTargetDate(null, this.jobTitle);
+		} else {
+			this.setSelectedTargetDate(this.newSelectedMonth, this.newSelectedDay);
+			const date = new Date();
+			date.setMonth(this.selectedTargetMonth - 1);
+			date.setDate(this.selectedTargetDay);
+			this.cpdService.updateTargetDate(date.toJSON(), this.jobTitle);
+		}
 	}
 
 	saveTargets() {
 		this.cpdService.updateTarget(this.jobTitle, this.dialogData)
 			.then(() => this.fetchTargets());
-	}
-
-	setShowTargetDate() {
-		const checkbox = this.shadowRoot.querySelector('#start-date-checkbox');
-		if (checkbox.checked) {
-			this.showTargetDate = true;
-		} else {
-			this.showTargetDate = false;
-		}
 	}
 
 	renderDaySelect() {
@@ -356,16 +403,25 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 			class="d2l-input-select"
 			id="daySelect"
 		>
-			${days.map((day, index) => this.renderSelectOption(day, index + 1, this.selectedTargetDay || 1))}
+			${days.map((day, index) => this.renderSelectOption(day, index + 1, this.newSelectedDay || 1))}
 		</select>
 		`;
 	}
 	setSelectedDay(event) {
-		this.newSelectedDay = event.target.value;
+		if (event.target.value) {
+			this.newSelectedDay = Number(event.target.value);
+		}
 	}
 
 	setSelectedMonth(event) {
-		this.newSelectedMonth = event.target.value;
+		if (event.target.value) {
+			this.newSelectedMonth = Number(event.target.value);
+		}
+	}
+
+	setSelectedTargetDate(month, day) {
+		this.selectedTargetMonth = month;
+		this.selectedTargetDay = day;
 	}
 }
 
