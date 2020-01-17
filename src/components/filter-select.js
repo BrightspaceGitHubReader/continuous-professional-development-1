@@ -29,17 +29,15 @@ class FilterSelect extends BaseMixin(LitElement) {
 				display: block;
 			}
 
-			.select_filter {
-				margin-left: 6px;
-				width: 30%;
-			}
-			.select_filter[dir="rtl"] {
-				margin-left: 0px;
-				margin-right: 6px;
+			.selectFilter {
+				width: 240px;
 			}
 
-			.select_filter_controls {
-				display: flex;
+			.selectFilterControls {
+				display: grid;
+				grid-gap: 6px;
+				width: min-content;
+				grid-auto-flow: column;
 				align-items: baseline;
 				margin-top: 6px;
 			}
@@ -91,7 +89,7 @@ class FilterSelect extends BaseMixin(LitElement) {
 		<div id="filter">
 			<label>
 				${this.label}
-				<div class="select_filter_controls">
+				<div class="selectFilterControls">
 					<d2l-input-checkbox
 						aria-label="${this.localize('filterRecordsBy', {choice: this.label})}"
 						checked
@@ -99,7 +97,7 @@ class FilterSelect extends BaseMixin(LitElement) {
 					>
 					</d2l-input-checkbox>
 					<select
-						class="d2l-input-select select_filter"
+						class="d2l-input-select selectFilter"
 						?disabled=${!this.enabled}
 						@change="${this.filterChange}"
 						aria-label="${this.localize('chooseChoice', {choice: this.label})}"

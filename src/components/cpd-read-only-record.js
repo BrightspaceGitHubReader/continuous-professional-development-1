@@ -6,6 +6,7 @@ import 'd2l-html-editor/d2l-html-editor';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { cpdSharedStyles } from '../styles/cpd-shared-styles';
 import { decimalToPercent } from '../helpers/record-helper.js';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getHoursAndMinutes } from  '../helpers/time-helper.js';
@@ -34,57 +35,55 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 
 	static get styles() {
 		return [
+			cpdSharedStyles,
 			selectStyles,
 			css`
-		main {
-			width: 100%;
-		}
-		main > ul {
-			display: grid;
-			grid-template-rows: 1fr 1.5fr 1fr 1fr;
-			grid-auto-rows: auto;
-		}
-		d2l-date-picker {
-			width: 7rem;
-		}
-		d2l-html-editor {
-			border-radius: 0.3rem;
-			border-style: solid;
-			border-width: 1px;
-			border-color: initial;
-		}
-		ul {
-			list-style-type: none;
-			padding: 0;
-			margin: 0;
-		}
-		li {
-			padding: 8px 0px;
-		}
-		.numberInput {
-			width: 200px;
-		}
-		ul.innerList {
-			display: flex;
-			flex-direction: row;
-			flex-wrap: wrap;
-			align-items: start;
-		}
-		ul.innerList > li {
-			list-style: none;
-			display: inline-block;
-			width: calc(100% / 4);
-		  }
-		.credit-container {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			grid-gap: 20px;
-		}
-		.credit-time-container {
-			display: grid;
-			grid-template-rows: 1fr;
-			grid-template-columns: 1fr 1fr;
-		}
+			main {
+				width: 100%;
+			}
+			main > ul {
+				display: grid;
+				grid-template-rows: 1fr 1.5fr 1fr 1fr;
+				grid-auto-rows: auto;
+			}
+			d2l-html-editor {
+				border-radius: 0.3rem;
+				border-style: solid;
+				border-width: 1px;
+				border-color: initial;
+			}
+			ul {
+				list-style-type: none;
+				padding: 0;
+				margin: 0;
+			}
+			li {
+				padding: 8px 0px;
+			}
+			.numberInput {
+				width: 204px;
+			}
+			ul.innerList {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				align-items: start;
+			}
+			ul.innerList > li {
+				list-style: none;
+				display: inline-block;
+				width: calc(100% / 4);
+			}
+			.credit-container {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				grid-gap: 20px;
+			}
+			.credit-time-container {
+				display: grid;
+				grid-template-rows: 1fr;
+				grid-template-columns: 1fr 1fr;
+			}
 		`];
 	}
 

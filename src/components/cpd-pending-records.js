@@ -11,6 +11,7 @@ import './page-select';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { cpdSharedStyles } from '../styles/cpd-shared-styles';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 
@@ -34,6 +35,7 @@ class PendingRecords extends BaseMixin(LitElement) {
 
 	static get styles() {
 		return [
+			cpdSharedStyles,
 			cpdTableStyles,
 			css`
 			div[role=main] {
@@ -41,29 +43,8 @@ class PendingRecords extends BaseMixin(LitElement) {
 				grid-gap: 1rem;
 			}
 
-			d2l-input-search {
-				width: 35%;
-			}
-
-			d2l-date-picker {
-				width: 7rem;
-			}
-
-			.date_filter_controls {
-				width: 16rem;
-				display: flex;
-				justify-content: space-between;
-				align-items: baseline;
-			}
-
 			.icon_column {
 				width: 30px;
-			}
-
-			.pageControl {
-				width: 100%;
-				display: flex;
-				justify-content: center;
 			}
 
 			.search_options[disabled] {
@@ -202,7 +183,7 @@ class PendingRecords extends BaseMixin(LitElement) {
 	render() {
 		return html`
 			<div role="main">
-				<div class="search_bar">
+				<div class="searchContainer">
 					<d2l-input-search
 						id="search_input"
 						label="${this.localize('search')}"
@@ -222,9 +203,9 @@ class PendingRecords extends BaseMixin(LitElement) {
 				class="search_options"
 				?disabled=${this.hideSearchOptions}
 				>
-				<div id="date_filter">
+				<div>
 					<label id="date_label">${this.localize('dateRange')}</label>
-					<div class="date_filter_controls">
+					<div class="dateFilterControls">
 						<d2l-date-picker
 							id="start_date_picker"
 							@d2l-date-picker-value-changed="${this.updateFilter}"

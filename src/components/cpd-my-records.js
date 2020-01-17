@@ -7,13 +7,14 @@ import '@brightspace-ui/core/components/inputs/input-search.js';
 import '@brightspace-ui/core/components/link/link.js';
 import 'd2l-date-picker/d2l-date-picker.js';
 import 'd2l-navigation/d2l-navigation-link-back.js';
-import './page-select.js';
+import './page-select';
 import './filter-select.js';
 import './message-container.js';
 import './progress-box';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { cpdSharedStyles } from '../styles/cpd-shared-styles';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getHoursAndMinutes } from '../helpers/time-helper.js';
@@ -67,8 +68,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 	static get styles() {
 		return [
-			selectStyles,
+			cpdSharedStyles,
 			cpdTableStyles,
+			selectStyles,
 			css`
 			div[role=main] {
 				display: grid;
@@ -76,27 +78,11 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			}
 
 			d2l-button {
-				width: 25%;
-			}
-
-			d2l-input-search {
-				width: fit-content;
-			}
-
-			d2l-date-picker {
-				width: 7rem;
+				width: min-content;
 			}
 
 			d2l-button-subtle {
 				width: min-content;
-			}
-
-			.search_bar {
-				display: grid;
-				column-gap: 12px;
-				grid-auto-flow: column;
-				align-items: baseline;
-				width: fit-content;
 			}
 
 			.search_options {
@@ -106,21 +92,6 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 			.search_options[disabled] {
 				display: none;
-			}
-
-			.date_filter_controls {
-				width: 16rem;
-				display: grid;
-				column-gap: 12px;
-				grid-auto-flow: column;
-				align-items: baseline;
-				margin-top: 6px;
-			}
-
-			.pageControl {
-				width: 100%;
-				display: flex;
-				justify-content: center;
 			}
 			`
 		];
@@ -386,7 +357,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					</d2l-button>
 				`}
 
-				<div class="search_bar">
+				<div class="searchContainer">
 					<d2l-input-search
 						id="search_input"
 						label="${this.localize('search')}"
@@ -422,9 +393,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 						>
 					</d2l-filter-select>
 
-					<div id="date_filter">
+					<div>
 						<label id="date_label">${this.localize('dateRange')}</label>
-						<div class="date_filter_controls">
+						<div class="dateFilterControls">
 							<d2l-date-picker
 								id="start_date_picker"
 								@d2l-date-picker-value-changed="${this.updateFilter}"

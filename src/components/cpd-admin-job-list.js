@@ -1,8 +1,10 @@
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/link/link.js';
+import './page-select';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { cpdSharedStyles } from '../styles/cpd-shared-styles.js';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 
 class CpdAdminJobList extends BaseMixin(LitElement) {
@@ -19,19 +21,15 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 
 	static get styles() {
 		return [
+			cpdSharedStyles,
 			cpdTableStyles,
 			css`
 			div[role=main] {
 				display: grid;
 				grid-gap: 1rem;
 			}
-			.pageControl {
-				width: 100%;
-				display: flex;
-				justify-content: center;
-			}
-			.defaults_column {
-				width: 12%;
+			.defaultsColumn {
+				width: 60px;
 				text-align: center;
 			}
 			`
@@ -74,7 +72,7 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 						${jobTargetData.JobTitle}
 					</d2l-link>
 				</td>
-				<td class="defaults_column">
+				<td class="defaultsColumn">
 					<d2l-icon
 						icon="tier1:${jobTargetData.HasDefaults ? 'check' : 'close-default'}">
 					</d2l-icon>
@@ -95,7 +93,7 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 					<thead>
 						<tr>
 							<th>${this.localize('jobTitle')}</th>
-							<th class="defaults_column">${this.localize('hasDefaults')}</th>
+							<th class="defaultsColumn">${this.localize('hasDefaults')}</th>
 						</tr>
 					</thead>
 					${this.jobTargets &&
@@ -105,7 +103,7 @@ class CpdAdminJobList extends BaseMixin(LitElement) {
 				</table>
 				<div class="pageControl">
 					<d2l-page-select
-						pages="${Math.ceil(this.jobTargets.TotalCount / this.jobTargets.PageSize)}"
+						pages="${Math.ceil(this.jobTargets && this.jobTargets.TotalCount / this.jobTargets.PageSize)}"
 						page="${this.page}"
 						@d2l-page-select-updated="${this.updatePage}"
 						>

@@ -1,9 +1,11 @@
 import './message-container.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
+import './page-select';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { cpdSharedStyles } from '../styles/cpd-shared-styles.js';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 
 class MyTeamCPD extends BaseMixin(LitElement) {
@@ -27,15 +29,12 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 
 	static get styles() {
 		return [
+			cpdSharedStyles,
 			cpdTableStyles,
 			css`
 			div[role=main] {
 				display: grid;
 				grid-gap: 1rem;
-			}
-
-			d2l-input-search {
-				width: 35%;
 			}
 
 			.icon_column {
@@ -45,12 +44,6 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 			.profile_image {
 				display: flex;
 				justify-content: flex-end;
-			}
-
-			.pageControl {
-				width: 100%;
-				display: flex;
-				justify-content: center;
 			}
 			`
 		];

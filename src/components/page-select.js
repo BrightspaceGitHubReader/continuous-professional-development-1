@@ -23,6 +23,15 @@ class PageSelect extends BaseMixin(LitElement) {
 			.hide {
 				visibility: hidden;
 			}
+			:host {
+				display: grid;
+				width: min-content;
+				grid-gap: 6px;
+				grid-auto-flow: column;
+			}
+			select {
+				width: fit-content;
+			}
 			`
 		];
 	}

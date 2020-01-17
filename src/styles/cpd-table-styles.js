@@ -30,6 +30,9 @@ th {
 	text-align: left;
 	margin: 1rem 0;
 }
+:host([dir="rtl"]) th {
+	text-align: right;
+}
 
 table thead > tr:first-child {
 	border-top-style: none;

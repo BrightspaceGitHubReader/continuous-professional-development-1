@@ -6,6 +6,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { dateParamString, formatForDatePicker, getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper.js';
 import { BaseMixin } from '../mixins/base-mixin.js';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { cpdSharedStyles } from '../styles/cpd-shared-styles';
 import { decimalToPercent } from '../helpers/record-helper.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
@@ -44,6 +45,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 
 	static get styles() {
 		return [
+			cpdSharedStyles,
 			selectStyles,
 			css`
 		main {
@@ -53,9 +55,6 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			display: grid;
 			grid-template-rows: repeat(4, 1fr);
 			grid-auto-rows: auto;
-		}
-		d2l-date-picker {
-			width: 7rem;
 		}
 		d2l-html-editor {
 			border-radius: 0.3rem;
@@ -259,7 +258,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 								</div>
 								<select
 									aria-label="${this.localize('chooseChoice', {choice: this.localize('type')})}"
-									class="d2l-input-select select_filter"
+									class="d2l-input-select selectFilter"
 									id="typeSelect"
 									>
 									${this.types.map((option) => this.renderSelect(option, this.record && +this.record.IsStructured))}
@@ -271,7 +270,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 								</div>
 								<select
 									aria-label="${this.localize('chooseChoice', {choice: this.localize('subject')})}"
-									class="d2l-input-select select_filter"
+									class="d2l-input-select selectFilter"
 									id="subjectSelect"
 									>
 									${this.subjects.map((option) => this.renderSelect(option, this.record && this.record.Subject && this.record.Subject.Id || 0))}
@@ -283,7 +282,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 								</div>
 								<select
 									aria-label="${this.localize('chooseChoice', {choice: this.localize('method')})}"
-									class="d2l-input-select select_filter"
+									class="d2l-input-select selectFilter"
 									id="methodSelect"
 									>
 									${this.methods.map((option) => this.renderSelect(option, this.record && this.record.Method && this.record.Method.Id || 0))}

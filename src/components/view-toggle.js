@@ -1,7 +1,9 @@
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/colors/colors';
 import { css, html, LitElement } from 'lit-element/lit-element';
-class ViewToggle extends LitElement {
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin';
+
+class ViewToggle extends RtlMixin(LitElement) {
 	static get properties() {
 		return {
 			text: {
