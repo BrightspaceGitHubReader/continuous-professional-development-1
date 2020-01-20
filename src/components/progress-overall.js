@@ -1,10 +1,10 @@
-import '@brightspace-ui/core/components/icons/icon.js';
+import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/meter/meter-circle';
 import '@brightspace-ui/core/components/meter/meter-radial';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { getHoursRounded, roundToOneDecimal } from '../helpers/time-helper.js';
-import { BaseMixin } from '../mixins/base-mixin.js';
-import { bodyCompactStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { css, html, LitElement } from 'lit-element/lit-element';
+import { getHoursRounded, roundToOneDecimal } from '../helpers/time-helper';
+import { BaseMixin } from '../mixins/base-mixin';
+import { bodyCompactStyles } from '@brightspace-ui/core/components/typography/styles';
 import { formatTotalProgress } from '../helpers/progress-helper';
 
 class ProgressOverall extends BaseMixin(LitElement) {

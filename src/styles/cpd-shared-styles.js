@@ -1,4 +1,4 @@
-import { css } from 'lit-element/lit-element.js';
+import { css } from 'lit-element/lit-element';
 
 export const cpdSharedStyles = css`
 	d2l-date-picker {

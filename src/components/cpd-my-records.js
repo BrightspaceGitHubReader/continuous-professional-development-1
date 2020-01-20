@@ -1,24 +1,24 @@
-import '@brightspace-ui/core/components/button/button.js';
-import '@brightspace-ui/core/components/button/button-icon.js';
-import '@brightspace-ui/core/components/button/button-subtle.js';
-import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
-import '@brightspace-ui/core/components/inputs/input-checkbox.js';
-import '@brightspace-ui/core/components/inputs/input-search.js';
-import '@brightspace-ui/core/components/link/link.js';
-import 'd2l-date-picker/d2l-date-picker.js';
-import 'd2l-navigation/d2l-navigation-link-back.js';
+import '@brightspace-ui/core/components/button/button';
+import '@brightspace-ui/core/components/button/button-icon';
+import '@brightspace-ui/core/components/button/button-subtle';
+import '@brightspace-ui/core/components/dialog/dialog-confirm';
+import '@brightspace-ui/core/components/inputs/input-checkbox';
+import '@brightspace-ui/core/components/inputs/input-search';
+import '@brightspace-ui/core/components/link/link';
+import 'd2l-date-picker/d2l-date-picker';
+import 'd2l-navigation/d2l-navigation-link-back';
 import './page-select';
-import './filter-select.js';
-import './message-container.js';
+import './filter-select';
+import './message-container';
 import './progress-box';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { BaseMixin } from '../mixins/base-mixin.js';
+import { css, html, LitElement } from 'lit-element/lit-element';
+import { BaseMixin } from '../mixins/base-mixin';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdSharedStyles } from '../styles/cpd-shared-styles';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
-import { getHoursAndMinutes } from '../helpers/time-helper.js';
-import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
+import { getHoursAndMinutes } from '../helpers/time-helper';
+import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
 
 class MyCpdRecords extends BaseMixin(LitElement) {
 

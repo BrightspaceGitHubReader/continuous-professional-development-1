@@ -1,2 +1,2 @@
-import './cpd.js';
-import './cpd-admin.js';
+import './cpd';
+import './cpd-admin';

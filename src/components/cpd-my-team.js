@@ -1,11 +1,11 @@
-import './message-container.js';
-import '@brightspace-ui/core/components/icons/icon.js';
-import '@brightspace-ui/core/components/inputs/input-search.js';
+import './message-container';
+import '@brightspace-ui/core/components/icons/icon';
+import '@brightspace-ui/core/components/inputs/input-search';
 import './page-select';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { BaseMixin } from '../mixins/base-mixin.js';
+import { css, html, LitElement } from 'lit-element/lit-element';
+import { BaseMixin } from '../mixins/base-mixin';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
-import { cpdSharedStyles } from '../styles/cpd-shared-styles.js';
+import { cpdSharedStyles } from '../styles/cpd-shared-styles';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 
 class MyTeamCPD extends BaseMixin(LitElement) {

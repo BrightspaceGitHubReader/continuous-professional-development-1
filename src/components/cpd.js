@@ -1,13 +1,13 @@
-import '@brightspace-ui/core/components/button/button.js';
-import 'd2l-tabs/d2l-tabs.js';
+import '@brightspace-ui/core/components/button/button';
+import 'd2l-tabs/d2l-tabs';
 import './cpd-manage-targets';
 import './cpd-my-records';
 import './cpd-add-record';
 import './cpd-pending-records';
 import './cpd-my-team';
 import './cpd-read-only-record';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { BaseMixin } from '../mixins/base-mixin.js';
+import { css, html, LitElement } from 'lit-element/lit-element';
+import { BaseMixin } from '../mixins/base-mixin';
 
 class Cpd extends BaseMixin(LitElement) {
 

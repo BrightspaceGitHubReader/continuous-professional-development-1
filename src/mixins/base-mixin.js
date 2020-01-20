@@ -1,5 +1,5 @@
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
-import { ResizeObserver } from 'd2l-resize-aware/resize-observer-module.js';
+import { ResizeObserver } from 'd2l-resize-aware/resize-observer-module';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin';
 
 const langTerms = {};

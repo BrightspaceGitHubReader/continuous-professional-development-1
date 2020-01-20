@@ -1,14 +1,14 @@
-import '@brightspace-ui/core/components/inputs/input-text.js';
+import '@brightspace-ui/core/components/inputs/input-text';
 import './attachments';
-import 'd2l-date-picker/d2l-date-picker.js';
+import 'd2l-date-picker/d2l-date-picker';
 import 'd2l-html-editor/d2l-html-editor';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { dateParamString, formatForDatePicker, getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper.js';
-import { BaseMixin } from '../mixins/base-mixin.js';
+import { css, html, LitElement } from 'lit-element/lit-element';
+import { dateParamString, formatForDatePicker, getHours, getMinutes, getTotalMinutes } from '../helpers/time-helper';
+import { BaseMixin } from '../mixins/base-mixin';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdSharedStyles } from '../styles/cpd-shared-styles';
-import { decimalToPercent } from '../helpers/record-helper.js';
-import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
+import { decimalToPercent } from '../helpers/record-helper';
+import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
 
 class AddCpdRecord extends BaseMixin(LitElement) {
 	static get properties() {

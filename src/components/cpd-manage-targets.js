@@ -1,19 +1,19 @@
 
-import 'd2l-navigation/d2l-navigation-link-back.js';
+import 'd2l-navigation/d2l-navigation-link-back';
 import '@brightspace-ui/core/components/button/button-icon';
 import '@brightspace-ui/core/components/button/button';
-import '@brightspace-ui/core/components/dialog/dialog.js';
+import '@brightspace-ui/core/components/dialog/dialog';
 import '@brightspace-ui/core/components/inputs/input-checkbox';
 import '@brightspace-ui/core/components/inputs/input-text';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { css, html, LitElement } from 'lit-element/lit-element';
 import { formatDate, getDateTimeDescriptor } from '@brightspace-ui/intl/lib/dateTime';
-import { getCurrentDate, getHours, getHoursAndMinutes, getMinutes, getMonthFromDate, getNonLeapYearDate, getTotalMinutes } from  '../helpers/time-helper.js';
-import { BaseMixin } from '../mixins/base-mixin.js';
+import { getCurrentDate, getHours, getHoursAndMinutes, getMinutes, getMonthFromDate, getNonLeapYearDate, getTotalMinutes } from  '../helpers/time-helper';
+import { BaseMixin } from '../mixins/base-mixin';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 import dayjs from 'dayjs/esm';
-import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
-import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
+import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles';
+import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
 import utc from 'dayjs/esm/plugin/utc';
 
 dayjs.extend(utc);

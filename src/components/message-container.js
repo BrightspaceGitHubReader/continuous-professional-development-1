@@ -1,6 +1,6 @@
-import '@brightspace-ui/core/components/icons/icon.js';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { BaseMixin } from '../mixins/base-mixin.js';
+import '@brightspace-ui/core/components/icons/icon';
+import { css, html, LitElement } from 'lit-element/lit-element';
+import { BaseMixin } from '../mixins/base-mixin';
 
 class MessageContainer extends BaseMixin(LitElement) {
 
@@ -27,7 +27,7 @@ class MessageContainer extends BaseMixin(LitElement) {
 		.message_card {
 			width: 98%;
 			height: 80%;
-			background-color: #f9fbff; 
+			background-color: #f9fbff;
 			border: 1px solid #cdd5dc;
 			border-radius: 0.5rem;
 			display: flex;

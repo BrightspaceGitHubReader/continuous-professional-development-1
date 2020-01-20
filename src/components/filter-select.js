@@ -1,7 +1,7 @@
-import '@brightspace-ui/core/components/inputs/input-checkbox.js';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { BaseMixin } from '../mixins/base-mixin.js';
-import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
+import '@brightspace-ui/core/components/inputs/input-checkbox';
+import { css, html, LitElement } from 'lit-element/lit-element';
+import { BaseMixin } from '../mixins/base-mixin';
+import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
 
 class FilterSelect extends BaseMixin(LitElement) {
 

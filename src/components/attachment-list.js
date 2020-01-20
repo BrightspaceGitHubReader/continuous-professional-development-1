@@ -1,12 +1,12 @@
-import '@brightspace-ui/core/components/button/button.js';
-import '@brightspace-ui/core/components/button/button-icon.js';
-import '@brightspace-ui/core/components/dialog/dialog.js';
-import '@brightspace-ui/core/components/link/link.js';
-import '@brightspace-ui/core/components/list/list.js';
-import '@brightspace-ui/core/components/list/list-item.js';
-import '@brightspace-ui-labs/file-uploader/d2l-file-uploader.js';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { BaseMixin } from '../mixins/base-mixin.js';
+import '@brightspace-ui/core/components/button/button';
+import '@brightspace-ui/core/components/button/button-icon';
+import '@brightspace-ui/core/components/dialog/dialog';
+import '@brightspace-ui/core/components/link/link';
+import '@brightspace-ui/core/components/list/list';
+import '@brightspace-ui/core/components/list/list-item';
+import '@brightspace-ui-labs/file-uploader/d2l-file-uploader';
+import { css, html, LitElement } from 'lit-element/lit-element';
+import { BaseMixin } from '../mixins/base-mixin';
 
 class AttachmentList extends BaseMixin(LitElement) {
 
