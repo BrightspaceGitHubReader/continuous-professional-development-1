@@ -50,6 +50,13 @@ class ProgressSubject extends BaseMixin(LitElement) {
 	}
 
 	renderRow(subjectData) {
+		if (!subjectData.structured.numerator &&
+			!subjectData.structured.denominator &&
+			!subjectData.unstructured.numerator &&
+			!subjectData.unstructured.denominator
+		) {
+			return html``;
+		}
 		return html`
 		<tr role="row">
 			<td>
