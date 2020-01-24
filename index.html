@@ -41,13 +41,21 @@
 			document.body.removeChild(loadingSpinner);
 			document.body.appendChild(cpd);
 		};
-
 		const loadCpdAdmin = function(frauSettings) {
 			const cpdAdmin = document.createElement('d2l-cpd-admin');
 			const loadingSpinner = document.getElementById('loading-spinner');
 			document.body.removeChild(loadingSpinner);
 			document.body.appendChild(cpdAdmin);
 		};
+		const loadCpdWidget = function(frauSettings) {
+			const {userId} = frauSettings;
+			const cpdWidget = document.createElement('d2l-cpd-widget');
+			cpdWidget.setAttribute('userId', userId);
+
+			const loadingSpinner = document.getElementById('loading-spinner');
+			document.body.removeChild(loadingSpinner);
+			document.body.appendChild(cpdWidget);
+		}
 		client
 			.connect()
 			.then(client => {
@@ -76,6 +84,8 @@
 						window.data.fraSettings.valenceHost = ifrauData[3];
 						if (ifrauData[4].admin) {
 							loadCpdAdmin(ifrauData[4]);
+						} else if (ifrauData[4].widget) {
+							loadCpdWidget(ifrauData[4])
 						} else {
 							loadCpd(ifrauData[4]);
 						}
