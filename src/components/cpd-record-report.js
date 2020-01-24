@@ -1,0 +1,120 @@
+import './progress-overall';
+import './progress-subject';
+import { css, html, LitElement } from 'lit-element/lit-element';
+import { BaseMixin } from '../mixins/base-mixin';
+import { CpdServiceFactory } from '../services/cpd-service-factory';
+import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
+import { getHoursAndMinutes } from '../helpers/time-helper';
+
+class CpdRecordReport extends BaseMixin(LitElement) {
+
+	static get properties() {
+		return {
+			cpdService: {
+				type: Object
+			},
+			userInfo: {
+				type: Object
+			},
+			target: {
+				type: Object
+			},
+			questions: {
+				type: Object
+			},
+			records: {
+				type: Array
+			},
+			progress: {
+				type: Object
+			}
+		};
+	}
+
+	static get styles() {
+		return [
+			css``
+		];
+	}
+
+	constructor() {
+		super();
+
+		this.cpdService = CpdServiceFactory.getCpdService();
+
+		this.userInfo = {};
+		this.target = {
+			StartDate: '01 January 2019',
+			EndDate: '01 January 2020'
+		};
+		this.records = [];
+		this.questions = [];
+		this.progress = {};
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+
+		this.cpdService.getUserInfo()
+			.then(body => {
+				this.userInfo.DisplayName = body;
+			});
+		this.cpdService.getTargetRecords()
+			.then(body => {
+				this.records = body;
+			});
+		this.cpdService.getProgress()
+			.then(body =>
+				this.progress = this.lowercasePropertyNames(body)
+			);
+		this.cpdService.getQuestions()
+			.then(body => {
+				const reducer = (accumulator, currentValue) => {
+					accumulator[currentValue.Id] = currentValue.QuestionText;
+					return accumulator;
+				};
+				this.questions = body.reduce(reducer, {});
+			});
+	}
+
+	renderRecord(record) {
+		return html`
+			<div>
+			${this.localize('headingRecordName')} ${record.RecordName}
+			${this.localize('headingCreditHours')} ${this.localize('shortTimeDuration', getHoursAndMinutes(record.CreditMinutes))}
+			${this.localize('headingDateCompleted')} ${formatDate(new Date(record.DateCompleted))}
+			${this.localize('headingSubject')} ${record.SubjectName}
+			${this.localize('headingMethod')} ${record.MethodName}
+			${record.Answers.map(answer => this.renderAnswer(answer))}
+			</div>
+		`;
+	}
+
+	renderAnswer(answer) {
+		return html`
+			<div>
+				${this.questions[answer.QuestionId]} ${answer.Text}
+			</div>
+		`;
+	}
+
+	render() {
+		return html`
+			<h1>${this.localize('userDetails')}</h1>
+			<p><b>${this.localize('userNameHeader')}</b> ${this.userInfo.DisplayName}</p>
+			<p><b>${this.localize('cpdPeriod')}</b> ${this.target.StartDate} - ${this.target.EndDate}</p>
+			<h2>${this.localize('overallProgressSummary')}</h2>
+			<d2l-progress-overall
+				.progress="${this.progress}"
+				>
+			</d2l-progress-overall>
+			<h2>${this.localize('overallProgressSummary')}</h2>
+			<d2l-progress-subject
+				.progress="${this.progress}"
+				>
+			</d2l-progress-subject>
+			${this.records.map(record => this.renderRecord(record))}
+		`;
+	}
+}
+customElements.define('d2l-cpd-record-report', CpdRecordReport);

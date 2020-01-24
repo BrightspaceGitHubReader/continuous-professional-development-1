@@ -1,0 +1,110 @@
+{
+    "Structured": {
+        "Numerator": 0,
+        "Denominator": 0
+    },
+    "Unstructured": {
+        "Numerator": 0,
+        "Denominator": 0
+    },
+    "SubjectProgress": [
+        {
+            "Subject": {
+                "Id": 1,
+                "Name": "Mortgage"
+            },
+            "Structured": {
+                "Numerator": 0,
+                "Denominator": 0
+            },
+            "Unstructured": {
+                "Numerator": 61,
+                "Denominator": 0
+            }
+        },
+        {
+            "Subject": {
+                "Id": 2,
+                "Name": "Protection"
+            },
+            "Structured": {
+                "Numerator": 0,
+                "Denominator": 0
+            },
+            "Unstructured": {
+                "Numerator": 0,
+                "Denominator": 0
+            }
+        },
+        {
+            "Subject": {
+                "Id": 3,
+                "Name": "General Insurance"
+            },
+            "Structured": {
+                "Numerator": 0,
+                "Denominator": 0
+            },
+            "Unstructured": {
+                "Numerator": 0,
+                "Denominator": 0
+            }
+        },
+        {
+            "Subject": {
+                "Id": 4,
+                "Name": "Investment"
+            },
+            "Structured": {
+                "Numerator": 0,
+                "Denominator": 0
+            },
+            "Unstructured": {
+                "Numerator": 0,
+                "Denominator": 0
+            }
+        },
+        {
+            "Subject": {
+                "Id": 5,
+                "Name": "Pension"
+            },
+            "Structured": {
+                "Numerator": 0,
+                "Denominator": 0
+            },
+            "Unstructured": {
+                "Numerator": 0,
+                "Denominator": 0
+            }
+        },
+        {
+            "Subject": {
+                "Id": 6,
+                "Name": "Regulation"
+            },
+            "Structured": {
+                "Numerator": 0,
+                "Denominator": 0
+            },
+            "Unstructured": {
+                "Numerator": 0,
+                "Denominator": 0
+            }
+        },
+        {
+            "Subject": {
+                "Id": 7,
+                "Name": "Other"
+            },
+            "Structured": {
+                "Numerator": 0,
+                "Denominator": 0
+            },
+            "Unstructured": {
+                "Numerator": 0,
+                "Denominator": 0
+            }
+        }
+    ]
+}

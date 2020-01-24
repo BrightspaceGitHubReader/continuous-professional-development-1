@@ -8,13 +8,18 @@ const getOptions = {
 
 export class DemoCpdService {
 
-	static createRecord() {
-	}
+	static createRecord() {}
+
 	static deleteRecord() {}
+
+	static getJobTitle() {
+		return Promise.resolve('Cool Job');
+	}
 
 	static getJobTitleDefaults() {
 		return fetch('../../../../data/job_targets.json', getOptions).then(r => r.json());
 	}
+
 	static getMethods() {
 		const data = [
 			{'Id': 1, 'Name': 'Course'},
@@ -23,29 +28,24 @@ export class DemoCpdService {
 		];
 		return Promise.resolve(data);
 	}
+
 	static getMyTeam() {
 		return fetch('../../../../data/reports.json', getOptions).then(r => r.json());
 	}
+
 	static getPendingRecords() {
 		return fetch('../../../../data/awards.json', getOptions).then(r => r.json());
 	}
 
 	static getProgress() {
-		const data =  {
-			Structured: {
-				numerator: 30,
-				denominator: 19
-			},
-			Unstructured: {
-				numerator: 12,
-				denominator: 15
-			}
-		};
-		return Promise.resolve(data);
+		return fetch('../../../../data/target_progress.json', getOptions).then(r => r.json());
 	}
 
 	static getQuestions() {
-		const data = [{Id:1, QuestionText:'Why is Ben moving?'}];
+		const data = [
+			{Id:1, QuestionText:'Why is Ben moving?'},
+			{Id:2, QuestionText:"Why don't Tom's monitors work?"}
+		];
 		return Promise.resolve(data);
 	}
 
@@ -70,33 +70,39 @@ export class DemoCpdService {
 		];
 		return Promise.resolve(data);
 	}
+
 	static getSubjectTargets(jobTitle) {
-		if (!jobTitle) {
-			return Promise.resolve(
-				{'TargetId':1, 'Type':'Personal', 'UserId':175, 'StartDate':'0001-12-17T00:00:00.000Z', 'Subjects':[{'Subject':{'Id':1, 'Name':'Mortgage'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':2, 'Name':'Protection'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':3, 'Name':'General Insurance'}, 'StructuredMinutes':90, 'UnstructuredMinutes':10}, {'Subject':{'Id':4, 'Name':'Investment'}, 'StructuredMinutes':10, 'UnstructuredMinutes':25}, {'Subject':{'Id':5, 'Name':'Pension'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':6, 'Name':'Regulation'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':7, 'Name':'Other'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}]}
-			);
+		if (jobTitle) {
+			return fetch('../../../../data/job_title_target.json', getOptions).then(r => r.json());
 		}
-		return Promise.resolve(
-			{'TargetId':1, 'Type':'Job', 'JobTitle':'Sous-Chef', 'StartDate':'0001-01-01T00:00:00.000Z', 'Subjects':[{'Subject':{'Id':1, 'Name':'Mortgage'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':2, 'Name':'Protection'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':3, 'Name':'General Insurance'}, 'StructuredMinutes':90, 'UnstructuredMinutes':10}, {'Subject':{'Id':4, 'Name':'Investment'}, 'StructuredMinutes':10, 'UnstructuredMinutes':25}, {'Subject':{'Id':5, 'Name':'Pension'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':6, 'Name':'Regulation'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}, {'Subject':{'Id':7, 'Name':'Other'}, 'StructuredMinutes':0, 'UnstructuredMinutes':0}]}
-		);
+		return fetch('../../../../data/personal_target.json', getOptions).then(r => r.json());
 	}
+
+	static async getTargetRecords() {
+		return fetch('../../../../data/record_array.json', getOptions).then(r => r.json());
+	}
+
 	static getTypes() {
-		return [ {
-			Id: 0,
-			Name: 'Unstructured'
-		},
-		{
-			Id: 1,
-			Name: 'Structured'
-		}];
+		return [
+			{
+				Id: 0,
+				Name: 'Unstructured'
+			},
+			{
+				Id: 1,
+				Name: 'Structured'
+			}
+		];
 	}
 
 	static getUserInfo() {
 		return Promise.resolve('First Last');
 	}
+
 	static updateTarget() {
 		return Promise.resolve();
 	}
+
 	static updateTargetDate(jobTitle, date) {
 		alert(`${jobTitle}, ${date}`);
 		return Promise.resolve();

@@ -1,0 +1,60 @@
+[
+		{
+      "RecordId": 1,
+			"RecordName": "Capstone Project",
+			"SubjectName": "Math",
+			"IsStructured": true,
+			"MethodName": "TBD",
+			"CreditMinutes": "100",
+			"DateCompleted": "01/01/2019",
+      "Answers": [
+        {
+          "QuestionId": 1,
+          "Text": "His wife got a job",
+          "AnswerId": 1
+        },
+        {
+          "QuestionId": 2,
+          "Text": "They hate him",
+          "AnswerId": 4
+        }
+      ]
+		},
+		{
+      "RecordId": 2,
+			"RecordName": "Group Assignment",
+			"SubjectName": "Management",
+			"IsStructured": false,
+			"MethodName": "TBD",
+			"CreditMinutes": "60",
+			"DateCompleted": "01/01/2019",
+      "Answers": [
+        {
+          "QuestionId": 1,
+          "Text": "He hates us",
+          "AnswerId": 2
+        }
+      ]
+		},
+		{
+      "RecordId": 3,
+			"RecordName": "English 101",
+			"SubjectName": "English",
+			"IsStructured": true,
+			"MethodName": "TBD",
+			"CreditMinutes": "20",
+			"DateCompleted": "10/12/2019",
+      "Answers": [
+        {
+          "QuestionId": 1,
+          "Text": "To be closer to coughing guy",
+          "AnswerId": 3
+        },
+        {
+          "QuestionId": 2,
+          "Text": "He has to choose between standing desk and working monitors",
+          "AnswerId": 4
+        }
+      ]
+		}
+]
