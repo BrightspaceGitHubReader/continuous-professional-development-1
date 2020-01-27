@@ -13,6 +13,7 @@ import './message-container';
 import './progress-box';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { BaseMixin } from '../mixins/base-mixin';
+import { CpdRoutes } from '../helpers/cpdRoutes';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdSharedStyles } from '../styles/cpd-shared-styles';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
@@ -92,6 +93,24 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 
 			.search_options[disabled] {
 				display: none;
+			}
+
+			.printLink {
+				display: grid;
+				grid-gap: 6px;
+				grid-auto-flow: column;
+				grid-template-columns: 30px; 90px;
+				align-items: center;
+				margin-left: 12px;
+			}
+
+			.printLink[dir="rtl"] {
+				margin-left: 0px;
+				margin-right: 12px;
+			}
+
+			.header {
+				display: flex;
 			}
 			`
 		];
@@ -333,30 +352,47 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		return this.hideSearchOptions ? this.localize('showSearchOptions') : this.localize('hideSearchOptions');
 	}
 
-	render() {
-		return html`
-
-			<div role="main">
-				${this.viewUserId ? html`
-
+	renderHeader(viewUserId) {
+		if (viewUserId) {
+			return html`
+				<div>
 					<div>
-						<div>
-							<d2l-navigation-link-back
-								text="${this.localize('backToTeam')}"
-								@click="${this.backToTeamClicked}"
-								href="javascript:void(0)">
-							</d2l-navigation-link-back>
-						</div>
+						<d2l-navigation-link-back
+							text="${this.localize('backToTeam')}"
+							@click="${this.backToTeamClicked}"
+							href="javascript:void(0)">
+						</d2l-navigation-link-back>
+					</div>
+					<div class="header">
 						<h2>
 							${this.localize('userTitle', { 'userName': this.userDisplayName})}
 						</h2>
-					</div>` : html`
-					<d2l-cpd-progress-box ?hasEnforcedTarget=${this.hasEnforcedTarget} .progress="${this.progress}"></d2l-cpd-progress-box>
-					<d2l-button id="new_record" primary @click="${this.newRecordButtonClicked}">
-			${this.localize('addNewCPD')}
-					</d2l-button>
-				`}
+						<div class="printLink">
+							<d2l-icon icon="tier1:print"></d2l-icon>
+							<d2l-link target="_blank" href="${CpdRoutes.Report(this.viewUserId)}">${this.localize('printRecords')}</d2l-link>
+						</div>
+					</div>
+				</div>`;
+		}
+		return html`
+			<div class="header">
+				<d2l-button id="new_record" primary @click="${this.newRecordButtonClicked}">
+					${this.localize('addNewCPD')}
+				</d2l-button>
+				<div class="printLink">
+					<d2l-icon icon="tier1:print"></d2l-icon>
+					<d2l-link target="_blank" href="${CpdRoutes.Report(this.viewUserId)}">${this.localize('printRecords')}</d2l-link>
+				</div>
+			</div>
+			`;
 
+	}
+
+	render() {
+		return html`
+			<div role="main">
+				${this.renderHeader(this.viewUserId)}
+				<d2l-cpd-progress-box ?hasEnforcedTarget=${this.hasEnforcedTarget} .progress="${this.progress}"></d2l-cpd-progress-box>
 				<div class="searchContainer">
 					<d2l-input-search
 						id="search_input"

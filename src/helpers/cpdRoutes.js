@@ -10,6 +10,7 @@ export class CpdRoutes {
 	static get Progress() { return 'target/progress'; }
 	static get Question() { return 'question'; }
 	static get Record() { return 'record'; }
+	static Report(userId) { return `/d2l/custom/cpd/report/${userId}`; }
 	static get Subject() { return 'subject'; }
 	static get Team() { return 'team'; }
 	static get UserRecord() {return 'record/user';}
