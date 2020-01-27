@@ -120,12 +120,12 @@ export class CpdService {
 	}
 	static getTypes() {
 		return [ {
-			Id: 0,
-			Name: 'Unstructured'
-		},
-		{
 			Id: 1,
 			Name: 'Structured'
+		},
+		{
+			Id: 0,
+			Name: 'Unstructured'
 		}];
 	}
 	static getUserInfo(userId) {
