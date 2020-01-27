@@ -56,6 +56,15 @@
 			document.body.removeChild(loadingSpinner);
 			document.body.appendChild(cpdWidget);
 		}
+		const loadCpdRecordReport = function(frauSettings) {
+			const {userId} = frauSettings;
+			const cpdRecordReport = document.createElement('d2l-cpd-record-report');
+			cpdRecordReport.setAttribute('userId', userId);
+
+			const loadingSpinner = document.getElementById('loading-spinner');
+			document.body.removeChild(loadingSpinner);
+			document.body.appendChild(cpdRecordReport);
+		}
 		client
 			.connect()
 			.then(client => {
@@ -86,6 +95,8 @@
 							loadCpdAdmin(ifrauData[4]);
 						} else if (ifrauData[4].widget) {
 							loadCpdWidget(ifrauData[4])
+						} else if (ifrauData[4].report) {
+							loadCpdRecordReport(ifrauData[4])
 						} else {
 							loadCpd(ifrauData[4]);
 						}
