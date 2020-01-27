@@ -30,6 +30,9 @@ class CpdWidget extends BaseMixin(LitElement) {
 			},
 			endDate: {
 				type: Date
+			},
+			cpdLink: {
+				type: String
 			}
 		};
 	}
@@ -113,6 +116,10 @@ class CpdWidget extends BaseMixin(LitElement) {
 			.then((data) =>
 				this.subjects = data
 			);
+		this.cpdService.ParentHost(CpdRoutes.CpdHome())
+			.then(url => {
+				this.cpdLink = url;
+			});
 	}
 
 	filterChange(e) {
@@ -122,10 +129,6 @@ class CpdWidget extends BaseMixin(LitElement) {
 	formatDateString(inputDate) {
 		const date = getNonLeapYearDate(inputDate.getMonth(), inputDate.getDate());
 		return `${formatDate(date, {format: 'medium'})}`;
-	}
-
-	goToCpdClicked() {
-		this.navigate(CpdRoutes.CpdHome());
 	}
 
 	renderSelect(option) {
@@ -215,7 +218,7 @@ class CpdWidget extends BaseMixin(LitElement) {
 					</select>
 				${this.renderView(this.selectedView)}
 				<div class="cpd-link">
-					<d2l-link @click="${this.goToCpdClicked}" href="javascript:void(0)">${this.localize('goToCpd')}</d2l-link>
+					<d2l-link target="_parent" href="${this.cpdLink}">${this.localize('goToCpd')}</d2l-link>
 				</div>
 			</div>
 		`;

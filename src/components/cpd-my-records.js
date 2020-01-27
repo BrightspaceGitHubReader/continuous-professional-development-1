@@ -63,6 +63,9 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			},
 			hasEnforcedTarget: {
 				type: Boolean
+			},
+			printRecordLink: {
+				type: String
 			}
 		};
 	}
@@ -157,7 +160,19 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				.then(data => {
 					this.userDisplayName = data;
 				});
-
+			this.cpdService.ParentHost()
+				.then(url => {
+					const recordRoute = CpdRoutes.Report(this.viewUserId);
+					this.printRecordLink = `${url}${recordRoute}`;
+				});
+		} else {
+			this.cpdService.getWhoAmI()
+				.then(data => {
+					return this.cpdService.ParentHost(CpdRoutes.Report(data.Identifier));
+				})
+				.then(url => {
+					this.printRecordLink = url;
+				});
 		}
 	}
 
@@ -374,18 +389,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					</div>
 				</div>`;
 		}
-		return html`
-			<div class="header">
-				<d2l-button id="new_record" primary @click="${this.newRecordButtonClicked}">
-					${this.localize('addNewCPD')}
-				</d2l-button>
-				<div class="printLink">
-					<d2l-icon icon="tier1:print"></d2l-icon>
-					<d2l-link target="_blank" href="${CpdRoutes.Report(this.viewUserId)}">${this.localize('printRecords')}</d2l-link>
-				</div>
-			</div>
-			`;
-
+		return html ``;
 	}
 
 	render() {
@@ -393,6 +397,15 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			<div role="main">
 				${this.renderHeader(this.viewUserId)}
 				<d2l-cpd-progress-box ?hasEnforcedTarget=${this.hasEnforcedTarget} .progress="${this.progress}"></d2l-cpd-progress-box>
+				<div class="header">
+					<d2l-button id="new_record" primary @click="${this.newRecordButtonClicked}">
+						${this.localize('addNewCPD')}
+					</d2l-button>
+					<div class="printLink">
+						<d2l-icon icon="tier1:print"></d2l-icon>
+						<d2l-link target="_blank" href="${this.printRecordLink}">${this.localize('printRecords')}</d2l-link>
+					</div>
+				</div>
 				<div class="searchContainer">
 					<d2l-input-search
 						id="search_input"

@@ -118,6 +118,9 @@ export class CpdService {
 		}
 		return this.getRequest(`/d2l/api/customization/cpd/1.0/target/job?jobTitle=${jobTitle}`);
 	}
+	static async getTargetRecords(userId) {
+		return this.getRequest(this.CpdPath(this.ReportRecords(userId)));
+	}
 	static getTypes() {
 		return [ {
 			Id: 1,
@@ -131,10 +134,20 @@ export class CpdService {
 	static getUserInfo(userId) {
 		return this.getRequest(this.CpdPath(`${this.Team}/username/${userId}`));
 	}
+	static getWhoAmI() {
+		return this.getRequest(CpdRoutes.WhoAmI);
+	}
 	static get Host() { return window.data.fraSettings.valenceHost; }
 	static get Job() { return 'target/job'; }
 	static get JobTitle() { return 'target/jobtitles'; }
 	static get Method() { return 'method'; }
+	static ParentHost(route) {
+		return window.data.fraSettings.navigation.getLastD2LPage()
+			.then(page => {
+				const host = (new URL(page.url)).host;
+				return `http://${host}${route ? route : ''}`;
+			});
+	}
 	static get Pending() { return 'pending'; }
 	static postJsonRequest(base_path, object) {
 		const postRequest = new Request(`${base_path}`, {

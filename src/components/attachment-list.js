@@ -7,6 +7,7 @@ import '@brightspace-ui/core/components/list/list-item';
 import '@brightspace-ui-labs/file-uploader/d2l-file-uploader';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { BaseMixin } from '../mixins/base-mixin';
+import { CpdServiceFactory } from '../services/cpd-service-factory';
 
 class AttachmentList extends BaseMixin(LitElement) {
 
@@ -18,6 +19,12 @@ class AttachmentList extends BaseMixin(LitElement) {
 			readOnly: {
 				type: Boolean,
 				value: false
+			},
+			hostPath: {
+				type: String
+			},
+			cpdService: {
+				type: Object
 			}
 		};
 	}
@@ -30,11 +37,20 @@ class AttachmentList extends BaseMixin(LitElement) {
 	constructor() {
 		super();
 		this.attachmentsList = [];
+		this.cpdService = CpdServiceFactory.getCpdService();
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		this.cpdService.ParentHost()
+			.then(url => {
+				this.hostPath = url;
+			});
 	}
 
 	createAttachmentUrl(attachment) {
 		if (attachment.href) {
-			return attachment.href;
+			return `${this.hostPath}${attachment.href}`;
 		}
 		if (attachment instanceof File) {
 			return window.URL.createObjectURL(attachment);
@@ -83,18 +99,14 @@ class AttachmentList extends BaseMixin(LitElement) {
 		this.fireAttachmentListRemoved(removedValue);
 	}
 
-	openFile(e) {
-		const link = e.target.getAttribute('link');
-		this.navigate(link);
-	}
-
 	render() {
 		return html`
 			<d2l-list separators="none">
 				${this.attachmentsList && this.attachmentsList.map((attachment, index) => html`
 					<d2l-list-item>
-						<d2l-link @click="${this.openFile}" href="javascript:void(0)"
-							link="${this.createAttachmentUrl(attachment)}">
+						<d2l-link
+							target="_blank"
+							href="${this.createAttachmentUrl(attachment)}">
 							${attachment.name}
 						</d2l-link>
 						<span>${this.getFileSizeString(attachment.size)}</span>

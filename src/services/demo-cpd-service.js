@@ -99,6 +99,14 @@ export class DemoCpdService {
 		return Promise.resolve('First Last');
 	}
 
+	static getWhoAmI() {
+		return Promise.resolve({Identifier: 12});
+	}
+
+	static ParentHost() {
+		return Promise.resolve('host');
+	}
+
 	static updateTarget() {
 		return Promise.resolve();
 	}

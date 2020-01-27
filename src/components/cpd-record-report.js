@@ -27,6 +27,9 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 			},
 			progress: {
 				type: Object
+			},
+			userId: {
+				type: Number
 			}
 		};
 	}
@@ -55,11 +58,11 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.cpdService.getUserInfo()
+		this.cpdService.getUserInfo(this.userId)
 			.then(body => {
 				this.userInfo.DisplayName = body;
 			});
-		this.cpdService.getTargetRecords()
+		this.cpdService.getTargetRecords(this.userId)
 			.then(body => {
 				this.records = body;
 			});
