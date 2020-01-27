@@ -1,7 +1,9 @@
 import '@brightspace-ui/core/components/colors/colors';
+import '@brightspace-ui/core/components/link/link.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { getHoursRounded, getNonLeapYearDate } from  '../helpers/time-helper';
 import { BaseMixin } from '../mixins/base-mixin';
+import { CpdRoutes } from '../helpers/cpdRoutes';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
@@ -81,8 +83,9 @@ class CpdWidget extends BaseMixin(LitElement) {
 			.progress-label {
 				vertical-align: middle;
 			}
-			.progress-text {
-				padding: 12px;
+			.progress-text,
+			.cpd-link {
+				margin: 12px 0px;
 			}
 			.select-subject {
 				width: 292px;
@@ -119,6 +122,10 @@ class CpdWidget extends BaseMixin(LitElement) {
 	formatDateString(inputDate) {
 		const date = getNonLeapYearDate(inputDate.getMonth(), inputDate.getDate());
 		return `${formatDate(date, {format: 'medium'})}`;
+	}
+
+	goToCpdClicked() {
+		this.navigate(CpdRoutes.CpdHome());
 	}
 
 	renderSelect(option) {
@@ -207,6 +214,9 @@ class CpdWidget extends BaseMixin(LitElement) {
 						${this.subjects.map(option => this.renderSelect(option))}
 					</select>
 				${this.renderView(this.selectedView)}
+				<div class="cpd-link">
+					<d2l-link @click="${this.goToCpdClicked}" href="javascript:void(0)">${this.localize('goToCpd')}</d2l-link>
+				</div>
 			</div>
 		`;
 	}

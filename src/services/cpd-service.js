@@ -75,7 +75,7 @@ export class CpdService {
 							id: file.Id,
 							name: file.Name,
 							size: file.Size,
-							href: `${window.data.fraSettings.valenceHost}${file.Href}`
+							href: `${file.Href}`
 						};
 					});
 				}

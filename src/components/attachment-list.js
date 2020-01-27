@@ -83,12 +83,18 @@ class AttachmentList extends BaseMixin(LitElement) {
 		this.fireAttachmentListRemoved(removedValue);
 	}
 
+	openFile(e) {
+		const link = e.target.getAttribute('link');
+		this.navigate(link);
+	}
+
 	render() {
 		return html`
 			<d2l-list separators="none">
 				${this.attachmentsList && this.attachmentsList.map((attachment, index) => html`
 					<d2l-list-item>
-						<d2l-link href="${this.createAttachmentUrl(attachment)}" target="_blank">
+						<d2l-link @click="${this.openFile}" href="javascript:void(0)"
+							link="${this.createAttachmentUrl(attachment)}">
 							${attachment.name}
 						</d2l-link>
 						<span>${this.getFileSizeString(attachment.size)}</span>

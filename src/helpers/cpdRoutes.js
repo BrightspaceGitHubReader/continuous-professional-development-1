@@ -1,4 +1,5 @@
 export class CpdRoutes {
+	static CpdHome() { return '/d2l/custom/cpd/main'; }
 	static FullPath(action) { return `${this.Host}/d2l/api/customization/cpd/1.0/${action}`; }
 	static get Host() { return window.data.fraSettings.valenceHost; }
 	static JobTarget(jobTitle) { return `target/job?jobTitle=${encodeURIComponent(jobTitle)}`; }

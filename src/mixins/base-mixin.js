@@ -84,6 +84,10 @@ export const BaseMixin = superclass => class extends RtlMixin(LocalizeMixin(supe
 		return newObj;
 	}
 
+	navigate(url) {
+		window.data.fraSettings.navigation.go(url);
+	}
+
 	resize() {
 		window.parentIFrame && window.parentIFrame.size();
 	}
