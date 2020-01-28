@@ -11,7 +11,7 @@ export class CpdRoutes {
 	static get Question() { return 'question'; }
 	static get Record() { return 'record'; }
 	static Report(userId) { return `/d2l/custom/cpd/report/${userId}`; }
-	static ReportRecords(userId) { return `record/transcriptrecords/${userId}`; }
+	static ReportRecords(userId) { return `transcriptrecords/${userId}`; }
 	static get Subject() { return 'subject'; }
 	static get Team() { return 'team'; }
 	static get UserRecord() { return 'record/user'; }

@@ -41,7 +41,7 @@ export class CpdService {
 		api_path += `?pageNumber=${page}`;
 		if (filters) {
 			const { Name } = filters;
-			if (Name && Name.value) api_path += `&searchTerm=${Name.value}`;
+			if (Name && Name.value) api_path += `&searchTerm=${encodeURIComponent(Name.value)}`;
 		}
 		return this.getRequest(api_path);
 	}
@@ -51,7 +51,7 @@ export class CpdService {
 		api_path += `?pageNumber=${page}`;
 		if (filters) {
 			const { Name, StartDate, EndDate } = filters;
-			if (Name && Name.value) api_path += `&awardName=${Name.value}`;
+			if (Name && Name.value) api_path += `&awardName=${encodeURIComponent(Name.value)}`;
 			if (StartDate && StartDate.value) api_path += `&startDate=${dateParamString(StartDate.value)}`;
 			if (EndDate && EndDate.value) api_path += `&endDate=${dateParamString(EndDate.value, true)}`;
 		}
@@ -92,7 +92,7 @@ export class CpdService {
 			const { Subject, Method, Name, StartDate, EndDate } = filters;
 			if (Subject.value && Subject.enabled) base_path += `&subject=${Subject.value}`;
 			if (Method.value && Method.enabled) base_path += `&method=${Method.value}`;
-			if (Name.value) base_path += `&name=${Name.value}`;
+			if (Name.value) base_path += `&name=${encodeURIComponent(Name.value)}`;
 			if (StartDate.value) base_path += `&startDate=${dateParamString(StartDate.value)}`;
 			if (EndDate.value) base_path += `&endDate=${dateParamString(EndDate.value, true)}`;
 		}
@@ -114,12 +114,12 @@ export class CpdService {
 	}
 	static getSubjectTargets(jobTitle) {
 		if (!jobTitle) {
-			return this.getRequest('/d2l/api/customization/cpd/1.0/target/user');
+			return this.getRequest(CpdRoutes.Path(CpdRoutes.UserTarget));
 		}
-		return this.getRequest(`/d2l/api/customization/cpd/1.0/target/job?jobTitle=${jobTitle}`);
+		return this.getRequest(CpdRoutes.Path(CpdRoutes.JobTarget(jobTitle)));
 	}
 	static async getTargetRecords(userId) {
-		return this.getRequest(this.CpdPath(this.ReportRecords(userId)));
+		return this.getRequest(CpdRoutes.Path(CpdRoutes.ReportRecords(userId)));
 	}
 	static getTypes() {
 		return [ {
