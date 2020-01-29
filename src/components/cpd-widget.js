@@ -36,6 +36,7 @@ class CpdWidget extends BaseMixin(LitElement) {
 			}
 		};
 	}
+
 	static get styles() {
 		return [
 			selectStyles,
@@ -53,6 +54,7 @@ class CpdWidget extends BaseMixin(LitElement) {
 				flex-direction: row;
 				flex-wrap: wrap;
 			}
+
 			.progress-by-type {
 				display: grid;
 				grid-template-columns: auto auto;
@@ -61,6 +63,15 @@ class CpdWidget extends BaseMixin(LitElement) {
 				text-align: center;
 				flex-grow: 1;
 			}
+
+			@media only screen and (max-width: 299px) {
+				.progress-by-type {
+					grid-template-columns: 100%;
+					grid-template-rows: auto auto auto;
+					justify-items: center;
+				}
+			}
+
 			.progress-range {
 				display: grid;
 			}
@@ -68,7 +79,7 @@ class CpdWidget extends BaseMixin(LitElement) {
 				grid-column-end: span 2;
 			}
 			.progress-overall {
-				width: 288px;
+				width: 100%;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
@@ -91,8 +102,18 @@ class CpdWidget extends BaseMixin(LitElement) {
 				margin: 12px 0px;
 			}
 			.select-subject {
-				width: 292px;
+				width: 100%;
 				margin: 12px 0px;
+			}
+
+			@media only screen and (min-width: 594px) {
+				.select-subject {
+					max-width: 300px;
+				}
+
+				.progress-overall {
+					max-width: 300px;
+				}
 			}
 			`]
 		;
