@@ -1,10 +1,10 @@
 import './progress-overall';
 import './progress-subject';
 import { css, html, LitElement } from 'lit-element/lit-element';
+import { getHoursAndMinutes, toLocalDate } from '../helpers/time-helper';
 import { BaseMixin } from '../mixins/base-mixin';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
-import { getHoursAndMinutes } from '../helpers/time-helper';
 
 class CpdRecordReport extends BaseMixin(LitElement) {
 
@@ -46,10 +46,6 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 		this.cpdService = CpdServiceFactory.getCpdService();
 
 		this.userInfo = {};
-		this.target = {
-			StartDate: '01 January 2019',
-			EndDate: '01 January 2020'
-		};
 		this.records = [];
 		this.questions = [];
 		this.progress = {};
@@ -67,9 +63,13 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 				this.records = body;
 			});
 		this.cpdService.getProgress()
-			.then(body =>
-				this.progress = this.lowercasePropertyNames(body)
-			);
+			.then(body => {
+				this.progress = this.lowercasePropertyNames(body);
+				this.target = {
+					rangeStart: this.formatDateString(toLocalDate(this.progress.startdate)),
+					rangeEnd: this.formatDateString(toLocalDate(this.progress.enddate))
+				};
+			});
 		this.cpdService.getQuestions()
 			.then(body => {
 				const reducer = (accumulator, currentValue) => {
@@ -78,6 +78,10 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 				};
 				this.questions = body.reduce(reducer, {});
 			});
+	}
+
+	formatDateString(inputDate) {
+		return `${formatDate(inputDate, {format: 'medium'})}`;
 	}
 
 	renderRecord(record) {
@@ -105,7 +109,7 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 		return html`
 			<h1>${this.localize('userDetails')}</h1>
 			<p><b>${this.localize('userNameHeader')}</b> ${this.userInfo.DisplayName}</p>
-			<p><b>${this.localize('cpdPeriod')}</b> ${this.target.StartDate} - ${this.target.EndDate}</p>
+			<p><b>${this.localize('cpdPeriod')}</b> ${this.localize('range', this.target)}</p>
 			<h2>${this.localize('overallProgressSummary')}</h2>
 			<d2l-progress-overall
 				.progress="${this.progress}"
