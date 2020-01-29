@@ -1,4 +1,7 @@
 import dayjs from 'dayjs/esm';
+import utc from 'dayjs/esm/plugin/utc';
+
+dayjs.extend(utc);
 
 export function formatForDatePicker(date) {
 	return dayjs(date).format('YYYY-MM-DD');
@@ -63,4 +66,9 @@ export function getCurrentDate() {
 		today.setDate(28);
 	}
 	return today;
+}
+
+export function toLocalDate(dateString) {
+	const date = dayjs(dateString).utc();
+	return new Date(date.year(), date.month(), date.date());
 }

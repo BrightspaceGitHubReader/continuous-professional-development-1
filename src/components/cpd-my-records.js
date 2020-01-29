@@ -162,14 +162,11 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				});
 			this.cpdService.ParentHost()
 				.then(url => {
-					const recordRoute = CpdRoutes.Report(this.viewUserId);
+					const recordRoute = CpdRoutes.UserReport(this.viewUserId);
 					this.printRecordLink = `${url}${recordRoute}`;
 				});
 		} else {
-			this.cpdService.getWhoAmI()
-				.then(data => {
-					return this.cpdService.ParentHost(CpdRoutes.Report(data.Identifier));
-				})
+			this.cpdService.ParentHost(CpdRoutes.Report)
 				.then(url => {
 					this.printRecordLink = url;
 				});

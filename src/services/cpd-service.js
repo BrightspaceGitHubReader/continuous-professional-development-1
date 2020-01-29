@@ -118,8 +118,11 @@ export class CpdService {
 		}
 		return this.getRequest(CpdRoutes.Path(CpdRoutes.JobTarget(jobTitle)));
 	}
-	static async getTargetRecords(userId) {
-		return this.getRequest(CpdRoutes.Path(CpdRoutes.ReportRecords(userId)));
+	static getTargetRecords(userId) {
+		if (!userId) {
+			return this.getRequest(CpdRoutes.Path(CpdRoutes.ReportRecords));
+		}
+		return this.getRequest(CpdRoutes.Path(CpdRoutes.UserReportRecords(userId)));
 	}
 	static getTypes() {
 		return [ {
@@ -132,7 +135,10 @@ export class CpdService {
 		}];
 	}
 	static getUserInfo(userId) {
-		return this.getRequest(this.CpdPath(`${this.Team}/username/${userId}`));
+		if (!userId) {
+			return this.getRequest(CpdRoutes.Path(CpdRoutes.DisplayName));
+		}
+		return this.getRequest(CpdRoutes.Path(CpdRoutes.UserDisplayName(userId)));
 	}
 	static getWhoAmI() {
 		return this.getRequest(CpdRoutes.WhoAmI);

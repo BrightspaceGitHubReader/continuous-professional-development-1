@@ -1,7 +1,7 @@
 import '@brightspace-ui/core/components/colors/colors';
 import '@brightspace-ui/core/components/link/link.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { getHoursRounded, getNonLeapYearDate } from  '../helpers/time-helper';
+import { getHoursRounded, toLocalDate } from  '../helpers/time-helper';
 import { BaseMixin } from '../mixins/base-mixin';
 import { CpdRoutes } from '../helpers/cpdRoutes';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
@@ -102,16 +102,17 @@ class CpdWidget extends BaseMixin(LitElement) {
 		super();
 		this.cpdService = CpdServiceFactory.getCpdService();
 		this.selectedView = 0;
-		this.startDate = new Date();
-		this.endDate = new Date();
 	}
 
 	connectedCallback() {
 		super.connectedCallback();
 		this.cpdService.getProgress()
-			.then((data) =>
-				this.progress = this.lowercasePropertyNames(data)
-			);
+			.then((data) => {
+				this.progress = this.lowercasePropertyNames(data);
+
+				this.startDate = toLocalDate(this.progress.startdate);
+				this.endDate = toLocalDate(this.progress.enddate);
+			});
 		this.cpdService.getSubjects()
 			.then((data) =>
 				this.subjects = data
@@ -127,8 +128,7 @@ class CpdWidget extends BaseMixin(LitElement) {
 	}
 
 	formatDateString(inputDate) {
-		const date = getNonLeapYearDate(inputDate.getMonth(), inputDate.getDate());
-		return `${formatDate(date, {format: 'medium'})}`;
+		return `${formatDate(inputDate, {format: 'medium'})}`;
 	}
 
 	renderSelect(option) {
