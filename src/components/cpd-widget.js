@@ -105,7 +105,6 @@ class CpdWidget extends BaseMixin(LitElement) {
 				width: 100%;
 				margin: 12px 0px;
 			}
-
 			@media only screen and (min-width: 594px) {
 				.select-subject {
 					max-width: 300px;
@@ -216,7 +215,7 @@ class CpdWidget extends BaseMixin(LitElement) {
 	}
 
 	render() {
-		if (!this.subjects || !this.progress) {
+		if (!this.subjects || !this.progress || !this.cpdLink) {
 			return html ``;
 		}
 		return html`
