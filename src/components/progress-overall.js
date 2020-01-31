@@ -20,7 +20,7 @@ class ProgressOverall extends BaseMixin(LitElement) {
 			bodyCompactStyles,
 			css`
 			.progress-inner {
-				margin: 10px;
+				margin: 12px;
 				border: 2px solid var(--d2l-color-gypsum);
 				border-radius: 0.5em;
 				background-color: var(--d2l-color-regolith);

@@ -1,6 +1,6 @@
 import '@brightspace-ui/core/components/colors/colors';
 import '@brightspace-ui/core/components/icons/icon';
-import './view-toggle';
+import '@brightspace-ui-labs/view-toggle/view-toggle';
 import './progress-overall';
 import './progress-subject';
 import { css, html, LitElement } from 'lit-element/lit-element';
@@ -24,10 +24,10 @@ class CpdProgressBox extends BaseMixin(LitElement) {
 	static get styles() {
 		return css`
 			d2l-view-toggle {
-				padding: 10px 0;
+				margin: 12px 0;
 			}
 			d2l-progress-subject {
-				margin: 10px;
+				margin: 12px;
 				display: block;
 			}
 			d2l-progress-overall {

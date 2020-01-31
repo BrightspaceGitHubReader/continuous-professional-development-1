@@ -219,7 +219,7 @@ class CpdWidget extends BaseMixin(LitElement) {
 			return html ``;
 		}
 		return html`
-			<div @d2l-view-toggle-changed=${this.viewToggleChanged}>
+			<div>
 				<label>
 					<div class="progress-range">
 						<h4 class="d2l-heading-4">
