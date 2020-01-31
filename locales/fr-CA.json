@@ -101,7 +101,7 @@
    "subjectProgress" : "Progrès par sujet",
    "subjectTargets" : "Objectifs du sujet",
    "targetStartDay" : "Date d’entrée en vigueur de l’objectif",
-   "targetStartDayDescription" : "Choisissez entre une date du SPS récurrente ou mobile pour votre objectif annuel et le suivi de vos progrès. Une date du SPS récurrente fera le suivi des progrès pour les 364 jours avant la date du jour.",
+   "targetStartDayDescription" : "Choisissez entre une date du SPS récurrente ou mobile pour votre objectif annuel et le suivi de vos progrès. Une date du SPS récurrente fera le suivi des progrès pour les 365 jours avant la date du jour.",
    "to" : "à",
    "total" : "Total",
    "type" : "Type",

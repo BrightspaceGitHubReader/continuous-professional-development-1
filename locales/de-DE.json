@@ -101,7 +101,7 @@
    "subjectProgress" : "Fortschritt nach Fach",
    "subjectTargets" : "Fachziele",
    "targetStartDay" : "Zielstartdatum",
-   "targetStartDayDescription" : "Wählen Sie zwischen einem fortlaufenden oder einem bestimmten SPS-Datum für Ihr Jahresziel und Ihre Fortschrittsverfolgung. Ein fortlaufendes SPS-Startdatum verfolgt den Fortschritt für die letzten 364 Tage vor dem aktuellen Datum.",
+   "targetStartDayDescription" : "Wählen Sie zwischen einem fortlaufenden oder einem bestimmten SPS-Datum für Ihr Jahresziel und Ihre Fortschrittsverfolgung. Ein fortlaufendes SPS-Startdatum verfolgt den Fortschritt für die letzten 365 Tage vor dem aktuellen Datum.",
    "to" : "bis",
    "total" : "Gesamt",
    "type" : "Typ",

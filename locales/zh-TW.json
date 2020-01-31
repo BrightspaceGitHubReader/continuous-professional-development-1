@@ -101,7 +101,7 @@
    "subjectProgress" : "依學科進度",
    "subjectTargets" : "學科目標",
    "targetStartDay" : "目標開始日",
-   "targetStartDayDescription" : "為您年度目標及進度追蹤選擇滾動式或特定 SPS 日期。滾動式 SPS 開始日將會追蹤目前日期前 364 天的進度。",
+   "targetStartDayDescription" : "為您年度目標及進度追蹤選擇滾動式或特定 SPS 日期。滾動式 SPS 開始日將會追蹤目前日期前 365 天的進度。",
    "to" : "至",
    "total" : "總計",
    "type" : "類型",

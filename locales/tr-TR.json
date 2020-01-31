@@ -101,7 +101,7 @@
    "subjectProgress" : "Konuya Göre İlerleme Durumu",
    "subjectTargets" : "Konu Hedefleri",
    "targetStartDay" : "Hedef Başlangıç Günü",
-   "targetStartDayDescription" : "Yıllık hedefiniz ve ilerleme durumu takibiniz için yuvarlama ya da belirli bir SPS tarihi arasında seçim yapın. Yuvarlama SPS başlangıç günü, geçerli tarihten önceki son 364 gün için ilerleme durumunu takip edecektir.",
+   "targetStartDayDescription" : "Yıllık hedefiniz ve ilerleme durumu takibiniz için yuvarlama ya da belirli bir SPS tarihi arasında seçim yapın. Yuvarlama SPS başlangıç günü, geçerli tarihten önceki son 365 gün için ilerleme durumunu takip edecektir.",
    "to" : "Kime",
    "total" : "Toplam",
    "type" : "Tür",

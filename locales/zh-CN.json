@@ -101,7 +101,7 @@
    "subjectProgress" : "按主题列出的进度",
    "subjectTargets" : "主题目标",
    "targetStartDay" : "目标开始日",
-   "targetStartDayDescription" : "为年度目标和进度跟踪选择滚动或特定 SPS 日期。滚动 SPS 开始日将跟踪当前日期前最近 364 天的进度。",
+   "targetStartDayDescription" : "为年度目标和进度跟踪选择滚动或特定 SPS 日期。滚动 SPS 开始日将跟踪当前日期前最近 365 天的进度。",
    "to" : "至",
    "total" : "总计",
    "type" : "类型",

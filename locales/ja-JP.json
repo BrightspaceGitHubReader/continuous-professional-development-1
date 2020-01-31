@@ -101,7 +101,7 @@
    "subjectProgress" : "科目ごとの進捗状況",
    "subjectTargets" : "科目目標",
    "targetStartDay" : "目標開始日",
-   "targetStartDayDescription" : "ローリング SPS 日または特定の SPS 日を選択して年間目標および進捗状況の追跡を行います。ローリング SPS 開始日は、現在の日付から 364 日間さかのぼって進捗状況を追跡します。",
+   "targetStartDayDescription" : "ローリング SPS 日または特定の SPS 日を選択して年間目標および進捗状況の追跡を行います。ローリング SPS 開始日は、現在の日付から 365 日間さかのぼって進捗状況を追跡します。",
    "to" : "～",
    "total" : "合計",
    "type" : "タイプ",

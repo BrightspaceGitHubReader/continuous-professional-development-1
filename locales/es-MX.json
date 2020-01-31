@@ -101,7 +101,7 @@
    "subjectProgress" : "Progreso por tema",
    "subjectTargets" : "Objetivos del tema",
    "targetStartDay" : "Día de inicio objetivo",
-   "targetStartDayDescription" : "Elija entre una fecha de SPS continua o específica para su objetivo anual y el seguimiento del progreso. Un día de inicio de SPS continuo realizará un seguimiento del progreso de los últimos 364 días antes de la fecha actual.",
+   "targetStartDayDescription" : "Elija entre una fecha de SPS continua o específica para su objetivo anual y el seguimiento del progreso. Un día de inicio de SPS continuo realizará un seguimiento del progreso de los últimos 365 días antes de la fecha actual.",
    "to" : "para",
    "total" : "Total",
    "type" : "Tipo",

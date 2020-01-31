@@ -101,7 +101,7 @@
   "subjectProgress": "Progress by Subject",
   "subjectTargets": "Subject Targets",
   "targetStartDay": "Target Start Day",
-  "targetStartDayDescription": "Choose between a rolling or specific SPS date for your annual target and progress tracking. A rolling SPS start day will track progress for the last 364 days prior to the current date.",
+  "targetStartDayDescription": "Choose between a rolling or specific SPS date for your annual target and progress tracking. A rolling SPS start day will track progress for the last 365 days prior to the current date.",
   "to": "to",
   "total": "Total",
   "type": "Type",

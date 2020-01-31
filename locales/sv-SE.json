@@ -101,7 +101,7 @@
    "subjectProgress" : "Framsteg efter ämne",
    "subjectTargets" : "Ämnesmål",
    "targetStartDay" : "Målstartdag",
-   "targetStartDayDescription" : "Välj mellan ett rullande eller ett specifikt SPS-datum för ditt årliga mål och din uppföljning. Med ett rullande SPS-startdatum spåras dina framsteg under de senaste 364 dagarna före det aktuella datumet.",
+   "targetStartDayDescription" : "Välj mellan ett rullande eller ett specifikt SPS-datum för ditt årliga mål och din uppföljning. Med ett rullande SPS-startdatum spåras dina framsteg under de senaste 365 dagarna före det aktuella datumet.",
    "to" : "till",
    "total" : "Totalt antal",
    "type" : "Typ",

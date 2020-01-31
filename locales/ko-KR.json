@@ -101,7 +101,7 @@
    "subjectProgress" : "주제별 진행 사항",
    "subjectTargets" : "대상 목표",
    "targetStartDay" : "목표 시작일",
-   "targetStartDayDescription" : "연간 목표 및 진행 상황 추적을 위해 롤링 SPS 또는 특정 SPS 날짜 중에서 선택합니다. 롤링 SPS 시작일은 현재 날짜 이전 마지막 364일 동안의 진행 상황을 추적합니다.",
+   "targetStartDayDescription" : "연간 목표 및 진행 상황 추적을 위해 롤링 SPS 또는 특정 SPS 날짜 중에서 선택합니다. 롤링 SPS 시작일은 현재 날짜 이전 마지막 365일 동안의 진행 상황을 추적합니다.",
    "to" : "~",
    "total" : "총",
    "type" : "유형",

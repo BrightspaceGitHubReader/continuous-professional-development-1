@@ -101,7 +101,7 @@
    "subjectProgress" : "Voortgang per onderwerp",
    "subjectTargets" : "Onderwerpdoelen",
    "targetStartDay" : "Startdag doel",
-   "targetStartDayDescription" : "Kies tussen en schuivende of specifieke SPS-datum voor uw jaardoel en het bijhouden van de voortgang. Met een schuivende SPS-startdag wordt de voortgang de 364 dagen vóór de huidige datum bijgehouden.",
+   "targetStartDayDescription" : "Kies tussen en schuivende of specifieke SPS-datum voor uw jaardoel en het bijhouden van de voortgang. Met een schuivende SPS-startdag wordt de voortgang de 365 dagen vóór de huidige datum bijgehouden.",
    "to" : "tot",
    "total" : "Totaal",
    "type" : "Type",
