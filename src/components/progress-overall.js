@@ -1,10 +1,10 @@
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/meter/meter-circle';
 import '@brightspace-ui/core/components/meter/meter-radial';
+import { bodyCompactStyles, bodySmallStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { getHoursRounded, roundToOneDecimal } from '../helpers/time-helper';
 import { BaseMixin } from '../mixins/base-mixin';
-import { bodyCompactStyles } from '@brightspace-ui/core/components/typography/styles';
 import { formatTotalProgress } from '../helpers/progress-helper';
 
 class ProgressOverall extends BaseMixin(LitElement) {
@@ -18,6 +18,7 @@ class ProgressOverall extends BaseMixin(LitElement) {
 	static get styles() {
 		return [
 			bodyCompactStyles,
+			bodySmallStyles,
 			css`
 			.progress-inner {
 				margin: 12px;
@@ -83,6 +84,22 @@ class ProgressOverall extends BaseMixin(LitElement) {
 			@media (max-width: 929px) {
 				.progress-inner-chevron {
 					display: none;
+				}
+			}
+
+			@media print {
+				.progress-inner {
+					border: 2px solid var(--d2l-color-gypsum);
+					border-radius: 0.5em;
+					background-color: var(--d2l-color-regolith);
+					display: grid;
+					grid-template-columns: 1fr auto 1fr;
+					grid-gap: 0px;
+					align-items: center;
+					justify-items: center;
+				}
+				.progress-inner-chevron {
+					display: inline-block;
 				}
 			}
 			`

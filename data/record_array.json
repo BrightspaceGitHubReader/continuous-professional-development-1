@@ -1,10 +1,14 @@
 [
 		{
       "RecordId": 1,
-			"RecordName": "Capstone Project",
-			"SubjectName": "Math",
-			"IsStructured": true,
-			"MethodName": "TBD",
+      "Name": "Capstone Project",
+      "Subject": {
+        "Name": "Math"
+      },
+      "IsStructured": true,
+      "Method": {
+        "Name": "TBD"
+      },
 			"CreditMinutes": "100",
 			"DateCompleted": "01/01/2019",
       "Answers": [
@@ -18,14 +22,31 @@
           "Text": "They hate him",
           "AnswerId": 4
         }
-      ]
-		},
+      ],
+      "Grade": "97.0",
+      "Attachments": {
+        "Files": [
+          {
+            "Name": "Resume.pdf",
+            "Id": 1
+          },
+          {
+            "Name": "CoverLetter.pdf",
+            "Id": 2
+          }
+        ]
+      }
+    },
 		{
       "RecordId": 2,
-			"RecordName": "Group Assignment",
-			"SubjectName": "Management",
-			"IsStructured": false,
-			"MethodName": "TBD",
+      "Name": "Group Assignment",
+      "Subject": {
+        "Name": "Management"
+      },
+      "IsStructured": false,
+      "Method": {
+        "Name": "TBD"
+      },
 			"CreditMinutes": "60",
 			"DateCompleted": "01/01/2019",
       "Answers": [
@@ -38,12 +59,17 @@
 		},
 		{
       "RecordId": 3,
-			"RecordName": "English 101",
-			"SubjectName": "English",
+      "Name": "English 101",
+      "Subject": {
+        "Name": "English"
+      },
 			"IsStructured": true,
-			"MethodName": "TBD",
+			"Method": {
+        "Name": "TBD"
+      },
 			"CreditMinutes": "20",
-			"DateCompleted": "10/12/2019",
+      "DateCompleted": "10/12/2019",
+      "Grade": "97.0",
       "Answers": [
         {
           "QuestionId": 1,

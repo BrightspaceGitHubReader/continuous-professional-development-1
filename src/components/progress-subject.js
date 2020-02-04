@@ -35,6 +35,9 @@ class ProgressSubject extends BaseMixin(LitElement) {
 			.progress-label {
 				vertical-align: middle;
 			}
+			d2l-meter-linear {
+				-webkit-print-color-adjust: exact;
+			}
 			`
 		];
 	}

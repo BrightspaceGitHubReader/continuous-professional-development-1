@@ -1,11 +1,11 @@
 {
     "Structured": {
-        "Numerator": 0,
-        "Denominator": 0
+        "Numerator": 10,
+        "Denominator": 5
     },
     "Unstructured": {
-        "Numerator": 0,
-        "Denominator": 0
+        "Numerator": 8,
+        "Denominator": 20
     },
     "SubjectProgress": [
         {
@@ -14,11 +14,11 @@
                 "Name": "Mortgage"
             },
             "Structured": {
-                "Numerator": 0,
-                "Denominator": 0
+                "Numerator": 6,
+                "Denominator": 12
             },
             "Unstructured": {
-                "Numerator": 61,
+                "Numerator": 3,
                 "Denominator": 0
             }
         },
@@ -28,12 +28,12 @@
                 "Name": "Protection"
             },
             "Structured": {
-                "Numerator": 0,
-                "Denominator": 0
+                "Numerator": 4,
+                "Denominator": 20
             },
             "Unstructured": {
-                "Numerator": 0,
-                "Denominator": 0
+                "Numerator": 1,
+                "Denominator": 5
             }
         },
         {
@@ -42,12 +42,12 @@
                 "Name": "General Insurance"
             },
             "Structured": {
-                "Numerator": 0,
-                "Denominator": 0
+                "Numerator": 12,
+                "Denominator": 40
             },
             "Unstructured": {
-                "Numerator": 0,
-                "Denominator": 0
+                "Numerator": 15,
+                "Denominator": 6
             }
         },
         {
@@ -56,12 +56,12 @@
                 "Name": "Investment"
             },
             "Structured": {
-                "Numerator": 0,
-                "Denominator": 0
+                "Numerator": 2,
+                "Denominator": 10
             },
             "Unstructured": {
-                "Numerator": 0,
-                "Denominator": 0
+                "Numerator": 1,
+                "Denominator": 10
             }
         },
         {
