@@ -1,4 +1,4 @@
-import { dateParamString, getHoursAndMinutes } from '../src/helpers/time-helper';
+import { dateParamString, getCurrentDate, getHoursAndMinutes } from '../src/helpers/time-helper';
 import dayjs from 'dayjs';
 import { expect } from 'chai';
 
@@ -45,6 +45,33 @@ describe('TimeHelpers', () => {
 			const result = getHoursAndMinutes(minutes);
 			expect(result.hours).to.equal(0);
 			expect(result.minutes).to.equal(40);
+		});
+	});
+	describe('getCurrentDate', () => {
+		let originalDateNow;
+		beforeEach(() => {
+			originalDateNow = Date.now;
+		});
+		afterEach(() => {
+			Date.now = originalDateNow;
+		});
+		const mockDateFeb29 = () => {
+			return new Date(2020, 1, 29);
+		};
+		const mockDateNotFeb29 = () => {
+			return new Date(2020, 6, 12);
+		};
+		it('should return Feb 28th date if the current date is Feb 29th in a leap year', () => {
+			Date.now = mockDateFeb29;
+			const currentDate = getCurrentDate();
+			expect(currentDate.getMonth()).to.equal(1);
+			expect(currentDate.getDate()).to.equal(28);
+		});
+		it('should return current date if the current date is not Feb 29th in a leap year', () => {
+			Date.now = mockDateNotFeb29;
+			const currentDate = getCurrentDate();
+			expect(currentDate.getMonth()).to.equal(6);
+			expect(currentDate.getDate()).to.equal(12);
 		});
 	});
 });

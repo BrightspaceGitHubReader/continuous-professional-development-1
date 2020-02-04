@@ -61,7 +61,7 @@ export function getNonLeapYearDate(month, date) {
 }
 
 export function getCurrentDate() {
-	const today = new Date();
+	const today = new Date(Date.now());
 	if (today.getMonth() === 1 && today.getDate() === 29) {
 		today.setDate(28);
 	}
