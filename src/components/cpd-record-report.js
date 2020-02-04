@@ -1,6 +1,7 @@
 import './progress-overall';
 import './progress-subject';
 import 'd2l-html-editor/d2l-html-editor';
+import '@brightspace-ui/core/components/button/button';
 import '@brightspace-ui/core/components/colors/colors';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { getHoursAndMinutes, toLocalDate } from '../helpers/time-helper';
@@ -89,6 +90,13 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 				margin-top: 0.2rem;
 				margin-bottom: 0.2rem;
 			}
+			.print-button {
+				float: right;
+				margin: 12px;
+			}
+			.print-button[dir="rtl"] {
+				float: left;
+			}
 			.progress-header {
 				margin-top: 60px;
 				margin-bottom: 20px;
@@ -100,6 +108,9 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 				.container {
 					padding: 0px;
 					width: 7.5in;
+				}
+				.print-button {
+					display: none;
 				}
 			}
 			`
@@ -154,6 +165,10 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 
 	formatDateString(inputDate) {
 		return `${formatDate(inputDate, {format: 'medium'})}`;
+	}
+
+	print() {
+		window.print();
 	}
 
 	renderRecord(record) {
@@ -213,6 +228,7 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 	render() {
 		return html`
 			<div class="container d2l-typography">
+				<d2l-button class="print-button" primary @click="${this.print}">${this.localize('printRecords')}</d2l-button>
 				<div class="report-header">
 					<div>
 						<div class="d2l-heading-1">${this.localize('cpdLog')}</div>
