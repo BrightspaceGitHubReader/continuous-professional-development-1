@@ -35,7 +35,7 @@
     "build": "polymer build && frau-appconfig-builder",
     "build:local": "polymer build --name dev && frau-appconfig-builder --dist ./build/dev",
     "lint": "eslint . --ext .js,.html",
-    "publish:dev:cdn": "npm run build && frau-publisher",
+    "publish:dev:cdn": "frau-publisher",
     "resolver": "frau-local-appresolver",
     "test": "npm run test:local && npm run test:mocha && npm run lint",
     "test:local": "polymer test --skip-plugin sauce",
