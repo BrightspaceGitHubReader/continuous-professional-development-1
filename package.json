@@ -1,6 +1,6 @@
 {
   "appId": "urn:d2l:fra:class:continuous-professional-development",
-  "name": "@brightspace-ui/cpd",
+  "name": "d2l-cpd",
   "description": "Continuous Professional Development",
   "repository": "https://github.com/BrightspaceUI/cpd.git",
   "version": "1.1.2",
