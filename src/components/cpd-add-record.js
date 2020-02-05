@@ -31,6 +31,9 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			recordId: {
 				type: Number
 			},
+			saving: {
+				type: Boolean
+			},
 			subjects: {
 				type: Array
 			},
@@ -205,7 +208,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 		if (this.validateForm()) {
 			return;
 		}
-
+		this.saving = true;
 		const record = {
 			Name: this.shadowRoot.querySelector('#recordName').value,
 			SubjectId: this.shadowRoot.querySelector('#subjectSelect').value,
@@ -327,7 +330,7 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					${this.questions.map((q) => this.renderQuestion(q))}
 				</ul>
 				<div>
-					<d2l-button @click="${this.saveForm}">${this.localize('save')}</d2l-button>
+					<d2l-button ?disabled="${this.saving}" @click="${this.saveForm}" >${this.localize('save')}</d2l-button>
 					<d2l-button @click="${this.cancelForm}">${this.localize('cancel')}</d2l-button>
 				</div>
 
