@@ -1,5 +1,6 @@
 import './progress-overall';
 import './progress-subject';
+import './cpd-report-logo';
 import 'd2l-html-editor/d2l-html-editor';
 import '@brightspace-ui/core/components/button/button';
 import '@brightspace-ui/core/components/colors/colors';
@@ -103,6 +104,10 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 			}
 			p.attachment {
 				margin-top: 0.2rem;
+			}
+			.logo-container {
+				align-self: center;
+				justify-self: end;
 			}
 			@media print {
 				.container {
@@ -243,6 +248,7 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 						</div>
 					</div>
 					<div class="logo-container">
+						<d2l-cpd-report-logo></d2l-cpd-report-logo>
 					</div>
 				</div>
 				<div class="d2l-heading-2 progress-header">${this.localize('overallProgressSummary')}</div>
