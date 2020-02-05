@@ -34,7 +34,7 @@ class ProgressOverall extends BaseMixin(LitElement) {
 			.progress-inner-meter {
 				display: flex;
 				flex-direction: column;
-				justify-content: center;
+				justify-content: flex-start;
 				align-items: center;
 			}
 			.progress-inner-split {
@@ -60,6 +60,7 @@ class ProgressOverall extends BaseMixin(LitElement) {
 			}
 			.progress-inner-summary {
 				display: flex;
+				width: 450px;
 				align-items: center;
 			}
 			.progress-inner-summary > div {
