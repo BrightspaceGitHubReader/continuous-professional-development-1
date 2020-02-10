@@ -202,6 +202,10 @@ export class CpdService {
 		return this.putWithFilesRequest(`${this.CpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
 	}
 
+	static updateSubject(subjectId, subject) {
+		return this.postJsonRequest(`${this.CpdPath(this.Subject)}/${subjectId}}`, subject);
+	}
+
 	static updateTarget(jobTitle, target) {
 		if (jobTitle) {
 			return this.postJsonRequest(CpdRoutes.FullPath(CpdRoutes.JobTarget(jobTitle)), target);

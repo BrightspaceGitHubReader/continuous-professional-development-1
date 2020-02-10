@@ -6,11 +6,17 @@ const getOptions = {
 	mode: 'cors'
 };
 
+const deletedSubjects = [];
+
 export class DemoCpdService {
 
 	static createRecord() {}
 
 	static deleteRecord() {}
+
+	static deleteSubject(subjectId) {
+		deletedSubjects.push(subjectId);
+	}
 
 	static getJobTitle() {
 		return Promise.resolve('Cool Job');
@@ -68,7 +74,7 @@ export class DemoCpdService {
 			{'Id': 2, 'Name': 'Art'},
 			{'Id': 3, 'Name': 'Mortgages'}
 		];
-		return Promise.resolve(data);
+		return Promise.resolve(data.filter(x => deletedSubjects.indexOf(`${x.Id}`) === -1));
 	}
 
 	static getSubjectTargets(jobTitle) {

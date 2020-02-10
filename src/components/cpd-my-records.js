@@ -332,10 +332,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					<d2l-button-icon
 						@click="${this.deleteRecordButtonClicked}"
 						icon="tier1:delete"
-						text="${this.localize('delete', {recordName})}"
+						text="${this.localize('deleteItem', {itemName: recordName})}"
 						record-id="${record.RecordId}">
 					</d2l-button-icon>
-					<d2l-dialog-confirm title-text="${this.localize('delete', {recordName})}" text="${this.localize('confirmDeleteRecord')}" @d2l-dialog-close="${this.deleteRecord}" >
+					<d2l-dialog-confirm title-text="${this.localize('deleteItem', {itemName: recordName})}" text="${this.localize('confirmDeleteRecord')}" @d2l-dialog-close="${this.deleteRecord}" >
 						<d2l-button slot="footer" primary dialog-action="yes">${this.localize('yes')}</d2l-button>
 						<d2l-button slot="footer" dialog-action>${this.localize('no')}</d2l-button>
 					</d2l-dialog-confirm>
