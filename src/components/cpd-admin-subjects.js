@@ -1,7 +1,8 @@
+import 'd2l-dnd-sortable/d2l-dnd-sortable';
 import 'd2l-dropdown/d2l-dropdown-context-menu';
 import 'd2l-dropdown/d2l-dropdown-content';
-import '@brightspace-ui/core/components/menu/menu';
-import '@brightspace-ui/core/components/menu/menu-item';
+import '@brightspace-ui/core/components/dialog/dialog';
+import '@brightspace-ui/core/components/dialog/dialog-confirm';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { BaseMixin } from '../mixins/base-mixin';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
@@ -31,6 +32,9 @@ class CpdAdminSubjects extends BaseMixin(LitElement) {
 		super();
 		this.cpdService = CpdServiceFactory.getCpdService();
 	}
+	addSubject() {
+		this.shadowRoot.querySelector('#create-subject-dialog').open();
+	}
 	connectedCallback() {
 		super.connectedCallback();
 		this.fetchSubjects();
@@ -50,7 +54,9 @@ class CpdAdminSubjects extends BaseMixin(LitElement) {
 	fetchSubjects() {
 		this.cpdService.getSubjects().then(data => this.subjects = data);
 	}
-
+	openEditDialog() {
+		this.shadowRoot.querySelector('#create-subject-dialog').open();
+	}
 	renderRow(subject) {
 		return html`
 		<tr>
@@ -74,11 +80,17 @@ class CpdAdminSubjects extends BaseMixin(LitElement) {
 		</tr>
 		`;
 	}
-
+	save() {
+		const subject = {
+			Name: this.shadowRoot.querySelector('#objectName').value,
+			SortOrder: 0
+		};
+		this.cpdService.createSubject(subject).then(() => this.fetchSubjects());
+	}
 	render() {
 		return html`
 		<div>
-			<d2l-button primary>${this.localize('addSubject')}</d2l-button>
+			<d2l-button primary @click="${this.addSubject}">${this.localize('addSubject')}</d2l-button>
 		</div>
 
 		<table>
@@ -91,6 +103,18 @@ class CpdAdminSubjects extends BaseMixin(LitElement) {
 			</thead>
 			${this.subjects && this.subjects.map(subject => this.renderRow(subject))}
 		</table>
+		<div>
+			<d2l-dialog id="create-subject-dialog" title-text="${this.localize('subjectTargets')}">
+				<d2l-input-text
+					id="objectName"
+					label="${this.localize('subjectName')}"
+					placeholder="${this.localize('subjectNamePlaceholder')}"
+					value=${this.objectData && this.objectData.Name || ''}>
+				</d2l-input-text>
+				<d2l-button @click="${this.save}" dialog-action primary>${this.localize('save')}</d2l-button>
+				<d2l-button dialog-action>${this.localize('cancel')}</d2l-button>
+			</d2l-dialog>
+		</div>
 		`;
 	}
 }

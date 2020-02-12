@@ -12,6 +12,8 @@ export class DemoCpdService {
 
 	static createRecord() {}
 
+	static createSubject() {}
+
 	static deleteRecord() {}
 
 	static deleteSubject(subjectId) {
