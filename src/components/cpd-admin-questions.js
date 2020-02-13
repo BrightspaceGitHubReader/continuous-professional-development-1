@@ -46,7 +46,7 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 			.then(() => this.fetchQuestions());
 	}
 	fetchQuestions() {
-		this.cpdService.getQuestions().then(data => this.questions = data);
+		return this.cpdService.getQuestions().then(data => this.questions = data);
 	}
 	openEditDialog(e) {
 		const item = e.target.getAttribute('item-json') &&
@@ -65,7 +65,7 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 				<d2l-dropdown-context-menu>
 					<d2l-dropdown-content id="questionDropdown-${item.Id}">
 						<d2l-menu>
-							<d2l-menu-item item-id="${item.Id}" @click="${this.openEditDialog}" text="${this.localize('edit')}"></d2l-menu-item>
+							<d2l-menu-item item-id="${item.Id}" @click="${this.openEditDialog}" text="${this.localize('edit')}" item-json="${JSON.stringify(item)}"></d2l-menu-item>
 							<d2l-menu-item item-id="${item.Id}" @click="${this.delete}" text="${this.localize('delete')}"></d2l-menu-item>
 						</d2l-menu>
 					</d2l-dropdown-content>
@@ -75,11 +75,18 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 		`;
 	}
 	save() {
-		const question = {
-			QuestionText: this.shadowRoot.querySelector('#objectName').value,
-			SortOrder: 0
-		};
-		this.cpdService.createQuestion(question).then(() => this.fetchQuestions());
+		this.objectData.QuestionText = this.shadowRoot.querySelector('#objectName').value;
+
+		if (!this.objectData.Id) {
+			this.objectData.SortOrder = 0;
+			this.cpdService.createQuestion(this.objectData)
+				.then(() => this.fetchQuestions()
+					.then(() => this.objectData = {}));
+		} else {
+			this.cpdService.updateQuestion(this.objectData.Id, this.objectData)
+				.then(() => this.fetchQuestions());
+		}
+
 	}
 	render() {
 
@@ -97,7 +104,7 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 
 
 		<div>
-			<d2l-dialog id="create-question-dialog" title-text="${this.localize('editQuestion')}">
+			<d2l-dialog id="create-question-dialog" title-text="${this.objectData && this.objectData.QuestionText ? this.localize('editQuestion') : this.localize('addQuestion')}">
 				<d2l-input-text
 					id="objectName"
 					label="${this.localize('questionName')}"

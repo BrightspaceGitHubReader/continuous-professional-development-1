@@ -224,7 +224,16 @@ export class CpdService {
 		});
 		return d2lfetch.fetch(postRequest);
 	}
-
+	static putJsonRequest(base_path, object) {
+		const putRequest = new Request(`${this.Host}${base_path}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type' : 'application/json'
+			},
+			body: JSON.stringify(object)
+		});
+		return d2lfetch.fetch(putRequest);
+	}
 	static putWithFilesRequest(base_path, object, files, removedFiles) {
 		const data = new FormData();
 		data.append('record', JSON.stringify(object));
@@ -257,6 +266,9 @@ export class CpdService {
 			};
 		};
 	}
+	static updateQuestion(questionId, question) {
+		return this.putJsonRequest(`${this.CpdPath(CpdRoutes.QuestionId(questionId))}`, question);
+	}
 	static updateRecord(recordId, record, files, removedFiles) {
 		return this.putWithFilesRequest(`${this.CpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
 	}
@@ -276,4 +288,5 @@ export class CpdService {
 	static updateTargetDate(date, jobTitle) {
 		return this.postJsonRequest(jobTitle ? CpdRoutes.FullPath(CpdRoutes.JobTargetStartDate(jobTitle)) : CpdRoutes.FullPath(CpdRoutes.UserTargetStartDate), date);
 	}
+
 }
