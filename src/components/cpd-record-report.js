@@ -12,6 +12,7 @@ import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdSharedStyles } from '../styles/cpd-shared-styles';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 
 class CpdRecordReport extends BaseMixin(LitElement) {
 
@@ -163,11 +164,6 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 			});
 	}
 
-	getQuestionKey(record, questionId) {
-		const answer = record && record.Answers && record.Answers.find(a => a.QuestionId === questionId) || false;
-		return answer ? 're-render' : 'render';
-	}
-
 	formatDateString(inputDate) {
 		return `${formatDate(inputDate, {format: 'medium'})}`;
 	}
@@ -218,14 +214,9 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 				<div class="d2l-heading-3">
 					${question}
 				</div>
-				<d2l-html-editor
-					key="${this.getQuestionKey(this.records, question.Id)}"
-					editor-id="answertext-${recordId}-${answer.QuestionId}-editor"
-					disabled
-					app-root=${`${window.location.href.replace(/[^/]*$/, '')}node_modules/d2l-html-editor/`}
-					content="${answer.Text}">
-						<div id="answertext-${recordId}-${answer.QuestionId}-editor" role="textbox" class="d2l-richtext-editor-container"></div>
-				</d2l-html-editor>
+				<div>
+					${unsafeHTML(answer.Text)}
+				</div>
 			<div>
 		`;
 	}
