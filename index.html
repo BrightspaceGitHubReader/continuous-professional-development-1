@@ -43,7 +43,7 @@
 		};
 		const loadCpdAdmin = function(frauSettings) {
 			const cpdAdmin = document.createElement('d2l-cpd-admin');
-			cpdAdmin.setAttribute('context', frauSettings)
+			cpdAdmin.setAttribute('context', JSON.stringify(frauSettings));
 			const loadingSpinner = document.getElementById('loading-spinner');
 			document.body.removeChild(loadingSpinner);
 			document.body.appendChild(cpdAdmin);
