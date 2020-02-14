@@ -10,6 +10,10 @@
     "package.json",
     "index.html"
   ],
+  "lint": {
+    "rules": [],
+    "ignoreWarnings": ["non-literal-import"]
+  },
   "extraDependencies": [
     "node_modules/@webcomponents/**",
     "node_modules/d2l-html-editor/**"

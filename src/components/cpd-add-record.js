@@ -1,3 +1,4 @@
+import '@brightspace-ui/core/components/button/button';
 import '@brightspace-ui/core/components/inputs/input-text';
 import './attachments';
 import 'd2l-date-picker/d2l-date-picker';
