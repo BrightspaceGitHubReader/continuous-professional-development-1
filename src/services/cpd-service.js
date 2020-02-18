@@ -251,9 +251,15 @@ export class CpdService {
 	static get Subject() { return 'subject'; }
 	static get Target() {return 'target';}
 	static get Team() { return 'team'; }
+	static updateItemSortOrder(type, id, sortOrder) {
+		return this.putJsonRequest(`${this.CpdPath(CpdRoutes.ItemSortOrder(type, id))}`, {
+			NewSortOrder: sortOrder
+		});
+	}
 	static updateQuestion(questionId, question) {
 		return this.putJsonRequest(`${this.CpdPath(CpdRoutes.QuestionId(questionId))}`, question);
 	}
+
 	static updateRecord(recordId, record, files, removedFiles) {
 		return this.putWithFilesRequest(`${this.CpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
 	}

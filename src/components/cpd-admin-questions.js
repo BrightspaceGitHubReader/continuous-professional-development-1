@@ -16,8 +16,14 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 			questions: {
 				type: Array
 			},
+			sortable: {
+				type: Boolean
+			},
 			objectData: {
 				type: Object
+			},
+			showContent: {
+				type: Boolean
 			}
 		};
 	}
@@ -35,6 +41,8 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 	constructor() {
 		super();
 		this.cpdService = CpdServiceFactory.getCpdService();
+		this.sortable = true;
+		this.showContent = true;
 	}
 	connectedCallback() {
 		super.connectedCallback();
@@ -55,7 +63,7 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 	}
 	renderRow(item) {
 		return html`
-		<li>
+		<li item-id="${item.Id}">
 			<div>
 				<d2l-icon class="drag-handle" icon="d2l-tier1:dragger"></d2l-icon>
 			</div>
@@ -65,7 +73,11 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 					<d2l-dropdown-content id="questionDropdown-${item.Id}">
 						<d2l-menu>
 							<d2l-menu-item item-id="${item.Id}" @click="${this.openEditDialog}" text="${this.localize('edit')}" item-json="${JSON.stringify(item)}"></d2l-menu-item>
-							<d2l-menu-item item-id="${item.Id}" @click="${this.delete}" text="${this.localize('delete')}"></d2l-menu-item>
+							${item.InUse ? html`` : html`
+							<d2l-menu-item
+								item-id="${item.Id}"
+								@click="${this.delete}"
+								text="${this.localize('delete')}"></d2l-menu-item>`}
 						</d2l-menu>
 					</d2l-dropdown-content>
 				</d2l-dropdown-context-menu>
@@ -87,21 +99,34 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 		}
 
 	}
+	async sorted(e) {
+		this.sortable = false;
+		const itemId = this.questions[e.detail.oldIndex].Id;
+		const newSortOrder = e.detail.newIndex + 1;
+		this.showContent = false;
+		await this.cpdService.updateItemSortOrder('question', itemId, newSortOrder);
+		await this.fetchQuestions();
+		this.sortable = true;
+		this.showContent = true;
+	}
+	renderList() {
+		if (!this.showContent) {
+			return html``;
+		}
+		return html`
+		<ul @d2l-dnd-sorted="${this.sorted}">
+			<d2l-dnd-sortable handle=".drag-handle" ?disabled="${!this.sortable}">
+				${this.questions && this.questions.map(question => this.renderRow(question))}
+			</d2l-dnd-sortable>
+		</ul>
+		`;
+	}
 	render() {
-
 		return html`
 		<div>
 			<d2l-button primary @click="${this.openEditDialog}">${this.localize('addQuestion')}</d2l-button>
 		</div>
-		<ul>
-			<d2l-dnd-sortable
-				handle=".drag-handle"
-			>
-				${this.questions && this.questions.map(question => this.renderRow(question))}
-			</d2l-dnd-sortable>
-		</ul>
-
-
+		${this.renderList()}
 		<div>
 			<d2l-dialog id="create-question-dialog" title-text="${this.objectData && this.objectData.QuestionText ? this.localize('editQuestion') : this.localize('addQuestion')}">
 				<d2l-input-text

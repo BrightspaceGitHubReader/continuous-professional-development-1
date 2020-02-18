@@ -3,6 +3,7 @@ export class CpdRoutes {
 	static get DisplayName() { return 'team/username'; }
 	static FullPath(action) { return `${this.Host}/d2l/api/customization/cpd/1.0/${action}`; }
 	static get Host() { return window.data.fraSettings.valenceHost; }
+	static ItemSortOrder(type, id) { return `${type}/${id}/sortorder`; }
 	static JobTarget(jobTitle) { return `target/job?jobTitle=${encodeURIComponent(jobTitle)}`; }
 	static JobTargetStartDate(jobTitle) { return `target/job/startDate?jobTitle=${encodeURIComponent(jobTitle)}`; }
 	static get Method() { return 'method'; }

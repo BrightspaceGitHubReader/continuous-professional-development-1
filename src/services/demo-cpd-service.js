@@ -59,8 +59,10 @@ export class DemoCpdService {
 
 	static getQuestions() {
 		const data = [
-			{Id:1, QuestionText:'Why is Ben moving?'},
-			{Id:2, QuestionText:"Why don't Tom's monitors work?"}
+			{Id:1, QuestionText:'Why is Ben moving?', SortOrder: 1},
+			{Id:2, QuestionText:"Why don't Tom's monitors work?"},
+			{Id:3, QuestionText:'When do snacks come?'},
+			{Id:4, QuestionText:'What did you learn?', InUse: true}
 		];
 		return Promise.resolve(data);
 	}
