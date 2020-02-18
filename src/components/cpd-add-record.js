@@ -134,7 +134,6 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					this.record = body;
 				});
 		}
-
 		if (this.awardRecord) {
 			this.record = {
 				Name: this.awardRecord.Name,
