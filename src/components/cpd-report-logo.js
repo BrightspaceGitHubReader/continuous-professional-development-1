@@ -1,4 +1,4 @@
-import { LitElement, html, svg } from 'lit-element/lit-element';
+import { html, LitElement, svg } from 'lit-element/lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 
 const baseUrl = import.meta.url;
