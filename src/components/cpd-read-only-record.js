@@ -149,10 +149,12 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 								<label for="creditMinutes" class="d2l-label-text">${this.localize('creditHours')}</label>
 								<p id="creditMinutes">${this.localize('shortTimeDuration', getHoursAndMinutes(this.record.CreditMinutes))}</p>
 							</div>
-							<div>
-								<label for="gradeValue" class="d2l-label-text">${this.localize('grade')}</label>
-								<p id="gradeValue">${this.localize('percent', decimalToPercent(this.record.Grade)) || this.localize('noGrade')}</p>
-							</div>
+							${this.record && this.record.Grade ? html`
+								<div>
+									<label for="gradeValue" class="d2l-label-text">${this.localize('grade')}</label>
+									<p id="gradeValue">${this.localize('percent', decimalToPercent(this.record.Grade)) || this.localize('noGrade')}</p>
+								</div>
+							` : html ``}
 						</div>
 					</li>
 					<li>
