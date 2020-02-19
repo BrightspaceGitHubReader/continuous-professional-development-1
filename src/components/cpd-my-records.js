@@ -381,7 +381,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 						</h2>
 						<div class="printLink">
 							<d2l-icon icon="tier1:print"></d2l-icon>
-							<d2l-link target="_blank" href="${CpdRoutes.Report(this.viewUserId)}">${this.localize('printRecords')}</d2l-link>
+							<d2l-link target="_blank" href="${CpdRoutes.UserReport(this.viewUserId)}">${this.localize('printRecords')}</d2l-link>
 						</div>
 					</div>
 				</div>`;
@@ -392,17 +392,19 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	render() {
 		return html`
 			<div role="main">
-				${this.renderHeader(this.viewUserId)}
-				<d2l-cpd-progress-box ?hasEnforcedTarget=${this.hasEnforcedTarget} .progress="${this.progress}"></d2l-cpd-progress-box>
-				<div class="header">
-					<d2l-button id="new_record" primary @click="${this.newRecordButtonClicked}">
-						${this.localize('addNewCPD')}
-					</d2l-button>
-					<div class="printLink">
-						<d2l-icon icon="tier1:print"></d2l-icon>
-						<d2l-link target="_blank" href="${this.printRecordLink}">${this.localize('printRecords')}</d2l-link>
+				${this.renderHeader(this.viewUserId)}				
+				${this.viewUserId ? html `` : html`
+					<d2l-cpd-progress-box ?hasEnforcedTarget=${this.hasEnforcedTarget} .progress="${this.progress}"></d2l-cpd-progress-box>
+					<div class="header">
+						<d2l-button id="new_record" primary @click="${this.newRecordButtonClicked}">
+							${this.localize('addNewCPD')}
+						</d2l-button>
+						<div class="printLink">
+							<d2l-icon icon="tier1:print"></d2l-icon>
+							<d2l-link target="_blank" href="${this.printRecordLink}">${this.localize('printRecords')}</d2l-link>
+						</div>
 					</div>
-				</div>
+				`}
 				<div class="searchContainer">
 					<d2l-input-search
 						id="search_input"
