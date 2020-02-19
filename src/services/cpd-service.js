@@ -13,31 +13,29 @@ d2lfetch.use({
 
 export class CpdService {
 
-	static CpdPath(action) { return `/d2l/api/customization/cpd/1.0/${action}`; }
-
 	static get Create() {
 		return (type) => {
 			return (object) => {
-				return this.postJsonRequest(this.CpdPath(type), object);
+				return this.postJsonRequest(CpdRoutes.RelativePath(type), object);
 			};
 		};
 	}
 	static createMethod(method) {
-		return this.postJsonRequest(this.CpdPath(CpdRoutes.Method), method);
+		return this.postJsonRequest(CpdRoutes.RelativePath(CpdRoutes.Method), method);
 	}
 	static createQuestion(question) {
 		return this.Create('question')(question);
 	}
 	static createRecord(record, files) {
-		return this.postWithFilesRequest(this.CpdPath(CpdRoutes.Record), record, files);
+		return this.postWithFilesRequest(CpdRoutes.RelativePath(CpdRoutes.Record), record, files);
 	}
 	static createSubject(subject) {
-		return this.postJsonRequest(this.CpdPath(CpdRoutes.Subject), subject);
+		return this.postJsonRequest(CpdRoutes.RelativePath(CpdRoutes.Subject), subject);
 	}
 	static get Delete() {
 		return (type) => {
 			return (id) => {
-				const request = new Request(`${this.Host}${this.CpdPath(type)}/${id}`, {
+				const request = new Request(`${this.Host}${CpdRoutes.RelativePath(type)}/${id}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type' : 'application/json'
@@ -48,7 +46,7 @@ export class CpdService {
 		};
 	}
 	static deleteMethod(methodId) {
-		const request = new Request(`${this.Host}${this.CpdPath(CpdRoutes.Method)}/${methodId}`, {
+		const request = new Request(`${this.Host}${CpdRoutes.RelativePath(CpdRoutes.Method)}/${methodId}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type' : 'application/json'
@@ -57,7 +55,7 @@ export class CpdService {
 		return d2lfetch.fetch(request);
 	}
 	static deleteQuestion(questionId) {
-		const request = new Request(`${this.Host}${this.CpdPath(CpdRoutes.QuestionId(questionId))}`, {
+		const request = new Request(`${this.Host}${CpdRoutes.RelativePath(CpdRoutes.QuestionId(questionId))}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type' : 'application/json'
@@ -66,7 +64,7 @@ export class CpdService {
 		return d2lfetch.fetch(request);
 	}
 	static deleteRecord(recordId) {
-		const request = new Request(`${this.Host}${this.CpdPath(CpdRoutes.Record)}/${recordId}`, {
+		const request = new Request(`${this.Host}${CpdRoutes.RelativePath(CpdRoutes.Record)}/${recordId}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type' : 'application/json'
@@ -75,16 +73,16 @@ export class CpdService {
 		return d2lfetch.fetch(request);
 	}
 	static getJobTitleDefaults(page) {
-		let api_path = this.CpdPath(this.JobTitle);
+		let api_path = CpdRoutes.RelativePath(this.JobTitle);
 		api_path += `?pageNumber=${page}`;
 		return this.getRequest(api_path);
 	}
 
 	static getMethods() {
-		return this.getRequest(this.CpdPath(this.Method));
+		return this.getRequest(CpdRoutes.RelativePath(this.Method));
 	}
 	static getMyTeam(page, filters) {
-		let api_path = this.CpdPath(this.Team);
+		let api_path = CpdRoutes.RelativePath(this.Team);
 		api_path += `?pageNumber=${page}`;
 		if (filters) {
 			const { Name } = filters;
@@ -94,7 +92,7 @@ export class CpdService {
 	}
 
 	static getPendingRecords(page, filters) {
-		let api_path = this.CpdPath(this.Pending);
+		let api_path = CpdRoutes.RelativePath(this.Pending);
 		api_path += `?pageNumber=${page}`;
 		if (filters) {
 			const { Name, StartDate, EndDate } = filters;
@@ -105,15 +103,18 @@ export class CpdService {
 		return this.getRequest(api_path);
 	}
 
-	static getProgress() {
-		return this.getRequest(CpdRoutes.Path(CpdRoutes.Progress));
+	static getProgress(userId) {
+		if (!userId) {
+			return this.getRequest(CpdRoutes.RelativePath(CpdRoutes.Progress));
+		}
+		return this.getRequest(CpdRoutes.RelativePath(CpdRoutes.UserProgress(userId)));
 	}
 
 	static getQuestions() {
-		return this.getRequest(this.CpdPath(CpdRoutes.Question));
+		return this.getRequest(CpdRoutes.RelativePath(CpdRoutes.Question));
 	}
 	static getRecord(recordId) {
-		const base_path = `${this.CpdPath(this.Record)}/${recordId}`;
+		const base_path = `${CpdRoutes.RelativePath(this.Record)}/${recordId}`;
 		return this.getRequest(base_path)
 			.then(body => {
 				if (body.Attachments) {
@@ -130,9 +131,9 @@ export class CpdService {
 			});
 	}
 	static getRecordSummary(page, viewUserId, filters) {
-		let base_path = `${this.CpdPath(this.Record)}?pageNumber=${page}`;
+		let base_path = `${CpdRoutes.RelativePath(this.Record)}?pageNumber=${page}`;
 		if (viewUserId) {
-			base_path = CpdRoutes.Path(`${CpdRoutes.UserRecord}/${viewUserId}?pageNumber=${page}`);
+			base_path = CpdRoutes.RelativePath(`${CpdRoutes.UserRecord}/${viewUserId}?pageNumber=${page}`);
 		}
 
 		if (filters) {
@@ -161,15 +162,15 @@ export class CpdService {
 	}
 	static getSubjectTargets(jobTitle) {
 		if (!jobTitle) {
-			return this.getRequest(CpdRoutes.Path(CpdRoutes.UserTarget));
+			return this.getRequest(CpdRoutes.RelativePath(CpdRoutes.UserTarget));
 		}
-		return this.getRequest(CpdRoutes.Path(CpdRoutes.JobTarget(jobTitle)));
+		return this.getRequest(CpdRoutes.RelativePath(CpdRoutes.JobTarget(jobTitle)));
 	}
 	static getTargetRecords(userId) {
 		if (!userId) {
-			return this.getRequest(CpdRoutes.Path(CpdRoutes.ReportRecords));
+			return this.getRequest(CpdRoutes.RelativePath(CpdRoutes.ReportRecords));
 		}
-		return this.getRequest(CpdRoutes.Path(CpdRoutes.UserReportRecords(userId)));
+		return this.getRequest(CpdRoutes.RelativePath(CpdRoutes.UserReportRecords(userId)));
 	}
 	static getTypes() {
 		return [ {
@@ -183,9 +184,9 @@ export class CpdService {
 	}
 	static getUserInfo(userId) {
 		if (!userId) {
-			return this.getRequest(CpdRoutes.Path(CpdRoutes.DisplayName));
+			return this.getRequest(CpdRoutes.RelativePath(CpdRoutes.DisplayName));
 		}
-		return this.getRequest(CpdRoutes.Path(CpdRoutes.UserDisplayName(userId)));
+		return this.getRequest(CpdRoutes.RelativePath(CpdRoutes.UserDisplayName(userId)));
 	}
 	static getWhoAmI() {
 		return this.getRequest(CpdRoutes.WhoAmI);
@@ -252,32 +253,33 @@ export class CpdService {
 	static get Target() {return 'target';}
 	static get Team() { return 'team'; }
 	static updateItemSortOrder(type, id, sortOrder) {
-		return this.putJsonRequest(`${this.CpdPath(CpdRoutes.ItemSortOrder(type, id))}`, {
+		return this.putJsonRequest(`${CpdRoutes.RelativePath(CpdRoutes.ItemSortOrder(type, id))}`, {
 			NewSortOrder: sortOrder
 		});
 	}
 	static updateQuestion(questionId, question) {
-		return this.putJsonRequest(`${this.CpdPath(CpdRoutes.QuestionId(questionId))}`, question);
+		return this.putJsonRequest(`${CpdRoutes.RelativePath(CpdRoutes.QuestionId(questionId))}`, question);
 	}
 
 	static updateRecord(recordId, record, files, removedFiles) {
-		return this.putWithFilesRequest(`${this.CpdPath(this.Record)}/${recordId}`, record, files, removedFiles);
+		return this.putWithFilesRequest(`${CpdRoutes.RelativePath(this.Record)}/${recordId}`, record, files, removedFiles);
 	}
 
 	static updateSubject(subjectId, subject) {
-		return this.postJsonRequest(`${this.CpdPath(this.Subject)}/${subjectId}}`, subject);
+		return this.postJsonRequest(`${CpdRoutes.RelativePath(this.Subject)}/${subjectId}}`, subject);
 	}
 
 	static updateTarget(jobTitle, target) {
+
 		if (jobTitle) {
-			return this.postJsonRequest(CpdRoutes.FullPath(CpdRoutes.JobTarget(jobTitle)), target);
+			return this.postJsonRequest(CpdRoutes.RelativePath(CpdRoutes.JobTarget(jobTitle)), target);
 		} else {
-			return this.postJsonRequest(CpdRoutes.FullPath(CpdRoutes.UserTarget), target);
+			return this.postJsonRequest(CpdRoutes.RelativePath(CpdRoutes.UserTarget), target);
 		}
 	}
 
 	static updateTargetDate(date, jobTitle) {
-		return this.postJsonRequest(jobTitle ? CpdRoutes.FullPath(CpdRoutes.JobTargetStartDate(jobTitle)) : CpdRoutes.FullPath(CpdRoutes.UserTargetStartDate), date);
+		return this.postJsonRequest(jobTitle ? CpdRoutes.RelativePath(CpdRoutes.JobTargetStartDate(jobTitle)) : CpdRoutes.RelativePath(CpdRoutes.UserTargetStartDate), date);
 	}
 
 }

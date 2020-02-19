@@ -59,9 +59,10 @@ class Cpd extends BaseMixin(LitElement) {
 			return html`<d2l-cpd-manage-targets></d2l-cpd-manage-targets>`;
 		}
 		if (this.pageData.page === 'cpd-add-record' || this.pageData.page === 'cpd-edit-record') {
+
 			if (this.pageData.awardData) {
 				return html`
-				<d2l-cpd-add-record awardRecord="${this.pageData.awardData}"></d2l-cpd-add-record>
+				<d2l-cpd-add-record .awardRecord="${JSON.parse(this.pageData.awardData)}"></d2l-cpd-add-record>
 			`;
 			}
 			return html`
@@ -78,7 +79,7 @@ class Cpd extends BaseMixin(LitElement) {
 		if (this.pageData.page === 'cpd-read-only-record') {
 			return html`
 			<d2l-cpd-read-only-record
-				recordId="${this.pageData.recordId}">
+				.recordId="${this.pageData.recordId}">
 			</d2l-cpd-read-only-record>
 			`;
 		}

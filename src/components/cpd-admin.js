@@ -36,7 +36,7 @@ class CpdAdmin extends BaseMixin(LitElement) {
 	}
 	render() {
 		if (this.pageData && this.pageData.page === 'cpd-manage-targets') {
-			return html`<d2l-cpd-manage-targets jobTitle="${this.pageData.jobTitle}"></d2l-cpd-manage-targets>`;
+			return html`<d2l-cpd-manage-targets .jobTitle="${this.pageData.jobTitle}"></d2l-cpd-manage-targets>`;
 		}
 		return html`
 		<d2l-tabs>

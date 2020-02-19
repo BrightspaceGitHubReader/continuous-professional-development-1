@@ -148,7 +148,7 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 			.then(body => {
 				this.records = body;
 			});
-		this.cpdService.getProgress()
+		this.cpdService.getProgress(this.userId)
 			.then(body => {
 				this.progress = this.lowercasePropertyNames(body);
 				this.target = {

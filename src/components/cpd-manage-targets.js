@@ -154,7 +154,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 							<div id="structured">
 								<label for="structuredHours">${this.localize('hours')}</label>
 								<d2l-input-text
-									@change="${this.onDialogDataUpdated}"
+									@blur="${this.onDialogDataUpdated}"
 									id="structuredHours"
 									class="numberInput"
 									required type="number"
@@ -164,7 +164,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 								</d2l-input-text>
 								<label for="structuredMinutes">${this.localize('minutes')}</label>
 								<d2l-input-text
-									@change="${this.onDialogDataUpdated}"
+									@blur="${this.onDialogDataUpdated}"
 									id="structuredMinutes"
 									class="numberInput"
 									required type="number"
@@ -180,7 +180,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 							<div id="unstructured">
 								<label for="unstructuredHours">${this.localize('hours')}</label>
 								<d2l-input-text
-									@change="${this.onDialogDataUpdated}"
+									@blur="${this.onDialogDataUpdated}"
 									id="unstructuredHours"
 									class="numberInput"
 									required
@@ -191,7 +191,7 @@ class ManageCpdTargets extends BaseMixin(LitElement) {
 								</d2l-input-text>
 								<label for="unstructuredMinutes">${this.localize('minutes')}</label>
 								<d2l-input-text
-									@change="${this.onDialogDataUpdated}"
+									@blur="${this.onDialogDataUpdated}"
 									id="unstructuredMinutes"
 									class="numberInput"
 									required

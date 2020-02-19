@@ -10,6 +10,7 @@
     "CreditMinutes": 100,
     "Attachments": {"Files": []},
     "Answers": [{"QuestionId": 1, "Text":"Some anser text"}],
+    "User": 4,
     "DateCompleted": "01/01/2019"
   },
   "2": {
@@ -23,6 +24,7 @@
     "CreditMinutes": 60,
     "Attachments": {"Files": []},
     "Answers": [{"QuestionId": 1, "Text":"Some anser text"}],
+    "User": 4,
     "DateCompleted": "01/01/2019"
   },
   "3": {
@@ -36,6 +38,7 @@
     "CreditMinutes": 20,
     "Attachments": {"Files": []},
     "Answers": [{"QuestionId": 1, "Text":"Some anser text"}],
+    "User": 4,
     "DateCompleted": "10/12/2019"
   }
 }
