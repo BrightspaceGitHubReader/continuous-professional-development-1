@@ -12,6 +12,7 @@ import { BaseMixin } from '../mixins/base-mixin';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdSharedStyles } from '../styles/cpd-shared-styles';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
+import { decimalToPercent } from '../helpers/record-helper';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 
@@ -189,7 +190,7 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 				<div class="d2l-heading-3">${this.localize('headingMethod')}</div>
 				<div class="record-data">${record.Method.Name}</div>
 				<div class="d2l-heading-3">${this.localize('headingGrade')}</div>
-				<div class="record-data">${ record.Grade ? record.Grade : this.localize('na') }</div>
+				<div class="record-data">${ record.Grade ? this.localize('percent', decimalToPercent(record.Grade)) : this.localize('na') }</div>
 				<div class="d2l-heading-3">${this.localize('headingEvidence')}</div>
 				${this.renderAttachments(record.Attachments)}
 				${record.Answers.map(answer => this.renderAnswer(record.Id, answer))}
