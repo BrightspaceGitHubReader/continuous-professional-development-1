@@ -381,7 +381,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 						</h2>
 						<div class="printLink">
 							<d2l-icon icon="tier1:print"></d2l-icon>
-							<d2l-link target="_blank" href="${CpdRoutes.UserReport(this.viewUserId)}">${this.localize('printRecords')}</d2l-link>
+							<d2l-link target="_blank" href="${this.printRecordLink}">${this.localize('printRecords')}</d2l-link>
 						</div>
 					</div>
 				</div>`;
