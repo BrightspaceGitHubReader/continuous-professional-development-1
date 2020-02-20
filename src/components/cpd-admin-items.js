@@ -10,17 +10,20 @@ import { BaseMixin } from '../mixins/base-mixin';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 
-class CpdAdminQuestions extends BaseMixin(LitElement) {
+class CpdAdminItems extends BaseMixin(LitElement) {
 	static get properties() {
 		return {
-			questions: {
+			items: {
 				type: Array
 			},
-			sortable: {
-				type: Boolean
+			context: {
+				type: Object
 			},
 			objectData: {
 				type: Object
+			},
+			sortable: {
+				type: Boolean
 			},
 			showContent: {
 				type: Boolean
@@ -35,6 +38,9 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 				display: grid;
 				grid-template-columns: 30px auto;
 			}
+			d2l-dialog > d2l-input-text {
+				margin: 6px 0px;
+			}
 			`
 		];
 	}
@@ -46,20 +52,20 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 	}
 	connectedCallback() {
 		super.connectedCallback();
-		this.fetchQuestions();
+		this.fetchItems();
 	}
 	delete(e) {
-		const questionId = e.target.getAttribute('item-id');
-		this.cpdService.deleteQuestion(questionId)
-			.then(() => this.fetchQuestions());
+		const itemId = e.target.getAttribute('item-id');
+		this.cpdService.Delete(this.context.type)(itemId)
+			.then(() => this.fetchItems());
 	}
-	fetchQuestions() {
-		return this.cpdService.getQuestions().then(data => this.questions = data);
+	fetchItems() {
+		return this.cpdService.getItems(this.context.type).then(data => this.items = data);
 	}
 	openEditDialog(e) {
 		this.objectData = e.target.getAttribute('item-json') &&
 			JSON.parse(e.target.getAttribute('item-json')) || {};
-		this.shadowRoot.querySelector('#create-question-dialog').open();
+		this.shadowRoot.querySelector(`#create-${this.context.type}-dialog`).open();
 	}
 	renderRow(item) {
 		return html`
@@ -68,9 +74,9 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 				<d2l-icon class="drag-handle" icon="d2l-tier1:dragger"></d2l-icon>
 			</div>
 			<div>
-				${item.QuestionText}
+				${item[this.context.textFieldName]}
 				<d2l-dropdown-context-menu>
-					<d2l-dropdown-content id="questionDropdown-${item.Id}">
+					<d2l-dropdown-content>
 						<d2l-menu>
 							<d2l-menu-item item-id="${item.Id}" @click="${this.openEditDialog}" text="${this.localize('edit')}" item-json="${JSON.stringify(item)}"></d2l-menu-item>
 							${item.InUse ? html`` : html`
@@ -86,26 +92,26 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 		`;
 	}
 	save() {
-		this.objectData.QuestionText = this.shadowRoot.querySelector('#objectName').value;
+		this.objectData[this.context.textFieldName] = this.shadowRoot.querySelector('#objectName').value;
 
 		if (!this.objectData.Id) {
 			this.objectData.SortOrder = 0;
-			this.cpdService.createQuestion(this.objectData)
-				.then(() => this.fetchQuestions()
+			this.cpdService.Create(this.context.type)(this.objectData)
+				.then(() => this.fetchItems()
 					.then(() => this.objectData = {}));
 		} else {
-			this.cpdService.updateQuestion(this.objectData.Id, this.objectData)
-				.then(() => this.fetchQuestions());
+			this.cpdService.Update(this.context.type)(this.objectData.Id)(this.objectData)
+				.then(() => this.fetchItems());
 		}
 
 	}
 	async sorted(e) {
 		this.sortable = false;
-		const itemId = this.questions[e.detail.oldIndex].Id;
+		const itemId = this.items[e.detail.oldIndex].Id;
 		const newSortOrder = e.detail.newIndex + 1;
 		this.showContent = false;
-		await this.cpdService.updateItemSortOrder('question', itemId, newSortOrder);
-		await this.fetchQuestions();
+		await this.cpdService.updateItemSortOrder(this.context.type, itemId, newSortOrder);
+		await this.fetchItems();
 		this.sortable = true;
 		this.showContent = true;
 	}
@@ -116,7 +122,7 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 		return html`
 		<ul @d2l-dnd-sorted="${this.sorted}">
 			<d2l-dnd-sortable handle=".drag-handle" ?disabled="${!this.sortable}">
-				${this.questions && this.questions.map(question => this.renderRow(question))}
+				${this.items && this.items.map(item => this.renderRow(item))}
 			</d2l-dnd-sortable>
 		</ul>
 		`;
@@ -124,16 +130,19 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 	render() {
 		return html`
 		<div>
-			<d2l-button primary @click="${this.openEditDialog}">${this.localize('addQuestion')}</d2l-button>
+			<d2l-button primary @click="${this.openEditDialog}">${this.context.addButtonText}</d2l-button>
 		</div>
 		${this.renderList()}
 		<div>
-			<d2l-dialog id="create-question-dialog" title-text="${this.objectData && this.objectData.QuestionText ? this.localize('editQuestion') : this.localize('addQuestion')}">
+			<d2l-dialog
+				id="create-${this.context.type}-dialog"
+				title-text="${this.objectData && this.objectData[this.context.textFieldName] ? this.context.dialogTitleEdit : this.context.dialogTitleAdd}"
+				>
 				<d2l-input-text
 					id="objectName"
-					label="${this.localize('questionName')}"
-					placeholder="${this.localize('questionNamePlaceholder')}"
-					value=${this.objectData && this.objectData.QuestionText || ''}>
+					label="${this.context.inputLabel}"
+					placeholder="${this.context.placeholderText}"
+					value=${this.objectData && this.objectData[this.context.textFieldName] || ''}>
 				</d2l-input-text>
 				<d2l-button @click="${this.save}" dialog-action primary>${this.localize('save')}</d2l-button>
 				<d2l-button dialog-action>${this.localize('cancel')}</d2l-button>
@@ -142,4 +151,4 @@ class CpdAdminQuestions extends BaseMixin(LitElement) {
 		`;
 	}
 }
-customElements.define('d2l-cpd-admin-questions', CpdAdminQuestions);
+customElements.define('d2l-cpd-admin-items', CpdAdminItems);

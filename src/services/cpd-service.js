@@ -72,12 +72,15 @@ export class CpdService {
 		});
 		return d2lfetch.fetch(request);
 	}
+
+	static getItems(type) {
+		return this.getRequest(CpdRoutes.RelativePath(type));
+	}
 	static getJobTitleDefaults(page) {
 		let api_path = CpdRoutes.RelativePath(this.JobTitle);
 		api_path += `?pageNumber=${page}`;
 		return this.getRequest(api_path);
 	}
-
 	static getMethods() {
 		return this.getRequest(CpdRoutes.RelativePath(this.Method));
 	}
@@ -252,6 +255,15 @@ export class CpdService {
 	static get Subject() { return 'subject'; }
 	static get Target() {return 'target';}
 	static get Team() { return 'team'; }
+	static get Update() {
+		return (type) => {
+			return (id) => {
+				return (object) => {
+					return this.putJsonRequest(`${CpdRoutes.RelativePath(CpdRoutes.ItemId(type, id))}`, object);
+				};
+			};
+		};
+	}
 	static updateItemSortOrder(type, id, sortOrder) {
 		return this.putJsonRequest(`${CpdRoutes.RelativePath(CpdRoutes.ItemSortOrder(type, id))}`, {
 			NewSortOrder: sortOrder
