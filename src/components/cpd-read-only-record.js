@@ -174,6 +174,7 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 	}
 
 	renderAnswers(question, answers) {
+		const answer = answers.find(answer => answer.QuestionId === question.Id);
 		return html`
 			<li>
 				<label for="${`answerText_${question.Id}`}">${question.QuestionText}</label>
@@ -182,7 +183,7 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 					editor-id=${`answerText_${question.Id}_editor`}
 					disabled
 					app-root=${`${window.location.href.replace(/[^/]*$/, '')}node_modules/d2l-html-editor/`}
-					content="${ encodeURIComponent(answers.find(answer => answer.QuestionId === question.Id).Text)}">
+					content="${ encodeURIComponent(answer && answer.Text || '')}">
 						<div id=${`answerText_${question.Id}_editor`} role="textbox" class="d2l-richtext-editor-container"></div>
 				</d2l-html-editor>
 			</li>
