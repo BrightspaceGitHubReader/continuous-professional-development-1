@@ -41,7 +41,8 @@ class ProgressOverall extends BaseMixin(LitElement) {
 				max-width: 450px;
 				display: grid;
 				grid-template-columns: 50% 50%;
-				grid-template-rows: 5fr 3fr;
+				grid-template-rows: 5fr;
+				grid-auto-rows: 3fr;
 			}
 			d2l-meter-circle {
 				min-width: 100px;
@@ -82,6 +83,9 @@ class ProgressOverall extends BaseMixin(LitElement) {
 				justify-content: center;
 				align-items: center;
 			}
+			.target-progress-print-header {
+				display: none;
+			}
 			@media (max-width: 929px) {
 				.progress-inner-chevron {
 					display: none;
@@ -90,17 +94,29 @@ class ProgressOverall extends BaseMixin(LitElement) {
 
 			@media print {
 				.progress-inner {
-					border: 2px solid var(--d2l-color-gypsum);
-					border-radius: 0.5em;
-					background-color: var(--d2l-color-regolith);
 					display: grid;
-					grid-template-columns: 1fr auto 1fr;
-					grid-gap: 0px;
-					align-items: center;
-					justify-items: center;
+					grid-template-columns: 3fr auto 2fr;
+				}
+				.progress-split-text {
+					display: none;
 				}
 				.progress-inner-chevron {
 					display: inline-block;
+				}
+				.progress-inner-summary > .d2l-body-compact {
+					display: none;
+				}
+				.progress-inner-summary {
+					display: grid;
+					justify-items: center;
+					width: auto;
+				}
+				.progress-inner-summary > div {
+					padding: 0px;
+				}
+				.d2l-body-compact.target-progress-print-header {
+					display: block;
+					padding: 0px;
 				}
 			}
 			`
@@ -155,6 +171,9 @@ class ProgressOverall extends BaseMixin(LitElement) {
 				<d2l-icon icon="tier3:chevron-right"></d2l-icon>
 			</div>
 			<div class="progress-inner-summary">
+				<div class="d2l-body-compact target-progress-print-header">
+					<h4>${this.localize('myTargetsProgress')}</h4>
+				</div>
 				<div class="progress-inner-circle">
 					<d2l-meter-circle
 						value="${this.getTotals().numerator}"
