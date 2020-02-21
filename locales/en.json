@@ -35,6 +35,7 @@
   "deleteItem": "Delete {itemName}",
   "edit": "Edit",
   "editCPD": "Edit CPD Record",
+  "editMethod": "Edit Method",
   "editQuestion": "Edit Question",
   "editSubject": "Edit Subject",
   "editSubjectName": "Edit Subject {subjectName}",
