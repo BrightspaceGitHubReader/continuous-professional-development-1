@@ -27,6 +27,9 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 			},
 			showContent: {
 				type: Boolean
+			},
+			validName: {
+				type: Boolean
 			}
 		};
 	}
@@ -49,6 +52,7 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 		this.cpdService = CpdServiceFactory.getCpdService();
 		this.sortable = true;
 		this.showContent = true;
+		this.validName = true;
 	}
 	connectedCallback() {
 		super.connectedCallback();
@@ -92,18 +96,29 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 		`;
 	}
 	save() {
-		this.objectData[this.context.textFieldName] = this.shadowRoot.querySelector('#objectName').value;
-
-		if (!this.objectData.Id) {
-			this.objectData.SortOrder = 0;
-			this.cpdService.Create(this.context.type)(this.objectData)
-				.then(() => this.fetchItems()
-					.then(() => this.objectData = {}));
+		const objectNameInput = this.shadowRoot.querySelector('#objectName');
+		const objectName = objectNameInput.value;
+		this.validate(objectName);
+		if (this.validName) {
+			if (!this.objectData.Id) {
+				this.objectData[this.context.textFieldName] = objectName;
+				this.objectData.SortOrder = 0;
+				this.cpdService.Create(this.context.type)(this.objectData)
+					.then(() => this.fetchItems()
+						.then(() => this.objectData = {}));
+			} else {
+				this.cpdService.Update(this.context.type)(this.objectData.Id)(this.objectData)
+					.then(() => this.fetchItems());
+			}
+			objectNameInput.setAttribute('aria-invalid', false);
+			this.shadowRoot.querySelector(`#create-${this.context.type}-dialog`)._close();
+			this.validName = false;
 		} else {
-			this.cpdService.Update(this.context.type)(this.objectData.Id)(this.objectData)
-				.then(() => this.fetchItems());
+			objectNameInput.setAttribute('aria-invalid', true);
 		}
-
+	}
+	validate(objectName) {
+		this.validName = objectName !== '';
 	}
 	async sorted(e) {
 		this.sortable = false;
@@ -144,7 +159,7 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 					placeholder="${this.context.placeholderText}"
 					value=${this.objectData && this.objectData[this.context.textFieldName] || ''}>
 				</d2l-input-text>
-				<d2l-button @click="${this.save}" dialog-action primary>${this.localize('save')}</d2l-button>
+				<d2l-button @click="${this.save}" primary>${this.localize('save')}</d2l-button>
 				<d2l-button dialog-action>${this.localize('cancel')}</d2l-button>
 			</d2l-dialog>
 		</div>
