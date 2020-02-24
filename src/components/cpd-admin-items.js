@@ -27,9 +27,6 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 			},
 			showContent: {
 				type: Boolean
-			},
-			validName: {
-				type: Boolean
 			}
 		};
 	}
@@ -98,8 +95,7 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 	save() {
 		const objectNameInput = this.shadowRoot.querySelector('#objectName');
 		const objectName = objectNameInput.value;
-		this.validate(objectName);
-		if (this.validName) {
+		if (this.validate(objectName)) {
 			if (!this.objectData.Id) {
 				this.objectData[this.context.textFieldName] = objectName;
 				this.objectData.SortOrder = 0;
@@ -107,18 +103,20 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 					.then(() => this.fetchItems()
 						.then(() => this.objectData = {}));
 			} else {
+				this.objectData[this.context.textFieldName] = objectName;
 				this.cpdService.Update(this.context.type)(this.objectData.Id)(this.objectData)
 					.then(() => this.fetchItems());
 			}
-			objectNameInput.setAttribute('aria-invalid', false);
 			this.shadowRoot.querySelector(`#create-${this.context.type}-dialog`)._close();
-			this.validName = false;
 		} else {
 			objectNameInput.setAttribute('aria-invalid', true);
 		}
 	}
 	validate(objectName) {
-		this.validName = objectName !== '';
+		return objectName !== '';
+	}
+	dialogClose() {
+		this.shadowRoot.querySelector('#objectName').setAttribute('aria-invalid', false);
 	}
 	async sorted(e) {
 		this.sortable = false;
@@ -152,6 +150,7 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 			<d2l-dialog
 				id="create-${this.context.type}-dialog"
 				title-text="${this.objectData && this.objectData[this.context.textFieldName] ? this.context.dialogTitleEdit : this.context.dialogTitleAdd}"
+				@d2l-dialog-close="${this.dialogClose}"
 				>
 				<d2l-input-text
 					id="objectName"
