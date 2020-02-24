@@ -49,7 +49,6 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 		this.cpdService = CpdServiceFactory.getCpdService();
 		this.sortable = true;
 		this.showContent = true;
-		this.validName = true;
 	}
 	connectedCallback() {
 		super.connectedCallback();
