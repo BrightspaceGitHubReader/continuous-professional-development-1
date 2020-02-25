@@ -92,18 +92,30 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 		`;
 	}
 	save() {
-		this.objectData[this.context.textFieldName] = this.shadowRoot.querySelector('#objectName').value;
-
-		if (!this.objectData.Id) {
-			this.objectData.SortOrder = 0;
-			this.cpdService.Create(this.context.type)(this.objectData)
-				.then(() => this.fetchItems()
-					.then(() => this.objectData = {}));
+		const objectNameInput = this.shadowRoot.querySelector('#objectName');
+		const objectName = objectNameInput.value;
+		if (this.validate(objectName)) {
+			if (!this.objectData.Id) {
+				this.objectData[this.context.textFieldName] = objectName;
+				this.objectData.SortOrder = 0;
+				this.cpdService.Create(this.context.type)(this.objectData)
+					.then(() => this.fetchItems()
+						.then(() => this.objectData = {}));
+			} else {
+				this.objectData[this.context.textFieldName] = objectName;
+				this.cpdService.Update(this.context.type)(this.objectData.Id)(this.objectData)
+					.then(() => this.fetchItems());
+			}
+			this.shadowRoot.querySelector(`#create-${this.context.type}-dialog`)._close();
 		} else {
-			this.cpdService.Update(this.context.type)(this.objectData.Id)(this.objectData)
-				.then(() => this.fetchItems());
+			objectNameInput.setAttribute('aria-invalid', true);
 		}
-
+	}
+	validate(objectName) {
+		return objectName !== '';
+	}
+	dialogClose() {
+		this.shadowRoot.querySelector('#objectName').setAttribute('aria-invalid', false);
 	}
 	async sorted(e) {
 		this.sortable = false;
@@ -137,6 +149,7 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 			<d2l-dialog
 				id="create-${this.context.type}-dialog"
 				title-text="${this.objectData && this.objectData[this.context.textFieldName] ? this.context.dialogTitleEdit : this.context.dialogTitleAdd}"
+				@d2l-dialog-close="${this.dialogClose}"
 				>
 				<d2l-input-text
 					id="objectName"
@@ -144,7 +157,7 @@ class CpdAdminItems extends BaseMixin(LitElement) {
 					placeholder="${this.context.placeholderText}"
 					value=${this.objectData && this.objectData[this.context.textFieldName] || ''}>
 				</d2l-input-text>
-				<d2l-button @click="${this.save}" dialog-action primary>${this.localize('save')}</d2l-button>
+				<d2l-button @click="${this.save}" primary>${this.localize('save')}</d2l-button>
 				<d2l-button dialog-action>${this.localize('cancel')}</d2l-button>
 			</d2l-dialog>
 		</div>
