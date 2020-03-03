@@ -3,7 +3,6 @@ import '@brightspace-ui/core/components/link/link.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { getHoursRounded, toLocalDate } from  '../helpers/time-helper';
 import { BaseMixin } from '../mixins/base-mixin';
-import { CpdRoutes } from '../helpers/cpdRoutes';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
@@ -137,10 +136,7 @@ class CpdWidget extends BaseMixin(LitElement) {
 			.then((data) =>
 				this.subjects = data
 			);
-		this.cpdService.ParentHost(CpdRoutes.CpdHome())
-			.then(url => {
-				this.cpdLink = url;
-			});
+		this.cpdLink = this.cpdService.CpdHomeLink;
 	}
 
 	filterChange(e) {

@@ -13,6 +13,7 @@ d2lfetch.use({
 
 export class CpdService {
 
+	static get CpdHomeLink() { return `${this.Host}/d2l/custom/cpd/main`; }
 	static get Create() {
 		return (type) => {
 			return (object) => {
@@ -198,13 +199,6 @@ export class CpdService {
 	static get Job() { return 'target/job'; }
 	static get JobTitle() { return 'target/jobtitles'; }
 	static get Method() { return 'method'; }
-	static ParentHost(route) {
-		return window.data.fraSettings.navigation.getLastD2LPage()
-			.then(page => {
-				const host = (new URL(page.url)).host;
-				return `http://${host}${route ? route : ''}`;
-			});
-	}
 	static get Pending() { return 'pending'; }
 	static postJsonRequest(base_path, object) {
 		const postRequest = new Request(`${this.Host}${base_path}`, {
