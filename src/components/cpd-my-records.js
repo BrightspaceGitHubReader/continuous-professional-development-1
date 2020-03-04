@@ -160,16 +160,11 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				.then(data => {
 					this.userDisplayName = data;
 				});
-			this.cpdService.ParentHost()
-				.then(url => {
-					const recordRoute = CpdRoutes.UserReport(this.viewUserId);
-					this.printRecordLink = `${url}${recordRoute}`;
-				});
+			const recordRoute = CpdRoutes.UserReport(this.viewUserId);
+			this.printRecordLink = `${this.cpdService.Host}${recordRoute}`;
 		} else {
-			this.cpdService.ParentHost(CpdRoutes.Report)
-				.then(url => {
-					this.printRecordLink = url;
-				});
+			const recordRoute = CpdRoutes.Report;
+			this.printRecordLink = `${this.cpdService.Host}${recordRoute}`;
 		}
 	}
 
@@ -392,7 +387,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 	render() {
 		return html`
 			<div role="main">
-				${this.renderHeader(this.viewUserId)}				
+				${this.renderHeader(this.viewUserId)}
 				${this.viewUserId ? html `` : html`
 					<d2l-cpd-progress-box ?hasEnforcedTarget=${this.hasEnforcedTarget} .progress="${this.progress}"></d2l-cpd-progress-box>
 					<div class="header">

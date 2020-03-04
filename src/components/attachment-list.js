@@ -42,10 +42,7 @@ class AttachmentList extends BaseMixin(LitElement) {
 
 	connectedCallback() {
 		super.connectedCallback();
-		this.cpdService.ParentHost()
-			.then(url => {
-				this.hostPath = url;
-			});
+		this.hostPath = this.cpdService.Host;
 	}
 
 	createAttachmentUrl(attachment) {
@@ -105,7 +102,7 @@ class AttachmentList extends BaseMixin(LitElement) {
 				${this.attachmentsList && this.attachmentsList.map((attachment, index) => html`
 					<d2l-list-item>
 						<d2l-link
-							target="_blank"
+							target="${attachment.href ? '_self' : '_blank'}"
 							href="${this.createAttachmentUrl(attachment)}">
 							${attachment.name}
 						</d2l-link>

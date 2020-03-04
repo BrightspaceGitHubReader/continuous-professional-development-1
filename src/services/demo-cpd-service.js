@@ -121,9 +121,6 @@ export class DemoCpdService {
 		return Promise.resolve({Identifier: 12});
 	}
 
-	static ParentHost() {
-		return Promise.resolve('host');
-	}
 	static updateMethod() {}
 
 	static updateQuestion() {}
