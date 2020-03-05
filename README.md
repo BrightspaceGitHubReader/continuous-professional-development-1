@@ -2,7 +2,7 @@
 
 [![Build Status](https://www.travis-ci.com/Brightspace/continuous-professional-development.svg?token=s5DqGXfBESukCURszFfU&branch=master)](https://www.travis-ci.com/Brightspace/continuous-professional-development)
 
-Continuous Professional Development FRA and BSI Customisation
+Continuous Professional Development FRA and BSI Customization
 
 ## Developing, Testing and Contributing
 
