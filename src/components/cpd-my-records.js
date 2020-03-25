@@ -133,11 +133,11 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		this.page = 1;
 
 		this.filters = {
-			Subject: 0,
-			Method: 0,
-			Name: 0,
-			StartDate: 0,
-			EndDate: 0
+			Subject: null,
+			Method: null,
+			Name: null,
+			StartDate: null,
+			EndDate: null
 		};
 
 		this.hideSearchOptions = true;
@@ -199,13 +199,13 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				this.cpdRecords = data;
 			});
 		if (!this.viewUserId) {
-			this.cpdService.getProgress()
+			this.cpdService.getProgress(null, this.filters)
 				.then((data) =>
 					this.progress = this.lowercasePropertyNames(data)
 				);
 		}
-
 	}
+
 	newRecordButtonClicked() {
 		this.fireNavigationEvent({page:'cpd-add-record'});
 	}
