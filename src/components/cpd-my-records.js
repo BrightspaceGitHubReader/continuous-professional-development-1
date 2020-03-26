@@ -13,7 +13,6 @@ import './message-container';
 import './progress-box';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { BaseMixin } from '../mixins/base-mixin';
-import { CpdRoutes } from '../helpers/cpdRoutes';
 import { CpdServiceFactory } from '../services/cpd-service-factory';
 import { cpdSharedStyles } from '../styles/cpd-shared-styles';
 import { cpdTableStyles } from '../styles/cpd-table-styles';
@@ -154,12 +153,8 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				.then(data => {
 					this.userDisplayName = data;
 				});
-			const recordRoute = CpdRoutes.UserReport(this.viewUserId);
-			this.printRecordLink = `${this.cpdService.Host}${recordRoute}`;
-		} else {
-			const recordRoute = CpdRoutes.Report;
-			this.printRecordLink = `${this.cpdService.Host}${recordRoute}`;
 		}
+		this.updatePrintRecordLink();
 	}
 
 	backToTeamClicked() {
@@ -198,6 +193,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					this.progress = this.lowercasePropertyNames(data)
 				);
 		}
+	}
+
+	updatePrintRecordLink() {
+		this.printRecordLink = this.cpdService.printRecordLink(this.filters, this.viewUserId);
 	}
 
 	newRecordButtonClicked() {
@@ -248,6 +247,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				break;
 		}
 		this.page = 1;
+		this.updatePrintRecordLink();
 		this.fetchRecords();
 	}
 
