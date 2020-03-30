@@ -105,9 +105,9 @@ export class CpdService {
 		searchParams.append('pageNumber', page);
 		if (filters) {
 			const { Name, StartDate, EndDate } = filters;
-			if (Name.value) searchParams.append('awardName', Name.value);
-			if (StartDate.value) searchParams.append('startDate', dateParamString(StartDate.value));
-			if (EndDate.value) searchParams.append('endDate', dateParamString(EndDate.value, true));
+			if (Name && Name.value) searchParams.append('awardName', Name.value);
+			if (StartDate && StartDate.value) searchParams.append('startDate', dateParamString(StartDate.value));
+			if (EndDate && EndDate.value) searchParams.append('endDate', dateParamString(EndDate.value, true));
 		}
 		url = url.concat(`?${searchParams.toString()}`);
 		return this.getRequest(url);
@@ -118,11 +118,11 @@ export class CpdService {
 		if (filters) {
 			const searchParams = new URLSearchParams();
 			const { Subject, Method, Name, StartDate, EndDate } = filters;
-			if (Subject.value && Subject.enabled) searchParams.append('subject', Subject.value);
-			if (Method.value && Method.enabled) searchParams.append('method', Method.value);
-			if (Name.value) searchParams.append('recordName', Name.value);
-			if (StartDate.value) searchParams.append('startDate', dateParamString(StartDate.value));
-			if (EndDate.value) searchParams.append('endDate', dateParamString(EndDate.value, true));
+			if (Subject && Subject.value && Subject.enabled) searchParams.append('subject', Subject.value);
+			if (Method && Method.value && Method.enabled) searchParams.append('method', Method.value);
+			if (Name && Name.value) searchParams.append('recordName', Name.value);
+			if (StartDate && StartDate.value) searchParams.append('startDate', dateParamString(StartDate.value));
+			if (EndDate && EndDate.value) searchParams.append('endDate', dateParamString(EndDate.value, true));
 			url = url.concat(`?${searchParams.toString()}`);
 		}
 		return this.getRequest(url);
@@ -155,11 +155,11 @@ export class CpdService {
 
 		if (filters) {
 			const { Subject, Method, Name, StartDate, EndDate } = filters;
-			if (Subject.value && Subject.enabled) searchParams.append('subject', Subject.value);
-			if (Method.value && Method.enabled) searchParams.append('method', Method.value);
-			if (Name.value) searchParams.append('name', Name.value);
-			if (StartDate.value) searchParams.append('startDate', dateParamString(StartDate.value));
-			if (EndDate.value) searchParams.append('endDate', dateParamString(EndDate.value, true));
+			if (Subject && Subject.value && Subject.enabled) searchParams.append('subject', Subject.value);
+			if (Method && Method.value && Method.enabled) searchParams.append('method', Method.value);
+			if (Name && Name.value) searchParams.append('name', Name.value);
+			if (StartDate && StartDate.value) searchParams.append('startDate', dateParamString(StartDate.value));
+			if (EndDate && EndDate.value) searchParams.append('endDate', dateParamString(EndDate.value, true));
 		}
 
 		url = url.concat(`?${searchParams.toString()}`);
@@ -189,11 +189,11 @@ export class CpdService {
 		if (filters) {
 			const searchParams = new URLSearchParams();
 			const { Subject, Method, Name, StartDate, EndDate } = filters;
-			if (Subject.value && Subject.enabled) searchParams.append('subject', Subject.value);
-			if (Method.value && Method.enabled) searchParams.append('method', Method.value);
-			if (Name.value) searchParams.append('recordName', Name.value);
-			if (StartDate.value) searchParams.append('startDate', dateParamString(StartDate.value));
-			if (EndDate.value) searchParams.append('endDate', dateParamString(EndDate.value, true));
+			if (Subject && Subject.value && Subject.enabled) searchParams.append('subject', Subject.value);
+			if (Method && Method.value && Method.enabled) searchParams.append('method', Method.value);
+			if (Name && Name.value) searchParams.append('recordName', Name.value);
+			if (StartDate && StartDate.value) searchParams.append('startDate', dateParamString(StartDate.value));
+			if (EndDate && EndDate.value) searchParams.append('endDate', dateParamString(EndDate.value, true));
 			url = url.concat(`?${searchParams.toString()}`);
 		}
 		return this.getRequest(url);
@@ -222,6 +222,7 @@ export class CpdService {
 	static get JobTitle() { return 'target/jobtitles'; }
 	static get Method() { return 'method'; }
 	static get Pending() { return 'pending'; }
+
 	static postJsonRequest(base_path, object) {
 		const postRequest = new Request(`${this.Host}${base_path}`, {
 			method: 'POST',
@@ -243,6 +244,20 @@ export class CpdService {
 			body: data
 		});
 		return d2lfetch.fetch(postRequest);
+	}
+	static printRecordLink(filters, userId) {
+		let url = userId ? CpdRoutes.UserReport(userId) : CpdRoutes.Report;
+		if (filters) {
+			const searchParams = new URLSearchParams();
+			const { Subject, Method, Name, StartDate, EndDate } = filters;
+			if (Subject && Subject.value && Subject.enabled) searchParams.append('subject', Subject.value);
+			if (Method && Method.value && Method.enabled) searchParams.append('method', Method.value);
+			if (Name && Name.value) searchParams.append('recordName', Name.value);
+			if (StartDate && StartDate.value) searchParams.append('startDate', dateParamString(StartDate.value));
+			if (EndDate && EndDate.value) searchParams.append('endDate', dateParamString(EndDate.value, true));
+			url = url.concat(`?${searchParams.toString()}`);
+		}
+		return `${CpdRoutes.Host}${url}`;
 	}
 	static putJsonRequest(base_path, object) {
 		const putRequest = new Request(`${this.Host}${base_path}`, {

@@ -121,6 +121,8 @@ export class DemoCpdService {
 		return Promise.resolve({Identifier: 12});
 	}
 
+	static printRecordLink() {}
+
 	static updateMethod() {}
 
 	static updateQuestion() {}
