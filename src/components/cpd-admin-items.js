@@ -1,6 +1,6 @@
 import 'd2l-dnd-sortable/d2l-dnd-sortable';
-import 'd2l-dropdown/d2l-dropdown-context-menu';
-import 'd2l-dropdown/d2l-dropdown-content';
+import '@brightspace-ui/core/components/dropdown/dropdown-context-menu';
+import '@brightspace-ui/core/components/dropdown/dropdown-content';
 import '@brightspace-ui/core/components/button/button-icon';
 import '@brightspace-ui/core/components/dialog/dialog';
 import '@brightspace-ui/core/components/dialog/dialog-confirm';

@@ -4,6 +4,10 @@ import '@brightspace-ui/core/components/button/button-subtle';
 import '@brightspace-ui/core/components/dialog/dialog-confirm';
 import '@brightspace-ui/core/components/inputs/input-checkbox';
 import '@brightspace-ui/core/components/inputs/input-search';
+import '@brightspace-ui/core/components/dropdown/dropdown-button';
+import '@brightspace-ui/core/components/dropdown/dropdown-menu';
+import '@brightspace-ui/core/components/menu/menu';
+import '@brightspace-ui/core/components/menu/menu-item-link';
 import '@brightspace-ui/core/components/link/link';
 import 'd2l-date-picker/d2l-date-picker';
 import 'd2l-navigation/d2l-navigation-link-back';
@@ -148,13 +152,30 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			.then(data => {
 				this.methodOptions = data;
 			});
-		if (this.viewUserId) {
-			this.cpdService.getUserInfo(this.viewUserId)
-				.then(data => {
-					this.userDisplayName = data;
-				});
-		}
+		this.cpdService.getUserInfo(this.viewUserId)
+			.then(data => {
+				this.userDisplayName = data;
+			});
 		this.updatePrintRecordLink();
+		this.addEventListener('d2l-menu-item-select', this.d2lMenuItemSelectListener);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.removeEventListener('d2l-menu-item-select', this.d2lMenuItemSelectListener);
+	}
+
+	d2lMenuItemSelectListener(event) {
+		if (event.path[0].id === 'print_records') {
+			window.open(this.printRecordLink, '_blank');
+		} else {
+			this.cpdService.getCsvExport(this.viewUserId, this.getCsvFileName());
+		}
+	}
+
+	getCsvFileName() {
+		const now = new Date();
+		return `${this.userDisplayName}_${now.toLocaleDateString()} ${now.toLocaleTimeString()}.csv`;
 	}
 
 	backToTeamClicked() {
@@ -369,8 +390,14 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 							${this.localize('userTitle', { 'userName': this.userDisplayName})}
 						</h2>
 						<div class="printLink">
-							<d2l-icon icon="tier1:print"></d2l-icon>
-							<d2l-link target="_blank" href="${this.printRecordLink}">${this.localize('printRecords')}</d2l-link>
+							<d2l-dropdown-button primary text="${this.localize('printExportRecords')}">
+								<d2l-dropdown-menu>
+									<d2l-menu>
+										<d2l-menu-item-link text="${this.localize('printRecords')}" id="print_records"></d2l-menu-item-link>
+										<d2l-menu-item-link text="${this.localize('exportRecords')}" id="export_records"></d2l-menu-item-link>
+									</d2l-menu>
+								</d2l-dropdown-menu>
+							</d2l-dropdown-button>
 						</div>
 					</div>
 				</div>`;
@@ -389,8 +416,14 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 							${this.localize('addNewCPD')}
 						</d2l-button>
 						<div class="printLink">
-							<d2l-icon icon="tier1:print"></d2l-icon>
-							<d2l-link target="_blank" href="${this.printRecordLink}">${this.localize('printRecords')}</d2l-link>
+							<d2l-dropdown-button primary text="${this.localize('printExportRecords')}">
+								<d2l-dropdown-menu>
+									<d2l-menu>
+										<d2l-menu-item-link text="${this.localize('printRecords')}" id="print_records"></d2l-menu-item-link>
+										<d2l-menu-item-link text="${this.localize('exportRecords')}" id="export_records"></d2l-menu-item-link>
+									</d2l-menu>
+								</d2l-dropdown-menu>
+							</d2l-dropdown-button>
 						</div>
 					</div>
 				`}

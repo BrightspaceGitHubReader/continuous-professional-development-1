@@ -74,6 +74,28 @@ export class CpdService {
 		return d2lfetch.fetch(request);
 	}
 
+	static getCsvExport(userId, fileName) {
+		let path;
+		if (userId) {
+			path = `${this.Host}${CpdRoutes.RelativePath(CpdRoutes.UserCSVReport(userId))}`;
+		} else {
+			path = `${this.Host}${CpdRoutes.RelativePath(CpdRoutes.CSVReport)}`;
+		}
+		const request = new Request(path);
+		return d2lfetch.fetch(request)
+			.then(resp => resp.blob())
+			.then(blob => {
+				const url = window.URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.style.display = 'none';
+				a.href = url;
+				a.download = fileName;
+				document.body.appendChild(a);
+				a.click();
+				window.URL.revokeObjectURL(url);
+			});
+	}
+
 	static getItems(type) {
 		return this.getRequest(CpdRoutes.RelativePath(type));
 	}
