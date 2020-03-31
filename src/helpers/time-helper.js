@@ -69,6 +69,8 @@ export function getCurrentDate() {
 }
 
 export function toLocalDate(dateString) {
-	const date = dayjs(dateString).utc();
-	return new Date(date.year(), date.month(), date.date());
+	if (dateString) {
+		const date = dayjs(dateString).utc();
+		return new Date(date.year(), date.month(), date.date());
+	}
 }

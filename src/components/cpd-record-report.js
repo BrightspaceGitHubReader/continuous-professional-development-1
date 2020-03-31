@@ -41,8 +41,20 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 			userId: {
 				type: Number
 			},
-			filters: {
-				type: Object
+			subject: {
+				type: Number
+			},
+			method: {
+				type: Number
+			},
+			recordName: {
+				type: String
+			},
+			startDate: {
+				type: String
+			},
+			endDate: {
+				type: String
 			}
 		};
 	}
@@ -137,22 +149,29 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 		this.records = [];
 		this.questions = [];
 		this.progress = {};
-		this.filters = {};
 		this.types = this.cpdService.getTypes();
 	}
 
 	connectedCallback() {
 		super.connectedCallback();
 
+		this.filters = {
+			Subject: {value: this.subject, enabled: true},
+			Method: {value: this.method, enabled: true},
+			Name: {value: this.recordName},
+			StartDate: {value: this.startDate},
+			EndDate: {value: this.endDate}
+		};
+
 		this.cpdService.getUserInfo(this.userId)
 			.then(body => {
 				this.userInfo.DisplayName = body;
 			});
-		this.cpdService.getTargetRecords(this.userId)
+		this.cpdService.getTargetRecords(this.userId, this.filters)
 			.then(body => {
 				this.records = body;
 			});
-		this.cpdService.getProgress(this.userId)
+		this.cpdService.getProgress(this.userId, this.filters)
 			.then(body => {
 				this.progress = this.lowercasePropertyNames(body);
 				this.target = {
@@ -171,11 +190,29 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 	}
 
 	formatDateString(inputDate) {
-		return `${formatDate(inputDate, {format: 'medium'})}`;
+		if (inputDate) {
+			return `${formatDate(inputDate, {format: 'medium'})}`;
+		}
 	}
 
 	print() {
 		window.print();
+	}
+
+	renderRangeString() {
+		if (this.target) {
+			let langterm = '';
+			if (this.target.rangeStart && this.target.rangeEnd) {
+				langterm = 'range';
+			} else if (this.target.rangeStart) {
+				langterm = 'rangeOnlyStart';
+			} else if (this.target.rangeEnd) {
+				langterm = 'rangeOnlyEnd';
+			}
+			return this.localize(langterm, this.target);
+		}
+		return '';
+
 	}
 
 	renderRecord(record) {
@@ -223,7 +260,7 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 				<div>
 					${unsafeHTML(answer.Text)}
 				</div>
-			<div>
+			</div>
 		`;
 	}
 
@@ -241,7 +278,7 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 						</div>
 						<div>
 							<span class="d2l-heading-3">${this.localize('cpdPeriod')}</span>
-							${this.localize('range', this.target)}
+							${this.renderRangeString()}
 						</div>
 					</div>
 					<div class="logo-container">

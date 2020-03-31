@@ -206,16 +206,16 @@ export class CpdService {
 		}
 		return this.getRequest(CpdRoutes.RelativePath(CpdRoutes.JobTarget(jobTitle)));
 	}
-	static getTargetRecords(filters, userId) {
+	static getTargetRecords(userId, filters) {
 		let url = userId ? CpdRoutes.RelativePath(CpdRoutes.UserReportRecords(userId)) : CpdRoutes.RelativePath(CpdRoutes.ReportRecords);
 		if (filters) {
 			const searchParams = new URLSearchParams();
 			const { Subject, Method, Name, StartDate, EndDate } = filters;
-			if (Subject && Subject.value && Subject.enabled) searchParams.append('subject', Subject.value);
-			if (Method && Method.value && Method.enabled) searchParams.append('method', Method.value);
+			if (Subject && Subject.value) searchParams.append('subject', Subject.value);
+			if (Method && Method.value) searchParams.append('method', Method.value);
 			if (Name && Name.value) searchParams.append('recordName', Name.value);
-			if (StartDate && StartDate.value) searchParams.append('startDate', dateParamString(StartDate.value));
-			if (EndDate && EndDate.value) searchParams.append('endDate', dateParamString(EndDate.value, true));
+			if (StartDate && StartDate.value) searchParams.append('startDate', StartDate.value);
+			if (EndDate && EndDate.value) searchParams.append('endDate', EndDate.value);
 			url = url.concat(`?${searchParams.toString()}`);
 		}
 		return this.getRequest(url);

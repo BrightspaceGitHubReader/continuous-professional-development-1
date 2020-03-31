@@ -106,6 +106,8 @@
   "questionNamePlaceholder": "Enter Question Text",
   "range": "{rangeStart} - {rangeEnd}",
   "recordName": "Record Name",
+  "rangeOnlyEnd": "Records up to and including {rangeEnd}",
+  "rangeOnlyStart": "Records on or after {rangeStart}",
   "rollingTarget": "Rolling SPS Date",
   "save": "Save",
   "search": "Search",
