@@ -75,11 +75,33 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 				font-weight: bold;
 			}
 			.record-grid {
-				display: grid;
-				grid-template-columns: 1fr 3fr;
 				border: 1px black solid;
 				page-break-before: always;
 				margin-top: 20px;
+			}
+			.record-properties {
+				width: calc(100% - 4px);
+				border-width: 0px;
+				margin: 2px;
+			}
+			.property-name {
+				width: 25%;
+				text-align: right;
+				padding: 0px 6px 0px 0px;
+			}
+			.property-value {
+				width: 75%;
+				padding: 0px;
+			}
+			.property-value * {
+				font-size: 0.95rem;
+			}
+			.property-name > *, .property-value > * {
+				margin: 0px;
+			}
+			.property-name, .property-value {
+				border-width: 0px;
+				height: 38px;
 			}
 			.container {
 				padding-left: 75px;
@@ -218,22 +240,72 @@ class CpdRecordReport extends BaseMixin(LitElement) {
 	renderRecord(record) {
 		return html`
 			<div class="record-grid">
-				<div class="d2l-heading-3">${this.localize('headingRecordName')}</div>
-				<div class="record-data">${record.Name}</div>
-				<div class="d2l-heading-3">${this.localize('headingCreditHours')}</div>
-				<div class="record-data">${this.localize('shortTimeDuration', getHoursAndMinutes(record.CreditMinutes))}</div>
-				<div class="d2l-heading-3">${this.localize('headingDateCompleted')}</div>
-				<div class="record-data">${formatDate(new Date(record.DateCompleted))}</div>
-				<div class="d2l-heading-3">${this.localize('headingSubject')}</div>
-				<div class="record-data">${record.Subject.Name}</div>
-				<div class="d2l-heading-3">${this.localize('headingRecordType')}</div>
-				<div class="record-data">${this.types.find(type => !!type.Id === record.IsStructured).Name}</div>
-				<div class="d2l-heading-3">${this.localize('headingMethod')}</div>
-				<div class="record-data">${record.Method.Name}</div>
-				<div class="d2l-heading-3">${this.localize('headingGrade')}</div>
-				<div class="record-data">${ record.Grade ? this.localize('percent', decimalToPercent(record.Grade)) : this.localize('na') }</div>
-				<div class="d2l-heading-3">${this.localize('headingEvidence')}</div>
-				${this.renderAttachments(record.Attachments)}
+				<table class="record-properties">
+					<tr>
+						<td class="property-name">
+							<div class="d2l-heading-3">${this.localize('headingRecordName')}</div>
+						</td>
+						<td class="property-value">
+							<div class="record-data">${record.Name}</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="property-name">
+							<div class="d2l-heading-3">${this.localize('headingCreditHours')}</div>
+						</td>
+						<td class="property-value">
+							<div class="record-data">${this.localize('shortTimeDuration', getHoursAndMinutes(record.CreditMinutes))}</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="property-name">
+							<div class="d2l-heading-3">${this.localize('headingDateCompleted')}</div>
+						</td>
+						<td class="property-value">
+							<div class="record-data">${formatDate(new Date(record.DateCompleted))}</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="property-name">
+							<div class="d2l-heading-3">${this.localize('headingSubject')}</div>
+						</td>
+						<td class="property-value">
+							<div class="record-data">${record.Subject.Name}</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="property-name">
+							<div class="d2l-heading-3">${this.localize('headingRecordType')}</div>
+						</td>
+						<td class="property-value">
+							<div class="record-data">${this.types.find(type => !!type.Id === record.IsStructured).Name}</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="property-name">
+							<div class="d2l-heading-3">${this.localize('headingMethod')}</div>
+						</td>
+						<td class="property-value">
+							<div class="record-data">${record.Method.Name}</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="property-name">
+							<div class="d2l-heading-3">${this.localize('headingGrade')}</div>
+						</td>
+						<td class="property-value">
+							<div class="record-data">${ record.Grade ? this.localize('percent', decimalToPercent(record.Grade)) : this.localize('na') }</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="property-name">
+							<div class="d2l-heading-3">${this.localize('headingEvidence')}</div>
+						</td>
+						<td class="property-value">
+							${this.renderAttachments(record.Attachments)}
+						</td>
+					</tr>
+				</table>
 				${record.Answers.map(answer => this.renderAnswer(record.Id, answer))}
 			</div>
 		`;
