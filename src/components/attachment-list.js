@@ -45,13 +45,9 @@ class AttachmentList extends BaseMixin(LitElement) {
 		this.hostPath = this.cpdService.Host;
 	}
 
-	createAttachmentUrl(attachment) {
-		if (attachment.href) {
-			return `${this.hostPath}${attachment.href}`;
-		}
-		if (attachment instanceof File) {
-			return window.URL.createObjectURL(attachment);
-		}
+	async getAttachment(e) {
+		const attachment = e.target.attachment;
+		await this.cpdService.getAttachment(attachment);
 	}
 
 	fireAttachmentListUpdated(oldVal) {
@@ -102,8 +98,10 @@ class AttachmentList extends BaseMixin(LitElement) {
 				${this.attachmentsList && this.attachmentsList.map((attachment, index) => html`
 					<d2l-list-item>
 						<d2l-link
-							target="${attachment.href ? '_self' : '_blank'}"
-							href="${this.createAttachmentUrl(attachment)}">
+							target="_self"
+							.attachment="${attachment}"
+							@click="${this.getAttachment}"
+							href="javascript:void(0)">
 							${attachment.name}
 						</d2l-link>
 						<span>${this.getFileSizeString(attachment.size)}</span>

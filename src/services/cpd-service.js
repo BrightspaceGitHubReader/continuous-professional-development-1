@@ -73,7 +73,27 @@ export class CpdService {
 		});
 		return d2lfetch.fetch(request);
 	}
-
+	static downloadBlob(blob, fileName) {
+		const url = window.URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.style.display = 'none';
+		a.href = url;
+		a.download = fileName;
+		document.body.appendChild(a);
+		a.click();
+		window.URL.revokeObjectURL(url);
+	}
+	static async getAttachment(attachment) {
+		let blob;
+		if (attachment.href) {
+			const path = `${this.Host}${attachment.href}`;
+			const response = await d2lfetch.fetch(new Request(path));
+			blob = await response.blob();
+		} else if (attachment instanceof File) {
+			blob = attachment;
+		}
+		this.downloadBlob(blob, attachment.name);
+	}
 	static getCsvExport(userId, fileName) {
 		let path;
 		if (userId) {
@@ -85,17 +105,9 @@ export class CpdService {
 		return d2lfetch.fetch(request)
 			.then(resp => resp.blob())
 			.then(blob => {
-				const url = window.URL.createObjectURL(blob);
-				const a = document.createElement('a');
-				a.style.display = 'none';
-				a.href = url;
-				a.download = fileName;
-				document.body.appendChild(a);
-				a.click();
-				window.URL.revokeObjectURL(url);
+				this.downloadBlob(blob, fileName);
 			});
 	}
-
 	static getItems(type) {
 		return this.getRequest(CpdRoutes.RelativePath(type));
 	}
