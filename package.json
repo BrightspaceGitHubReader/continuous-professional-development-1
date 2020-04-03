@@ -80,7 +80,6 @@
     "d2l-fetch": "Brightspace/d2l-fetch.git#semver:^2",
     "d2l-fetch-auth": "^1.2.0",
     "d2l-html-editor": "github:Brightspace/d2l-html-editor#semver:^2",
-    "d2l-menu": "BrightspaceUI/menu#semver:^2",
     "d2l-navigation": "github:BrightspaceUI/navigation#semver:^4",
     "d2l-resize-aware": "BrightspaceUI/resize-aware#semver:^1",
     "d2l-table": "BrightspaceUI/table#semver:^2",

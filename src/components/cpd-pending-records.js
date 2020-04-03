@@ -2,9 +2,10 @@ import '@brightspace-ui/core/components/button/button-icon';
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/inputs/input-search';
 import '@brightspace-ui/core/components/link/link';
-import 'd2l-menu/d2l-menu';
 import '@brightspace-ui/core/components/dropdown/dropdown';
 import '@brightspace-ui/core/components/dropdown/dropdown-menu';
+import '@brightspace-ui/core/components/menu/menu';
+import '@brightspace-ui/core/components/menu/menu-item';
 import 'd2l-date-picker/d2l-date-picker';
 import './message-container';
 import './page-select';
@@ -168,7 +169,7 @@ class PendingRecords extends BaseMixin(LitElement) {
 									data-award-id="${JSON.stringify(award)}"
 									text="${this.localize('addToMyCpd')}"
 									@click="${this.addAwardButtonClicked}">
-									</d2l-menu-item>
+								</d2l-menu-item>
 							</d2l-menu>
 						</d2l-dropdown-menu>
 					</d2l-dropdown>
