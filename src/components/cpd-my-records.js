@@ -157,16 +157,15 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				this.userDisplayName = data;
 			});
 		this.updatePrintRecordLink();
-		this.addEventListener('d2l-menu-item-select', this.d2lMenuItemSelectListener);
 	}
 
 	disconnectedCallback() {
 		super.disconnectedCallback();
-		this.removeEventListener('d2l-menu-item-select', this.d2lMenuItemSelectListener);
 	}
 
 	d2lMenuItemSelectListener(event) {
-		if (event.path[0].id === 'print_records') {
+		const itemText = event.target.getAttribute('id');
+		if (itemText === 'print_records') {
 			window.open(this.printRecordLink, '_blank');
 		} else {
 			this.cpdService.getCsvExport(this.viewUserId, this.getCsvFileName());
@@ -393,8 +392,8 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 							<d2l-dropdown-button primary text="${this.localize('printExportRecords')}">
 								<d2l-dropdown-menu>
 									<d2l-menu>
-										<d2l-menu-item-link text="${this.localize('printRecords')}" id="print_records"></d2l-menu-item-link>
-										<d2l-menu-item-link text="${this.localize('exportRecords')}" id="export_records"></d2l-menu-item-link>
+										<d2l-menu-item-link text="${this.localize('printRecords')}" id="print_records" @click="${this.d2lMenuItemSelectListener}"></d2l-menu-item-link>
+										<d2l-menu-item-link text="${this.localize('exportRecords')}" id="export_records" @click="${this.d2lMenuItemSelectListener}"></d2l-menu-item-link>
 									</d2l-menu>
 								</d2l-dropdown-menu>
 							</d2l-dropdown-button>
@@ -419,8 +418,8 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 							<d2l-dropdown-button primary text="${this.localize('printExportRecords')}">
 								<d2l-dropdown-menu>
 									<d2l-menu>
-										<d2l-menu-item-link text="${this.localize('printRecords')}" id="print_records"></d2l-menu-item-link>
-										<d2l-menu-item-link text="${this.localize('exportRecords')}" id="export_records"></d2l-menu-item-link>
+										<d2l-menu-item-link text="${this.localize('printRecords')}" id="print_records" @click="${this.d2lMenuItemSelectListener}"></d2l-menu-item-link>
+										<d2l-menu-item-link text="${this.localize('exportRecords')}" id="export_records" @click="${this.d2lMenuItemSelectListener}"></d2l-menu-item-link>
 									</d2l-menu>
 								</d2l-dropdown-menu>
 							</d2l-dropdown-button>
