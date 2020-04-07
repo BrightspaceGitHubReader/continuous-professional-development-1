@@ -28,6 +28,29 @@ export class DemoCpdService {
 		deletedSubjects.push(subjectId);
 	}
 
+	static downloadBlob(blob, fileName) {
+		const url = window.URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.style.display = 'none';
+		a.href = url;
+		a.download = fileName;
+		document.body.appendChild(a);
+		a.click().then(() => {
+			window.URL.revokeObjectURL(url);
+			document.body.removeChild(a);
+		});
+	}
+
+	static async getAttachment(attachment) {
+		let blob;
+		if (attachment.href) {
+			return;
+		} else if (attachment instanceof File) {
+			blob = attachment;
+		}
+		this.downloadBlob(blob, attachment.name);
+	}
+
 	static getJobTitle() {
 		return Promise.resolve('Cool Job');
 	}

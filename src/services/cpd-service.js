@@ -80,8 +80,10 @@ export class CpdService {
 		a.href = url;
 		a.download = fileName;
 		document.body.appendChild(a);
-		a.click();
-		window.URL.revokeObjectURL(url);
+		a.click().then(() => {
+			window.URL.revokeObjectURL(url);
+			document.body.removeChild(a);
+		});
 	}
 	static async getAttachment(attachment) {
 		let blob;
