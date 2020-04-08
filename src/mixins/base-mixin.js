@@ -49,6 +49,9 @@ export const BaseMixin = superclass => class extends RtlMixin(LocalizeMixin(supe
 
 	connectedCallback() {
 		super.connectedCallback();
+		if (window.iFrameResizer && window.iFrameResizer.heightCalculationMethod !== 'lowestElement') {
+			window.iFrameResizer.heightCalculationMethod = 'lowestElement';
+		}
 		new ResizeObserver(() => {
 			this.resize();
 		}).observe(document.body, {
