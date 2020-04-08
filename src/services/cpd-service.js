@@ -74,7 +74,12 @@ export class CpdService {
 		return d2lfetch.fetch(request);
 	}
 	static downloadBlob(blob, fileName) {
-		const url = window.URL.createObjectURL(blob);
+		let url;
+		if (window.navigator.msSaveOrOpenBlob) {
+			url = window.navigator.msSaveOrOpenBlob(blob, fileName);
+		} else {
+			url = window.URL.createObjectURL(blob);
+		}
 		const a = document.createElement('a');
 		a.style.display = 'none';
 		a.href = url;

@@ -29,7 +29,12 @@ export class DemoCpdService {
 	}
 
 	static downloadBlob(blob, fileName) {
-		const url = window.URL.createObjectURL(blob);
+		let url;
+		if (window.navigator.msSaveOrOpenBlob) {
+			url = window.navigator.msSaveOrOpenBlob(blob, fileName);
+		} else {
+			url = window.URL.createObjectURL(blob);
+		}
 		const a = document.createElement('a');
 		a.style.display = 'none';
 		a.href = url;
@@ -41,14 +46,15 @@ export class DemoCpdService {
 		});
 	}
 
-	static async getAttachment(attachment) {
-		let blob;
-		if (attachment.href) {
-			return;
-		} else if (attachment instanceof File) {
-			blob = attachment;
-		}
-		this.downloadBlob(blob, attachment.name);
+	static async getAttachment(fileName) {
+		const blob = new Blob([JSON.stringify({key: 'value'})], {type : 'application/json'});
+		this.downloadBlob(blob, fileName);
+	}
+
+	static getCsvExport() {
+		const now = new Date();
+		const fileName = `${this.userDisplayName}_${now.toLocaleDateString()} ${now.toLocaleTimeString()}.csv`;
+		this.getAttachment(fileName);
 	}
 
 	static getJobTitle() {
