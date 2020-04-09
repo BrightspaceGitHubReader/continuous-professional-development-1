@@ -6,6 +6,7 @@ import '@brightspace-ui/core/components/dropdown/dropdown';
 import '@brightspace-ui/core/components/dropdown/dropdown-menu';
 import '@brightspace-ui/core/components/menu/menu';
 import '@brightspace-ui/core/components/menu/menu-item';
+import '@brightspace-ui-labs/view-toggle/view-toggle';
 import 'd2l-date-picker/d2l-date-picker';
 import './message-container';
 import './page-select';
@@ -90,6 +91,9 @@ class PendingRecords extends BaseMixin(LitElement) {
 			case 'end_date_picker':
 				this.filters.EndDate = e.detail;
 				break;
+			case 'view_toggle':
+				this.filters.Dismissed = e.detail.view === 'dismissed';
+				break;
 		}
 		this.page = 1;
 		this.fetchAwards();
@@ -110,10 +114,24 @@ class PendingRecords extends BaseMixin(LitElement) {
 
 	addAwardButtonClicked(e) {
 		const awardData = e.target.getAttribute('data-award-id');
+		if (this.filters.Dismissed) {
+			this.cpdService.restoreRecord(awardData.IssuedAwardId);
+		}
 		this.fireNavigationEvent({
 			page: 'cpd-add-record',
 			awardData
 		});
+	}
+
+	dismissRecordButtonClicked(e) {
+		const awardData = JSON.parse(e.target.getAttribute('data-award-id'));
+		if (this.filters.Dismissed) {
+			this.cpdService.restoreRecord(awardData.IssuedAwardId);
+		}
+		else {
+			this.cpdService.dismissRecord(awardData.IssuedAwardId);
+		}
+		this.fetchAwards();
 	}
 
 	renderTable() {
@@ -170,6 +188,11 @@ class PendingRecords extends BaseMixin(LitElement) {
 									text="${this.localize('addToMyCpd')}"
 									@click="${this.addAwardButtonClicked}">
 								</d2l-menu-item>
+								<d2l-menu-item
+									data-award-id="${JSON.stringify(award)}"
+									text="${this.localize(this.filters.Dismissed ? 'restoreRecord' : 'dismissRecord')}"
+									@click="${this.dismissRecordButtonClicked}">
+								</d2l-menu-item>
 							</d2l-menu>
 						</d2l-dropdown-menu>
 					</d2l-dropdown>
@@ -182,8 +205,19 @@ class PendingRecords extends BaseMixin(LitElement) {
 	}
 
 	render() {
+		const toggleOptions = [
+			{
+				text: this.localize('pendingRecords'),
+				val: 'pending'
+			},
+			{
+				text: this.localize('dismissedRecords'),
+				val: 'dismissed'
+			}
+		];
 		return html`
 			<div role="main">
+				<d2l-view-toggle id="view_toggle" .toggleOptions=${toggleOptions} selectedOption="pending" @d2l-view-toggle-changed="${this.updateFilter}"></d2l-view-toggle>
 				<div class="searchContainer">
 					<d2l-input-search
 						id="search_input"

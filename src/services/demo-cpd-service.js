@@ -28,6 +28,8 @@ export class DemoCpdService {
 		deletedSubjects.push(subjectId);
 	}
 
+	static dismissRecord() {}
+
 	static downloadBlob(blob, fileName) {
 		let url;
 		if (window.navigator.msSaveOrOpenBlob) {
@@ -151,6 +153,8 @@ export class DemoCpdService {
 	}
 
 	static printRecordLink() {}
+
+	static restoreRecord() {}
 
 	static updateMethod() {}
 

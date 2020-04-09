@@ -73,6 +73,17 @@ export class CpdService {
 		});
 		return d2lfetch.fetch(request);
 	}
+
+	static dismissRecord(awardId) {
+		const request = new Request(`${this.Host}${CpdRoutes.RelativePath(CpdRoutes.DismissRecord(awardId))}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type' : 'application/json'
+			}
+		});
+		return d2lfetch.fetch(request);
+	}
+
 	static downloadBlob(blob, fileName) {
 		let url;
 		if (window.navigator.msSaveOrOpenBlob) {
@@ -145,10 +156,11 @@ export class CpdService {
 		const searchParams = new URLSearchParams();
 		searchParams.append('pageNumber', page);
 		if (filters) {
-			const { Name, StartDate, EndDate } = filters;
+			const { Name, StartDate, EndDate, Dismissed } = filters;
 			if (Name && Name.value) searchParams.append('awardName', Name.value);
 			if (StartDate && StartDate.value) searchParams.append('startDate', dateParamString(StartDate.value));
 			if (EndDate && EndDate.value) searchParams.append('endDate', dateParamString(EndDate.value, true));
+			if (Dismissed) searchParams.append('dismissed', true);
 		}
 		url = url.concat(`?${searchParams.toString()}`);
 		return this.getRequest(url);
@@ -324,6 +336,15 @@ export class CpdService {
 		return d2lfetch.fetch(postRequest);
 	}
 	static get Record() { return 'record'; }
+	static restoreRecord(awardId) {
+		const request = new Request(`${this.Host}${CpdRoutes.RelativePath(CpdRoutes.DismissRecord(awardId))}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type' : 'application/json'
+			}
+		});
+		return d2lfetch.fetch(request);
+	}
 	static get Subject() { return 'subject'; }
 	static get Target() {return 'target';}
 	static get Team() { return 'team'; }
