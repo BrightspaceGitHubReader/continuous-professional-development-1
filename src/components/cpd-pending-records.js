@@ -115,7 +115,7 @@ class PendingRecords extends BaseMixin(LitElement) {
 	addAwardButtonClicked(e) {
 		const awardData = e.target.getAttribute('data-award-id');
 		if (this.filters.Dismissed) {
-			this.cpdService.restoreRecord(awardData.IssuedAwardId);
+			this.cpdService.restoreRecord(JSON.parse(awardData).IssuedAwardId);
 		}
 		this.fireNavigationEvent({
 			page: 'cpd-add-record',
