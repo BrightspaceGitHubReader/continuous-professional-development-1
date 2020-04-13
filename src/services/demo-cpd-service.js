@@ -33,7 +33,8 @@ export class DemoCpdService {
 	static downloadBlob(blob, fileName) {
 		let url;
 		if (window.navigator.msSaveOrOpenBlob) {
-			url = window.navigator.msSaveOrOpenBlob(blob, fileName);
+			window.navigator.msSaveOrOpenBlob(blob, fileName);
+			return;
 		} else {
 			url = window.URL.createObjectURL(blob);
 		}
@@ -42,21 +43,26 @@ export class DemoCpdService {
 		a.href = url;
 		a.download = fileName;
 		document.body.appendChild(a);
-		a.click().then(() => {
-			window.URL.revokeObjectURL(url);
-			document.body.removeChild(a);
-		});
+		a.click();
+		window.URL.revokeObjectURL(url);
+		document.body.removeChild(a);
 	}
 
-	static async getAttachment(fileName) {
-		const blob = new Blob([JSON.stringify({key: 'value'})], {type : 'application/json'});
-		this.downloadBlob(blob, fileName);
+	static async getAttachment(attachment) {
+		let blob;
+		if (attachment.href) {
+			blob = new Blob([JSON.stringify({key: 'value'})], {type : 'application/json'});
+		} else if (attachment instanceof File) {
+			blob = attachment;
+		}
+		this.downloadBlob(blob, attachment.name);
 	}
 
 	static getCsvExport() {
 		const now = new Date();
-		const fileName = `${this.userDisplayName}_${now.toLocaleDateString()} ${now.toLocaleTimeString()}.csv`;
-		this.getAttachment(fileName);
+		const fileName = `${this.userDisplayName}_${now.toLocaleDateString()}_${now.toLocaleTimeString()}.csv`;
+		const blob = new Blob([JSON.stringify({key: 'value'})], {type : 'application/json'});
+		this.downloadBlob(blob, fileName);
 	}
 
 	static getJobTitle() {
