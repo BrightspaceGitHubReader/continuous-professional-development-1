@@ -105,7 +105,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				display: grid;
 				grid-gap: 6px;
 				grid-auto-flow: column;
-				grid-template-columns: 30px; 90px;
+				grid-template-columns: 30px 90px;
 				align-items: center;
 				margin-left: 12px;
 			}
@@ -207,12 +207,10 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 			.then(data => {
 				this.cpdRecords = data;
 			});
-		if (!this.viewUserId) {
-			this.cpdService.getProgress(null, this.filters)
-				.then((data) =>
-					this.progress = this.lowercasePropertyNames(data)
-				);
-		}
+		this.cpdService.getProgress(this.viewUserId, this.filters)
+			.then((data) =>
+				this.progress = this.lowercasePropertyNames(data)
+			);
 	}
 
 	updatePrintRecordLink() {
@@ -408,8 +406,8 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 		return html`
 			<div role="main">
 				${this.renderHeader(this.viewUserId)}
+				<d2l-cpd-progress-box ?hasEnforcedTarget=${this.hasEnforcedTarget} .progress="${this.progress}"></d2l-cpd-progress-box>
 				${this.viewUserId ? html `` : html`
-					<d2l-cpd-progress-box ?hasEnforcedTarget=${this.hasEnforcedTarget} .progress="${this.progress}"></d2l-cpd-progress-box>
 					<div class="header">
 						<d2l-button id="new_record" primary @click="${this.newRecordButtonClicked}">
 							${this.localize('addNewCPD')}
