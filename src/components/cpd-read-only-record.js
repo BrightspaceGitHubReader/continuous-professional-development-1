@@ -115,7 +115,7 @@ class ReadOnlyCpdRecord extends BaseMixin(LitElement) {
 		return html`
 			<main>
 				<d2l-navigation-link-back
-					text="${this.localize('backToUserRecords', {userName: this.userDisplayName})}"
+					text="${this.localize('backToUserRecords', {userDisplayName: this.userDisplayName})}"
 					@click="${this.backToUserRecordsClicked}"
 					href="javascript:void(0)">
 				</d2l-navigation-link-back>

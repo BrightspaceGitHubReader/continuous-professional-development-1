@@ -1,4 +1,5 @@
 import './message-container';
+import '@brightspace-ui/core/components/button/button-icon';
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/inputs/input-search';
 import './page-select';
@@ -23,6 +24,12 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 			},
 			cpdService: {
 				type: Object
+			},
+			viewUserId: {
+				type: Number
+			},
+			userDisplayName: {
+				type: String
 			}
 		};
 	}
@@ -45,6 +52,10 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 				display: flex;
 				justify-content: flex-end;
 			}
+
+			.userLink {
+				vertical-align: middle;
+			}
 			`
 		];
 	}
@@ -60,34 +71,59 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.cpdService.getMyTeam(this.page)
-			.then(data => {
-				this.myTeam = data;
-			});
+		this.filters.ManagingUserId = this.viewUserId;
+		this.fetchData();
 	}
 
-	fetchReports() {
+	attributeChangedCallback(name, oldval, newval) {
+		super.attributeChangedCallback(name, oldval, newval);
+		if (name === 'viewuserid') {
+			this.page = 1;
+			this.filters.ManagingUserId = this.viewUserId;
+			this.fetchData();
+		}
+	}
+
+	backToTeamClicked() {
+		this.fireNavigationEvent({page: 'cpd-my-team'});
+	}
+
+	fetchData() {
 		this.cpdService.getMyTeam(this.page, this.filters)
 			.then(data => {
 				this.myTeam = data;
 			});
+		if (this.viewUserId) {
+			this.cpdService.getUserInfo(this.viewUserId)
+				.then(data => {
+					this.userDisplayName = data;
+				});
+		}
 	}
 
 	updateFilter(e) {
 		this.filters.Name = e.detail;
 		this.page = 1;
-		this.fetchReports();
+		this.fetchData();
 	}
 
 	updatePage(e) {
 		this.page = e.detail.page;
-		this.fetchReports();
+		this.fetchData();
 	}
 
 	userClicked(e) {
 		this.fireNavigationEvent(
 			{
 				page: 'cpd-user-records',
+				viewUserId: e.target.getAttribute('user-id')
+			});
+	}
+
+	userTeamClicked(e) {
+		this.fireNavigationEvent(
+			{
+				page: 'cpd-user-team',
 				viewUserId: e.target.getAttribute('user-id')
 			});
 	}
@@ -134,17 +170,40 @@ class MyTeamCPD extends BaseMixin(LitElement) {
 				</td>
 
 				<td>
-					<d2l-link @click="${this.userClicked}" user-id="${report.UserId}">
+					<d2l-link class="userLink" @click="${this.userClicked}" user-id="${report.UserId}">
 						${report.DisplayName}
 					</d2l-link>
+					${ report.HasDirectReports ? html`<d2l-button-icon user-id="${report.UserId}" icon="tier1:group" text="${this.localize('viewTeamCPD')}" @click="${this.userTeamClicked}"></d2l-button-icon>` : html ``}
 				</td>
 			</tr>
 		`;
 	}
 
+	renderHeader(viewUserId) {
+		if (viewUserId) {
+			return html`
+				<div>
+					<div>
+						<d2l-navigation-link-back
+							text="${this.localize('backToTeam')}"
+							@click="${this.backToTeamClicked}"
+							href="javascript:void(0)">
+						</d2l-navigation-link-back>
+					</div>
+					<div class="header">
+						<h2>
+							${this.localize('userTeam', { 'userDisplayName': this.userDisplayName})}
+						</h2>
+					</div>
+				</div>`;
+		}
+		return html ``;
+	}
+
 	render() {
 		return html`
 			<div role="main">
+				${this.renderHeader(this.viewUserId)}
 				<d2l-input-search
 					label="${this.localize('search')}"
 					placeholder=${this.localize('searchTeamPlaceholder')}

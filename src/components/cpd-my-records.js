@@ -384,7 +384,7 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 					</div>
 					<div class="header">
 						<h2>
-							${this.localize('userTitle', { 'userName': this.userDisplayName})}
+							${this.localize('userTitle', { 'userDisplayName': this.userDisplayName})}
 						</h2>
 						<div class="printLink">
 							<d2l-dropdown-button primary text="${this.localize('printExportRecords')}">

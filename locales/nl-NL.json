@@ -15,7 +15,7 @@
    "backToJobCpd" : "Terug naar Lijst functies",
    "backToMyCPD" : "Terug naar Mijn CPD",
    "backToTeam" : "Terug naar Mijn team",
-   "backToUserRecords" : "Terug naar de records van {userName}",
+   "backToUserRecords" : "Terug naar de records van {userDisplayName}",
    "cancel" : "Annuleren",
    "chooseChoice" : "Kies een {choice}",
    "combined" : "Gecombineerd",
@@ -133,7 +133,7 @@
    "type" : "Type",
    "unstructured" : "Niet gestructureerd",
    "userDetails" : "Gebruikerdetails",
-   "userTitle" : "CPD-record van {userName}",
+   "userTitle" : "CPD-record van {userDisplayName}",
    "viewCPD" : "CPD-record weergeven",
    "yes" : "Ja"
 }

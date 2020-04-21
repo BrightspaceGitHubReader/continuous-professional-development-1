@@ -15,7 +15,7 @@
    "backToJobCpd" : "Zurück zur Berufsbezeichnungsliste",
    "backToMyCPD" : "Zurück zu „Meine CPD“",
    "backToTeam" : "Zurück zu „Mein Team“",
-   "backToUserRecords" : "Zurück zu den Datensätzen von {userName}",
+   "backToUserRecords" : "Zurück zu den Datensätzen von {userDisplayName}",
    "cancel" : "Abbrechen",
    "chooseChoice" : "{Choice} auswählen",
    "combined" : "Kombiniert",
@@ -133,7 +133,7 @@
    "type" : "Typ",
    "unstructured" : "Nicht strukturiert",
    "userDetails" : "Benutzer – Details",
-   "userTitle" : "CPD-Datensatz von {userName}",
+   "userTitle" : "CPD-Datensatz von {userDisplayName}",
    "viewCPD" : "CPD-Datensatz anzeigen",
    "yes" : "Ja"
 }

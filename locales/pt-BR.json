@@ -15,7 +15,7 @@
    "backToJobCpd" : "Voltar à Lista de Cargos",
    "backToMyCPD" : "Voltar ao Meu CPD",
    "backToTeam" : "Voltar para Minha Equipe",
-   "backToUserRecords" : "Voltar para os registros de {userName}",
+   "backToUserRecords" : "Voltar para os registros de {userDisplayName}",
    "cancel" : "Cancelar",
    "chooseChoice" : "Escolher {choice}",
    "combined" : "Combinado",
@@ -133,7 +133,7 @@
    "type" : "Tipo",
    "unstructured" : "Não Estruturado",
    "userDetails" : "Detalhes do Usuário",
-   "userTitle" : "Registro de CPD de {userName}",
+   "userTitle" : "Registro de CPD de {userDisplayName}",
    "viewCPD" : "Exibir Registro de CPD",
    "yes" : "Sim"
 }

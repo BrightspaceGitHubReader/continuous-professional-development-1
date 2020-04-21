@@ -15,7 +15,7 @@
   "backToJobCpd": "Back to Job Title List",
   "backToMyCPD": "Back to My CPD",
   "backToTeam": "Back to My Team",
-  "backToUserRecords": "Back to {userName}'s records",
+  "backToUserRecords": "Back to {userDisplayName}'s records",
   "cancel": "Cancel",
   "chooseChoice": "Choose a {choice}",
   "combined": "Combined",
@@ -140,7 +140,9 @@
   "type": "Type",
   "unstructured": "Unstructured",
   "userDetails": "User Details",
-  "userTitle": "{userName}'s CPD Record",
+  "userTeam": "{userDisplayName}'s Team CPD",
+  "userTitle": "{userDisplayName}'s CPD Record",
   "viewCPD": "View CPD Record",
+  "viewTeamCPD": "View Team CPD",
   "yes": "Yes"
 }

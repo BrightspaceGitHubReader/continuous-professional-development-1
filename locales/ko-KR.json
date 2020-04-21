@@ -15,7 +15,7 @@
    "backToJobCpd" : "직책 목록으로 돌아갑니다.",
    "backToMyCPD" : "My CPD로 돌아갑니다.",
    "backToTeam" : "내 팀으로 돌아가기",
-   "backToUserRecords" : "{username}님의 레코드로 돌아가기",
+   "backToUserRecords" : "{userDisplayName}님의 레코드로 돌아가기",
    "cancel" : "취소",
    "chooseChoice" : "{Choice} 선택",
    "combined" : "결합",
@@ -133,7 +133,7 @@
    "type" : "유형",
    "unstructured" : "비구조적",
    "userDetails" : "사용자 상세 정보",
-   "userTitle" : "{userName}님의 CPD 레코드",
+   "userTitle" : "{userDisplayName}님의 CPD 레코드",
    "viewCPD" : "CPD 레코드 보기",
    "yes" : "예"
 }

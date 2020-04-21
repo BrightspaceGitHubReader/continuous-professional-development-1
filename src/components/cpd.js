@@ -83,6 +83,13 @@ class Cpd extends BaseMixin(LitElement) {
 			</d2l-cpd-read-only-record>
 			`;
 		}
+		if (this.pageData.page === 'cpd-user-team') {
+			return html`
+			<d2l-cpd-my-team
+				viewuserid="${this.pageData.viewUserId}">
+			</d2l-cpd-my-team>
+			`;
+		}
 		return html`
 			<d2l-tabs>
 				${this.managePersonal ?

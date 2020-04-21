@@ -144,8 +144,9 @@ export class CpdService {
 		const searchParams = new URLSearchParams();
 		searchParams.append('pageNumber', page);
 		if (filters) {
-			const { Name } = filters;
+			const { ManagingUserId, Name  } = filters;
 			if (Name && Name.value) searchParams.append('searchTerm', Name.value);
+			if (ManagingUserId) searchParams.append('managingUserId', ManagingUserId);
 		}
 		url = url.concat(`?${searchParams.toString()}`);
 		return this.getRequest(url);
