@@ -97,6 +97,16 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 			grid-template-rows: 1fr;
 			grid-template-columns: 1fr 1fr;
 		}
+		.d2l-richtext-editor-container {
+			border: 0;
+			outline-style: none;
+		}
+		.save-div {
+			margin-top: 12px;
+		}
+		.question-text-label {
+			margin: 30px 0px;
+		}
 		`];
 	}
 
@@ -329,8 +339,8 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 					</li>
 					${this.questions.map((q) => this.renderQuestion(q))}
 				</ul>
-				<div>
-					<d2l-button ?disabled="${this.saving}" @click="${this.saveForm}" >${this.localize('save')}</d2l-button>
+				<div class="save-div">
+					<d2l-button ?disabled="${this.saving}" @click="${this.saveForm}" primary>${this.localize('save')}</d2l-button>
 					<d2l-button @click="${this.cancelForm}">${this.localize('cancel')}</d2l-button>
 				</div>
 
@@ -341,7 +351,9 @@ class AddCpdRecord extends BaseMixin(LitElement) {
 	renderQuestion(question) {
 		return html`
 			<li>
-				<label for=${`answerText_${question.Id}`}>${question.QuestionText}</label>
+				<div class="question-text-label">
+					<label for=${`answerText_${question.Id}`}>${question.QuestionText}</label>
+				</div>
 				<d2l-html-editor
 					id=${`answerText_${question.Id}`}
 					key="${ this.getQuestionKey(this.record, question.Id)}"
