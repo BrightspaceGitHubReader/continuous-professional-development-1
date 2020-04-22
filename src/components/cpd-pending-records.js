@@ -71,6 +71,16 @@ class PendingRecords extends BaseMixin(LitElement) {
 			.then(data => {
 				this.pendingRecords = data;
 			});
+
+		this.cpdService.getSubjects()
+			.then(body => {
+				this.subjects = body.reduce((d, v) => (d[v.Id] = v.Name, d), {});
+			});
+
+		this.cpdService.getMethods()
+			.then(body => {
+				this.methods = body.reduce((d, v) => (d[v.Id] = v.Name, d), {});
+			});
 	}
 
 	fetchAwards() {
@@ -149,6 +159,12 @@ class PendingRecords extends BaseMixin(LitElement) {
 					<th>
 						${this.localize('dateIssued')}
 					</th>
+					<th>
+						${this.localize('subject')}
+					</th>
+					<th>
+						${this.localize('method')}
+					</th>
 				</tr>
 			</thead>
 
@@ -199,6 +215,10 @@ class PendingRecords extends BaseMixin(LitElement) {
 				</td>
 				<td>
 					${formatDate(new Date(award.IssuedDate))}
+				</td>
+				<td>${this.subjects && this.subjects[award.SubjectId]}
+				</td>
+				<td>${this.methods && this.methods[award.MethodId]}
 				</td>
 			</tr>
 		`;
