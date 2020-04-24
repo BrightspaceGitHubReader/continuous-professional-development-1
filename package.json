@@ -24,10 +24,6 @@
       "files": "./build/prod/**",
       "moduleType": "app",
       "targetDirectory": "continuous-professional-development",
-      "creds": {
-        "key": "AKIA3HLX2CRXT6ZTVCIB",
-        "secretVar": "CDN_SECRET"
-      },
       "devTagVar": "TRAVIS_COMMIT",
       "versionVar": "TRAVIS_TAG"
     }
@@ -62,6 +58,7 @@
     "frau-appconfig-builder": "^1.0.0",
     "frau-ci": "^1",
     "frau-local-appresolver": "^1.0.0",
+    "frau-publisher": "^2.7.12",
     "mocha": "^6",
     "npm-run-all": "^4.1.5",
     "onchange": "^6.1.0",
