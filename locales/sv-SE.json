@@ -107,7 +107,7 @@
    "questionName" : "Frågetext",
    "questionNamePlaceholder" : "Ange frågetext",
    "range" : "{rangeStart}–{rangeEnd}",
-   "rangeOnlyEnd" : "Poster till och med {RangeEnd}",
+   "rangeOnlyEnd" : "Poster till och med {rangeEnd}",
    "rangeOnlyStart" : "Poster från och med {RangeStart}",
    "recordName" : "Postnamn",
    "restoreRecord" : "Återställ post",
