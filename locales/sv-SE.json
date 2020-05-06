@@ -108,7 +108,7 @@
    "questionNamePlaceholder" : "Ange frågetext",
    "range" : "{rangeStart}–{rangeEnd}",
    "rangeOnlyEnd" : "Poster till och med {rangeEnd}",
-   "rangeOnlyStart" : "Poster från och med {RangeStart}",
+   "rangeOnlyStart" : "Poster från och med {rangeStart}",
    "recordName" : "Postnamn",
    "restoreRecord" : "Återställ post",
    "rollingTarget" : "Rullande SPS-datum",
