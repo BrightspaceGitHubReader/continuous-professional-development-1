@@ -107,7 +107,7 @@
    "questionName" : "Texto da Pergunta",
    "questionNamePlaceholder" : "Insira o texto da pergunta",
    "range" : "{rangeStart} – {RangeEnd}",
-   "rangeOnlyEnd" : "Grava até e incluindo (rangeEnd)",
+   "rangeOnlyEnd" : "Grava até e incluindo {rangeEnd}",
    "rangeOnlyStart" : "Grava em ou após (rangeStart)",
    "recordName" : "Nome do Registro",
    "restoreRecord" : "Restaurar registro",
