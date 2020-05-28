@@ -15,7 +15,7 @@
    "backToJobCpd" : "Volver a la lista Ocupación",
    "backToMyCPD" : "Volver a Mi CPD",
    "backToTeam" : "Volver a Mi equipo",
-   "backToUserRecords" : "Volver a los registros de {userDisplayName}",
+   "backToUserRecords" : "Back to {userDisplayName}'s records",
    "cancel" : "Cancelar",
    "chooseChoice" : "Seleccione una {choice}",
    "combined" : "Combinados",
@@ -141,7 +141,7 @@
    "unstructured" : "No estructurado",
    "userDetails" : "Detalles de usuario",
    "userTeam" : "{userDisplayName}'s Team CPD",
-   "userTitle" : "Registro CPD de {userDisplayName}",
+   "userTitle" : "{userDisplayName}'s CPD Record",
    "viewCPD" : "Ver registro CPD",
    "viewTeamCPD" : "View Team CPD",
    "yes" : "Sí"

@@ -15,7 +15,7 @@
    "backToJobCpd" : "Revenir à la liste de titre de poste",
    "backToMyCPD" : "Revenir à mon PPC",
    "backToTeam" : "Retour à Mon équipe",
-   "backToUserRecords" : "Retour aux dossiers de {userDisplayName}",
+   "backToUserRecords" : "Back to {userDisplayName}'s records",
    "cancel" : "Annuler",
    "chooseChoice" : "Choisissez un {choice}",
    "combined" : "Combiné",
@@ -141,7 +141,7 @@
    "unstructured" : "Non structuré(e)",
    "userDetails" : "Information détaillée sur l'utilisateur",
    "userTeam" : "{userDisplayName}'s Team CPD",
-   "userTitle" : "{userDisplayName} du dossier de PPC",
+   "userTitle" : "{userDisplayName}'s CPD Record",
    "viewCPD" : "Afficher le dossier de PPC",
    "viewTeamCPD" : "View Team CPD",
    "yes" : "Oui"

@@ -15,7 +15,7 @@
    "backToJobCpd" : "役職リストに戻る",
    "backToMyCPD" : "マイ CPD に戻る",
    "backToTeam" : "マイチームに戻る",
-   "backToUserRecords" : "{userDisplayName} のレコードに戻る",
+   "backToUserRecords" : "Back to {userDisplayName}'s records",
    "cancel" : "キャンセル",
    "chooseChoice" : "{choice} の選択",
    "combined" : "組み合わせ",
@@ -141,7 +141,7 @@
    "unstructured" : "非構造化",
    "userDetails" : "ユーザーの詳細",
    "userTeam" : "{userDisplayName}'s Team CPD",
-   "userTitle" : "{userDisplayName} の CPD レコード",
+   "userTitle" : "{userDisplayName}'s CPD Record",
    "viewCPD" : "CPD レコードの表示",
    "viewTeamCPD" : "View Team CPD",
    "yes" : "はい"

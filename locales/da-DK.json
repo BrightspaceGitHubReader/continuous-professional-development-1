@@ -15,7 +15,7 @@
    "backToJobCpd" : "Tilbage til listen over jobtitler",
    "backToMyCPD" : "Tilbage til Min CPD",
    "backToTeam" : "Tilbage til Mit team",
-   "backToUserRecords" : "Tilbage til poster for {userDisplayName}",
+   "backToUserRecords" : "Back to {userDisplayName}'s records",
    "cancel" : "Annuller",
    "chooseChoice" : "Vælg et {choice}",
    "combined" : "Kombineret",
@@ -141,7 +141,7 @@
    "unstructured" : "Ustruktureret",
    "userDetails" : "Brugeroplysninger",
    "userTeam" : "{userDisplayName}'s Team CPD",
-   "userTitle" : "CPD-post for {userDisplayName}",
+   "userTitle" : "{userDisplayName}'s CPD Record",
    "viewCPD" : "Vis CPD-post",
    "viewTeamCPD" : "View Team CPD",
    "yes" : "Ja"

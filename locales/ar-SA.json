@@ -15,7 +15,7 @@
    "backToJobCpd" : "الرجوع إلى قائمة المسميات الوظيفية",
    "backToMyCPD" : "الرجوع إلى صفحة التطوير المهني المستمر الخاص بي",
    "backToTeam" : "العودة إلى فريقي",
-   "backToUserRecords" : "العودة إلى سجلات {userDisplayName}",
+   "backToUserRecords" : "Back to {userDisplayName}'s records",
    "cancel" : "إلغاء",
    "chooseChoice" : "اختيار {choice}",
    "combined" : "مجمّع",
@@ -141,7 +141,7 @@
    "unstructured" : "غير المقنن",
    "userDetails" : "تفاصيل المستخدم",
    "userTeam" : "{userDisplayName}'s Team CPD",
-   "userTitle" : "سجل التطوير المهني المستمر الخاص بـ {userDisplayName}",
+   "userTitle" : "{userDisplayName}'s CPD Record",
    "viewCPD" : "عرض سجل التطوير المهني المستمر",
    "viewTeamCPD" : "View Team CPD",
    "yes" : "نعم"
