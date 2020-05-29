@@ -15,7 +15,7 @@
    "backToJobCpd" : "İş Unvanı Listesine Geri Dön",
    "backToMyCPD" : "Devamlı Profesyonel Gelişimime Geri Dön",
    "backToTeam" : "Ekibime Dön",
-   "backToUserRecords" : "{userDisplayName} adlı kullanıcının kayıtlarına dön",
+   "backToUserRecords" : "Back to {userDisplayName}'s records",
    "cancel" : "İptal",
    "chooseChoice" : "{Choice} seç",
    "combined" : "Birleştirilmiş",
@@ -141,7 +141,7 @@
    "unstructured" : "Yapılandırılmamış",
    "userDetails" : "Kullanıcı Ayrıntıları",
    "userTeam" : "{userDisplayName}'s Team CPD",
-   "userTitle" : "{userDisplayName} adlı kullanıcının CPD Kaydı",
+   "userTitle" : "{userDisplayName}'s CPD Record",
    "viewCPD" : "CPD Kaydını gör",
    "viewTeamCPD" : "View Team CPD",
    "yes" : "Evet"
