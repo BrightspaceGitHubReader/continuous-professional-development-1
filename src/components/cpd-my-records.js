@@ -408,8 +408,8 @@ class MyCpdRecords extends BaseMixin(LitElement) {
 				${this.renderHeader(this.viewUserId)}
 				<d2l-cpd-progress-box
 					?hasEnforcedTarget=${this.hasEnforcedTarget}
-					${ this.viewUserId ? html`viewUserId=${this.viewUserId}` : null }
 					.progress="${this.progress}"
+					viewUserId=${this.viewUserId || 0}
 					>
 				</d2l-cpd-progress-box>
 				${this.viewUserId ? html `` : html`
