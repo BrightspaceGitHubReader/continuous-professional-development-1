@@ -3,7 +3,7 @@
   "name": "d2l-cpd",
   "description": "Continuous Professional Development",
   "repository": "https://github.com/BrightspaceUI/cpd.git",
-  "version": "1.3.7",
+  "version": "1.3.8",
   "publishConfig": {
     "access": "public"
   },
